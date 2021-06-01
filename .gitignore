@@ -1,0 +1,13 @@
+bin/
+lib/
+include/
+share/
+src/*/migrations/
+src/sgc/__pycache__/
+static_cdn/
+src/static_files/
+media/
+media_assets/
+log/
+db.py
+*.pyc
