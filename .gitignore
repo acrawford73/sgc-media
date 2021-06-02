@@ -4,8 +4,8 @@ include/
 share/
 src/*/migrations/
 src/sgc/__pycache__/
-media/
 media_assets/
 log/
 db.py
 *.pyc
+image.py

@@ -2,12 +2,11 @@
 
 # Copyright (c) 2021 Anthony Crawford
 
-#    _/_/_/    _/_/_/    _/_/_/  
-#  _/        _/        _/        
-#    _/_/    _/  _/_/  _/        
-#        _/  _/    _/  _/        
-#  _/_/_/      _/_/_/    _/_/_/ 
-#
+#       _/_/_/    _/_/_/    _/_/_/
+#    _/        _/        _/
+#     _/_/    _/  _/_/  _/
+#        _/  _/    _/  _/
+# _/_/_/      _/_/_/    _/_/_/
 
 ### SGC MEDIA ###
 # Watches for new media in watch folder, uploaded via SSH or SFTP
@@ -32,11 +31,10 @@ import logging.handlers
 # Configuration
 from configparser import SafeConfigParser
 # Third Party
-from PIL import Image
 import psycopg2
+from PIL import Image
 import inotify.adapters
-from videoprops import get_video_properties
-from videoprops import get_audio_properties
+from videoprops import get_video_properties, get_audio_properties
 
 # ------------------------------
 # Functions
@@ -69,7 +67,7 @@ def file_check_exists(inputfile):
 			print('Assets file ' + inputfile + ' not found!')
 		return False
 
-# Create SHA256 value from video file
+# Create SHA256 value from a file
 def hash_file(asset):
 	""""This function returns the SHA-1 hash of the file passed into it"""
 	# make a hash object
@@ -123,7 +121,7 @@ def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, ass
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		conn.commit()
@@ -170,7 +168,7 @@ def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, ass
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		conn.commit()
@@ -190,7 +188,7 @@ def asset_delete_photo(asset_full_path):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		conn.commit()
@@ -210,7 +208,7 @@ def asset_delete_audio(asset_full_path):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		conn.commit()
@@ -230,7 +228,7 @@ def asset_delete_video(asset_full_path):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		conn.commit()
@@ -250,7 +248,7 @@ def asset_find_photo(asset_sha256):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		res_count = cur.rowcount  #int
@@ -270,7 +268,7 @@ def asset_find_audio(asset_sha256):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		res_count = cur.rowcount  #int
@@ -290,7 +288,7 @@ def asset_find_video(asset_sha256):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		res_count = cur.rowcount  #int
@@ -345,8 +343,10 @@ def Watcher(watch_path):
 					if asset_exists > 0:
 						log.warn("Asset already exists in database: " + asset_full_path)
 						continue
-
 				asset_size = int(os.path.getsize(asset_full_path))
+				if asset_size == 0:
+					log.warn("Asset is empty with 0 bytes. Skipping...")
+					continue
 				asset_uuid = str(uuid.uuid4())
 
 				img=Image.open(asset_full_path)
@@ -388,8 +388,10 @@ def Watcher(watch_path):
 					if asset_exists > 0:
 						log.warn("Asset already exists in database: " + asset_full_path)
 						continue
-
 				asset_size = int(os.path.getsize(asset_full_path))
+				if asset_size == 0:
+					log.warn("Asset is empty with 0 bytes. Skipping...")
+					continue
 				asset_uuid = str(uuid.uuid4())
 				log.info("Asset created: " + asset_full_path)
 				log.debug("File:         " + asset)
@@ -408,6 +410,9 @@ def Watcher(watch_path):
 						continue
 
 				asset_size = int(os.path.getsize(asset_full_path))
+				if asset_size == 0:
+					log.warn("Asset is empty with 0 bytes. Skipping...")
+					continue
 				asset_uuid = str(uuid.uuid4())
 
 				log.info("Asset created: " + asset_full_path)
@@ -518,7 +523,7 @@ if __name__ == "__main__":
 	# Start Watcher
 	# ------------------------------
 	print();log.info("SGC-Media Watcher Started.");print()
-	log.info("Watching folder: " + watch_path)
+	log.info("Watching folder: " + watch_path);print()
 
 	# Audit existing files with database...
 	#asset_audit()
