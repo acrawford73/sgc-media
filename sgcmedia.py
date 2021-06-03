@@ -328,6 +328,11 @@ def Watcher(watch_path):
 		asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 		file, ext = os.path.splitext(asset)
 
+		log.debug("ASSET_FULL_PATH=" + asset_full_path)
+		log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
+		log.debug("FILE=" + file)
+		log.debug("EXT=" + ext)
+
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
 
@@ -373,7 +378,7 @@ def Watcher(watch_path):
 				log.debug("UUID:         " + asset_uuid)
 				log.debug("Width:        " + str(width))
 				log.debug("Height:       " + str(height))
-				log.debug("Orientation   " + orientation)
+				log.debug("Orientation:  " + orientation)
 
 				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
 
