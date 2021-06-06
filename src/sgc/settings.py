@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ss8x12p_10yn5hb$@cn@=&5bc()&ly1n2(sg@_9@1!$77xz92f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.0.19']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.0.3']
 
 SITE_ID = 1
 
@@ -144,7 +144,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # DRF
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 10
 }
 

@@ -328,13 +328,13 @@ def Watcher(watch_path):
 		asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 		file, ext = os.path.splitext(asset)
 
-		log.debug("ASSET_FULL_PATH=" + asset_full_path)
-		log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
-		log.debug("FILE=" + file)
-		log.debug("EXT=" + ext)
-
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
+
+			log.debug("ASSET_FULL_PATH=" + asset_full_path)
+			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
+			log.debug("FILE=" + file)
+			log.debug("EXT=" + ext)
 
 			created_utc = datetime.datetime.utcnow()
 			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
@@ -370,7 +370,8 @@ def Watcher(watch_path):
 				is_public = True
 
 				log.info("Asset created: " + asset_full_path)
-				log.info("Asset created: {\"path\":\""+asset_full_path+"\", \"size\":"+str(asset_size)+", \"sha256\":\""+asset_sha256+"\", \"uuid\":\""+asset_uuid+"\", \"width\":"+str(width)+", \"height\":"+str(height)+", \"orientation\":\""+orientation+"\"}")
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation)
+				#log.info("Asset created: {\"path\":\""+asset_full_path+"\", \"size\":"+str(asset_size)+", \"sha256\":\""+asset_sha256+"\", \"uuid\":\""+asset_uuid+"\", \"width\":"+str(width)+", \"height\":"+str(height)+", \"orientation\":\""+orientation+"\"}")
 
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
