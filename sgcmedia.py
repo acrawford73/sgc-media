@@ -69,11 +69,14 @@ def file_check_exists(inputfile):
 
 # Create SHA256 value from a file
 def hash_file(asset):
-	""""This function returns the SHA-1 hash of the file passed into it"""
+	""""This function returns the SHA-256 hash of the file passed into it"""
 	# make a hash object
 	h = hashlib.sha256()
 	# open file for reading in binary mode
 	with open(asset,'rb') as file:
+
+		## check for file open errors here - if so return False
+
 		# loop till the end of the file
 		chunk = 0
 		while chunk != b'':
@@ -313,8 +316,9 @@ def Watcher(watch_path):
 
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
+	inw.block_duration_s = 2
 	#
-	
+
 	# Non-recursive
 	#inw = inotify.adapters.Inotify()
 	#inw.add_watch(watch_path)
