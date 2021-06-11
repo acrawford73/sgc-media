@@ -316,7 +316,7 @@ def Watcher(watch_path):
 
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
-	inw.block_duration_s = 2
+	#inw.block_duration_s = 2
 	#
 
 	# Non-recursive
@@ -388,7 +388,7 @@ def Watcher(watch_path):
 				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
 
 
-			# Ingest music asset
+			# Ingest audio/music asset
 			
 			elif ext in ext_audio:
 				
@@ -405,7 +405,6 @@ def Watcher(watch_path):
 				asset_uuid = str(uuid.uuid4())
 				log.info("Asset created: " + asset_full_path)
 				log.debug("File:         " + asset)
-
 
 
 			# Ingest video asset
@@ -487,6 +486,7 @@ def Watcher(watch_path):
 				log.info("Asset deleted from file system and database: {}".format(asset_full_path))
 			else:
 				log.info("Asset deleted from file system: {}".format(asset_full_path))
+
 
 
 ### STARTS HERE

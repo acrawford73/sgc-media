@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MediaVideo, MediaAudio, MediaPhoto
+from .models import MediaVideo, MediaAudio, MediaPhoto, AudioGenre, MediaService
 
 class MediaVideoAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'file_size', 'media_video_format', 'created']
@@ -26,7 +26,20 @@ class MediaPhotoAdmin(admin.ModelAdmin):
 	class Meta:
 		model = MediaPhoto
 
+class AudioGenreAdmin(admin.ModelAdmin):
+	list_display = ['genre']
+	class Meta:
+		model = AudioGenre
+
+class MediaServiceAdmin(admin.ModelAdmin):
+	list_display = ['service']
+	class Meta:
+		model = MediaService
+
 
 admin.site.register(MediaVideo, MediaVideoAdmin)
 admin.site.register(MediaAudio, MediaAudioAdmin)
 admin.site.register(MediaPhoto, MediaPhotoAdmin)
+
+admin.site.register(AudioGenre, AudioGenreAdmin)
+admin.site.register(MediaService, MediaServiceAdmin)

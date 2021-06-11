@@ -43,11 +43,21 @@ class MediaVideo(models.Model):
 			return self.file_name
 
 
-class AudioGenres(models.Model):
-	genre = models.CharField(max_length=32, default="", null=True, blank=True)
+class AudioGenre(models.Model):
+	genre = models.CharField(max_length=50, default="", null=True, blank=True)
 	class Meta:
+		ordering = ['genre']
 		def __unicode__(self):
 			return self.genre
+
+
+class MediaService(models.Model):
+	service = models.CharField(max_length=50, default="", null=True, blank=True)
+	class Meta:
+		ordering = ['service']
+		def __unicode__(self):
+			return self.service
+
 
 class MediaAudio(models.Model):
 	title = models.CharField(max_length=64, default="", null=True, blank=True)
