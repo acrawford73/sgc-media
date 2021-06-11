@@ -30,6 +30,13 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1','192.168.0.3']
 
 SITE_ID = 1
 
+# Host Security
+#SECURE_HSTS_SECONDS = 3600
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True
+#SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT_ENABLED') != 'False'
+
+
 # Application definition
 
 INSTALLED_APPS = [
