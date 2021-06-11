@@ -6,7 +6,8 @@ import uuid
 
 MEDIA_FORMATS = (
 	("SD", "SD"),
-	("HD", "HD"),
+	("HD720", "HD720"),
+	("HD1080", "HD1080"),
 	("4K", "4K"),
 )
 
@@ -23,7 +24,7 @@ class MediaVideo(models.Model):
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	media_video_width = models.PositiveSmallIntegerField(default=0)
 	media_video_height= models.PositiveSmallIntegerField(default=0)
-	media_video_format = models.CharField(max_length=4, choices=MEDIA_FORMATS, default='HD')
+	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD720')
 	media_video_frame_rate = models.CharField(max_length=32, default="")
 	media_video_codec = models.CharField(max_length=32, default="")
 	media_video_aspect_ratio = models.CharField(max_length=16, default="")

@@ -115,10 +115,13 @@ def get_media_properties(asset_full_path):
 #	# Determine which assets are not in storage, delete in DB.
 
 
-# Add Photo asset to database
-def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public):
-	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
+## NOTE:
+# psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
+
+# Add Video asset to database
+def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published):
+	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published)
 	log.debug("SQL: " + sql)
 	for df in data:
 		log.debug("DATA: " + str(df))
@@ -159,13 +162,10 @@ def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, ass
 	# 		conn.close()
 
 
-## NOTE:
-# psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
-
-# Add Video asset to database
-def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published):
-	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published)
+# Add Photo asset to database
+def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public):
+	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
 	log.debug("SQL: " + sql)
 	for df in data:
 		log.debug("DATA: " + str(df))
@@ -183,8 +183,9 @@ def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, ass
 		if conn is not None:
 			conn.close()
 
-def asset_delete_photo(asset_full_path):
-	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
+
+def asset_delete_video(asset_full_path):
+	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
 	data = (asset_full_path,) # comma required!
 	log.debug("SQL: " + sql)
 	for df in data:
@@ -223,8 +224,8 @@ def asset_delete_audio(asset_full_path):
 		if conn is not None:
 			conn.close()
 
-def asset_delete_video(asset_full_path):
-	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
+def asset_delete_photo(asset_full_path):
+	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
 	data = (asset_full_path,) # comma required!
 	log.debug("SQL: " + sql)
 	for df in data:
@@ -243,8 +244,8 @@ def asset_delete_video(asset_full_path):
 		if conn is not None:
 			conn.close()
 
-def asset_find_photo(asset_sha256):
-	sql = "SELECT file_sha256 FROM media_mediaphoto WHERE file_sha256=%s"
+def asset_find_video(asset_sha256):
+	sql = "SELECT file_sha256 FROM media_mediavideo WHERE file_sha256=%s"
 	data = (asset_sha256,)
 	log.debug("SQL: " + sql)
 	for df in data:
@@ -283,8 +284,8 @@ def asset_find_audio(asset_sha256):
 		if conn is not None:
 			conn.close()
 
-def asset_find_video(asset_sha256):
-	sql = "SELECT file_sha256 FROM media_mediavideo WHERE file_sha256=%s"
+def asset_find_photo(asset_sha256):
+	sql = "SELECT file_sha256 FROM media_mediaphoto WHERE file_sha256=%s"
 	data = (asset_sha256,)
 	log.debug("SQL: " + sql)
 	for df in data:
@@ -302,6 +303,8 @@ def asset_find_video(asset_sha256):
 	finally:
 		if conn is not None:
 			conn.close()
+
+
 
 
 # ------------------------------
@@ -430,10 +433,12 @@ def Watcher(watch_path):
 				media_properties = get_media_properties(asset_full_path)
 				media_video_codec = str(media_properties[0])
 				media_video_width = int(media_properties[1])
-				if media_video_width >= 1920:
+				if media_video_width > 1920:
 					media_video_format = "4K"
+				elif media_video_width >= 1920:
+					media_video_format = "HD1080"
 				elif media_video_width >= 1280:
-					media_video_format = "HD"
+					media_video_format = "HD720"
 				else:
 					media_video_format = "SD"
 				media_video_height = int(media_properties[2])
