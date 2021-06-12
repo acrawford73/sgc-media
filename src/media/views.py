@@ -49,7 +49,7 @@ class MediaAudioDetailView(DetailView):
 class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
-	fields = ['is_published', 'title', 'artist', 'album', 'genre', 'location', 'geo_latitude', 'geo_longitude', 'short_description', 'notes']
+	fields = ['is_published', 'title', 'artist', 'album', 'genre', 'location_name', 'location_latitude', 'location_longitude', 'short_description', 'notes']
 
 class MediaAudioListAPI(generics.ListAPIView):
 	queryset = MediaAudio.objects.all()
@@ -75,7 +75,7 @@ class MediaPhotoDetailView(DetailView):
 class MediaPhotoUpdateView(UpdateView):
 	model = MediaPhoto
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'notes', 'orientation', 'service', 'location', 'geo_latitude', 'geo_longitude']
+	fields = ['is_public', 'title', 'short_description', 'notes', 'orientation', 'service', 'location_name', 'location_latitude', 'location_longitude']
 
 class MediaPhotoListAPI(generics.ListAPIView):
 	queryset = MediaPhoto.objects.all()

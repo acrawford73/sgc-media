@@ -123,7 +123,7 @@ class MediaPhoto(models.Model):
 	title = models.CharField(max_length=64, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=128, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=256, default="", null=True, blank=True)
-	notes = models.TextField(max_length=512, default="", null=True, blank=True)
+	full_name = models.CharField(max_length=255, default="")
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
 	media_path = models.CharField(max_length=4096, default="")
@@ -136,10 +136,11 @@ class MediaPhoto(models.Model):
 	tags = models.CharField(max_length=32, default="", null=True, blank=True)
 	is_public = models.BooleanField(default=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
-	location = models.CharField(max_length=64, default="", null=True, blank=True)
-	geo_latitude = models.CharField(max_length=64, default="", null=True, blank=True)
-	geo_longitude = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_latitude = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_longitude = models.CharField(max_length=64, default="", null=True, blank=True)
 	created = models.DateTimeField()
+	notes = models.TextField(max_length=512, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-photo-detail', kwargs={'pk': self.pk})
