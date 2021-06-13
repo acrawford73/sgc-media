@@ -13,9 +13,9 @@ MEDIA_FORMATS = (
 
 class MediaVideo(models.Model):
 	title = models.CharField(max_length=64, default="", null=True, blank=True)
-	short_description = models.CharField(max_length=256, default="", null=True, blank=True)
-	long_description = models.TextField(max_length=512, default="", null=True, blank=True)
-	notes = models.TextField(max_length=512, default="", null=True, blank=True)
+	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
+	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
+	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
 	media_path = models.CharField(max_length=4096, default="")
@@ -34,6 +34,7 @@ class MediaVideo(models.Model):
 	media_audio_sample_rate = models.CharField(max_length=16, default="")
 	created = models.DateTimeField()
 	is_published = models.BooleanField(default=False)
+	tags = models.JSONField(default=dict)
 
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
@@ -89,9 +90,9 @@ class MediaAudio(models.Model):
 	audio_encoder = models.CharField(max_length=32, default="")
 	created = models.DateTimeField()
 	is_published = models.BooleanField(default=False)
-	short_description = models.CharField(max_length=256, default="", null=True, blank=True)
-	long_description = models.TextField(max_length=512, default="", null=True, blank=True)
-	notes = models.TextField(max_length=512, default="", null=True, blank=True)
+	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
+	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
+	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
@@ -121,8 +122,8 @@ PHOTO_ORIENTATION = (
 
 class MediaPhoto(models.Model):
 	title = models.CharField(max_length=64, default="", null=True, blank=True)
-	short_description = models.CharField(max_length=128, default="", null=True, blank=True)
-	long_description = models.TextField(max_length=256, default="", null=True, blank=True)
+	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
+	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	full_name = models.CharField(max_length=255, default="")
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
@@ -133,14 +134,14 @@ class MediaPhoto(models.Model):
 	width = models.PositiveSmallIntegerField(default=0)
 	height = models.PositiveSmallIntegerField(default=0)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=PHOTO_ORIENTATION)
-	tags = models.CharField(max_length=32, default="", null=True, blank=True)
+	tags = models.JSONField(default=dict)
 	is_public = models.BooleanField(default=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_latitude = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_longitude = models.CharField(max_length=64, default="", null=True, blank=True)
 	created = models.DateTimeField()
-	notes = models.TextField(max_length=512, default="", null=True, blank=True)
+	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-photo-detail', kwargs={'pk': self.pk})
@@ -149,5 +150,4 @@ class MediaPhoto(models.Model):
 		ordering = ['-created']
 		def __unicode__(self):
 			return self.file_name
-
 

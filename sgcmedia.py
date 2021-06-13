@@ -67,7 +67,7 @@ def file_check_exists(inputfile):
 			print('Assets file ' + inputfile + ' not found!')
 		return False
 
-# Create SHA256 value from a file
+# Create SHA256 value of file
 def hash_file(asset):
 	""""This function returns the SHA-256 hash of the file passed into it"""
 	# make a hash object
@@ -362,7 +362,7 @@ def Watcher(watch_path):
 				asset_uuid = str(uuid.uuid4())
 
 				img=Image.open(asset_full_path)
-				width,height=img.size    # w=Width and h=Height
+				width,height=img.size
 				img.close()
 
 				if width > height:
@@ -375,6 +375,8 @@ def Watcher(watch_path):
 				created_utc = datetime.datetime.utcnow()
 				created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 				is_public = True
+
+				photo_path = created_utc.strftime("photo/%Y/%m/%d/")
 
 				log.info("Asset created: " + asset_full_path)
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation)
@@ -454,10 +456,12 @@ def Watcher(watch_path):
 				# log.debug(duration_sec)
 				# log.debug(duration_hms)
 
+				is_published = False
 				created_utc = datetime.datetime.utcnow()
 				created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-				is_published = False
 				
+				video_path = created_utc.strftime("video/%Y/%m/%d/")
+
 				# Debug
 				log.debug("Size:         " + str(asset_size))
 				log.debug("Hash:         " + asset_sha256)
