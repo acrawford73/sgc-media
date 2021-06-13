@@ -118,193 +118,99 @@ def get_media_properties(asset_full_path):
 ## NOTE:
 # psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
 
+def pgql(sql, data):
+	log.debug("SQL: " + sql)
+	for df in data:
+		log.debug("DATA: " + str(df))
+	conn = None
+	try:
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.commit()
+			conn.close()
+
+
+def pgql_find(sql, data):
+	log.debug("SQL:  " + sql)
+	for df in data:
+		log.debug("DATA: " + str(df))
+	conn = None
+	try:
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+		res_count = cur.rowcount  #int
+		conn.close()
+		return res_count
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+
 # Add Video asset to database
 def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published):
 	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published)
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		conn.commit()
-		conn.close()
-		log.debug("Asset added to database: {}".format(asset_full_path))
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+	pgql(sql, data)
 
 
 # Add Audio asset to database
-#def asset_audio_create():
-	# sql = "INSERT INTO media_mediaaudio() VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	# data = ()
-	# log.debug("SQL: " + sql)
-	# for df in data:
-	# 	log.debug("DATA: " + str(df))
-	# conn = None
-	# try:
-	# 	conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="dominoac")
-	# 	cur = conn.cursor()
-	# 	cur.execute(sql, data)
-	# 	conn.commit()
-	# 	conn.close()
-	# 	log.debug("Asset added to database: {}".format(asset_full_path))
-	# except (Exception, psycopg2.DatabaseError) as error:
-	# 	log.error(error)
-	# finally:
-	# 	if conn is not None:
-	# 		conn.close()
+# def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public):
+# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+# 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
+# 	pgql(sql, data)
 
 
 # Add Photo asset to database
-def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public):
-	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		conn.commit()
-		conn.close()
-		log.debug("Asset added to database: {}".format(asset_full_path))
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags):
+	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags)
+	pgql(sql, data)
 
 
 def asset_delete_video(asset_full_path):
 	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
 	data = (asset_full_path,) # comma required!
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		conn.commit()
-		conn.close()
-		log.debug("Asset deleted from database: {}".format(asset_full_path))
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+	pgql(sql, data)
+	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
 def asset_delete_audio(asset_full_path):
 	sql = "DELETE FROM media_mediaaudio WHERE file_path=%s"
 	data = (asset_full_path,) # comma required!
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		conn.commit()
-		conn.close()
-		log.debug("Asset deleted from database: {}".format(asset_full_path))
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+	pgql(sql, data)
+	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
 def asset_delete_photo(asset_full_path):
 	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
 	data = (asset_full_path,) # comma required!
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		conn.commit()
-		conn.close()
-		log.debug("Asset deleted from database: {}".format(asset_full_path))
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+	pgql(sql, data)
+	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
 def asset_find_video(asset_sha256):
 	sql = "SELECT file_sha256 FROM media_mediavideo WHERE file_sha256=%s"
 	data = (asset_sha256,)
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		res_count = cur.rowcount  #int
-		conn.close()
-		return res_count
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+	res_count = pgql_find(sql, data)
+	return res_count
 
 def asset_find_audio(asset_sha256):
 	sql = "SELECT file_sha256 FROM media_mediaaudio WHERE file_sha256=%s"
 	data = (asset_sha256,)
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		res_count = cur.rowcount  #int
-		conn.close()
-		return res_count
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
+	res_count = pgql_find(sql, data)
+	return res_count
 
 def asset_find_photo(asset_sha256):
 	sql = "SELECT file_sha256 FROM media_mediaphoto WHERE file_sha256=%s"
 	data = (asset_sha256,)
-	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-		res_count = cur.rowcount  #int
-		conn.close()
-		return res_count
-	except (Exception, psycopg2.DatabaseError) as error:
-		log.error(error)
-	finally:
-		if conn is not None:
-			conn.close()
-
-
+	res_count = pgql_find(sql, data)
+	return res_count
+	
 
 
 # ------------------------------
@@ -378,6 +284,8 @@ def Watcher(watch_path):
 
 				photo_path = created_utc.strftime("photo/%Y/%m/%d/")
 
+				tags = []
+
 				log.info("Asset created: " + asset_full_path)
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation)
 				#log.info("Asset created: {\"path\":\""+asset_full_path+"\", \"size\":"+str(asset_size)+", \"sha256\":\""+asset_sha256+"\", \"uuid\":\""+asset_uuid+"\", \"width\":"+str(width)+", \"height\":"+str(height)+", \"orientation\":\""+orientation+"\"}")
@@ -390,7 +298,7 @@ def Watcher(watch_path):
 				log.debug("Height:       " + str(height))
 				log.debug("Orientation:  " + orientation)
 
-				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
+				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags)
 
 
 			# Ingest audio/music asset

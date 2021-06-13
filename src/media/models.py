@@ -124,7 +124,6 @@ class MediaPhoto(models.Model):
 	title = models.CharField(max_length=64, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
-	full_name = models.CharField(max_length=255, default="")
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
 	media_path = models.CharField(max_length=4096, default="")
@@ -134,8 +133,8 @@ class MediaPhoto(models.Model):
 	width = models.PositiveSmallIntegerField(default=0)
 	height = models.PositiveSmallIntegerField(default=0)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=PHOTO_ORIENTATION)
-	tags = models.JSONField(default=dict)
 	is_public = models.BooleanField(default=True)
+	tags = models.JSONField(default=dict)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_latitude = models.CharField(max_length=64, default="", null=True, blank=True)
