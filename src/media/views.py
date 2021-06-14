@@ -23,10 +23,10 @@ class MediaVideoDetailView(DetailView):
 class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
 	context_object_name = 'asset'
-	fields = ['is_published', 'title', 'short_description', 'long_description', 'notes']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes']
 
 class MediaVideoListAPI(generics.ListAPIView):
-	queryset = MediaVideo.objects.all()  #.filter(is_published=True)
+	queryset = MediaVideo.objects.all()  #.filter(is_public=True)
 	serializer_class = MediaVideoSerializerList
 
 class MediaVideoDetailAPI(generics.RetrieveAPIView):
@@ -49,7 +49,7 @@ class MediaAudioDetailView(DetailView):
 class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
-	fields = ['is_published', 'title', 'artist', 'album', 'genre', 'location_name', 'location_latitude', 'location_longitude', 'short_description', 'notes']
+	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'location_name', 'location_latitude', 'location_longitude', 'short_description', 'notes']
 
 class MediaAudioListAPI(generics.ListAPIView):
 	queryset = MediaAudio.objects.all()

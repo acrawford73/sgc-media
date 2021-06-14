@@ -30,7 +30,7 @@
                 <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'media-photo-detail' asset.id %}">{{ asset.file_name }}</a></td>
                 <td>{{ asset.orientation }}</td>
-                <td>{{ asset.is_public }}</td>
+                <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
               </tr>
               {% endfor %}

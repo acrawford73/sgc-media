@@ -28,13 +28,14 @@ class MediaVideo(models.Model):
 	media_video_frame_rate = models.CharField(max_length=32, default="")
 	media_video_codec = models.CharField(max_length=32, default="")
 	media_video_aspect_ratio = models.CharField(max_length=16, default="")
-	#media_video_duration = models.PositiveIntegerField(default=0)
+	media_video_duration = models.PositiveIntegerField(default=0, null=True, blank=True)
 	media_audio_codec = models.CharField(max_length=32, default="")
 	media_audio_channels = models.PositiveSmallIntegerField(default=0)
 	media_audio_sample_rate = models.CharField(max_length=16, default="")
 	created = models.DateTimeField()
-	is_published = models.BooleanField(default=False)
+	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=dict)
+	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
@@ -74,7 +75,7 @@ class MediaAudio(models.Model):
 	disk_total = models.CharField(max_length=2, default="", null=True, blank=True)
 	comments = models.CharField(max_length=64, default="", null=True, blank=True)
 	artwork = models.CharField(max_length=64, default="", null=True, blank=True)
-	duration = models.CharField(max_length=16, default="", null=True, blank=True)
+	duration = models.PositiveIntegerField(default=0, null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")   # file.mp3
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp3
 	media_path = models.CharField(max_length=4096, default="")
@@ -89,10 +90,11 @@ class MediaAudio(models.Model):
 	audio_codec = models.CharField(max_length=32, default="")
 	audio_encoder = models.CharField(max_length=32, default="")
 	created = models.DateTimeField()
-	is_published = models.BooleanField(default=False)
+	is_public = models.BooleanField(default=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
+	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
@@ -141,6 +143,7 @@ class MediaPhoto(models.Model):
 	location_longitude = models.CharField(max_length=64, default="", null=True, blank=True)
 	created = models.DateTimeField()
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
+	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-photo-detail', kwargs={'pk': self.pk})

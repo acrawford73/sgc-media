@@ -118,6 +118,7 @@ def get_media_properties(asset_full_path):
 ## NOTE:
 # psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
 
+# For insert and delete
 def pgql(sql, data):
 	log.debug("SQL: " + sql)
 	for df in data:
@@ -133,7 +134,6 @@ def pgql(sql, data):
 		if conn is not None:
 			conn.commit()
 			conn.close()
-
 
 def pgql_find(sql, data):
 	log.debug("SQL:  " + sql)
@@ -153,13 +153,11 @@ def pgql_find(sql, data):
 		if conn is not None:
 			conn.close()
 
-
 # Add Video asset to database
 def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published):
 	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published)
 	pgql(sql, data)
-
 
 # Add Audio asset to database
 # def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public):
@@ -167,13 +165,11 @@ def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, ass
 # 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
 # 	pgql(sql, data)
 
-
 # Add Photo asset to database
 def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags):
 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags)
 	pgql(sql, data)
-
 
 def asset_delete_video(asset_full_path):
 	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
@@ -183,13 +179,13 @@ def asset_delete_video(asset_full_path):
 
 def asset_delete_audio(asset_full_path):
 	sql = "DELETE FROM media_mediaaudio WHERE file_path=%s"
-	data = (asset_full_path,) # comma required!
+	data = (asset_full_path,)
 	pgql(sql, data)
 	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
 def asset_delete_photo(asset_full_path):
 	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
-	data = (asset_full_path,) # comma required!
+	data = (asset_full_path,)
 	pgql(sql, data)
 	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
@@ -228,7 +224,7 @@ def Watcher(watch_path):
 	#inw.block_duration_s = 2
 	#
 
-	# Non-recursive
+	# Non-Recursive
 	#inw = inotify.adapters.Inotify()
 	#inw.add_watch(watch_path)
 	#
@@ -237,20 +233,21 @@ def Watcher(watch_path):
 	
 		(_, type_names, path, asset) = event
 		log.debug("Asset=[{}{}] Event_Type=[{}]".format(path, asset, type_names))
-		asset_full_path = os.path.join(path, asset)
-		asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
-		file, ext = os.path.splitext(asset)
 
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
+
+			created_utc = datetime.datetime.utcnow()
+			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+			
+			asset_full_path = os.path.join(path, asset)
+			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
+			file, ext = os.path.splitext(asset)
 
 			log.debug("ASSET_FULL_PATH=" + asset_full_path)
 			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
 			log.debug("FILE=" + file)
 			log.debug("EXT=" + ext)
-
-			created_utc = datetime.datetime.utcnow()
-			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 
 			# Ingest photo asset
 			if ext in ext_photo:
@@ -278,12 +275,8 @@ def Watcher(watch_path):
 				else:
 					orientation = "Square"
 
-				created_utc = datetime.datetime.utcnow()
-				created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 				is_public = True
-
-				photo_path = created_utc.strftime("photo/%Y/%m/%d/")
-
+				
 				tags = []
 
 				log.info("Asset created: " + asset_full_path)

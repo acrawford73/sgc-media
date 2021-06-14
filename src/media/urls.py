@@ -19,7 +19,6 @@ urlpatterns = [
 	path('api/music/<int:pk>', views.MediaAudioDetailAPI.as_view(), name='media-audio-detail-api'),
 
 	# Photo
-	# path('photo/<int:pk>', views.MediaPhotoView.as_view(), name='photo')
 	path('photos/', views.MediaPhotoListView.as_view(), name='media-photo-list'),
 	path('photos/<int:pk>/', views.MediaPhotoDetailView.as_view(), name='media-photo-detail'), 
 	path('photos/edit/<int:pk>/', views.MediaPhotoUpdateView.as_view(), name='media-photo-update'),
