@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-import uuid
 
 #
 
@@ -28,13 +27,14 @@ class MediaVideo(models.Model):
 	media_video_frame_rate = models.CharField(max_length=32, default="")
 	media_video_codec = models.CharField(max_length=32, default="")
 	media_video_aspect_ratio = models.CharField(max_length=16, default="")
-	media_video_duration = models.PositiveIntegerField(default=0, null=True, blank=True)
+	media_video_duration = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
+	#media_video_duration = models.PositiveIntegerField(default=0, null=True, blank=True)
 	media_audio_codec = models.CharField(max_length=32, default="")
 	media_audio_channels = models.PositiveSmallIntegerField(default=0)
 	media_audio_sample_rate = models.CharField(max_length=16, default="")
 	created = models.DateTimeField()
 	is_public = models.BooleanField(default=True)
-	tags = models.JSONField(default=dict)
+	tags = models.JSONField(default=list)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
@@ -75,7 +75,7 @@ class MediaAudio(models.Model):
 	disk_total = models.CharField(max_length=2, default="", null=True, blank=True)
 	comments = models.CharField(max_length=64, default="", null=True, blank=True)
 	artwork = models.CharField(max_length=64, default="", null=True, blank=True)
-	duration = models.PositiveIntegerField(default=0, null=True, blank=True)
+	duration = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")   # file.mp3
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp3
 	media_path = models.CharField(max_length=4096, default="")
@@ -136,7 +136,7 @@ class MediaPhoto(models.Model):
 	height = models.PositiveSmallIntegerField(default=0)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=PHOTO_ORIENTATION)
 	is_public = models.BooleanField(default=True)
-	tags = models.JSONField(default=dict)
+	tags = models.JSONField(default=list)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_latitude = models.CharField(max_length=64, default="", null=True, blank=True)

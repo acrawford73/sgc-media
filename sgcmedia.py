@@ -23,6 +23,7 @@ import errno
 import hashlib
 import datetime,time
 from time import strftime
+from decimal import Decimal
 from distutils.util import strtobool
 # Logging
 import logging
@@ -87,7 +88,7 @@ def hash_file(asset):
 	# return the hex representation of digest
 	return h.hexdigest()
 
-def get_media_properties(asset_full_path):
+def get_video_properties(asset_full_path):
 	props = get_video_properties(asset_full_path)
 	media_video_codec = props['codec_name']
 	media_video_width = props['width']
@@ -154,9 +155,9 @@ def pgql_find(sql, data):
 			conn.close()
 
 # Add Video asset to database
-def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published):
-	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published)
+def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags):
+	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
 	pgql(sql, data)
 
 # Add Audio asset to database
@@ -295,7 +296,7 @@ def Watcher(watch_path):
 
 
 			# Ingest audio/music asset
-			
+
 			elif ext in ext_audio:
 				
 				asset_sha256 = str(hash_file(asset_full_path))
@@ -309,6 +310,7 @@ def Watcher(watch_path):
 					log.warn("Asset is empty with 0 bytes. Skipping...")
 					continue
 				asset_uuid = str(uuid.uuid4())
+				#duration = get_audio_properties()
 				log.info("Asset created: " + asset_full_path)
 				log.debug("File:         " + asset)
 
@@ -329,11 +331,8 @@ def Watcher(watch_path):
 					log.warn("Asset is empty with 0 bytes. Skipping...")
 					continue
 				asset_uuid = str(uuid.uuid4())
-
-				log.info("Asset created: " + asset_full_path)
-				log.debug("File:         " + asset)
 				
-				media_properties = get_media_properties(asset_full_path)
+				media_properties = get_video_properties(asset_full_path)
 				media_video_codec = str(media_properties[0])
 				media_video_width = int(media_properties[1])
 				if media_video_width > 1920:
@@ -347,29 +346,30 @@ def Watcher(watch_path):
 				media_video_height = int(media_properties[2])
 				media_video_aspect_ratio = str(media_properties[3])
 				media_video_frame_rate = str(media_properties[4])
-				media_audio_codec = str(media_properties[5].upper())
-				media_audio_channels = int(media_properties[6])
-				media_audio_sample_rate = str(media_properties[7])
+				media_video_duration = Decimal(media_properties[5])
+				media_audio_codec = str(media_properties[6].upper())
+				media_audio_channels = int(media_properties[7])
+				media_audio_sample_rate = str(media_properties[8])
 
-				# # Duration
-				# duration_sec = get_video_duration(asset)[0]
-				# duration_hms = get_video_duration(asset)[1]
-				# log.debug(duration_sec)
-				# log.debug(duration_hms)
-
-				is_published = False
+				is_public = True
 				created_utc = datetime.datetime.utcnow()
 				created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 				
-				video_path = created_utc.strftime("video/%Y/%m/%d/")
+				video_path = created_utc.strftime("%Y/%m/%d/")
+				make_sure_path_exists(video_path)
+
+				tags = []
 
 				# Debug
+				log.info("Asset:        " + asset_full_path)
+				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
 				log.debug("Hash:         " + asset_sha256)
 				log.debug("UUID:         " + asset_uuid)
 				log.debug("Height:       " + str(media_video_height))
 				log.debug("Width:        " + str(media_video_width))
 				log.debug("Format:       " + media_video_format)
+				log.debug("Duration:     " + str(media_video_duration))
 				log.debug("Aspect Ratio: " + media_video_aspect_ratio)
 				log.debug("Frame Rate:   " + media_video_frame_rate)
 				log.debug("Video Codec:  " + media_video_codec)
@@ -377,7 +377,7 @@ def Watcher(watch_path):
 				log.debug("Channels:     " + str(media_audio_channels))
 				log.debug("Sample Rate:  " + media_audio_sample_rate)
 				
-				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_published)
+				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
 
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")
