@@ -88,24 +88,28 @@ def hash_file(asset):
 	# return the hex representation of digest
 	return h.hexdigest()
 
-def get_video_properties(asset_full_path):
+def get_v_properties(asset_full_path):
 	props = get_video_properties(asset_full_path)
 	media_video_codec = props['codec_name']
 	media_video_width = props['width']
 	media_video_height = props['height']
 	media_video_aspect_ratio = props['display_aspect_ratio']
-	media_video_frame_rate = props['avg_frame_rate']
-	props = get_audio_properties(asset_full_path)
-	media_audio_codec = props['codec_name']
-	media_audio_channels = props['channels']
-	media_audio_sample_rate = props['sample_rate']
-	return [media_video_codec, media_video_width, media_video_height, media_video_aspect_ratio, media_video_frame_rate, media_audio_codec, media_audio_channels, media_audio_sample_rate]
-
-# def get_video_duration(asset):
-# 	clip = VideoFileClip(asset)
-# 	duration_sec = str(clip.duration)
-# 	duration_hms = str(datetime.timedelta(seconds = int(duration_sec)))
-# 	return [duration_sec, duration_hms]
+	media_video_frame_rate = props['r_frame_rate']
+	media_video_duration = props['duration']
+	try:
+		media_audio_codec = "NA"
+		media_audio_channels = 0
+		media_audio_sample_rate = 0
+		props = get_audio_properties(asset_full_path)
+		if 'codec_name' in props:
+			media_audio_codec = props['codec_name']
+		if 'channels' in props:
+			media_audio_channels = props['channels']
+		if 'sample_rate' in props:
+			media_audio_sample_rate = props['sample_rate']
+	except RuntimeError as error:
+		print(error)
+	return [media_video_codec, media_video_width, media_video_height, media_video_aspect_ratio, media_video_frame_rate, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
 
 
 #def asset_audit():
@@ -155,21 +159,21 @@ def pgql_find(sql, data):
 			conn.close()
 
 # Add Video asset to database
-def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags):
-	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
+def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type):
+	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
 	pgql(sql, data)
 
 # Add Audio asset to database
-# def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public):
-# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-# 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public)
+# def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, content_type):
+# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+# 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, content_type)
 # 	pgql(sql, data)
 
 # Add Photo asset to database
-def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags):
-	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags)
+def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type):
+	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type)
 	pgql(sql, data)
 
 def asset_delete_video(asset_full_path):
@@ -243,6 +247,7 @@ def Watcher(watch_path):
 			
 			asset_full_path = os.path.join(path, asset)
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
+
 			file, ext = os.path.splitext(asset)
 
 			log.debug("ASSET_FULL_PATH=" + asset_full_path)
@@ -253,6 +258,8 @@ def Watcher(watch_path):
 			# Ingest photo asset
 			if ext in ext_photo:
 				
+				content_type = "Photo"
+
 				asset_sha256 = str(hash_file(asset_full_path))
 				asset_exists = asset_find_photo(asset_sha256)
 				if asset_exists is not None:
@@ -283,7 +290,6 @@ def Watcher(watch_path):
 				log.info("Asset created: " + asset_full_path)
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation)
 				#log.info("Asset created: {\"path\":\""+asset_full_path+"\", \"size\":"+str(asset_size)+", \"sha256\":\""+asset_sha256+"\", \"uuid\":\""+asset_uuid+"\", \"width\":"+str(width)+", \"height\":"+str(height)+", \"orientation\":\""+orientation+"\"}")
-
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
 				log.debug("Hash:         " + asset_sha256)
@@ -292,13 +298,15 @@ def Watcher(watch_path):
 				log.debug("Height:       " + str(height))
 				log.debug("Orientation:  " + orientation)
 
-				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags)
+				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type)
 
 
 			# Ingest audio/music asset
 
 			elif ext in ext_audio:
 				
+				content_type = "Audio"
+
 				asset_sha256 = str(hash_file(asset_full_path))
 				asset_exists = asset_find_audio(asset_sha256)
 				if asset_exists is not None:
@@ -317,6 +325,8 @@ def Watcher(watch_path):
 
 			# Ingest video asset
 			elif ext in ext_video:
+
+				content_type = "Video"
 
 				# If asset already exists, ignore it
 				asset_sha256 = str(hash_file(asset_full_path))
@@ -352,13 +362,8 @@ def Watcher(watch_path):
 				media_audio_sample_rate = str(media_properties[8])
 
 				is_public = True
-				created_utc = datetime.datetime.utcnow()
-				created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-				
-				video_path = created_utc.strftime("%Y/%m/%d/")
-				make_sure_path_exists(video_path)
 
-				tags = []
+				tags = json.dumps([])  # empty
 
 				# Debug
 				log.info("Asset:        " + asset_full_path)
@@ -377,13 +382,14 @@ def Watcher(watch_path):
 				log.debug("Channels:     " + str(media_audio_channels))
 				log.debug("Sample Rate:  " + media_audio_sample_rate)
 				
-				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
+				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
 
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")
 
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':
+			asset_full_path = os.path.join(path, asset)
 			if delete_db_on_fs_delete == True:
 				if ext in ext_photo:
 					asset_delete_photo(asset_full_path)

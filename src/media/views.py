@@ -14,7 +14,7 @@ class MediaVideoListView(ListView):
 	template_name = 'media/video_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'assets'
 	ordering = ['-created']
-	paginate_by = 15
+	paginate_by = 20
 
 class MediaVideoDetailView(DetailView):
 	model = MediaVideo
@@ -23,7 +23,7 @@ class MediaVideoDetailView(DetailView):
 class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'media_video_width', 'media_video_height', 'orientation']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all()  #.filter(is_public=True)
@@ -40,7 +40,7 @@ class MediaAudioListView(ListView):
 	template_name = 'media/audio_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'assets'
 	ordering = ['-created']
-	paginate_by = 15
+	paginate_by = 20
 
 class MediaAudioDetailView(DetailView):
 	model = MediaAudio
@@ -66,7 +66,7 @@ class MediaPhotoListView(ListView):
 	template_name = 'media/photo_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
-	paginate_by = 15
+	paginate_by = 20
 
 class MediaPhotoDetailView(DetailView):
 	model = MediaPhoto
@@ -75,7 +75,7 @@ class MediaPhotoDetailView(DetailView):
 class MediaPhotoUpdateView(UpdateView):
 	model = MediaPhoto
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'notes', 'orientation', 'service', 'location_name', 'location_latitude', 'location_longitude']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'orientation', 'service', 'location_name', 'location_latitude', 'location_longitude']
 
 class MediaPhotoListAPI(generics.ListAPIView):
 	queryset = MediaPhoto.objects.all()

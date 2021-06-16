@@ -43,7 +43,7 @@
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }} (UTC)</td>
               </tr>
               <tr>
-                <td><strong>Published</strong></td>
+                <td><strong>Public</strong></td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
               <tr>
@@ -55,8 +55,16 @@
                 <td>{{ asset.media_path }}</td>
               </tr>
               <tr>
+                <td><strong>Username</strong></td>
+                <td>{{ asset.username }}</td>
+              </tr>
+              <tr>
                 <td><strong>Title</strong></td>
                 <td>{{ asset.title }}</td>
+              </tr>
+              <tr>
+                <td><strong>Tags</strong></td>
+                <td>{{ asset.tags }}</td>
               </tr>
               <tr>
                 <td><strong>Short Description</strong></td>
@@ -70,6 +78,22 @@
                 <td><strong>Notes</strong></td>
                 <td>{{ asset.notes }}</td>
               </tr>
+              <tr>
+                <td><strong>Service</strong></td>
+                <td>{{ asset.service }}</td>
+              </tr>
+              <tr>
+                <td><strong>Location</strong></td>
+                <td>{{ asset.location_name }}</td>
+              </tr>
+              <tr>
+                <td><strong>Latitude</strong></td>
+                <td>{{ asset.location_latitude }}</td>
+              </tr>
+              <tr>
+                <td><strong>Longitude</strong></td>
+                <td>{{ asset.location_longitude }}</td>
+              </tr>
             </tbody>
           </table>
           <p>&nbsp;</p>
@@ -80,6 +104,10 @@
                 <td><strong>Size in Bytes</strong></td>
                 <!-- <td>{{ asset.file_size|floatformat:"-3g" }}</td> -->
                 <td>{{ asset.file_size|floatformat:"-3g" }}</td>
+              </tr>
+              <tr>
+                <td><strong>Duration</strong></td>
+                <td>{{ asset.media_video_duration }}</td>
               </tr>
               <tr>
                 <td><strong>SHA256 Hash</strong></td>

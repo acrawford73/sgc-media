@@ -10,8 +10,20 @@ MEDIA_FORMATS = (
 	("4K", "4K"),
 )
 
+CONTENT_TYPE = (
+	("Photo", "Photo"),
+	("Video", "Video"),
+	("Audio", "Audio"),
+)
+
+MEDIA_ORIENTATION = (
+	("Landscape", "Landscape"),
+	("Portrait", "Portrait"),
+	("Square", "Square"),
+)
+
 class MediaVideo(models.Model):
-	title = models.CharField(max_length=64, default="", null=True, blank=True)
+	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
@@ -21,6 +33,7 @@ class MediaVideo(models.Model):
 	file_size = models.PositiveIntegerField(default=0)
 	file_sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	media_video_width = models.PositiveSmallIntegerField(default=0)
 	media_video_height= models.PositiveSmallIntegerField(default=0)
 	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD720')
@@ -28,13 +41,16 @@ class MediaVideo(models.Model):
 	media_video_codec = models.CharField(max_length=32, default="")
 	media_video_aspect_ratio = models.CharField(max_length=16, default="")
 	media_video_duration = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
-	#media_video_duration = models.PositiveIntegerField(default=0, null=True, blank=True)
 	media_audio_codec = models.CharField(max_length=32, default="")
 	media_audio_channels = models.PositiveSmallIntegerField(default=0)
 	media_audio_sample_rate = models.CharField(max_length=16, default="")
+	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_latitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
+	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField()
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list)
+	service = models.CharField(max_length=32, default="NA", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
@@ -63,7 +79,7 @@ class MediaService(models.Model):
 
 
 class MediaAudio(models.Model):
-	title = models.CharField(max_length=64, default="", null=True, blank=True)
+	title = models.CharField(max_length=128, default="", null=True, blank=True)
 	artist = models.CharField(max_length=64, default="", null=True, blank=True)
 	album = models.CharField(max_length=64, default="", null=True, blank=True)	
 	composer = models.CharField(max_length=64, default="", null=True, blank=True)
@@ -91,6 +107,7 @@ class MediaAudio(models.Model):
 	audio_encoder = models.CharField(max_length=32, default="")
 	created = models.DateTimeField()
 	is_public = models.BooleanField(default=True)
+	service = models.CharField(max_length=32, default="NA", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
@@ -116,14 +133,8 @@ PHOTO_SERVICES = (
 	("NAS", "NAS"),
 )
 
-PHOTO_ORIENTATION = (
-	("Landscape", "Landscape"),
-	("Portrait", "Portrait"),
-	("Square", "Square"),
-)
-
 class MediaPhoto(models.Model):
-	title = models.CharField(max_length=64, default="", null=True, blank=True)
+	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
@@ -134,13 +145,13 @@ class MediaPhoto(models.Model):
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	width = models.PositiveSmallIntegerField(default=0)
 	height = models.PositiveSmallIntegerField(default=0)
-	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=PHOTO_ORIENTATION)
+	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
-	location_latitude = models.CharField(max_length=64, default="", null=True, blank=True)
-	location_longitude = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_latitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
+	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField()
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
