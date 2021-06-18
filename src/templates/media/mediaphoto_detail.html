@@ -69,12 +69,12 @@
                 <td>{{ asset.media_path }}</td>
               </tr>
               <tr>
-                <td><strong>Size in Bytes</strong></td>
-                <td>{{ asset.file_size|floatformat:"-3g" }}</td>
+                <td><strong>Size</strong></td>
+                <td>{{ asset.size|floatformat:"-3g" }} bytes</td>
               </tr>
               <tr>
                 <td><strong>SHA256 Hash</strong></td>
-                <td>{{ asset.file_sha256 }}</td>
+                <td>{{ asset.sha256 }}</td>
               </tr>
               <tr>
                 <td><strong>UUID</strong></td>

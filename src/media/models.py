@@ -30,8 +30,8 @@ class MediaVideo(models.Model):
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
 	media_path = models.CharField(max_length=4096, default="")
-	file_size = models.PositiveIntegerField(default=0)
-	file_sha256 = models.CharField(max_length=64, default="")
+	size = models.PositiveIntegerField(default=0)
+	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	media_video_width = models.PositiveSmallIntegerField(default=0)
@@ -95,8 +95,8 @@ class MediaAudio(models.Model):
 	file_name = models.CharField(max_length=255, default="")   # file.mp3
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp3
 	media_path = models.CharField(max_length=4096, default="")
-	file_size = models.PositiveIntegerField(default=0)
-	file_sha256 = models.CharField(max_length=64, default="")
+	size = models.PositiveIntegerField(default=0)
+	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	audio_format = models.CharField(max_length=32, default="")
 	audio_bitrate = models.CharField(max_length=32, default="")
@@ -140,8 +140,8 @@ class MediaPhoto(models.Model):
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
 	media_path = models.CharField(max_length=4096, default="")
-	file_size = models.PositiveIntegerField(default=0)
-	file_sha256 = models.CharField(max_length=64, default="")
+	size = models.PositiveIntegerField(default=0)
+	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	width = models.PositiveSmallIntegerField(default=0)
 	height = models.PositiveSmallIntegerField(default=0)

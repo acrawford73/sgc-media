@@ -76,7 +76,7 @@ def get_v_properties(asset_full_path):
 
 
 def asset_find(table, asset_sha256):
-	sql = "SELECT file_sha256 FROM %s WHERE file_sha256=%s"
+	sql = "SELECT sha256 FROM %s WHERE sha256=%s"
 	data = (asset_sha256,)
 	#log.debug("SQL: " + sql)
 	#for df in data:
@@ -128,14 +128,14 @@ def pgql(sql, data):
 
 # Add Video asset to database
 def asset_video_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, file_size, file_sha256, file_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 	pgql(sql, data)
 
 
 # Add Photo asset to database
 def asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username,long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username,long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 	pgql(sql, data)
 

@@ -101,17 +101,17 @@
           <table class="table table-striped table-hover table-md">
             <tbody>
               <tr>
-                <td><strong>Size in Bytes</strong></td>
+                <td><strong>Size</strong></td>
                 <!-- <td>{{ asset.file_size|floatformat:"-3g" }}</td> -->
-                <td>{{ asset.file_size|floatformat:"-3g" }}</td>
+                <td>{{ asset.size|floatformat:"-3g" }} bytes</td>
               </tr>
               <tr>
                 <td><strong>Duration</strong></td>
-                <td>{{ asset.media_video_duration }}</td>
+                <td>{{ asset.media_video_duration }} seconds</td>
               </tr>
               <tr>
                 <td><strong>SHA256 Hash</strong></td>
-                <td>{{ asset.file_sha256 }}</td>
+                <td>{{ asset.sha256 }}</td>
               </tr>
               <tr>
                 <td><strong>UUID</strong></td>

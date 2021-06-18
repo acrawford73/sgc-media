@@ -160,19 +160,19 @@ def pgql_find(sql, data):
 
 # Add Video asset to database
 def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type):
-	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, file_size, file_sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
 	pgql(sql, data)
 
 # Add Audio asset to database
 # def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, content_type):
-# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 # 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, content_type)
 # 	pgql(sql, data)
 
 # Add Photo asset to database
 def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type):
-	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, file_size, file_sha256, file_uuid, width, height, orientation, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type)
 	pgql(sql, data)
 
@@ -195,19 +195,19 @@ def asset_delete_photo(asset_full_path):
 	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
 def asset_find_video(asset_sha256):
-	sql = "SELECT file_sha256 FROM media_mediavideo WHERE file_sha256=%s"
+	sql = "SELECT sha256 FROM media_mediavideo WHERE sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data)
 	return res_count
 
 def asset_find_audio(asset_sha256):
-	sql = "SELECT file_sha256 FROM media_mediaaudio WHERE file_sha256=%s"
+	sql = "SELECT sha256 FROM media_mediaaudio WHERE sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data)
 	return res_count
 
 def asset_find_photo(asset_sha256):
-	sql = "SELECT file_sha256 FROM media_mediaphoto WHERE file_sha256=%s"
+	sql = "SELECT sha256 FROM media_mediaphoto WHERE sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data)
 	return res_count

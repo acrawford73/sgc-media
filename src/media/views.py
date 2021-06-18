@@ -14,7 +14,7 @@ class MediaVideoListView(ListView):
 	template_name = 'media/video_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'assets'
 	ordering = ['-created']
-	paginate_by = 20
+	paginate_by = 15
 
 class MediaVideoDetailView(DetailView):
 	model = MediaVideo
@@ -40,7 +40,7 @@ class MediaAudioListView(ListView):
 	template_name = 'media/audio_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'assets'
 	ordering = ['-created']
-	paginate_by = 20
+	paginate_by = 15
 
 class MediaAudioDetailView(DetailView):
 	model = MediaAudio
@@ -66,7 +66,7 @@ class MediaPhotoListView(ListView):
 	template_name = 'media/photo_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
-	paginate_by = 20
+	paginate_by = 15
 
 class MediaPhotoDetailView(DetailView):
 	model = MediaPhoto

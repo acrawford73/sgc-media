@@ -30,7 +30,7 @@
               <tr align="center">
                 <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'media-video-detail' asset.id %}">{{ asset.file_name }}</a></td>
-                <td>{{ asset.file_size|floatformat:"-3g" }}</td>
+                <td>{{ asset.size|floatformat:"-3g" }}</td>
                 <td>{{ asset.media_video_format }}</td>
                 <td>{{ asset.orientation }}</td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
