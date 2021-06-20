@@ -93,7 +93,6 @@ def get_v_properties(asset_full_path):
 	media_video_codec = props['codec_name']
 	media_video_width = props['width']
 	media_video_height = props['height']
-	media_video_aspect_ratio = props['display_aspect_ratio']
 	media_video_frame_rate = props['r_frame_rate']
 	media_video_duration = props['duration']
 	try:
@@ -109,7 +108,7 @@ def get_v_properties(asset_full_path):
 			media_audio_sample_rate = props['sample_rate']
 	except RuntimeError as error:
 		print(error)
-	return [media_video_codec, media_video_width, media_video_height, media_video_aspect_ratio, media_video_frame_rate, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
+	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
 
 
 #def asset_audit():
@@ -159,9 +158,9 @@ def pgql_find(sql, data):
 			conn.close()
 
 # Add Video asset to database
-def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type):
-	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
+def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type):
+	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
 	pgql(sql, data)
 
 # Add Audio asset to database
@@ -354,12 +353,11 @@ def Watcher(watch_path):
 				else:
 					media_video_format = "SD"
 				media_video_height = int(media_properties[2])
-				media_video_aspect_ratio = str(media_properties[3])
-				media_video_frame_rate = str(media_properties[4])
-				media_video_duration = Decimal(media_properties[5])
-				media_audio_codec = str(media_properties[6].upper())
-				media_audio_channels = int(media_properties[7])
-				media_audio_sample_rate = str(media_properties[8])
+				media_video_frame_rate = str(media_properties[3])
+				media_video_duration = Decimal(media_properties[4])
+				media_audio_codec = str(media_properties[5].upper())
+				media_audio_channels = int(media_properties[6])
+				media_audio_sample_rate = str(media_properties[7])
 
 				is_public = True
 
@@ -375,14 +373,13 @@ def Watcher(watch_path):
 				log.debug("Width:        " + str(media_video_width))
 				log.debug("Format:       " + media_video_format)
 				log.debug("Duration:     " + str(media_video_duration))
-				log.debug("Aspect Ratio: " + media_video_aspect_ratio)
 				log.debug("Frame Rate:   " + media_video_frame_rate)
 				log.debug("Video Codec:  " + media_video_codec)
 				log.debug("Audio Codec:  " + media_audio_codec)
 				log.debug("Channels:     " + str(media_audio_channels))
 				log.debug("Sample Rate:  " + media_audio_sample_rate)
 				
-				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
+				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
 
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")

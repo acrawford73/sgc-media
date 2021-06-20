@@ -56,7 +56,6 @@ def get_v_properties(asset_full_path):
 	media_video_codec = props['codec_name']
 	media_video_width = props['width']
 	media_video_height = props['height']
-	media_video_aspect_ratio = props['display_aspect_ratio']
 	media_video_frame_rate = props['avg_frame_rate']
 	media_video_duration = props['duration']
 	try:
@@ -72,15 +71,22 @@ def get_v_properties(asset_full_path):
 			media_audio_sample_rate = props['sample_rate']
 	except RuntimeError as error:
 		print(error)
-	return [media_video_codec, media_video_width, media_video_height, media_video_aspect_ratio, media_video_frame_rate, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
+	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
 
+def pgql(sql, data):
+	conn = None
+	try:
+		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+	except (Exception, psycopg2.DatabaseError) as error:
+		print(error)
+	finally:
+		if conn is not None:
+			conn.commit()
+			conn.close()
 
-def asset_find(table, asset_sha256):
-	sql = "SELECT sha256 FROM %s WHERE sha256=%s"
-	data = (asset_sha256,)
-	#log.debug("SQL: " + sql)
-	#for df in data:
-		#log.debug("DATA: " + str(df))
+def pgql_find(sql, data):
 	conn = None
 	try:
 		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
@@ -94,6 +100,18 @@ def asset_find(table, asset_sha256):
 	finally:
 		if conn is not None:
 			conn.close()
+
+def asset_find_video(asset_sha256):
+	sql = "SELECT sha256 FROM media_mediavideo WHERE sha256=%s"
+	data = (asset_sha256,)
+	res_count = pgql_find(sql, data)
+	return res_count
+
+def asset_find_photo(asset_sha256):
+	sql = "SELECT sha256 FROM media_mediaphoto WHERE sha256=%s"
+	data = (asset_sha256,)
+	res_count = pgql_find(sql, data)
+	return res_count
 
 
 # Create SHA256 value of file
@@ -109,33 +127,16 @@ def hash_file(asset):
 	return h.hexdigest()
 
 
-def pgql(sql, data):
-	#log.debug("SQL: " + sql)
-	#for df in data:
-		#log.debug("DATA: " + str(df))
-	conn = None
-	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
-		cur = conn.cursor()
-		cur.execute(sql, data)
-	except (Exception, psycopg2.DatabaseError) as error:
-		print(error)
-	finally:
-		if conn is not None:
-			conn.commit()
-			conn.close()
-
-
 # Add Video asset to database
-def asset_video_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
+def asset_video_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 	pgql(sql, data)
 
 
 # Add Photo asset to database
 def asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username,long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 	pgql(sql, data)
 
@@ -199,9 +200,9 @@ def importer(data, media_path):
 			# Determine if asset exists already
 			asset_sha256 = str(hash_file(src_path))
 			if content_type == "Photo":
-				asset_exists = asset_find("media_mediaphoto", asset_sha256)
+				asset_exists = asset_find_photo(asset_sha256)
 			else:
-				asset_exists = asset_find("media_mediavideo", asset_sha256)
+				asset_exists = asset_find_video(asset_sha256)
 			if asset_exists is not None:
 				if asset_exists > 0:
 					print("Asset already exists in database.")
@@ -237,12 +238,11 @@ def importer(data, media_path):
 				else:
 					media_video_format = "SD"
 				media_video_height = int(media_properties[2])
-				media_video_aspect_ratio = str(media_properties[3])
-				media_video_frame_rate = str(media_properties[4])
-				media_video_duration = Decimal(media_properties[5])
-				media_audio_codec = str(media_properties[6].upper())
-				media_audio_channels = int(media_properties[7])
-				media_audio_sample_rate = str(media_properties[8])
+				media_video_frame_rate = str(media_properties[3])
+				media_video_duration = Decimal(media_properties[4])
+				media_audio_codec = str(media_properties[5].upper())
+				media_audio_channels = int(media_properties[6])
+				media_audio_sample_rate = str(media_properties[7])
 				if media_video_width > media_video_height:
 					orientation = "Landscape"
 				elif media_video_height > media_video_width:
@@ -270,7 +270,7 @@ def importer(data, media_path):
 				if content_type == "Photo":
 					asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 				else:
-					asset_video_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_aspect_ratio, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
+					asset_video_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 				shutil.copy(src_path, asset_full_path)
 				import_count += 1
 			else:

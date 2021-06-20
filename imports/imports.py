@@ -49,14 +49,14 @@ if __name__ == "__main__":
 	# Audio Genres
 	f = open("genres.json", "r")
 	data = json.load(f)
-        f.close()
+	f.close()
 	import_genres(data)
 	print()
 
 	# Services
 	f = open("services.json", "r")
 	data = json.load(f)
-        f.close()
+	f.close()
 	import_services(data)
 	print()
 
