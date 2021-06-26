@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -24,5 +24,8 @@ urlpatterns = [
 	path('photos/edit/<int:pk>/', views.MediaPhotoUpdateView.as_view(), name='media-photo-update'),
 	path('api/photos/', views.MediaPhotoListAPI.as_view(), name='media-photo-list-api'),
 	path('api/photos/<int:pk>', views.MediaPhotoDetailAPI.as_view(), name='media-photo-detail-api'),
+	re_path('^api/photos/(?P<username>.+)/$', views.MediaPhotoListAPI.as_view()),
+	re_path('^api/photos/(?P<service>.+)/$', views.MediaPhotoListAPI.as_view()),
+	re_path('^api/photos/(?P<orientation>.+)/$', views.MediaPhotoListAPI.as_view()),
 
 ]

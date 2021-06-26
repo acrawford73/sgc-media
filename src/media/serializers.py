@@ -6,7 +6,7 @@ from .models import MediaVideo, MediaAudio, MediaPhoto
 class MediaVideoSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = MediaVideo
-		fields = ['id', 'title', 'file_name', 'file_path', 'sha256', 'file_uuid', 'size', 'created', 'service', 'orientation']
+		fields = ['id', 'username', 'title', 'service', 'media_path', 'sha256', 'created', 'size']
 
 class MediaVideoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -18,7 +18,7 @@ class MediaVideoSerializerDetail(serializers.ModelSerializer):
 class MediaAudioSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = MediaAudio
-		fields = ['id', 'title', 'file_name', 'file_path', 'sha256', 'file_uuid', 'size', 'created']
+		fields = ['id', 'title', 'artist', 'album', 'genre', 'media_path', 'sha256', 'created', 'size']
 
 class MediaAudioSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -30,7 +30,7 @@ class MediaAudioSerializerDetail(serializers.ModelSerializer):
 class MediaPhotoSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = MediaPhoto
-		fields = ['id', 'title', 'media_path', 'sha256', 'size', 'created', 'service', 'orientation']
+		fields = ['id', 'username', 'title', 'service', 'media_path', 'sha256', 'created', 'size']
 
 class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 	class Meta:

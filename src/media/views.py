@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView
 from .models import MediaVideo, MediaAudio, MediaPhoto
 from rest_framework import generics
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import MediaVideoSerializerList, MediaVideoSerializerDetail
 from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail
@@ -23,7 +25,7 @@ class MediaVideoDetailView(DetailView):
 class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'media_video_width', 'media_video_height', 'orientation']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'media_video_width', 'media_video_height', 'orientation', 'location_name', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all()  #.filter(is_public=True)
@@ -75,11 +77,16 @@ class MediaPhotoDetailView(DetailView):
 class MediaPhotoUpdateView(UpdateView):
 	model = MediaPhoto
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'orientation', 'service', 'location_name', 'location_latitude', 'location_longitude']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'orientation', 'service', 'location_name', 'location_city', 'location_state', 'location_country']
 
 class MediaPhotoListAPI(generics.ListAPIView):
-	queryset = MediaPhoto.objects.all()
+	queryset = MediaPhoto.objects.all().filter(is_public=True)
 	serializer_class = MediaPhotoSerializerList
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['service', 'orientation', 'username', 'is_public']
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'long_description', 'service', 'orientation', 'username', 'is_public', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	ordering_fields = ['-id', '-created']
 
 class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhoto.objects.all()
