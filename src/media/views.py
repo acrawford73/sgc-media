@@ -28,8 +28,20 @@ class MediaVideoUpdateView(UpdateView):
 	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'media_video_width', 'media_video_height', 'orientation', 'location_name', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
-	queryset = MediaVideo.objects.all()  #.filter(is_public=True)
+	queryset = MediaVideo.objects.all().filter(is_public=True)
 	serializer_class = MediaVideoSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['service', 'orientation', 'username']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
+
+class MediaVideoListAPISearch(generics.ListAPIView):
+	queryset = MediaVideo.objects.all().filter(is_public=True)
+	serializer_class = MediaVideoSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
 
 class MediaVideoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaVideo.objects.all()
@@ -51,11 +63,23 @@ class MediaAudioDetailView(DetailView):
 class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'location_name', 'location_latitude', 'location_longitude', 'short_description', 'notes']
+	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'short_description', 'notes']
 
 class MediaAudioListAPI(generics.ListAPIView):
 	queryset = MediaAudio.objects.all()
 	serializer_class = MediaAudioSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['service', 'orientation', 'username']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
+
+class MediaAudioListAPISearch(generics.ListAPIView):
+	queryset = MediaAudio.objects.all()
+	serializer_class = MediaAudioSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'artist', 'album', 'genre', 'year', 'service', '@tags']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
 
 class MediaAudioDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaAudio.objects.all()
@@ -82,11 +106,18 @@ class MediaPhotoUpdateView(UpdateView):
 class MediaPhotoListAPI(generics.ListAPIView):
 	queryset = MediaPhoto.objects.all().filter(is_public=True)
 	serializer_class = MediaPhotoSerializerList
-	#filter_backends = [DjangoFilterBackend]
-	#filterset_fields = ['service', 'orientation', 'username', 'is_public']
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['service', 'orientation', 'username']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
+
+class MediaPhotoListAPISearch(generics.ListAPIView):
+	queryset = MediaPhoto.objects.all().filter(is_public=True)
+	serializer_class = MediaPhotoSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'long_description', 'service', 'orientation', 'username', 'is_public', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
-	ordering_fields = ['-id', '-created']
+	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
 
 class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhoto.objects.all()
