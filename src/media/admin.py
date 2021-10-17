@@ -1,5 +1,4 @@
 from django.contrib import admin
-
 from .models import MediaVideo, MediaAudio, MediaPhoto, AudioGenre, MediaService
 
 class MediaVideoAdmin(admin.ModelAdmin):

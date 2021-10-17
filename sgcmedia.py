@@ -170,9 +170,9 @@ def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, ass
 # 	pgql(sql, data)
 
 # Add Photo asset to database
-def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type):
-	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type)
+def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type):
+	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type)
 	pgql(sql, data)
 
 def asset_delete_video(asset_full_path):
@@ -275,6 +275,15 @@ def Watcher(watch_path):
 				width,height=img.size
 				img.close()
 
+				if width > 1920:
+					photo_format = "UHD"
+				elif width >= 1920:
+					photo_format = "FHD"
+				elif width >= 1280:
+					photo_format = "HD"
+				else:
+					photo_format = "SD"
+
 				if width > height:
 					orientation = "Landscape"
 				elif height > width:
@@ -297,7 +306,7 @@ def Watcher(watch_path):
 				log.debug("Height:       " + str(height))
 				log.debug("Orientation:  " + orientation)
 
-				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, content_type)
+				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type)
 
 
 			# Ingest audio/music asset
@@ -345,11 +354,11 @@ def Watcher(watch_path):
 				media_video_codec = str(media_properties[0])
 				media_video_width = int(media_properties[1])
 				if media_video_width > 1920:
-					media_video_format = "4K"
+					media_video_format = "UHD"
 				elif media_video_width >= 1920:
-					media_video_format = "HD1080"
+					media_video_format = "FHD"
 				elif media_video_width >= 1280:
-					media_video_format = "HD720"
+					media_video_format = "HD"
 				else:
 					media_video_format = "SD"
 				media_video_height = int(media_properties[2])

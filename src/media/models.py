@@ -3,17 +3,17 @@ from django.urls import reverse
 
 #
 
+# SD: Anything under 720p
+# HD: 720p
+# FHD: 1080p
+# UHD: 4K
+
+
 MEDIA_FORMATS = (
 	("SD", "SD"),
-	("HD720", "HD720"),
-	("HD1080", "HD1080"),
-	("4K", "4K"),
-)
-
-CONTENT_TYPE = (
-	("Photo", "Photo"),
-	("Video", "Video"),
-	("Audio", "Audio"),
+	("HD", "HD"),
+	("FHD", "FHD"),
+	("UHD", "UHD"),
 )
 
 MEDIA_ORIENTATION = (
@@ -22,13 +22,49 @@ MEDIA_ORIENTATION = (
 	("Square", "Square"),
 )
 
+VIDEO_GENRES = (
+	("Action","Action"),
+	("Adventure","Adventure"),
+	("Animals","Animals"),
+	("Animated","Animated"),
+	("Anime","Anime"),
+	("Children","Children"),
+	("Comedy","Comedy"),
+	("Crime","Crime"),
+	("Documentary","Documentary"),
+	("Drama","Drama"),
+	("Educational","Educational"),
+	("Fantasy","Fantasy"),
+	("Faith","Faith"),
+	("Food","Food"),
+	("Fashion","Fashion"),
+	("Gaming","Gaming"),
+	("Health","Health"),
+	("History","History"),
+	("Horror","Horror"),
+	("Miniseries","Miniseries"),
+	("Mystery","Mystery"),
+	("Nature","Nature"),
+	("News","News"),
+	("Reality","Reality"),
+	("Romance","Romance"),
+	("Science","Science"),
+	("Science Fiction","Science Fiction"),
+	("Sitcom","Sitcom"),
+	("Special","Special"),
+	("Sports","Sports"),
+	("Thriller","Thriller"),
+	("Technology","Technology"),
+)
+
+
 class MediaVideo(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
-	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
+	file_path = models.CharField(max_length=4096, default="")
 	media_path = models.CharField(max_length=4096, default="")
 	size = models.PositiveIntegerField(default=0)
 	sha256 = models.CharField(max_length=64, default="")
@@ -36,7 +72,7 @@ class MediaVideo(models.Model):
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	media_video_width = models.PositiveSmallIntegerField(default=0)
 	media_video_height= models.PositiveSmallIntegerField(default=0)
-	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD720')
+	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD')
 	media_video_frame_rate = models.CharField(max_length=32, default="")
 	media_video_codec = models.CharField(max_length=32, default="")
 	media_video_duration = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
@@ -147,6 +183,7 @@ class MediaPhoto(models.Model):
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	width = models.PositiveSmallIntegerField(default=0)
 	height = models.PositiveSmallIntegerField(default=0)
+	photo_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD')
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list)
@@ -168,4 +205,3 @@ class MediaPhoto(models.Model):
 		ordering = ['-created']
 		def __unicode__(self):
 			return self.file_name
-

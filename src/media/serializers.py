@@ -6,9 +6,11 @@ from .models import MediaVideo, MediaAudio, MediaPhoto
 class MediaVideoSerializerList(serializers.ModelSerializer):
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
+	width = serializers.IntegerField(source='media_video_width')
+	height = serializers.IntegerField(source='media_video_height')
 	class Meta:
 		model = MediaVideo
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'media_path', 'sha256', 'created', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'sha256', 'created', 'size', 'categories']
 
 class MediaVideoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -33,9 +35,10 @@ class MediaAudioSerializerDetail(serializers.ModelSerializer):
 class MediaPhotoSerializerList(serializers.ModelSerializer):
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
+	format = serializers.CharField(source='photo_format')
 	class Meta:
 		model = MediaPhoto
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'media_path', 'sha256', 'created', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'format', 'width', 'height', 'media_path', 'sha256', 'created', 'size', 'categories']
 
 class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
