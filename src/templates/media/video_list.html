@@ -23,6 +23,7 @@
                 <th>Format</th>
                 <th>Orientation</th>
                 <th>Ingested UTC</th>
+                <th>Public</th>
               </tr>
             </thead>
             <tbody>
@@ -34,6 +35,7 @@
                 <td>{{ asset.media_video_format }}</td>
                 <td>{{ asset.orientation }}</td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
+		<td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
               {% endfor %}
 

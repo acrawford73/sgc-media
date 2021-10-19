@@ -158,21 +158,21 @@ def pgql_find(sql, data):
 			conn.close()
 
 # Add Video asset to database
-def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type):
-	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
+def asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags):
+	sql = "INSERT INTO media_mediavideo(file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
 	pgql(sql, data)
 
 # Add Audio asset to database
-# def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, content_type):
-# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-# 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, content_type)
+# def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, created, is_public):
+# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+# 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, created, is_public)
 # 	pgql(sql, data)
 
 # Add Photo asset to database
-def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type):
-	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type)
+def asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags):
+	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
 	pgql(sql, data)
 
 def asset_delete_video(asset_full_path):
@@ -257,13 +257,11 @@ def Watcher(watch_path):
 			# Ingest photo asset
 			if ext in ext_photo:
 				
-				content_type = "Photo"
-
 				asset_sha256 = str(hash_file(asset_full_path))
 				asset_exists = asset_find_photo(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
-						log.warn("Asset already exists in database: " + asset_full_path)
+						log.warning("Asset already exists in database: " + asset_full_path)
 						continue
 				asset_size = int(os.path.getsize(asset_full_path))
 				if asset_size == 0:
@@ -306,15 +304,13 @@ def Watcher(watch_path):
 				log.debug("Height:       " + str(height))
 				log.debug("Orientation:  " + orientation)
 
-				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, content_type)
+				asset_photo_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
 
 
 			# Ingest audio/music asset
 
 			elif ext in ext_audio:
 				
-				content_type = "Audio"
-
 				asset_sha256 = str(hash_file(asset_full_path))
 				asset_exists = asset_find_audio(asset_sha256)
 				if asset_exists is not None:
@@ -334,8 +330,6 @@ def Watcher(watch_path):
 			# Ingest video asset
 			elif ext in ext_video:
 
-				content_type = "Video"
-
 				# If asset already exists, ignore it
 				asset_sha256 = str(hash_file(asset_full_path))
 				asset_exists = asset_find_video(asset_sha256)
@@ -350,7 +344,7 @@ def Watcher(watch_path):
 					continue
 				asset_uuid = str(uuid.uuid4())
 				
-				media_properties = get_video_properties(asset_full_path)
+				media_properties = get_v_properties(asset_full_path)
 				media_video_codec = str(media_properties[0])
 				media_video_width = int(media_properties[1])
 				if media_video_width > 1920:
@@ -368,6 +362,13 @@ def Watcher(watch_path):
 				media_audio_channels = int(media_properties[6])
 				media_audio_sample_rate = str(media_properties[7])
 
+				if media_video_width > media_video_height:
+					orientation = "Landscape"
+				elif media_video_height > media_video_width:
+					orientation = "Portrait"
+				else:
+					orientation = "Square"
+
 				is_public = True
 
 				tags = json.dumps([])  # empty
@@ -380,6 +381,7 @@ def Watcher(watch_path):
 				log.debug("UUID:         " + asset_uuid)
 				log.debug("Height:       " + str(media_video_height))
 				log.debug("Width:        " + str(media_video_width))
+				log.debug("Orientation:  " + orientation)
 				log.debug("Format:       " + media_video_format)
 				log.debug("Duration:     " + str(media_video_duration))
 				log.debug("Frame Rate:   " + media_video_frame_rate)
@@ -388,7 +390,7 @@ def Watcher(watch_path):
 				log.debug("Channels:     " + str(media_audio_channels))
 				log.debug("Sample Rate:  " + media_audio_sample_rate)
 				
-				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, content_type)
+				asset_video_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
 
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")
