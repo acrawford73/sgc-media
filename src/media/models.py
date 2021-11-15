@@ -75,7 +75,7 @@ class MediaVideo(models.Model):
 	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD')
 	media_video_frame_rate = models.CharField(max_length=32, default="")
 	media_video_codec = models.CharField(max_length=32, default="")
-	media_video_duration = models.DecimalField(max_digits=12, decimal_places=6, default=0.0, null=True, blank=True)
+	media_video_duration = models.DecimalField(max_digits=12, decimal_places=3, default=0.0, null=True, blank=True)
 	media_audio_codec = models.CharField(max_length=32, default="")
 	media_audio_channels = models.PositiveSmallIntegerField(default=0)
 	media_audio_sample_rate = models.CharField(max_length=16, default="")
@@ -205,3 +205,14 @@ class MediaPhoto(models.Model):
 		ordering = ['-created']
 		def __unicode__(self):
 			return self.file_name
+
+
+# class Settings(models.Model):
+# 	upload_path = models.CharField(max_length=4096, default="", null=True, blank=True)
+
+# 	# def get_absolute_url(self):
+# 	# 	return reverse('settings-detail', kwargs={'pk': self.pk})
+
+# 	class Meta:
+# 		def __unicode__(self):
+# 			return self.upload_path

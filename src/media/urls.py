@@ -39,4 +39,8 @@ urlpatterns = [
 	re_path('^api/photos/(?P<service>.+)/$', views.MediaPhotoListAPI.as_view()),
 	re_path('^api/photos/(?P<orientation>.+)/$', views.MediaPhotoListAPI.as_view()),
 
+# 	# Settings
+# 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),
+#
+
 ]

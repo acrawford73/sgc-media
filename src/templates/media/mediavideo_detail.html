@@ -6,6 +6,8 @@
 
 {% block content %}
 
+<!-- https://videojs.com/getting-started/ -->
+<script src='{% static "js/video.min-7-15-4.js" %}'></script>
 <script>document.window.HELP_IMPROVE_VIDEOJS = false;</script>
 
 <!-- Begin page content -->
@@ -21,19 +23,19 @@
           <p align="center">
             <video
               id="{{ asset.id }}"
-              class="video-js vjs-big-play-centered"
               controls
               preload="auto"
+              crossorigin="anonymous"
               width="{{ asset.media_video_width }}"
               height="{{ asset.media_video_height }}"
               poster=""
-              data-setup="{}">
+              data-setup='{"playbackRates":[1,1.5,2]}'
+              class="video-js vjs-fluid vjs-big-play-centered">
               <source src="/media/{{ asset.media_path }}" type="video/mp4" />
-              <!-- <source src="MY_VIDEO.webm" type="video/webm" /> -->
-<!--               <p class="vjs-no-js">
+<!--                <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
-                web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video.</a>
-              </p> -->
+                web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video.</a> -->
+              </p>
             </video>
           </p>
           <table class="table table-striped table-hover table-md">

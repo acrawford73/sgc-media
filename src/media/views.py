@@ -123,3 +123,11 @@ class MediaPhotoListAPISearch(generics.ListAPIView):
 class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhoto.objects.all()
 	serializer_class = MediaPhotoSerializerDetail
+
+
+### Settings
+# class SettingsUpdateView(UpdateView):
+# 	model = Settings
+# 	context_object_name = 'settings'
+# 	fields = ['upload_path']
+

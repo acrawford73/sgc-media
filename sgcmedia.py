@@ -30,7 +30,7 @@ import logging
 import logging.config
 import logging.handlers
 # Configuration
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 # Third Party
 import psycopg2
 from PIL import Image
@@ -398,6 +398,7 @@ def Watcher(watch_path):
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':
 			asset_full_path = os.path.join(path, asset)
+			file, ext = os.path.splitext(asset)
 			if delete_db_on_fs_delete == True:
 				if ext in ext_photo:
 					asset_delete_photo(asset_full_path)
@@ -419,7 +420,7 @@ if __name__ == "__main__":
 	# ------------------------------
 	# Configuration
 	# ------------------------------
-	config = SafeConfigParser()
+	config = ConfigParser()
 	config.read('etc/config.conf')
 	debug = strtobool(config.get('sgc', 'debug'))
 	delete_db_on_fs_delete = strtobool(config.get('sgc', 'delete_db_on_fs_delete'))

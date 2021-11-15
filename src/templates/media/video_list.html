@@ -19,7 +19,8 @@
               <tr align="center" class="table-primary">
                 <th>#</th>
                 <th>File</th>
-                <th>Size</th>
+                <!-- <th>Size</th> -->
+                <th>Duration</th>
                 <th>Format</th>
                 <th>Orientation</th>
                 <th>Ingested UTC</th>
@@ -31,7 +32,8 @@
               <tr align="center">
                 <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'media-video-detail' asset.id %}">{{ asset.file_name }}</a></td>
-                <td>{{ asset.size|floatformat:"-3g" }}</td>
+                <!-- <td>{{ asset.size|floatformat:"-3g" }}</td> -->
+                <td>{{ asset.media_video_duration }}</td>
                 <td>{{ asset.media_video_format }}</td>
                 <td>{{ asset.orientation }}</td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>

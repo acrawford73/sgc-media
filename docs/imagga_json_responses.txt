@@ -1,0 +1,247 @@
+tags
+
+{
+    "result": {
+        "tags": [
+            {
+                "confidence": 74.7262115478516,
+                "tag": {
+                    "en": "range"
+                }
+            },
+            {
+                "confidence": 74.7206954956055,
+                "tag": {
+                    "en": "mountain"
+                }
+            },
+            {
+                "confidence": 56.7158126831055,
+                "tag": {
+                    "en": "landscape"
+                }
+            },
+            {
+                "confidence": 52.0157279968262,
+                "tag": {
+                    "en": "mountains"
+                }
+            },
+            {
+                "confidence": 43.43359375,
+                "tag": {
+                    "en": "valley"
+                }
+            },
+            {
+                "confidence": 40.4076881408691,
+                "tag": {
+                    "en": "snow"
+                }
+            },
+            {
+                "confidence": 37.0930252075195,
+                "tag": {
+                    "en": "sky"
+                }
+            },
+            {
+                "confidence": 36.1794738769531,
+                "tag": {
+                    "en": "forest"
+                }
+            },
+            {
+                "confidence": 32.620491027832,
+                "tag": {
+                    "en": "canyon"
+                }
+            },
+            {
+                "confidence": 31.0227203369141,
+                "tag": {
+                    "en": "peak"
+                }
+            },
+            {
+                "confidence": 29.4975547790527,
+                "tag": {
+                    "en": "tree"
+                }
+            },
+            {
+                "confidence": 28.9153327941895,
+                "tag": {
+                    "en": "glacier"
+                }
+            },
+            {
+                "confidence": 28.8693199157715,
+                "tag": {
+                    "en": "highland"
+                }
+            },
+            {
+                "confidence": 28.0894603729248,
+                "tag": {
+                    "en": "park"
+                }
+            },
+            {
+                "confidence": 28.0584278106689,
+                "tag": {
+                    "en": "environment"
+                }
+            },
+            {
+                "confidence": 27.9807891845703,
+                "tag": {
+                    "en": "clouds"
+                }
+            },
+            {
+                "confidence": 27.6590881347656,
+                "tag": {
+                    "en": "trees"
+                }
+            },
+            {
+                "confidence": 26.2398223876953,
+                "tag": {
+                    "en": "scenery"
+                }
+            },
+            {
+                "confidence": 25.7238502502441,
+                "tag": {
+                    "en": "wilderness"
+                }
+            }
+        ]
+    },
+    "status": {
+        "text": "",
+        "type": "success"
+    }
+}
+
+colors
+
+{
+    "result": {
+        "colors": {
+            "background_colors": [
+                {
+                    "b": 146,
+                    "closest_palette_color": "cerulean",
+                    "closest_palette_color_html_code": "#0074a8",
+                    "closest_palette_color_parent": "blue",
+                    "closest_palette_distance": 7.6390495300293,
+                    "g": 121,
+                    "html_code": "#527992",
+                    "percent": 48.4497489929199,
+                    "r": 82
+                },
+                {
+                    "b": 46,
+                    "closest_palette_color": "light bronze",
+                    "closest_palette_color_html_code": "#8c5e37",
+                    "closest_palette_color_parent": "skin",
+                    "closest_palette_distance": 1.95421481132507,
+                    "g": 91,
+                    "html_code": "#8a5b2e",
+                    "percent": 40.5341148376465,
+                    "r": 138
+                },
+                {
+                    "b": 35,
+                    "closest_palette_color": "brownie",
+                    "closest_palette_color_html_code": "#584039",
+                    "closest_palette_color_parent": "brown",
+                    "closest_palette_distance": 6.41486358642578,
+                    "g": 52,
+                    "html_code": "#4e3423",
+                    "percent": 11.0161352157593,
+                    "r": 78
+                }
+            ],
+            "color_percent_threshold": 1.75,
+            "color_variance": 34,
+            "foreground_colors": [
+                {
+                    "b": 49,
+                    "closest_palette_color": "latte",
+                    "closest_palette_color_html_code": "#5d473a",
+                    "closest_palette_color_parent": "brown",
+                    "closest_palette_distance": 3.01697754859924,
+                    "g": 66,
+                    "html_code": "#5e4231",
+                    "percent": 42.5997428894043,
+                    "r": 94
+                },
+                {
+                    "b": 167,
+                    "closest_palette_color": "sand",
+                    "closest_palette_color_html_code": "#c1b7b0",
+                    "closest_palette_color_parent": "light grey",
+                    "closest_palette_distance": 4.80042266845703,
+                    "g": 183,
+                    "html_code": "#cbb7a7",
+                    "percent": 33.8481330871582,
+                    "r": 203
+                },
+                {
+                    "b": 36,
+                    "closest_palette_color": "graphite",
+                    "closest_palette_color_html_code": "#3a3536",
+                    "closest_palette_color_parent": "black",
+                    "closest_palette_distance": 6.26122570037842,
+                    "g": 37,
+                    "html_code": "#262524",
+                    "percent": 23.5521240234375,
+                    "r": 38
+                }
+            ],
+            "image_colors": [
+                {
+                    "b": 146,
+                    "closest_palette_color": "cerulean",
+                    "closest_palette_color_html_code": "#0074a8",
+                    "closest_palette_color_parent": "blue",
+                    "closest_palette_distance": 7.73924016952515,
+                    "g": 121,
+                    "html_code": "#537992",
+                    "percent": 48.2466621398926,
+                    "r": 83
+                },
+                {
+                    "b": 46,
+                    "closest_palette_color": "light bronze",
+                    "closest_palette_color_html_code": "#8c5e37",
+                    "closest_palette_color_parent": "skin",
+                    "closest_palette_distance": 2.54145884513855,
+                    "g": 88,
+                    "html_code": "#85582e",
+                    "percent": 47.0013961791992,
+                    "r": 133
+                },
+                {
+                    "b": 26,
+                    "closest_palette_color": "espresso",
+                    "closest_palette_color_html_code": "#40312f",
+                    "closest_palette_color_parent": "brown",
+                    "closest_palette_distance": 6.23852396011353,
+                    "g": 35,
+                    "html_code": "#37231a",
+                    "percent": 4.61745357513428,
+                    "r": 55
+                }
+            ],
+            "object_percentage": 1.51922690868378
+        }
+    },
+    "status": {
+        "text": "",
+        "type": "success"
+    }
+}
