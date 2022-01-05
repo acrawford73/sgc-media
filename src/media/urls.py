@@ -3,7 +3,12 @@ from . import views
 
 urlpatterns = [
 
+
+	# Upload
+	path('upload/', views.MediaUploadView.as_view(), name='upload'),
+
 	# Video
+	path('video/upload/', views.MediaVideoCreateView.as_view(), name='media-video-create'),
 	path('', views.MediaVideoListView.as_view()),
 	path('videos/', views.MediaVideoListView.as_view(), name='media-video-list'),
 	path('videos/<int:pk>/', views.MediaVideoDetailView.as_view(), name='media-video-detail'), 

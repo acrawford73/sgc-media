@@ -1,6 +1,6 @@
 #from __future__ import unicode_literals
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from .models import MediaVideo, MediaAudio, MediaPhoto
 from rest_framework import generics
 from rest_framework import filters
@@ -11,7 +11,17 @@ from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail
 
 
+### Upload
+class MediaUploadView(TemplateView):
+	template_name = 'media/upload.html'
+
+
 ### Video
+class MediaVideoCreateView(CreateView):
+	model = MediaVideo
+	template_name = 'media/mediavideo_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['title', 'short_description', 'long_description', 'orientation', 'service', 'file_path', 'notes']
+
 class MediaVideoListView(ListView):
 	model = MediaVideo
 	template_name = 'media/video_list.html'  #<app>/<model>_<viewtype>.html

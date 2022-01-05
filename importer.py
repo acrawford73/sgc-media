@@ -135,9 +135,9 @@ def asset_video_create(title, asset, asset_full_path, asset_media_path, asset_si
 
 
 # Add Photo asset to database
-def asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
+def asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description):
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
 	pgql(sql, data)
 
 
@@ -224,6 +224,15 @@ def importer(data, media_path):
 					orientation = "Portrait"
 				else:
 					orientation = "Square"
+				# SD HD FHD UHD
+				if width >= 2160:
+					photo_format = "UHD"
+				elif width >= 1920:
+					photo_format = "FHD"
+				elif width >= 1280:
+					photo_format = "HD"
+				else:
+					photo_format = "SD"
 
 			elif content_type == "Video":
 				media_properties = get_v_properties(src_path)
@@ -267,16 +276,32 @@ def importer(data, media_path):
 
 			# If file already exists in media storage don't add it again
 			if not file_check_exists(asset_full_path):
+				
+				# Save metadata to database
 				if content_type == "Photo":
-					asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
-				else:
+					asset_photo_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
+				elif content_type == "Video":
 					asset_video_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
-				shutil.copy(src_path, asset_full_path)
-				import_count += 1
+				#else:
+					#asset_audio_create(title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, orientation, media_video_width, media_video_height, media_video_format, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, service, location_name, location_latitude, location_longitude, username, long_description)
+				
+				# Copy media asset to storage
+				try:
+					shutil.copyfile(src_path, asset_full_path)
+					# File copied successfully
+					import_count += 1
+				except shutil.SameFileError:
+					print("Error: Source and Destination are the same file path.")
+				except IsADirectoryError:
+					print("Error: Destination is a directory.")
+				except PermissionError:
+					print("Error: Permission Denied.")
+				except:
+					print("Error occurred while copying file.")
+
 			else:
 				continue
 				
-
 		else:
 			print("Media file missing: " + media['_source']['path'])
 			continue

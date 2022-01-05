@@ -57,12 +57,26 @@ VIDEO_GENRES = (
 	("Technology","Technology"),
 )
 
+VIDEO_SERVICES = (
+	("NA", "NA"),
+	("Personal", "Personal"),
+	("Instagram", "Instagram"),
+	("Tumblr", "Tumblr"),
+	("DLive", "DLive"),
+	("Bitchute", "Bitchute"),
+	("Rumble", "Rumble"),
+	("Odyssey", "Odyssey"),
+	("Gab", "Gab"),
+	("Vimeo", "Vimeo"),
+	("NAS", "NAS"),
+)
+
 
 class MediaVideo(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
-	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
+	notes = models.TextField(max_length=2048, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")
 	media_path = models.CharField(max_length=4096, default="")
@@ -88,7 +102,7 @@ class MediaVideo(models.Model):
 	created = models.DateTimeField()
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list)
-	service = models.CharField(max_length=32, default="NA", null=True, blank=True)
+	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
