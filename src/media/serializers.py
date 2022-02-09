@@ -8,9 +8,10 @@ class MediaVideoSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	width = serializers.IntegerField(source='media_video_width')
 	height = serializers.IntegerField(source='media_video_height')
+	duration = serializers.DecimalField(source='media_video_duration',max_digits=8, decimal_places=3)
 	class Meta:
 		model = MediaVideo
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'sha256', 'created', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'sha256', 'created', 'duration', 'size', 'categories']
 
 class MediaVideoSerializerDetail(serializers.ModelSerializer):
 	class Meta:

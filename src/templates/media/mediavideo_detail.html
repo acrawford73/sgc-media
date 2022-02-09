@@ -21,13 +21,13 @@
         <div class="table-responsive">
           <p>&nbsp;</p>
           <p align="center">
-            <video
+            <video 
               id="{{ asset.id }}"
               controls
               preload="auto"
               crossorigin="anonymous"
-              width="{{ asset.media_video_width }}"
-              height="{{ asset.media_video_height }}"
+              width="800"
+	      <!-- height={{ asset.media_video_height }} -->
               poster=""
               data-setup='{"playbackRates":[1,1.5,2]}'
               class="video-js vjs-fluid vjs-big-play-centered">
@@ -48,14 +48,12 @@
                 <td><strong>Public</strong></td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
-              <tr>
-                <td><strong>File Path</strong></td>
-                <td>{{ asset.file_path }}</td>
-              </tr>
-              <tr>
-                <td><strong>Media Path</strong></td>
-                <td>{{ asset.media_path }}</td>
-              </tr>
+            </tbody>
+          </table>   
+          <p>&nbsp;</p>
+          <h3>Metadata</h3>
+          <table class="table table-striped table-hover table-md">
+            <tbody>
               <tr>
                 <td><strong>Username</strong></td>
                 <td>{{ asset.username }}</td>
@@ -79,37 +77,6 @@
               <tr>
                 <td><strong>Tags</strong></td>
                 <td>{{ asset.tags }}</td>
-              </tr>
-           </tbody>
-          </table>
-          <p>&nbsp;</p>
-          <h3>Technical</h3>
-          <table class="table table-striped table-hover table-md">
-            <tbody>
-              <tr>
-                <td><strong>Size</strong></td>
-                <!-- <td>{{ asset.file_size|floatformat:"-3g" }}</td> -->
-                <td>{{ asset.size|floatformat:"-3g" }} bytes</td>
-              </tr>
-              <tr>
-                <td><strong>Duration</strong></td>
-                <td>{{ asset.media_video_duration }} seconds</td>
-              </tr>
-              <tr>
-                <td><strong>SHA256 Hash</strong></td>
-                <td>{{ asset.sha256 }}</td>
-              </tr>
-              <tr>
-                <td><strong>UUID</strong></td>
-                <td>{{ asset.file_uuid|upper }}</td>
-              </tr>
-              <tr>
-                <td><strong>Width</strong></td>
-                <td>{{ asset.media_video_width }}</td>
-              </tr>
-              <tr>
-                <td><strong>Height</strong></td>
-                <td>{{ asset.media_video_height }}</td>
               </tr>
               <tr>
                 <td><strong>Service</strong></td>
@@ -138,6 +105,45 @@
               <tr>
                 <td><strong>Longitude</strong></td>
                 <td>{{ asset.location_longitude }}</td>
+              </tr>
+           </tbody>
+          </table>
+          <p>&nbsp;</p>
+          <h3>Properties</h3>
+          <table class="table table-striped table-hover table-md">
+            <tbody>
+              <tr>
+                <td><strong>File Path</strong></td>
+                <td>{{ asset.file_path }}</td>
+              </tr>
+              <tr>
+                <td><strong>Media Path</strong></td>
+                <td>{{ asset.media_path }}</td>
+              </tr>
+              <tr>
+                <td><strong>Size</strong></td>
+                <!-- <td>{{ asset.file_size|floatformat:"-3g" }}</td> -->
+                <td>{{ asset.size|floatformat:"-3g" }} bytes</td>
+              </tr>
+              <tr>
+                <td><strong>Duration</strong></td>
+                <td>{{ asset.media_video_duration }} seconds</td>
+              </tr>
+              <tr>
+                <td><strong>SHA256 Hash</strong></td>
+                <td>{{ asset.sha256 }}</td>
+              </tr>
+              <tr>
+                <td><strong>UUID</strong></td>
+                <td>{{ asset.file_uuid|upper }}</td>
+              </tr>
+              <tr>
+                <td><strong>Width</strong></td>
+                <td>{{ asset.media_video_width }}</td>
+              </tr>
+              <tr>
+                <td><strong>Height</strong></td>
+                <td>{{ asset.media_video_height }}</td>
               </tr>
               <tr>
                 <td><strong>Format</strong></td>

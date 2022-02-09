@@ -101,7 +101,7 @@ class MediaVideo(models.Model):
 	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField()
 	is_public = models.BooleanField(default=True)
-	tags = models.JSONField(default=list)
+	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 
