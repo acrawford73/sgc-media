@@ -30,6 +30,12 @@
                 <td><strong>Is Public</strong></td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
+              </tbody>
+          </table>
+          <p>&nbsp;</p>
+          <h3>Metadata</h3>
+          <table class="table table-striped table-hover table-md">
+            <tbody>
               <tr>
                 <td><strong>Username</strong></td>
                 <td>{{ asset.username }}</td>
@@ -53,6 +59,34 @@
               <tr>
                 <td><strong>Tags</strong></td>
                 <td>{{ asset.tags }}</td>
+              </tr>
+              <tr>
+                <td><strong>Service</strong></td>
+                <td>{{ asset.service }}</td>
+              </tr>
+              <tr>
+                <td><strong>Location</strong></td>
+                <td>{{ asset.location_name }}</td>
+              </tr>
+              <tr>
+                <td><strong>City</strong></td>
+                <td>{{ asset.location_city }}</td>
+              </tr>
+              <tr>
+                <td><strong>State</strong></td>
+                <td>{{ asset.location_state }}</td>
+              </tr>
+              <tr>
+                <td><strong>Country</strong></td>
+                <td>{{ asset.location_country }}</td>
+              </tr>
+              <tr>
+                <td><strong>Latitude</strong></td>
+                <td>{{ asset.location_latitude }}</td>
+              </tr>
+              <tr>
+                <td><strong>Longitude</strong></td>
+                <td>{{ asset.location_longitude }}</td>
               </tr>
             </tbody>
           </table>
@@ -89,40 +123,12 @@
                 <td>{{ asset.height }}</td>
               </tr>
               <tr>
-                <td><strong>Orientation</strong></td>
-                <td>{{ asset.orientation }}</td>
-              </tr>
-              <tr>
                 <td><strong>Format</strong></td>
                 <td>{{ asset.photo_format }}</td>
               </tr>
               <tr>
-                <td><strong>Service</strong></td>
-                <td>{{ asset.service }}</td>
-              </tr>
-              <tr>
-                <td><strong>Location</strong></td>
-                <td>{{ asset.location_name }}</td>
-              </tr>
-              <tr>
-                <td><strong>City</strong></td>
-                <td>{{ asset.location_city }}</td>
-              </tr>
-              <tr>
-                <td><strong>State</strong></td>
-                <td>{{ asset.location_state }}</td>
-              </tr>
-              <tr>
-                <td><strong>Country</strong></td>
-                <td>{{ asset.location_country }}</td>
-              </tr>
-              <tr>
-                <td><strong>Latitude</strong></td>
-                <td>{{ asset.location_latitude }}</td>
-              </tr>
-              <tr>
-                <td><strong>Longitude</strong></td>
-                <td>{{ asset.location_longitude }}</td>
+                <td><strong>Orientation</strong></td>
+                <td>{{ asset.orientation }}</td>
               </tr>
             </tbody>
           </table>

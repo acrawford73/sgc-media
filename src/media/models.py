@@ -200,7 +200,7 @@ class MediaPhoto(models.Model):
 	photo_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD')
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	is_public = models.BooleanField(default=True)
-	tags = models.JSONField(default=list)
+	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_city = models.CharField(max_length=64, default="", null=True, blank=True)
