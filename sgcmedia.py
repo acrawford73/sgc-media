@@ -236,7 +236,7 @@ def Watcher(watch_path):
 	for event in inw.event_gen(yield_nones=False):
 	
 		(_, type_names, path, asset) = event
-		log.debug("Asset=[{}{}] Event_Type=[{}]".format(path, asset, type_names))
+		log.debug("Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
 
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
@@ -265,7 +265,7 @@ def Watcher(watch_path):
 						continue
 				asset_size = int(os.path.getsize(asset_full_path))
 				if asset_size == 0:
-					log.warn("Asset is empty with 0 bytes. Skipping...")
+					log.warning("Asset is empty with 0 bytes. Skipping...")
 					continue
 				asset_uuid = str(uuid.uuid4())
 
@@ -293,8 +293,8 @@ def Watcher(watch_path):
 				
 				tags = []
 
-				log.info("Asset created: " + asset_full_path)
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation)
+				#log.info("Asset created: " + asset_full_path)
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
 				#log.info("Asset created: {\"path\":\""+asset_full_path+"\", \"size\":"+str(asset_size)+", \"sha256\":\""+asset_sha256+"\", \"uuid\":\""+asset_uuid+"\", \"width\":"+str(width)+", \"height\":"+str(height)+", \"orientation\":\""+orientation+"\"}")
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
@@ -315,11 +315,11 @@ def Watcher(watch_path):
 				asset_exists = asset_find_audio(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
-						log.warn("Asset already exists in database: " + asset_full_path)
+						log.warning("Asset already exists in database: " + asset_full_path)
 						continue
 				asset_size = int(os.path.getsize(asset_full_path))
 				if asset_size == 0:
-					log.warn("Asset is empty with 0 bytes. Skipping...")
+					log.warning("Asset is empty with 0 bytes. Skipping...")
 					continue
 				asset_uuid = str(uuid.uuid4())
 				#duration = get_audio_properties()
@@ -335,12 +335,12 @@ def Watcher(watch_path):
 				asset_exists = asset_find_video(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
-						log.warn("Asset already exists in database: " + asset_full_path)
+						log.warning("Asset already exists in database: " + asset_full_path)
 						continue
 
 				asset_size = int(os.path.getsize(asset_full_path))
 				if asset_size == 0:
-					log.warn("Asset is empty with 0 bytes. Skipping...")
+					log.warning("Asset is empty with 0 bytes. Skipping...")
 					continue
 				asset_uuid = str(uuid.uuid4())
 				
@@ -374,7 +374,8 @@ def Watcher(watch_path):
 				tags = json.dumps([])  # empty
 
 				# Debug
-				log.info("Asset:        " + asset_full_path)
+				#log.info("Asset:        " + asset_full_path)
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
 				log.debug("Hash:         " + asset_sha256)
@@ -414,7 +415,7 @@ def Watcher(watch_path):
 
 
 
-### STARTS HERE
+### STARTS HERE ###
 if __name__ == "__main__":
 
 	# ------------------------------
@@ -429,7 +430,7 @@ if __name__ == "__main__":
 	db_pass = config.get('sgc', 'db_pass')
 	db_port = int(config.get('sgc', 'db_port'))
 	watch_path = config.get('sgc', 'watch_path')
-	watch_interval = int(config.get('sgc', 'watch_interval'))
+	#watch_interval = int(config.get('sgc', 'watch_interval'))
 	log_path = config.get('sgc', 'log_path')
 
 	# ------------------------------
