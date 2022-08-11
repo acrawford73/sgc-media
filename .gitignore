@@ -12,3 +12,4 @@ image.py
 check.py
 export_pretty.json
 importer.py
+.env

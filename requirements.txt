@@ -2,7 +2,7 @@ asgiref==3.4.1
 cached-property==1.5.2
 certifi==2021.10.8
 charset-normalizer==2.0.10
-Django==3.2.14
+Django==3.2.15
 django-ajax-search==1.5.1
 django-crispy-forms==1.13.0
 django-filter==21.1
