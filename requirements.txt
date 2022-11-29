@@ -3,5 +3,6 @@ Django==3.2.16
 django-crispy-forms==1.14.0
 djangorestframework==3.14.0
 get-video-properties==0.1.1
+Pillow==9.3.0
 pytz==2022.6
 sqlparse==0.4.3
