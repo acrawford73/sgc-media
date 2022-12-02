@@ -106,21 +106,9 @@
             </tbody>
           </table>
           <p>&nbsp;</p>
-          <h3>Properties</h3>
+          <h3>Media Properties</h3>
           <table class="table table-striped table-hover table-md">
             <tbody>
-              <tr>
-                <td><strong>Size</strong></td>
-                <td>{{ asset.size|floatformat:"-3g" }} bytes</td>
-              </tr>
-              <tr>
-                <td><strong>SHA256 Hash</strong></td>
-                <td>{{ asset.sha256 }}</td>
-              </tr>
-              <tr>
-                <td><strong>UUID</strong></td>
-                <td>{{ asset.file_uuid|upper }}</td>
-              </tr>
               <tr>
                 <td><strong>Format</strong></td>
                 <td>{{ asset.audio_format }}</td>
@@ -148,6 +136,24 @@
               <tr>
                 <td><strong>Encoder</strong></td>
                 <td>{{ asset.audio_encoder }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>&nbsp;</p>
+          <h3>File Properties</h3>
+          <table class="table table-striped table-hover table-md">
+            <tbody>
+              <tr>
+                <td><strong>Size</strong></td>
+                <td>{{ asset.size|floatformat:"-3g" }} bytes</td>
+              </tr>
+              <tr>
+                <td><strong>SHA256 Hash</strong></td>
+                <td>{{ asset.sha256 }}</td>
+              </tr>
+              <tr>
+                <td><strong>UUID</strong></td>
+                <td>{{ asset.file_uuid|upper }}</td>
               </tr>
             </tbody>
           </table>

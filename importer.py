@@ -173,11 +173,6 @@ def importer(data, media_path):
 						location_longitude = Decimal(media['_source']['location']['longitude'])
 
 			long_description = media['_source']['caption']
-			title = ""
-			if service == "Flickr":
-				title = media['_source']['title']
-			elif service == "Tumblr":
-				title = media['_source']['slug']
 
 			if media['_source']['tags'] is not None:
 				if (media['_source']['tags'] == [""]) or (media['_source']['tags'] == []):
@@ -262,6 +257,15 @@ def importer(data, media_path):
 			asset = media['_source']['path'].split('/')[-1]
 			asset_uuid = str(uuid.uuid4())
 			is_public = True
+
+			if service == "Flickr":
+				title = media['_source']['title']
+			elif service == "Tumblr":
+				title = media['_source']['slug']
+			elif service == "Instagram":
+				title = media['_source']['caption']
+			if title == "":
+				title = asset.split(".")[0]
 
 			created_utc = datetime.datetime.utcnow()
 			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
