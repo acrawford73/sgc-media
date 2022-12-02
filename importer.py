@@ -259,13 +259,13 @@ def importer(data, media_path):
 			is_public = True
 
 			if service == "Flickr":
-				title = media['_source']['title']
+				title = media['_source']['title'][0:511].strip()
 			elif service == "Tumblr":
-				title = media['_source']['slug']
+				title = media['_source']['slug'][0:511].strip()
 			elif service == "Instagram":
-				title = media['_source']['caption']
+				title = media['_source']['caption'][0:511].strip()
 			if title == "":
-				title = asset.split(".")[0]
+				title = asset.split(".")[0].strip()
 
 			created_utc = datetime.datetime.utcnow()
 			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
