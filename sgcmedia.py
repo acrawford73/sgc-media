@@ -159,7 +159,7 @@ def pgql_find(sql, data):
 
 # Add Video asset to database
 def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
 	pgql(sql, data)
 
@@ -171,7 +171,7 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 
 # Add Photo asset to database
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
 	pgql(sql, data)
 
@@ -211,7 +211,21 @@ def asset_find_photo(asset_sha256):
 	res_count = pgql_find(sql, data)
 	return res_count
 	
+def asset_update_photo(asset_full_path, asset_media_path, asset_sha256):
+	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s WHERE sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,)
+	pgql(sql, data)
 
+def asset_update_video(asset_full_path, asset_media_path, asset_sha256):
+	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,)
+	pgql(sql, data)
+	
+def asset_update_audio(asset_full_path, asset_media_path, asset_sha256):
+	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,)
+	pgql(sql, data)
+	
 
 # ------------------------------
 # WATCHER
@@ -261,7 +275,7 @@ def Watcher(watch_path):
 				asset_exists = asset_find_photo(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
-						log.warning("Asset already exists in database: " + asset_full_path)
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
 						continue
 				asset_size = int(os.path.getsize(asset_full_path))
 				if asset_size == 0:
@@ -317,7 +331,7 @@ def Watcher(watch_path):
 				asset_exists = asset_find_audio(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
-						log.warning("Asset already exists in database: " + asset_full_path)
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
 						continue
 				asset_size = int(os.path.getsize(asset_full_path))
 				if asset_size == 0:
@@ -332,12 +346,12 @@ def Watcher(watch_path):
 			# Ingest video asset
 			elif ext in ext_video:
 
-				# If asset already exists, ignore it
+				# If asset already exists in database, ignore it
 				asset_sha256 = str(hash_file(asset_full_path))
 				asset_exists = asset_find_video(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
-						log.warning("Asset already exists in database: " + asset_full_path)
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
 						continue
 
 				asset_size = int(os.path.getsize(asset_full_path))
@@ -404,6 +418,7 @@ def Watcher(watch_path):
 		elif type_names[0] == 'IN_DELETE':
 			asset_full_path = os.path.join(path, asset)
 			file, ext = os.path.splitext(asset)
+			#asset_sha256 = str(hash_file(asset_full_path))
 			if delete_db_on_fs_delete == True:
 				if ext in ext_photo:
 					asset_delete_photo(asset_full_path)
@@ -413,23 +428,41 @@ def Watcher(watch_path):
 					asset_delete_video(asset_full_path)
 				else:
 					pass
+				#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
 				log.info("Asset deleted from file system and database: {}".format(asset_full_path))
+
 			else:
-				log.info("Asset deleted from file system: {}".format(asset_full_path))
+				#log.info("Asset " + asset_sha256 + " deleted from file system: {}".format(asset_full_path))
+				log.info("Asset deleted from file system and database: {}".format(asset_full_path))
 
 		## FILE UPDATE EVENT ##
-		# elif type_names[0] == "IN_UPDATE":
-		# 	asset_full_path = os.path.join(path, asset)
-		# 	file, ext = os.path.splitext(asset)
-		# 	if ext in ext_photo:
-		# 		asset_update_photo(asset_full_path)
-		# 	elif ext in ext_audio:
-		# 		asset_update_audio(asset_full_path)
-		# 	elif ext in ext_video:
-		# 		asset_update_video(asset_full_path)
-		# 	else:
-		# 		pass
-		# 	log.info("Asset updated file system path and database: {}".format(asset_full_path))
+		elif type_names[0] == "IN_MOVED_TO":
+			asset_full_path = os.path.join(path, asset)
+			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
+			file, ext = os.path.splitext(asset)
+
+			asset_sha256 = str(hash_file(asset_full_path))
+			if ext in ext_video:
+				asset_exists = asset_find_video(asset_sha256)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						asset_update_video(asset_full_path, asset_media_path, asset_sha256)
+						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+			elif ext in ext_photo:
+				asset_exists = asset_find_photo(asset_sha256)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						asset_update_photo(asset_full_path, asset_media_path, asset_sha256)
+						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+			# elif ext in ext_audio:
+			# 	asset_exists = asset_find_audio(asset_sha256)
+			# 	if asset_exists is not None:
+			# 		if asset_exists > 0:
+			# 			asset_update_audio(asset_full_path, asset_sha256)
+			#			log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+			else:
+				log.error("Invalid file extension " + ext)
+			
 
 
 
