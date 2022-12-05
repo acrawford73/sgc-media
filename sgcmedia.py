@@ -447,13 +447,13 @@ def Watcher(watch_path):
 				if asset_exists is not None:
 					if asset_exists > 0:
 						asset_update_video(asset_full_path, asset_media_path, asset_sha256)
-						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+						log.info("Asset updated: " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
 			elif ext in ext_photo:
 				asset_exists = asset_find_photo(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
 						asset_update_photo(asset_full_path, asset_media_path, asset_sha256)
-						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+						log.info("Asset updated: " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
 			# elif ext in ext_audio:
 			# 	asset_exists = asset_find_audio(asset_sha256)
 			# 	if asset_exists is not None:
