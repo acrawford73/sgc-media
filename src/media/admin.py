@@ -4,7 +4,7 @@ from .models import MediaVideo, MediaAudio, MediaPhoto, AudioGenre, MediaService
 class MediaVideoAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'media_video_format', 'created']
 	search_fields = ['file_name', 'media_video_format']
-	list_filter = ['media_video_format', 'is_public']
+	list_filter = ['media_video_format', 'service', 'is_public']
 	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'media_video_duration', 'media_video_width', 'media_video_height', 'media_video_format', 'media_video_frame_rate', 'media_video_codec', 'media_audio_codec', 'media_audio_channels', 'media_audio_sample_rate']
 	class Meta:
 		model = MediaVideo
@@ -12,7 +12,7 @@ class MediaVideoAdmin(admin.ModelAdmin):
 class MediaAudioAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'album', 'artist', 'created']
 	search_fields = ['file_name', 'artist', 'album', 'genre', 'year']
-	list_filter = ['genre', 'year', 'is_public']
+	list_filter = ['genre', 'year', 'service', 'is_public']
 	readonly_fields = ['size', 'sha256', 'file_uuid', 'created']
 	class Meta:
 		model = MediaAudio

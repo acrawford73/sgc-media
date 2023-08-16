@@ -68,6 +68,7 @@ VIDEO_SERVICES = (
 	("Odyssey", "Odyssey"),
 	("Gab", "Gab"),
 	("Vimeo", "Vimeo"),
+	("Odysee", "Odysee"),
 	("NAS", "NAS"),
 )
 

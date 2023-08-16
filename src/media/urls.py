@@ -20,6 +20,17 @@ urlpatterns = [
 	re_path('^api/videos/(?P<service>.+)/$', views.MediaVideoListAPI.as_view()),
 	re_path('^api/videos/(?P<orientation>.+)/$', views.MediaVideoListAPI.as_view()),
 
+	# Photo
+	path('photos/', views.MediaPhotoListView.as_view(), name='media-photo-list'),
+	path('photos/<int:pk>/', views.MediaPhotoDetailView.as_view(), name='media-photo-detail'), 
+	path('photos/edit/<int:pk>/', views.MediaPhotoUpdateView.as_view(), name='media-photo-update'),
+	path('api/photos/', views.MediaPhotoListAPI.as_view(), name='media-photo-list-api'),
+	path('api/photos/search/', views.MediaPhotoListAPISearch.as_view()),
+	path('api/photos/<int:pk>', views.MediaPhotoDetailAPI.as_view(), name='media-photo-detail-api'),
+	re_path('^api/photos/(?P<username>.+)/$', views.MediaPhotoListAPI.as_view()),
+	re_path('^api/photos/(?P<service>.+)/$', views.MediaPhotoListAPI.as_view()),
+	re_path('^api/photos/(?P<orientation>.+)/$', views.MediaPhotoListAPI.as_view()),
+
 	# Audio
 	path('music/', views.MediaAudioListView.as_view(), name='media-audio-list'),
 	path('music/<int:pk>/', views.MediaAudioDetailView.as_view(), name='media-audio-detail'), 
@@ -32,18 +43,7 @@ urlpatterns = [
 	re_path('^api/music/(?P<album>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/music/(?P<genre>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/music/(?P<year>.+)/$', views.MediaAudioListAPI.as_view()),
-
-	# Photo
-	path('photos/', views.MediaPhotoListView.as_view(), name='media-photo-list'),
-	path('photos/<int:pk>/', views.MediaPhotoDetailView.as_view(), name='media-photo-detail'), 
-	path('photos/edit/<int:pk>/', views.MediaPhotoUpdateView.as_view(), name='media-photo-update'),
-	path('api/photos/', views.MediaPhotoListAPI.as_view(), name='media-photo-list-api'),
-	path('api/photos/search/', views.MediaPhotoListAPISearch.as_view()),
-	path('api/photos/<int:pk>', views.MediaPhotoDetailAPI.as_view(), name='media-photo-detail-api'),
-	re_path('^api/photos/(?P<username>.+)/$', views.MediaPhotoListAPI.as_view()),
-	re_path('^api/photos/(?P<service>.+)/$', views.MediaPhotoListAPI.as_view()),
-	re_path('^api/photos/(?P<orientation>.+)/$', views.MediaPhotoListAPI.as_view()),
-
+	
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),
 #

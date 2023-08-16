@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'sgc',
         'USER': 'sgc',
         'PASSWORD': 'sgcmedia',
-        'HOST': 'localhost',
+        'HOST': '192.168.0.13',
         'PORT': '5432',
     }
         
