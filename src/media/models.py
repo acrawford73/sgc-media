@@ -65,7 +65,7 @@ VIDEO_SERVICES = (
 	("DLive", "DLive"),
 	("Bitchute", "Bitchute"),
 	("Rumble", "Rumble"),
-	("Odyssey", "Odyssey"),
+	("Odysee", "Odysee"),
 	("Gab", "Gab"),
 	("Vimeo", "Vimeo"),
 	("Odysee", "Odysee"),

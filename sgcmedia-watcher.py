@@ -129,7 +129,7 @@ def pgql(sql, data):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 	except (Exception, psycopg2.DatabaseError) as error:
@@ -145,7 +145,7 @@ def pgql_find(sql, data):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host="localhost", dbname="sgc", user="sgc", password="sgcmedia")
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		res_count = cur.rowcount  #int
