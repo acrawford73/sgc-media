@@ -7,7 +7,8 @@ from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 #from url_filter.filtersets import ModelFilterSet
 from .serializers import MediaVideoSerializerList, MediaVideoSerializerDetail
-from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail
+from .serializers import MediaAudioSerializerListArtists, MediaAudioSerializerListAlbums, \
+					MediaAudioSerializerList, MediaAudioSerializerDetail
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail
 
 
@@ -82,6 +83,22 @@ class MediaAudioListAPI(generics.ListAPIView):
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['service', 'artist', 'album', 'genre']
 	ordering_fields = ['id', 'created']
+	ordering = ['-id']
+
+class MediaAudioListAPIArtists(generics.ListAPIView):
+	queryset = MediaAudio.objects.order_by('artist').values('artist').distinct()
+	serializer_class = MediaAudioSerializerListArtists
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['artist']
+	ordering_fields = ['artist']
+	ordering = ['-id']
+
+class MediaAudioListAPIAlbums(generics.ListAPIView):
+	queryset = MediaAudio.objects.order_by('album').values('album').distinct()
+	serializer_class = MediaAudioSerializerListAlbums
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['album']
+	ordering_fields = ['album']
 	ordering = ['-id']
 
 class MediaAudioListAPISearch(generics.ListAPIView):

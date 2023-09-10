@@ -41,8 +41,6 @@ import psycopg2
 from PIL import Image
 import inotify.adapters
 from videoprops import get_video_properties, get_audio_properties
-# Videoprops
-
 from tinytag import TinyTag
 # TinyTag supported formats:
 # MP3/MP2/MP1 (ID3 v1, v1.1, v2.2, v2.3+)
@@ -57,7 +55,7 @@ from tinytag import TinyTag
 # ------------------------------
 # Functions
 # ------------------------------
-# string to boolean function
+# string to boolean
 def str_to_bool(s):
 	if s in ("True", "TRUE", "true", "1"):
 		return True
@@ -193,14 +191,14 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 # Add Audio asset to database
 def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_genre, \
-	media_audio_year, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
+	media_audio_year, media_audio_comments, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
 	created, is_public, tags):
 	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
-	file_uuid, artist, album, genre, year, duration, audio_bitrate, audio_sample_rate, \
-	created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	file_uuid, artist, album, genre, year, comments, duration, audio_bitrate, audio_sample_rate, \
+	created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_genre, \
-	media_audio_year, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
+	media_audio_year, media_audio_comments, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
 	created, is_public, tags)
 	pgql(sql, data)
 
@@ -375,23 +373,59 @@ def Watcher(watch_path):
 				is_public = True
 				asset_title = asset.split(".")[0]
 				asset_uuid = str(uuid.uuid4())
+				
 				audio_metadata = TinyTag.get(asset_full_path)
-				if audio_metadata.title != "":
+				if (audio_metadata.title is not None) and (audio_metadata.title != ""):
 					asset_title = audio_metadata.title
-				media_audio_artist = audio_metadata.artist
-				media_audio_album = audio_metadata.album
-				media_audio_genre = audio_metadata.genre
-				media_audio_year = audio_metadata.year
-				media_audio_duration = round(audio_metadata.duration,3)
+
+				if (audio_metadata.artist is not None):	
+					media_audio_artist = audio_metadata.artist
+				else:
+					media_audio_artist = ""
+
+				if (audio_metadata.album is not None):
+					media_audio_album = audio_metadata.album
+				else:
+					media_audio_album = ""
+
+				if (audio_metadata.genre is not None):
+					media_audio_genre = audio_metadata.genre
+				else:
+					media_audio_genre = ""
+
+				if (audio_metadata.year is not None):
+					media_audio_year = audio_metadata.year
+				else:
+					media_audio_year = ""
+
+				if (audio_metadata.duration is not None):
+					media_audio_duration = round(audio_metadata.duration,3)
+				else:
+					media_audio_duration = 0.0
+
 				media_audio_filesize = asset_size
-				media_audio_bitrate = str(round(audio_metadata.bitrate,3))
-				media_audio_samplerate = str(audio_metadata.samplerate)
+
+				if audio_metadata.bitrate is not None:
+					media_audio_bitrate = str(int(audio_metadata.bitrate))
+				else:
+					media_audio_bitrate = ""
+
+				if audio_metadata.samplerate is not None:
+					media_audio_samplerate = str(audio_metadata.samplerate)
+				else:
+					media_audio_samplerate = ""
+
+				if audio_metadata.comment is not None:
+					media_audio_comments = str(audio_metadata.comment)
+				else:
+					media_audio_comments = ""
 
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid)
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size) + " bytes")
 				log.debug("Hash:        " + asset_sha256)
 				log.debug("UUID:        " + asset_uuid)
+
 				log.debug("Title:       " + asset_title)
 				log.debug("Artist:      " + media_audio_artist)
 				log.debug("Album:       " + media_audio_album)
@@ -401,9 +435,11 @@ def Watcher(watch_path):
 				log.debug("Bit Rate:    " + media_audio_bitrate + " KB/s")
 				log.debug("Sample Rate: " + media_audio_samplerate)
 
+				log.debug("Comment:     " + media_audio_comments)
+
 				asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
-					media_audio_genre, media_audio_year, media_audio_duration, \
+					media_audio_genre, media_audio_year, media_audio_comments, media_audio_duration, \
 					media_audio_bitrate, media_audio_samplerate, created, is_public, tags)
 
 

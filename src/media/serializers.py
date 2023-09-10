@@ -20,6 +20,16 @@ class MediaVideoSerializerDetail(serializers.ModelSerializer):
 
 
 # Audio
+class MediaAudioSerializerListArtists(serializers.ModelSerializer):
+	class Meta:
+		model = MediaAudio
+		fields = ['id', 'artist']
+
+class MediaAudioSerializerListAlbums(serializers.ModelSerializer):
+	class Meta:
+		model = MediaAudio
+		fields = ['id', 'album']
+
 class MediaAudioSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	bitrate = serializers.CharField(source='audio_bitrate')

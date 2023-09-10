@@ -38,6 +38,8 @@ urlpatterns = [
 	path('api/audio/', views.MediaAudioListAPI.as_view(), name='media-audio-list-api'),
 	path('api/audio/search/', views.MediaAudioListAPISearch.as_view()),
 	path('api/audio/<int:pk>', views.MediaAudioDetailAPI.as_view(), name='media-audio-detail-api'),
+	path('api/audio/artists/', views.MediaAudioListAPIArtists.as_view()),
+	path('api/audio/albums/', views.MediaAudioListAPIAlbums.as_view()),
 	re_path('^api/audio/(?P<title>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/audio/(?P<artist>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/audio/(?P<album>.+)/$', views.MediaAudioListAPI.as_view()),
