@@ -21,10 +21,11 @@ class MediaVideoSerializerDetail(serializers.ModelSerializer):
 
 # Audio
 class MediaAudioSerializerList(serializers.ModelSerializer):
-	categories = serializers.JSONField(source='tags')
+	description = serializers.CharField(source='short_description')
+	bitrate = serializers.CharField(source='audio_bitrate')
 	class Meta:
 		model = MediaAudio
-		fields = ['id', 'title', 'artist', 'album', 'genre', 'media_path', 'sha256', 'created', 'size', 'categories']
+		fields = ['id', 'title', 'artist', 'album', 'genre', 'description', 'duration', 'bitrate', 'source', 'media_path', 'sha256', 'created', 'size']
 
 class MediaAudioSerializerDetail(serializers.ModelSerializer):
 	class Meta:

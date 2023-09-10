@@ -32,17 +32,17 @@ urlpatterns = [
 	re_path('^api/photos/(?P<orientation>.+)/$', views.MediaPhotoListAPI.as_view()),
 
 	# Audio
-	path('music/', views.MediaAudioListView.as_view(), name='media-audio-list'),
-	path('music/<int:pk>/', views.MediaAudioDetailView.as_view(), name='media-audio-detail'), 
-	path('music/edit/<int:pk>/', views.MediaAudioUpdateView.as_view(), name='media-audio-update'),
-	path('api/music/', views.MediaAudioListAPI.as_view(), name='media-audio-list-api'),
-	path('api/music/search/', views.MediaAudioListAPISearch.as_view()),
-	path('api/music/<int:pk>', views.MediaAudioDetailAPI.as_view(), name='media-audio-detail-api'),
-	re_path('^api/music/(?P<title>.+)/$', views.MediaAudioListAPI.as_view()),
-	re_path('^api/music/(?P<artist>.+)/$', views.MediaAudioListAPI.as_view()),
-	re_path('^api/music/(?P<album>.+)/$', views.MediaAudioListAPI.as_view()),
-	re_path('^api/music/(?P<genre>.+)/$', views.MediaAudioListAPI.as_view()),
-	re_path('^api/music/(?P<year>.+)/$', views.MediaAudioListAPI.as_view()),
+	path('audio/', views.MediaAudioListView.as_view(), name='media-audio-list'),
+	path('audio/<int:pk>/', views.MediaAudioDetailView.as_view(), name='media-audio-detail'), 
+	path('audio/edit/<int:pk>/', views.MediaAudioUpdateView.as_view(), name='media-audio-update'),
+	path('api/audio/', views.MediaAudioListAPI.as_view(), name='media-audio-list-api'),
+	path('api/audio/search/', views.MediaAudioListAPISearch.as_view()),
+	path('api/audio/<int:pk>', views.MediaAudioDetailAPI.as_view(), name='media-audio-detail-api'),
+	re_path('^api/audio/(?P<title>.+)/$', views.MediaAudioListAPI.as_view()),
+	re_path('^api/audio/(?P<artist>.+)/$', views.MediaAudioListAPI.as_view()),
+	re_path('^api/audio/(?P<album>.+)/$', views.MediaAudioListAPI.as_view()),
+	re_path('^api/audio/(?P<genre>.+)/$', views.MediaAudioListAPI.as_view()),
+	re_path('^api/audio/(?P<year>.+)/$', views.MediaAudioListAPI.as_view()),
 	
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),

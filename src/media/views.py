@@ -74,13 +74,13 @@ class MediaAudioDetailView(DetailView):
 class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'short_description', 'notes']
+	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes']
 
 class MediaAudioListAPI(generics.ListAPIView):
 	queryset = MediaAudio.objects.all()
 	serializer_class = MediaAudioSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'orientation', 'username']
+	filterset_fields = ['service', 'artist', 'album', 'genre']
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
 

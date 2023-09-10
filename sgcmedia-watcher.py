@@ -8,12 +8,18 @@
 #        _/  _/    _/  _/
 # _/_/_/      _/_/_/    _/_/_/
 
-### SGC MEDIA ###
-# Watches for new media in watch folder, uploaded via SSH or SFTP
-# Copies new media from private to public storage
-# Adds new media to Postgres database
-# Removes media from Postgres database upon deletion if enabled
-# The database schema is already created through Django project 'sgcmedia' setup
+### SGC-MEDIA:
+# Acts as an ingest host for media files.
+# Files are uploaded via SSH or SFTP. 
+# CMS like interface for reviewing ingested media.
+# API for querying media content.
+
+# The database schema is already through Django project 'sgcmedia' setup.
+# Features: 
+# - Watches for new media in watch folder.
+# - Copies new media from private to public storage.
+# - Adds new media to Postgres database.
+# - Removes media from Postgres database upon deletion, if enabled.
 
 import os
 import sys
@@ -24,7 +30,6 @@ import hashlib
 import datetime,time
 from time import strftime
 from decimal import Decimal
-from distutils.util import strtobool
 # Logging
 import logging
 import logging.config
@@ -36,10 +41,31 @@ import psycopg2
 from PIL import Image
 import inotify.adapters
 from videoprops import get_video_properties, get_audio_properties
+# Videoprops
+
+from tinytag import TinyTag
+# TinyTag supported formats:
+# MP3/MP2/MP1 (ID3 v1, v1.1, v2.2, v2.3+)
+# Wave/RIFF
+# OGG
+# OPUS
+# FLAC
+# WMA
+# MP4/M4A/M4B/M4R/M4V/ALAC/AAX/AAXC
+# AIFF/AIFF-C
 
 # ------------------------------
 # Functions
 # ------------------------------
+# string to boolean function
+def str_to_bool(s):
+	if s in ("True", "TRUE", "true", "1"):
+		return True
+	elif s in ("False", "FALSE", "false", "0"):
+		return False
+	else:
+		return None
+
 def make_sure_path_exists(path):
 	try:
 		os.makedirs(path)
@@ -108,7 +134,8 @@ def get_v_properties(asset_full_path):
 			media_audio_sample_rate = props['sample_rate']
 	except RuntimeError as error:
 		print(error)
-	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
+	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, \
+		media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
 
 
 #def asset_audit():
@@ -164,16 +191,31 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 	pgql(sql, data)
 
 # Add Audio asset to database
-# def asset_audio_create(asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, created, is_public):
-# 	sql = "INSERT INTO media_mediaphoto(file_name, file_path, media_path, size, sha256, file_uuid, width, height, created, is_public) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-# 	data = (asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, created, is_public)
-# 	pgql(sql, data)
+def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_genre, \
+	media_audio_year, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
+	created, is_public, tags):
+	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
+	file_uuid, artist, album, genre, year, duration, audio_bitrate, audio_sample_rate, \
+	created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_genre, \
+	media_audio_year, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
+	created, is_public, tags)
+	pgql(sql, data)
 
 # Add Photo asset to database
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags):
 	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
 	pgql(sql, data)
+
+# Delete
+def asset_delete_photo(asset_full_path):
+	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
+	data = (asset_full_path,)
+	pgql(sql, data)
+	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
 def asset_delete_video(asset_full_path):
 	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
@@ -187,11 +229,12 @@ def asset_delete_audio(asset_full_path):
 	pgql(sql, data)
 	log.debug("Asset deleted from database: {}".format(asset_full_path))
 
-def asset_delete_photo(asset_full_path):
-	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
-	data = (asset_full_path,)
-	pgql(sql, data)
-	log.debug("Asset deleted from database: {}".format(asset_full_path))
+# Query
+def asset_find_photo(asset_sha256):
+	sql = "SELECT sha256 FROM media_mediaphoto WHERE sha256=%s"
+	data = (asset_sha256,)
+	res_count = pgql_find(sql, data)
+	return res_count
 
 def asset_find_video(asset_sha256):
 	sql = "SELECT sha256 FROM media_mediavideo WHERE sha256=%s"
@@ -205,12 +248,7 @@ def asset_find_audio(asset_sha256):
 	res_count = pgql_find(sql, data)
 	return res_count
 
-def asset_find_photo(asset_sha256):
-	sql = "SELECT sha256 FROM media_mediaphoto WHERE sha256=%s"
-	data = (asset_sha256,)
-	res_count = pgql_find(sql, data)
-	return res_count
-	
+# Update
 def asset_update_photo(asset_full_path, asset_media_path, asset_sha256):
 	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s WHERE sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
@@ -233,9 +271,9 @@ def asset_update_audio(asset_full_path, asset_media_path, asset_sha256):
 # Check watch folder for new content
 def Watcher(watch_path):
 	
-	ext_photo = ['.jpeg','.jpg','.JPG','.png','.PNG','.gif','.GIF','.bmp','.BMP']
-	ext_audio = ['.mp3','.MP3','.m4a','.M4A']
-	ext_video = ['.mp4','.MP4','.ts','.TS','.wmv','.WMV','.mkv','.MKV']
+	ext_photo = ['.jpeg', '.jpg', '.png', '.gif', '.bmp']
+	ext_audio = ['.mp3', '.m4a', '.ogg', '.wav', '.flac']
+	ext_video = ['.mp4', '.ts', '.wmv', '.mkv']
 
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
@@ -262,6 +300,8 @@ def Watcher(watch_path):
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 
 			file, ext = os.path.splitext(asset)
+			ext = ext.lower()
+			tags = json.dumps([])  # empty
 
 			log.debug("ASSET_FULL_PATH=" + asset_full_path)
 			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
@@ -304,14 +344,8 @@ def Watcher(watch_path):
 					orientation = "Square"
 
 				is_public = True
-				
-				tags = []
-
 				asset_title = asset.split(".")[0]
-
-				#log.info("Asset created: " + asset_full_path)
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
-				#log.info("Asset created: {\"path\":\""+asset_full_path+"\", \"size\":"+str(asset_size)+", \"sha256\":\""+asset_sha256+"\", \"uuid\":\""+asset_uuid+"\", \"width\":"+str(width)+", \"height\":"+str(height)+", \"orientation\":\""+orientation+"\"}")
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
 				log.debug("Hash:         " + asset_sha256)
@@ -337,10 +371,40 @@ def Watcher(watch_path):
 				if asset_size == 0:
 					log.warning("Asset is empty with 0 bytes. Skipping...")
 					continue
+
+				is_public = True
+				asset_title = asset.split(".")[0]
 				asset_uuid = str(uuid.uuid4())
-				#duration = get_audio_properties()
-				log.info("Asset created: " + asset_full_path)
-				log.debug("File:         " + asset)
+				audio_metadata = TinyTag.get(asset_full_path)
+				if audio_metadata.title != "":
+					asset_title = audio_metadata.title
+				media_audio_artist = audio_metadata.artist
+				media_audio_album = audio_metadata.album
+				media_audio_genre = audio_metadata.genre
+				media_audio_year = audio_metadata.year
+				media_audio_duration = round(audio_metadata.duration,3)
+				media_audio_filesize = asset_size
+				media_audio_bitrate = str(round(audio_metadata.bitrate,3))
+				media_audio_samplerate = str(audio_metadata.samplerate)
+
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid)
+				log.debug("File:        " + asset)
+				log.debug("Size:        " + str(asset_size) + " bytes")
+				log.debug("Hash:        " + asset_sha256)
+				log.debug("UUID:        " + asset_uuid)
+				log.debug("Title:       " + asset_title)
+				log.debug("Artist:      " + media_audio_artist)
+				log.debug("Album:       " + media_audio_album)
+				log.debug("Genre:       " + media_audio_genre)
+				log.debug("Year:        " + media_audio_year)
+				log.debug("Duration:    " + str(media_audio_duration) + " seconds")
+				log.debug("Bit Rate:    " + media_audio_bitrate + " KB/s")
+				log.debug("Sample Rate: " + media_audio_samplerate)
+
+				asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
+					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
+					media_audio_genre, media_audio_year, media_audio_duration, \
+					media_audio_bitrate, media_audio_samplerate, created, is_public, tags)
 
 
 			# Ingest video asset
@@ -358,8 +422,8 @@ def Watcher(watch_path):
 				if asset_size == 0:
 					log.warning("Asset is empty with 0 bytes. Skipping...")
 					continue
+
 				asset_uuid = str(uuid.uuid4())
-				
 				media_properties = get_v_properties(asset_full_path)
 				media_video_codec = str(media_properties[0])
 				media_video_width = int(media_properties[1])
@@ -386,13 +450,8 @@ def Watcher(watch_path):
 					orientation = "Square"
 
 				is_public = True
-
-				tags = json.dumps([])  # empty
-
 				asset_title = asset.split(".")[0]
 
-				# Debug
-				#log.info("Asset:        " + asset_full_path)
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
@@ -418,6 +477,7 @@ def Watcher(watch_path):
 		elif type_names[0] == 'IN_DELETE':
 			asset_full_path = os.path.join(path, asset)
 			file, ext = os.path.splitext(asset)
+			ext = ext.lower()
 			#asset_sha256 = str(hash_file(asset_full_path))
 			if delete_db_on_fs_delete == True:
 				if ext in ext_photo:
@@ -440,6 +500,7 @@ def Watcher(watch_path):
 			asset_full_path = os.path.join(path, asset)
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 			file, ext = os.path.splitext(asset)
+			ext = ext.lower()
 
 			asset_sha256 = str(hash_file(asset_full_path))
 			if ext in ext_video:
@@ -454,12 +515,12 @@ def Watcher(watch_path):
 					if asset_exists > 0:
 						asset_update_photo(asset_full_path, asset_media_path, asset_sha256)
 						log.info("Asset updated: " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
-			# elif ext in ext_audio:
-			# 	asset_exists = asset_find_audio(asset_sha256)
-			# 	if asset_exists is not None:
-			# 		if asset_exists > 0:
-			# 			asset_update_audio(asset_full_path, asset_sha256)
-			#			log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+			elif ext in ext_audio:
+				asset_exists = asset_find_audio(asset_sha256)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						asset_update_audio(asset_full_path, asset_sha256)
+						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
 			else:
 				log.error("Invalid file extension " + ext)
 			
@@ -474,8 +535,8 @@ if __name__ == "__main__":
 	# ------------------------------
 	config = ConfigParser()
 	config.read('etc/config.conf')
-	debug = strtobool(config.get('sgc', 'debug'))
-	delete_db_on_fs_delete = strtobool(config.get('sgc', 'delete_db_on_fs_delete'))
+	debug = str_to_bool(config.get('sgc', 'debug'))
+	delete_db_on_fs_delete = str_to_bool(config.get('sgc', 'delete_db_on_fs_delete'))
 	db_host = config.get('sgc', 'db_host')
 	db_user = config.get('sgc', 'db_user')
 	db_pass = config.get('sgc', 'db_pass')
