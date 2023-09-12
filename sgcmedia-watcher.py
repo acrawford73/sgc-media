@@ -300,7 +300,7 @@ def Watcher(watch_path):
 	
 	ext_photo = ['.jpeg', '.jpg', '.png', '.gif', '.bmp']
 	ext_audio = ['.mp3', '.m4a', '.ogg', '.wav', '.flac']
-	ext_video = ['.mp4', '.ts', '.wmv', '.mkv']
+	ext_video = ['.mp4', 'm4v', 'mpg', '.ts', '.wmv', '.mkv', '.mov']
 	ext_doc = ['.txt', '.epub', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', \
 	'.odt', '.ods', '.odg', '.odp']
 
