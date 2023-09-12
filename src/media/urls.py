@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
 
-
 	# Upload
 	path('upload/', views.MediaUploadView.as_view(), name='upload'),
 
@@ -45,7 +44,17 @@ urlpatterns = [
 	re_path('^api/audio/(?P<album>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/audio/(?P<genre>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/audio/(?P<year>.+)/$', views.MediaAudioListAPI.as_view()),
-	
+
+	# Documents
+	path('docs/', views.MediaDocListView.as_view(), name='media-doc-list'),
+	path('docs/<int:pk>/', views.MediaDocDetailView.as_view(), name='media-doc-detail'), 
+	path('docs/edit/<int:pk>/', views.MediaDocUpdateView.as_view(), name='media-doc-update'),
+	path('api/docs/', views.MediaDocListAPI.as_view(), name='media-doc-list-api'),
+	path('api/docs/search/', views.MediaDocListAPISearch.as_view()),
+	path('api/docs/<int:pk>', views.MediaDocDetailAPI.as_view(), name='media-doc-detail-api'),
+	re_path('^api/docs/(?P<doc_format>.+)/$', views.MediaDocListAPI.as_view()),
+
+
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),
 #

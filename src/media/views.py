@@ -1,7 +1,7 @@
 #from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
-from .models import MediaVideo, MediaAudio, MediaPhoto
+from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -10,6 +10,7 @@ from .serializers import MediaVideoSerializerList, MediaVideoSerializerDetail
 from .serializers import MediaAudioSerializerListArtists, MediaAudioSerializerListAlbums, \
 					MediaAudioSerializerList, MediaAudioSerializerDetail
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail
+from .serializers import MediaDocSerializerList, MediaDocSerializerDetail
 
 
 ### Upload
@@ -78,31 +79,27 @@ class MediaAudioUpdateView(UpdateView):
 	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes']
 
 class MediaAudioListAPI(generics.ListAPIView):
-	queryset = MediaAudio.objects.all()
+	queryset = MediaAudio.objects.all().filter(is_public=True)
 	serializer_class = MediaAudioSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'artist', 'album', 'genre']
+	filterset_fields = ['service', 'artist', 'album', 'album_artist', 'composer', 'genre', 'year']
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
 
 class MediaAudioListAPIArtists(generics.ListAPIView):
-	queryset = MediaAudio.objects.order_by('artist').values('artist').distinct()
+	queryset = MediaAudio.objects.order_by("artist").distinct("artist").filter(is_public=True)
 	serializer_class = MediaAudioSerializerListArtists
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['artist']
-	ordering_fields = ['artist']
-	ordering = ['-id']
 
 class MediaAudioListAPIAlbums(generics.ListAPIView):
-	queryset = MediaAudio.objects.order_by('album').values('album').distinct()
+	queryset = MediaAudio.objects.order_by("album").distinct("album").filter(is_public=True)
 	serializer_class = MediaAudioSerializerListAlbums
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['album']
-	ordering_fields = ['album']
-	ordering = ['-id']
 
 class MediaAudioListAPISearch(generics.ListAPIView):
-	queryset = MediaAudio.objects.all()
+	queryset = MediaAudio.objects.all().filter(is_public=True)
 	serializer_class = MediaAudioSerializerList
 	filter_backends = [filters.SearchFilter]
 	search_fields = ['title', 'artist', 'album', 'genre', 'year', 'service', '@tags']
@@ -150,6 +147,44 @@ class MediaPhotoListAPISearch(generics.ListAPIView):
 class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhoto.objects.all()
 	serializer_class = MediaPhotoSerializerDetail
+
+
+### Documents
+class MediaDocListView(ListView):
+	model = MediaDoc
+	template_name = 'media/doc_list.html'
+	context_object_name = 'assets'
+	ordering = ['-created']
+	paginate_by = 15
+
+class MediaDocDetailView(DetailView):
+	model = MediaDoc
+	context_object_name = 'asset'
+
+class MediaDocUpdateView(UpdateView):
+	model = MediaDoc
+	context_object_name = 'asset'
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'doc_format', 'keywords', 'tags']
+
+class MediaDocListAPI(generics.ListAPIView):
+	queryset = MediaDoc.objects.all().filter(is_public=True)
+	serializer_class = MediaDocSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['keywords', 'doc_format']
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
+
+class MediaDocListAPISearch(generics.ListAPIView):
+	queryset = MediaDoc.objects.all().filter(is_public=True)
+	serializer_class = MediaDocSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'short_description', 'long_description', 'notes', 'doc_format', 'keywords', '@tags'] 
+	ordering_fields = ['id', 'created']
+	ordering = ['-id']
+
+class MediaDocDetailAPI(generics.RetrieveAPIView):
+	queryset = MediaDoc.objects.all()
+	serializer_class = MediaDocSerializerDetail
 
 
 ### Settings

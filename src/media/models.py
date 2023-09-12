@@ -133,17 +133,17 @@ class MediaService(models.Model):
 
 class MediaAudio(models.Model):
 	title = models.CharField(max_length=128, default="", null=True, blank=True)
-	artist = models.CharField(max_length=64, default="", null=True, blank=True)
-	album = models.CharField(max_length=64, default="", null=True, blank=True)	
-	composer = models.CharField(max_length=64, default="", null=True, blank=True)
+	artist = models.CharField(max_length=128, default="", null=True, blank=True)
+	album = models.CharField(max_length=128, default="", null=True, blank=True)	
+	album_artist = models.CharField(max_length=128, default="", null=True, blank=True)	
+	composer = models.CharField(max_length=128, default="", null=True, blank=True)
 	genre = models.CharField(max_length=64, default="", null=True, blank=True)
 	year = models.CharField(max_length=32, default="", null=True, blank=True)
 	track_num = models.CharField(max_length=4, default="", null=True, blank=True)
 	track_total = models.CharField(max_length=4, default="", null=True, blank=True)
-	disk_num = models.CharField(max_length=2, default="", null=True, blank=True)
-	disk_total = models.CharField(max_length=2, default="", null=True, blank=True)
-	comments = models.CharField(max_length=256, default="", null=True, blank=True)
-	artwork = models.CharField(max_length=64, default="", null=True, blank=True)
+	disc_num = models.CharField(max_length=2, default="", null=True, blank=True)
+	disc_total = models.CharField(max_length=2, default="", null=True, blank=True)
+	comments = models.CharField(max_length=512, default="", null=True, blank=True)
 	duration = models.DecimalField(max_digits=12, decimal_places=3, default=0.0, null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")   # file.mp3
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp3
@@ -167,6 +167,8 @@ class MediaAudio(models.Model):
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
+	image = models.TextField(max_length=262144, default="", null=True, blank=True)
+	extra = models.TextField(max_length=2048, default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
@@ -223,6 +225,48 @@ class MediaPhoto(models.Model):
 		def __unicode__(self):
 			return self.file_name
 
+
+DOC_FORMATS = (
+	("NA", "NA"),
+	("TXT", "Text"),
+	("PDF", "Adobe PDF"),
+	("EPUB", "eBook"),
+	("DOC", "Microsoft Word"),
+	("DOCX", "Microsoft Word"),
+	("XLS", "Microsoft Excel"),
+	("XLSX", "Microsoft Excel"),
+	("PPT", "Microsoft Powerpoint"),
+	("PPTX", "Microsoft Powerpoint"),
+	("ODT", "LibreOffice Writer"),
+	("ODS", "LibreOffice Calc"),
+	("ODG", "LibreOffice Draw"),
+	("ODP", "LibreOffice Impress"),
+)
+
+class MediaDoc(models.Model):
+	title = models.CharField(max_length=512, default="", null=True, blank=True)
+	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
+	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
+	notes = models.TextField(max_length=2048, default="", null=True, blank=True)
+	file_name = models.CharField(max_length=255, default="")
+	file_path = models.CharField(max_length=4096, default="")
+	media_path = models.CharField(max_length=4096, default="")
+	size = models.PositiveIntegerField(default=0)
+	sha256 = models.CharField(max_length=64, default="")
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	doc_format = models.CharField(max_length=32, choices=DOC_FORMATS, default='PDF')
+	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
+	created = models.DateTimeField()
+	is_public = models.BooleanField(default=True)
+	tags = models.JSONField(default=list, null=True, blank=True)
+
+	def get_absolute_url(self):
+		return reverse('media-doc-detail', kwargs={'pk': self.pk})
+
+	class Meta:
+		ordering = ['-created']
+		def __unicode__(self):
+			return self.file_name
 
 # class Settings(models.Model):
 # 	upload_path = models.CharField(max_length=4096, default="", null=True, blank=True)

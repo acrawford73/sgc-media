@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MediaVideo, MediaAudio, MediaPhoto, AudioGenre, MediaService
+from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, AudioGenre, MediaService
 
 class MediaVideoAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'media_video_format', 'created']
@@ -10,7 +10,7 @@ class MediaVideoAdmin(admin.ModelAdmin):
 		model = MediaVideo
 
 class MediaAudioAdmin(admin.ModelAdmin):
-	list_display = ['file_name', 'size', 'album', 'artist', 'created']
+	list_display = ['file_name', 'size', 'artist', 'album', 'created']
 	search_fields = ['file_name', 'artist', 'album', 'genre', 'year']
 	list_filter = ['genre', 'year', 'service', 'is_public']
 	readonly_fields = ['size', 'sha256', 'file_uuid', 'created']
@@ -24,6 +24,14 @@ class MediaPhotoAdmin(admin.ModelAdmin):
 	readonly_fields = ['size', 'sha256', 'file_uuid', 'created']
 	class Meta:
 		model = MediaPhoto
+
+class MediaDocAdmin(admin.ModelAdmin):
+	list_display = ['file_name', 'size', 'title', 'created']
+	search_fields = ['file_name', 'title']
+	list_filter = ['doc_format', 'is_public']
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created']
+	class Meta:
+		model = MediaDoc
 
 class AudioGenreAdmin(admin.ModelAdmin):
 	list_display = ['genre']

@@ -26,10 +26,12 @@ import sys
 import json
 import uuid
 import errno
+import base64
 import hashlib
 import datetime,time
 from time import strftime
 from decimal import Decimal
+from os.path import splitext
 # Logging
 import logging
 import logging.config
@@ -190,22 +192,33 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 
 # Add Audio asset to database
 def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_genre, \
-	media_audio_year, media_audio_comments, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
-	created, is_public, tags):
+	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
+	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
+	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
+	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra):
 	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
-	file_uuid, artist, album, genre, year, comments, duration, audio_bitrate, audio_sample_rate, \
-	created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, \
+	created, is_public, tags, image, extra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_genre, \
-	media_audio_year, media_audio_comments, media_audio_duration, media_audio_bitrate, media_audio_samplerate, \
-	created, is_public, tags)
+	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
+	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
+	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
+	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra)
 	pgql(sql, data)
 
 # Add Photo asset to database
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
+	pgql(sql, data)
+
+# Add Document asset to database
+def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+	asset_sha256, asset_uuid, doc_format, created, is_public, tags):
+	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, sha256, \
+		file_uuid, doc_format, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
+		asset_uuid, doc_format, created, is_public, tags)
 	pgql(sql, data)
 
 # Delete
@@ -223,6 +236,12 @@ def asset_delete_video(asset_full_path):
 
 def asset_delete_audio(asset_full_path):
 	sql = "DELETE FROM media_mediaaudio WHERE file_path=%s"
+	data = (asset_full_path,)
+	pgql(sql, data)
+	log.debug("Asset deleted from database: {}".format(asset_full_path))
+
+def asset_delete_doc(asset_full_path):
+	sql = "DELETE FROM media_mediadoc WHERE file_path=%s"
 	data = (asset_full_path,)
 	pgql(sql, data)
 	log.debug("Asset deleted from database: {}".format(asset_full_path))
@@ -246,6 +265,12 @@ def asset_find_audio(asset_sha256):
 	res_count = pgql_find(sql, data)
 	return res_count
 
+def asset_find_doc(asset_sha256):
+	sql = "SELECT sha256 FROM media_mediadoc WHERE sha256=%s"
+	data = (asset_sha256,)
+	res_count = pgql_find(sql, data)
+	return res_count
+
 # Update
 def asset_update_photo(asset_full_path, asset_media_path, asset_sha256):
 	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s WHERE sha256=%s"
@@ -262,7 +287,11 @@ def asset_update_audio(asset_full_path, asset_media_path, asset_sha256):
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	pgql(sql, data)
 	
-
+def asset_update_doc(asset_full_path, asset_media_path, asset_sha256):
+	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s WHERE sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,)
+	pgql(sql, data)
+	
 # ------------------------------
 # WATCHER
 # ------------------------------
@@ -272,6 +301,8 @@ def Watcher(watch_path):
 	ext_photo = ['.jpeg', '.jpg', '.png', '.gif', '.bmp']
 	ext_audio = ['.mp3', '.m4a', '.ogg', '.wav', '.flac']
 	ext_video = ['.mp4', '.ts', '.wmv', '.mkv']
+	ext_doc = ['.txt', '.epub', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', \
+	'.odt', '.ods', '.odg', '.odp']
 
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
@@ -300,6 +331,7 @@ def Watcher(watch_path):
 			file, ext = os.path.splitext(asset)
 			ext = ext.lower()
 			tags = json.dumps([])  # empty
+			is_public = True
 
 			log.debug("ASSET_FULL_PATH=" + asset_full_path)
 			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
@@ -341,8 +373,7 @@ def Watcher(watch_path):
 				else:
 					orientation = "Square"
 
-				is_public = True
-				asset_title = asset.split(".")[0]
+				asset_title = splitext(asset)[0]
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
@@ -370,26 +401,36 @@ def Watcher(watch_path):
 					log.warning("Asset is empty with 0 bytes. Skipping...")
 					continue
 
-				is_public = True
-				asset_title = asset.split(".")[0]
+				asset_title = splitext(asset)[0]
 				asset_uuid = str(uuid.uuid4())
 				
-				audio_metadata = TinyTag.get(asset_full_path)
-				if (audio_metadata.title is not None) and (audio_metadata.title != ""):
-					asset_title = audio_metadata.title
+				audio_metadata = TinyTag.get(asset_full_path, image=True)
 
-				if (audio_metadata.artist is not None):	
-					media_audio_artist = audio_metadata.artist
+				if (audio_metadata.title is not None) and (audio_metadata.title != ""):
+					asset_title = audio_metadata.title.strip()
+
+				if (audio_metadata.artist is not None):
+					media_audio_artist = audio_metadata.artist.strip()
 				else:
 					media_audio_artist = ""
 
 				if (audio_metadata.album is not None):
-					media_audio_album = audio_metadata.album
+					media_audio_album = audio_metadata.album.strip()
 				else:
 					media_audio_album = ""
 
+				if (audio_metadata.albumartist is not None):
+					media_audio_album_artist = audio_metadata.albumartist.strip()
+				else:
+					media_audio_album_artist = ""
+
+				if (audio_metadata.composer is not None):
+					media_audio_composer = audio_metadata.composer.strip()
+				else:
+					media_audio_composer = ""
+
 				if (audio_metadata.genre is not None):
-					media_audio_genre = audio_metadata.genre
+					media_audio_genre = audio_metadata.genre.strip()
 				else:
 					media_audio_genre = ""
 
@@ -397,6 +438,26 @@ def Watcher(watch_path):
 					media_audio_year = audio_metadata.year
 				else:
 					media_audio_year = ""
+
+				if (audio_metadata.track is not None):
+					media_audio_track = audio_metadata.track
+				else:
+					media_audio_track = ""
+
+				if (audio_metadata.track_total is not None):
+					media_audio_track_total = audio_metadata.track_total
+				else:
+					media_audio_track_total = ""
+
+				if (audio_metadata.disc is not None):
+					media_audio_disc = audio_metadata.disc
+				else:
+					media_audio_disc = ""
+
+				if (audio_metadata.disc_total is not None):
+					media_audio_disc_total = audio_metadata.disc_total
+				else:
+					media_audio_disc_total = ""
 
 				if (audio_metadata.duration is not None):
 					media_audio_duration = round(audio_metadata.duration,3)
@@ -416,31 +477,52 @@ def Watcher(watch_path):
 					media_audio_samplerate = ""
 
 				if audio_metadata.comment is not None:
-					media_audio_comments = str(audio_metadata.comment)
+					media_audio_comments = str(audio_metadata.comment).strip()
 				else:
 					media_audio_comments = ""
 
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid)
+				image_data = audio_metadata.get_image()
+				if image_data is not None:
+					image = base64.b64encode(image_data).decode('utf-8')
+					media_audio_image = image
+				else:
+					media_audio_image = ""
+
+				if audio_metadata.extra is not None:
+					media_audio_extra = str(audio_metadata.extra).strip()
+				else:
+					media_audio_extra = ""
+
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size) + " bytes")
 				log.debug("Hash:        " + asset_sha256)
 				log.debug("UUID:        " + asset_uuid)
 
-				log.debug("Title:       " + asset_title)
-				log.debug("Artist:      " + media_audio_artist)
-				log.debug("Album:       " + media_audio_album)
-				log.debug("Genre:       " + media_audio_genre)
-				log.debug("Year:        " + media_audio_year)
-				log.debug("Duration:    " + str(media_audio_duration) + " seconds")
-				log.debug("Bit Rate:    " + media_audio_bitrate + " KB/s")
-				log.debug("Sample Rate: " + media_audio_samplerate)
-
-				log.debug("Comment:     " + media_audio_comments)
+				log.debug("Title:        " + asset_title)
+				log.debug("Artist:       " + media_audio_artist)
+				log.debug("Album:        " + media_audio_album)
+				log.debug("Album Artist: " + media_audio_album_artist)
+				log.debug("Composer:     " + media_audio_composer)
+				log.debug("Genre:        " + media_audio_genre)
+				log.debug("Year:         " + media_audio_year)
+				log.debug("Track Num:    " + media_audio_track)
+				log.debug("Track Total:  " + media_audio_track_total)
+				log.debug("Disc Num:     " + media_audio_disc)
+				log.debug("Disc Total:   " + media_audio_disc_total)
+				log.debug("Duration:     " + str(media_audio_duration) + " seconds")
+				log.debug("Bit Rate:     " + media_audio_bitrate + " KB/s")
+				log.debug("Sample Rate:  " + media_audio_samplerate)
+				log.debug("Comment:      " + media_audio_comments)
+				log.debug("Extra:        " + media_audio_extra)
 
 				asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
-					media_audio_genre, media_audio_year, media_audio_comments, media_audio_duration, \
-					media_audio_bitrate, media_audio_samplerate, created, is_public, tags)
+					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
+					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
+					media_audio_comments, media_audio_duration, media_audio_bitrate, \
+					media_audio_samplerate, created, is_public, tags, media_audio_image, \
+					media_audio_extra)
 
 
 			# Ingest video asset
@@ -473,7 +555,7 @@ def Watcher(watch_path):
 					media_video_format = "SD"
 				media_video_height = int(media_properties[2])
 				media_video_frame_rate = str(media_properties[3])
-				media_video_duration = Decimal(media_properties[4])
+				media_video_duration = round(Decimal(media_properties[4]),3)
 				media_audio_codec = str(media_properties[5].upper())
 				media_audio_channels = int(media_properties[6])
 				media_audio_sample_rate = str(media_properties[7])
@@ -486,7 +568,7 @@ def Watcher(watch_path):
 					orientation = "Square"
 
 				is_public = True
-				asset_title = asset.split(".")[0]
+				asset_title = splitext(asset)[0]
 
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
 				log.debug("File:         " + asset)
@@ -506,6 +588,32 @@ def Watcher(watch_path):
 				
 				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
 
+			elif ext in ext_doc:
+				
+				asset_sha256 = str(hash_file(asset_full_path))
+				asset_exists = asset_find_doc(asset_sha256)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
+						continue
+				asset_size = int(os.path.getsize(asset_full_path))
+				if asset_size == 0:
+					log.warning("Asset is empty with 0 bytes. Skipping...")
+					continue
+				asset_uuid = str(uuid.uuid4())
+
+				doc_format = ext.split(".")[1].upper()  # "PDF"
+
+				asset_title = splitext(asset)[0]
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format)
+				log.debug("File:   " + asset)
+				log.debug("Size:   " + str(asset_size))
+				log.debug("Hash:   " + asset_sha256)
+				log.debug("UUID:   " + asset_uuid)
+				log.debug("Format: " + doc_format)
+
+				asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, doc_format, created, is_public, tags)
+
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")
 
@@ -522,6 +630,8 @@ def Watcher(watch_path):
 					asset_delete_audio(asset_full_path)
 				elif ext in ext_video:
 					asset_delete_video(asset_full_path)
+				elif ext in ext_doc:
+					asset_delete_doc(asset_full_path)
 				else:
 					pass
 				#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
@@ -557,6 +667,13 @@ def Watcher(watch_path):
 					if asset_exists > 0:
 						asset_update_audio(asset_full_path, asset_sha256)
 						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+			elif ext in ext_doc:
+				asset_exists = asset_find_doc(asset_sha256)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						asset_update_doc(asset_full_path, asset_sha256)
+						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
+
 			else:
 				log.error("Invalid file extension " + ext)
 			

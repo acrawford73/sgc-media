@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MediaVideo, MediaAudio, MediaPhoto
+from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc
 
 
 # Video
@@ -28,14 +28,14 @@ class MediaAudioSerializerListArtists(serializers.ModelSerializer):
 class MediaAudioSerializerListAlbums(serializers.ModelSerializer):
 	class Meta:
 		model = MediaAudio
-		fields = ['id', 'album']
+		fields = ['id', 'album', 'artist']
 
 class MediaAudioSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	bitrate = serializers.CharField(source='audio_bitrate')
 	class Meta:
 		model = MediaAudio
-		fields = ['id', 'title', 'artist', 'album', 'genre', 'description', 'duration', 'bitrate', 'source', 'media_path', 'sha256', 'created', 'size']
+		fields = ['id', 'title', 'artist', 'album', 'album_artist', 'composer', 'genre', 'description', 'duration', 'bitrate', 'media_path', 'sha256', 'created', 'size']
 
 class MediaAudioSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -57,3 +57,15 @@ class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 		model = MediaPhoto
 		fields = '__all__'
 
+
+# Documents
+class MediaDocSerializerList(serializers.ModelSerializer):
+	description = serializers.CharField(source='short_description')
+	class Meta:
+		model = MediaDoc
+		fields = ['id', 'title', 'description', 'doc_format', 'media_path', 'sha256', 'created', 'size', 'keywords']
+
+class MediaDocSerializerDetail(serializers.ModelSerializer):
+	class Meta:
+		model = MediaDoc
+		fields = '__all__'
