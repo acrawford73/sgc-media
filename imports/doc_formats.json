@@ -1,0 +1,16 @@
+{
+	"NA" :"Not Available",
+	"TXT" :"Text",
+	"PDF" : "Adobe PDF",
+	"EPUB" : "eBook",
+	"DOC" : "Microsoft Word",
+	"DOCX" : "Microsoft Word",
+	"XLS" : "Microsoft Excel",
+	"XLSX" : "Microsoft Excel",
+	"PPT" : "Microsoft Powerpoint",
+	"PPTX" : "Microsoft Powerpoint",
+	"ODT" : "LibreOffice Writer",
+	"ODS" : "LibreOffice Calc",
+	"ODG" : "LibreOffice Draw",
+	"ODP" : "LibreOffice Impress"
+}

@@ -8,7 +8,6 @@ from django.urls import reverse
 # FHD: 1080p
 # UHD: 4K
 
-
 MEDIA_FORMATS = (
 	("SD", "SD"),
 	("HD", "HD"),
@@ -20,41 +19,6 @@ MEDIA_ORIENTATION = (
 	("Landscape", "Landscape"),
 	("Portrait", "Portrait"),
 	("Square", "Square"),
-)
-
-VIDEO_GENRES = (
-	("Action","Action"),
-	("Adventure","Adventure"),
-	("Animals","Animals"),
-	("Animated","Animated"),
-	("Anime","Anime"),
-	("Children","Children"),
-	("Comedy","Comedy"),
-	("Crime","Crime"),
-	("Documentary","Documentary"),
-	("Drama","Drama"),
-	("Educational","Educational"),
-	("Fantasy","Fantasy"),
-	("Faith","Faith"),
-	("Food","Food"),
-	("Fashion","Fashion"),
-	("Gaming","Gaming"),
-	("Health","Health"),
-	("History","History"),
-	("Horror","Horror"),
-	("Miniseries","Miniseries"),
-	("Mystery","Mystery"),
-	("Nature","Nature"),
-	("News","News"),
-	("Reality","Reality"),
-	("Romance","Romance"),
-	("Science","Science"),
-	("Science Fiction","Science Fiction"),
-	("Sitcom","Sitcom"),
-	("Special","Special"),
-	("Sports","Sports"),
-	("Thriller","Thriller"),
-	("Technology","Technology"),
 )
 
 VIDEO_SERVICES = (
@@ -69,9 +33,14 @@ VIDEO_SERVICES = (
 	("Gab", "Gab"),
 	("Vimeo", "Vimeo"),
 	("Odysee", "Odysee"),
-	("NAS", "NAS"),
 )
 
+class MediaVideoGenre(models.Model):
+	genre = models.CharField(max_length=64, null=False, blank=False)
+	class Meta:
+		ordering = ['genre']
+		def __unicode__(self):
+			return self.genre
 
 class MediaVideo(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -105,6 +74,7 @@ class MediaVideo(models.Model):
 	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
+	genre = models.ForeignKey(MediaVideoGenre, on_delete=models.SET_NULL, blank=True, null=True)
 
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
@@ -115,6 +85,23 @@ class MediaVideo(models.Model):
 			return self.file_name
 
 
+MEDIA_SERVICES = (
+	("NA", "NA"),
+	("Audio", "Audio"),
+	("Document", "Document"),
+	("Photo", "Photo"),
+	("Video", "Video"),
+)
+
+class MediaService(models.Model):
+	service = models.CharField(max_length=50, default="", null=True, blank=True)
+	media_type = models.CharField(max_length=50, default="NA", choices=MEDIA_SERVICES, null=False, blank=False)
+	class Meta:
+		ordering = ['service']
+		def __unicode__(self):
+			return self.service
+
+
 class AudioGenre(models.Model):
 	genre = models.CharField(max_length=50, default="", null=True, blank=True)
 	class Meta:
@@ -122,21 +109,12 @@ class AudioGenre(models.Model):
 		def __unicode__(self):
 			return self.genre
 
-
-class MediaService(models.Model):
-	service = models.CharField(max_length=50, default="", null=True, blank=True)
-	class Meta:
-		ordering = ['service']
-		def __unicode__(self):
-			return self.service
-
-
 class MediaAudio(models.Model):
 	title = models.CharField(max_length=128, default="", null=True, blank=True)
 	artist = models.CharField(max_length=128, default="", null=True, blank=True)
 	album = models.CharField(max_length=128, default="", null=True, blank=True)	
-	album_artist = models.CharField(max_length=128, default="", null=True, blank=True)	
-	composer = models.CharField(max_length=128, default="", null=True, blank=True)
+	album_artist = models.CharField(max_length=256, default="", null=True, blank=True)	
+	composer = models.CharField(max_length=256, default="", null=True, blank=True)
 	genre = models.CharField(max_length=64, default="", null=True, blank=True)
 	year = models.CharField(max_length=32, default="", null=True, blank=True)
 	track_num = models.CharField(max_length=4, default="", null=True, blank=True)
@@ -187,7 +165,6 @@ PHOTO_SERVICES = (
 	("Google", "Google"),
 	("Dropbox", "Dropbox"),
 	("Amazon", "Amazon"),
-	("NAS", "NAS"),
 )
 
 class MediaPhoto(models.Model):
@@ -226,22 +203,13 @@ class MediaPhoto(models.Model):
 			return self.file_name
 
 
-DOC_FORMATS = (
-	("NA", "NA"),
-	("TXT", "Text"),
-	("PDF", "Adobe PDF"),
-	("EPUB", "eBook"),
-	("DOC", "Microsoft Word"),
-	("DOCX", "Microsoft Word"),
-	("XLS", "Microsoft Excel"),
-	("XLSX", "Microsoft Excel"),
-	("PPT", "Microsoft Powerpoint"),
-	("PPTX", "Microsoft Powerpoint"),
-	("ODT", "LibreOffice Writer"),
-	("ODS", "LibreOffice Calc"),
-	("ODG", "LibreOffice Draw"),
-	("ODP", "LibreOffice Impress"),
-)
+class MediaDocFormat(models.Model):
+	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
+	doc_format_name = models.CharField(max_length=64, null=False, blank=False)
+	class Meta:
+		ordering = ['doc_format']
+		def __unicode__(self):
+			return self.pk
 
 class MediaDoc(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -254,7 +222,7 @@ class MediaDoc(models.Model):
 	size = models.PositiveIntegerField(default=0)
 	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-	doc_format = models.CharField(max_length=32, choices=DOC_FORMATS, default='PDF')
+	doc_format = models.ForeignKey(MediaDocFormat, related_name="document_formats", on_delete=models.SET_NULL, blank=True, null=True)
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField()
 	is_public = models.BooleanField(default=True)

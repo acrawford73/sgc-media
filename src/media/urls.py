@@ -13,6 +13,7 @@ urlpatterns = [
 	path('videos/<int:pk>/', views.MediaVideoDetailView.as_view(), name='media-video-detail'), 
 	path('videos/edit/<int:pk>/', views.MediaVideoUpdateView.as_view(), name='media-video-update'),
 	path('api/videos/', views.MediaVideoListAPI.as_view(), name='media-video-list-api'),
+	path('api/videos/genres/', views.MediaVideoGenreListAPI.as_view()),
 	path('api/videos/search/', views.MediaVideoListAPISearch.as_view()),
 	path('api/videos/<int:pk>', views.MediaVideoDetailAPI.as_view(), name='media-video-detail-api'),
 	re_path('^api/videos/(?P<username>.+)/$', views.MediaVideoListAPI.as_view()),

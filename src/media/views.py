@@ -1,14 +1,18 @@
 #from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
-from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc
+from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaDocFormat, MediaVideoGenre
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 #from url_filter.filtersets import ModelFilterSet
-from .serializers import MediaVideoSerializerList, MediaVideoSerializerDetail
-from .serializers import MediaAudioSerializerListArtists, MediaAudioSerializerListAlbums, \
-					MediaAudioSerializerList, MediaAudioSerializerDetail
+from .serializers import MediaVideoSerializerList, \
+						 MediaVideoSerializerDetail, \
+						 MediaVideoGenreSerializerList
+from .serializers import MediaAudioSerializerList, \
+						 MediaAudioSerializerDetail, \
+						 MediaAudioSerializerListArtists, \
+						 MediaAudioSerializerListAlbums
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail
 from .serializers import MediaDocSerializerList, MediaDocSerializerDetail
 
@@ -38,7 +42,7 @@ class MediaVideoDetailView(DetailView):
 class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'service', 'media_video_width', 'media_video_height', 'orientation', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'media_video_width', 'media_video_height', 'orientation', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
@@ -55,6 +59,12 @@ class MediaVideoListAPISearch(generics.ListAPIView):
 	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
+
+class MediaVideoGenreListAPI(generics.ListAPIView):
+	queryset = MediaVideoGenre.objects.all()
+	serializer_class = MediaVideoGenreSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['genre']
 
 class MediaVideoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaVideo.objects.all()

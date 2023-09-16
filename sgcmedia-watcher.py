@@ -197,8 +197,9 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
 	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra):
 	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
-	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, \
-	created, is_public, tags, image, extra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, \
+	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, \
+	is_public, tags, image, extra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
@@ -214,11 +215,11 @@ def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, as
 
 # Add Document asset to database
 def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, asset_uuid, doc_format, created, is_public, tags):
+	asset_sha256, asset_uuid, doc_format_id, created, is_public, tags):
 	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, sha256, \
-		file_uuid, doc_format, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	file_uuid, doc_format_id, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
-		asset_uuid, doc_format, created, is_public, tags)
+	asset_uuid, doc_format_id, created, is_public, tags)
 	pgql(sql, data)
 
 # Delete
@@ -291,7 +292,33 @@ def asset_update_doc(asset_full_path, asset_media_path, asset_sha256):
 	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s WHERE sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	pgql(sql, data)
-	
+
+def get_doc_format_id(doc_format_ext):
+	sql = "SELECT id,doc_format FROM media_mediadocformat WHERE doc_format=%s"
+	data = (doc_format_ext,)
+	log.debug("SQL:  " + sql)
+	for df in data:
+		log.debug("DATA: " + str(df))
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+		if cur.rowcount > 0:
+			for record in cur:
+				result = record[0]
+		else:
+			conn.close()
+			log.error("Document format missing from MediaDocFormat table.")
+			return False
+		conn.close()
+		return result
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
 # ------------------------------
 # WATCHER
 # ------------------------------
@@ -602,20 +629,25 @@ def Watcher(watch_path):
 					continue
 				asset_uuid = str(uuid.uuid4())
 
-				doc_format = ext.split(".")[1].upper()  # "PDF"
+				doc_format_ext = ext.split(".")[1].upper()  # "PDF"
+				
+				result = get_doc_format_id(doc_format_ext)
+				if result != False:
+					doc_format_id = result
 
 				asset_title = splitext(asset)[0]
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format)
-				log.debug("File:   " + asset)
-				log.debug("Size:   " + str(asset_size))
-				log.debug("Hash:   " + asset_sha256)
-				log.debug("UUID:   " + asset_uuid)
-				log.debug("Format: " + doc_format)
+				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
+				log.debug("File:        " + asset)
+				log.debug("Size:        " + str(asset_size))
+				log.debug("Hash:        " + asset_sha256)
+				log.debug("UUID:        " + asset_uuid)
+				log.debug("Format:      " + doc_format_ext)
+				log.debug("Format ID:   " + str(doc_format_id))
 
-				asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, doc_format, created, is_public, tags)
+				asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, doc_format_id, created, is_public, tags)
 
 			else:
-				log.error("Invalid file extension " + ext + ", asset not ingested.")
+				log.error("Invalid file extension " + ext.upper() + ", asset not ingested.")
 
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':

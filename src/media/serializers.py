@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc
+from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenre
 
 
 # Video
@@ -12,6 +12,11 @@ class MediaVideoSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = MediaVideo
 		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'sha256', 'created', 'duration', 'size', 'categories']
+
+class MediaVideoGenreSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaVideoGenre
+		fields = ['id', 'genre']
 
 class MediaVideoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
