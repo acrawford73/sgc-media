@@ -1,0 +1,9 @@
+{
+	"NA" :"Not Available",
+	"MP3" :"MPEG-2 Audio Layer 3",
+	"M4A" : "MPEG-4 Audio",
+	"OGG" : "Ogg Vorbis",
+	"WAV" : "Waveform Audio",
+	"WAV" : "Windows Media Audio",
+	"FLAC" : "Free Lossless Audio Codec"
+}

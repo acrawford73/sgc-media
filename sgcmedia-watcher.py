@@ -185,9 +185,9 @@ def pgql_find(sql, data):
 			conn.close()
 
 # Add Video asset to database
-def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags) VALUES (%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
+def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id):
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id) VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
 	pgql(sql, data)
 
 # Add Audio asset to database
@@ -195,22 +195,22 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
-	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra):
+	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra, doc_format_id):
 	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
 	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, \
 	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, \
-	is_public, tags, image, extra) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	is_public, tags, image, extra, doc_format_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
-	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra)
+	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra, doc_format_id)
 	pgql(sql, data)
 
 # Add Photo asset to database
-def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
+def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id):
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
 	pgql(sql, data)
 
 # Add Document asset to database
@@ -293,6 +293,84 @@ def asset_update_doc(asset_full_path, asset_media_path, asset_sha256):
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	pgql(sql, data)
 
+def get_video_format_id(doc_format_ext):
+	sql = "SELECT id,doc_format FROM media_mediavideoformat WHERE doc_format=%s"
+	data = (doc_format_ext,)
+	log.debug("SQL:  " + sql)
+	for df in data:
+		log.debug("DATA: " + str(df))
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+		if cur.rowcount > 0:
+			for record in cur:
+				result = record[0]
+			conn.close()
+			return result
+		else:
+			conn.close()
+			log.error("Document format missing from MediaVideoFormat table.")
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+def get_audio_format_id(doc_format_ext):
+	sql = "SELECT id,doc_format FROM media_mediaaudioformat WHERE doc_format=%s"
+	data = (doc_format_ext,)
+	log.debug("SQL:  " + sql)
+	for df in data:
+		log.debug("DATA: " + str(df))
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+		if cur.rowcount > 0:
+			for record in cur:
+				result = record[0]
+			conn.close()
+			return result
+		else:
+			conn.close()
+			log.error("Document format missing from MediaAudioFormat table.")
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+def get_photo_format_id(doc_format_ext):
+	sql = "SELECT id,doc_format FROM media_mediaphotoformat WHERE doc_format=%s"
+	data = (doc_format_ext,)
+	log.debug("SQL:  " + sql)
+	for df in data:
+		log.debug("DATA: " + str(df))
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql, data)
+		if cur.rowcount > 0:
+			for record in cur:
+				result = record[0]
+			conn.close()
+			return result
+		else:
+			conn.close()
+			log.error("Document format missing from MediaPhotoFormat table.")
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
 def get_doc_format_id(doc_format_ext):
 	sql = "SELECT id,doc_format FROM media_mediadocformat WHERE doc_format=%s"
 	data = (doc_format_ext,)
@@ -307,30 +385,123 @@ def get_doc_format_id(doc_format_ext):
 		if cur.rowcount > 0:
 			for record in cur:
 				result = record[0]
+			conn.close()
+			return result
 		else:
 			conn.close()
 			log.error("Document format missing from MediaDocFormat table.")
 			return False
-		conn.close()
-		return result
 	except (Exception, psycopg2.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
 			conn.close()
 
+
+def get_video_formats():
+	sql = "SELECT doc_format FROM media_mediavideoformat"
+	log.debug("SQL:  " + sql)
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql)
+		if cur.rowcount > 0:
+			data = []
+			for row in cur:
+				data.append(row[0])
+			conn.close()
+			return data
+		else:
+			log.error("No video formats available.")
+			conn.close()
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+def get_audio_formats():
+	sql = "SELECT doc_format FROM media_mediaaudioformat"
+	log.debug("SQL:  " + sql)
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql)
+		if cur.rowcount > 0:
+			data = []
+			for row in cur:
+				data.append(row[0])
+			conn.close()
+			return data
+		else:
+			log.error("No audio formats available.")
+			conn.close()
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+def get_photo_formats():
+	sql = "SELECT doc_format FROM media_mediaphotoformat"
+	log.debug("SQL:  " + sql)
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql)
+		if cur.rowcount > 0:
+			data = []
+			for row in cur:
+				data.append(row[0])
+			conn.close()
+			return data
+		else:
+			log.error("No photo formats available.")
+			conn.close()
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+def get_doc_formats():
+	sql = "SELECT doc_format FROM media_mediadocformat"
+	log.debug("SQL:  " + sql)
+	conn = None
+	try:
+		conn = psycopg2.connect(host="192.168.0.13", dbname="sgc", user="sgc", password="sgcmedia")
+		cur = conn.cursor()
+		cur.execute(sql)
+		if cur.rowcount > 0:
+			data = []
+			for row in cur:
+				data.append(row[0])
+			conn.close()
+			return data
+		else:
+			log.error("No document formats available.")
+			conn.close()
+			return False
+	except (Exception, psycopg2.DatabaseError) as error:
+		log.error(error)
+	finally:
+		if conn is not None:
+			conn.close()
+
+
+
 # ------------------------------
 # WATCHER
 # ------------------------------
 # Check watch folder for new content
-def Watcher(watch_path):
+def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 	
-	ext_photo = ['.jpeg', '.jpg', '.png', '.gif', '.bmp']
-	ext_audio = ['.mp3', '.m4a', '.ogg', '.wav', '.flac']
-	ext_video = ['.mp4', 'm4v', 'mpg', '.ts', '.wmv', '.mkv', '.mov']
-	ext_doc = ['.txt', '.epub', '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx', \
-	'.odt', '.ods', '.odg', '.odp']
-
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
 	#inw.block_duration_s = 2
@@ -355,8 +526,7 @@ def Watcher(watch_path):
 			asset_full_path = os.path.join(path, asset)
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 
-			file, ext = os.path.splitext(asset)
-			ext = ext.lower()
+			file, ext = os.path.splitext(asset) # "path/file"  ".txt"
 			tags = json.dumps([])  # empty
 			is_public = True
 
@@ -364,6 +534,8 @@ def Watcher(watch_path):
 			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
 			log.debug("FILE=" + file)
 			log.debug("EXT=" + ext)
+			
+			ext = ext.split(".")[1].upper()  # remove the period .
 
 			# Ingest photo asset
 			if ext in ext_photo:
@@ -400,6 +572,11 @@ def Watcher(watch_path):
 				else:
 					orientation = "Square"
 
+				doc_format_ext = ext
+				result = get_photo_format_id(doc_format_ext)
+				if result != False:
+					doc_format_id = result
+
 				asset_title = splitext(asset)[0]
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
 				log.debug("File:         " + asset)
@@ -409,8 +586,9 @@ def Watcher(watch_path):
 				log.debug("Width:        " + str(width))
 				log.debug("Height:       " + str(height))
 				log.debug("Orientation:  " + orientation)
+				log.debug("Format ID:    " + str(doc_format_id))
 
-				asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags)
+				asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
 
 
 			# Ingest audio/music asset
@@ -520,6 +698,11 @@ def Watcher(watch_path):
 				else:
 					media_audio_extra = ""
 
+				doc_format_ext = ext
+				result = get_audio_format_id(doc_format_ext)
+				if result != False:
+					doc_format_id = result
+
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size) + " bytes")
@@ -542,6 +725,7 @@ def Watcher(watch_path):
 				log.debug("Sample Rate:  " + media_audio_samplerate)
 				log.debug("Comment:      " + media_audio_comments)
 				log.debug("Extra:        " + media_audio_extra)
+				log.debug("Format ID:    " + str(doc_format_id))
 
 				asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
@@ -549,7 +733,7 @@ def Watcher(watch_path):
 					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
 					media_audio_comments, media_audio_duration, media_audio_bitrate, \
 					media_audio_samplerate, created, is_public, tags, media_audio_image, \
-					media_audio_extra)
+					media_audio_extra, doc_format_id)
 
 
 			# Ingest video asset
@@ -594,7 +778,11 @@ def Watcher(watch_path):
 				else:
 					orientation = "Square"
 
-				is_public = True
+				doc_format_ext = ext
+				result = get_video_format_id(doc_format_ext)
+				if result != False:
+					doc_format_id = result
+
 				asset_title = splitext(asset)[0]
 
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
@@ -612,8 +800,9 @@ def Watcher(watch_path):
 				log.debug("Audio Codec:  " + media_audio_codec)
 				log.debug("Channels:     " + str(media_audio_channels))
 				log.debug("Sample Rate:  " + media_audio_sample_rate)
+				log.debug("Format ID:    " + str(doc_format_id))
 				
-				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags)
+				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
 
 			elif ext in ext_doc:
 				
@@ -629,8 +818,7 @@ def Watcher(watch_path):
 					continue
 				asset_uuid = str(uuid.uuid4())
 
-				doc_format_ext = ext.split(".")[1].upper()  # "PDF"
-				
+				doc_format_ext = ext
 				result = get_doc_format_id(doc_format_ext)
 				if result != False:
 					doc_format_id = result
@@ -647,13 +835,14 @@ def Watcher(watch_path):
 				asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, doc_format_id, created, is_public, tags)
 
 			else:
-				log.error("Invalid file extension " + ext.upper() + ", asset not ingested.")
+				log.error("Invalid file extension " + ext + ", asset not ingested.")
 
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':
 			asset_full_path = os.path.join(path, asset)
 			file, ext = os.path.splitext(asset)
-			ext = ext.lower()
+			ext = ext.split(".")[1].upper()
+			
 			#asset_sha256 = str(hash_file(asset_full_path))
 			if delete_db_on_fs_delete == True:
 				if ext in ext_photo:
@@ -678,7 +867,7 @@ def Watcher(watch_path):
 			asset_full_path = os.path.join(path, asset)
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 			file, ext = os.path.splitext(asset)
-			ext = ext.lower()
+			ext = ext.split(".")[1].upper()
 
 			asset_sha256 = str(hash_file(asset_full_path))
 			if ext in ext_video:
@@ -707,7 +896,7 @@ def Watcher(watch_path):
 						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
 
 			else:
-				log.error("Invalid file extension " + ext)
+				log.error("Invalid file extension ." + ext)
 			
 
 
@@ -761,7 +950,31 @@ if __name__ == "__main__":
 	# Audit existing files with database...
 	#asset_audit()
 
+	ext_video = get_video_formats()
+	log.debug(ext_video)
+	if ext_video == False:
+		log.error("There are no video formats listed in the database.")
+		quit()
+	
+	ext_audio = get_audio_formats()
+	log.debug(ext_audio)
+	if ext_audio == False:
+		log.error("There are no audio formats listed in the database.")
+		quit()
+
+	ext_photo = get_photo_formats()
+	log.debug(ext_photo)
+	if ext_photo == False:
+		log.error("There are no photo formats listed in the database.")
+		quit()
+
+	ext_doc = get_doc_formats()
+	log.debug(ext_doc)
+	if ext_doc == False:
+		log.error("There are no document formats listed in the database.")
+		quit()
+
 	# Start watcher loop
-	Watcher(watch_path)
+	Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc)
 
 	log.info("SGC-Media Watcher Stopped.");print()

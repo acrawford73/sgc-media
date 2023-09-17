@@ -1,0 +1,11 @@
+{
+	"NA" :"Not Available",
+	"MP4" : "MPEG-4",
+	"M4V" : "MPEG-4 Video",
+	"MPG" : "MPEG-2 Video",
+	"MKV" : "Matroska",
+	"MOV" : "Quicktime",
+	"TS" : "Transport Stream",
+	"WMV" : "Windows Media Video"
+}
+ 

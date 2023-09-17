@@ -1,7 +1,9 @@
 #from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
-from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaDocFormat, MediaVideoGenre
+from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, \
+					MediaAudio, MediaAudioFormat, \
+					MediaPhoto, MediaPhotoFormat, MediaDoc, MediaDocFormat
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend

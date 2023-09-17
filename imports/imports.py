@@ -39,6 +39,45 @@ def import_video_genres(data,host):
 				conn.commit()
 				conn.close()
 
+def import_video_formats(data,host):
+	conn = None
+	conn = psycopg2.connect(host=host, dbname="sgc", user="sgc", password="sgcmedia")
+	cur = conn.cursor()
+	for key, value in data.items():
+		print(key, value)
+		sql = "INSERT INTO media_mediavideoformat(doc_format,doc_format_name) VALUES (%s, %s)"
+		data = (key,value,)
+		cur.execute(sql, data)
+	if conn is not None:
+		conn.commit()
+		conn.close()
+
+def import_audio_formats(data,host):
+	conn = None
+	conn = psycopg2.connect(host=host, dbname="sgc", user="sgc", password="sgcmedia")
+	cur = conn.cursor()
+	for key, value in data.items():
+		print(key, value)
+		sql = "INSERT INTO media_mediaaudioformat(doc_format,doc_format_name) VALUES (%s, %s)"
+		data = (key,value,)
+		cur.execute(sql, data)
+	if conn is not None:
+		conn.commit()
+		conn.close()
+
+def import_photo_formats(data,host):
+	conn = None
+	conn = psycopg2.connect(host=host, dbname="sgc", user="sgc", password="sgcmedia")
+	cur = conn.cursor()
+	for key, value in data.items():
+		print(key, value)
+		sql = "INSERT INTO media_mediaphotoformat(doc_format,doc_format_name) VALUES (%s, %s)"
+		data = (key,value,)
+		cur.execute(sql, data)
+	if conn is not None:
+		conn.commit()
+		conn.close()
+
 def import_doc_formats(data,host):
 	conn = None
 	conn = psycopg2.connect(host=host, dbname="sgc", user="sgc", password="sgcmedia")
@@ -97,12 +136,33 @@ if __name__ == "__main__":
 	# import_video_genres(data,host)
 	# print()
 
-	#Doc Formats
-	f = open("doc_formats.json", "r")
+	#Video Formats
+	f = open("video_formats.json", "r")
 	data = json.load(f)
 	f.close()
-	import_doc_formats(data,host)
+	import_video_formats(data,host)
 	print()
+
+	#Audio Formats
+	f = open("audio_formats.json", "r")
+	data = json.load(f)
+	f.close()
+	import_audio_formats(data,host)
+	print()
+
+	#Photo Formats
+	f = open("photo_formats.json", "r")
+	data = json.load(f)
+	f.close()
+	import_photo_formats(data,host)
+	print()
+
+	#Doc Formats
+	# f = open("doc_formats.json", "r")
+	# data = json.load(f)
+	# f.close()
+	# import_doc_formats(data,host)
+	# print()
 
 	# # Services
 	# f = open("services.json", "r")

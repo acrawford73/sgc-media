@@ -12,5 +12,9 @@
 	"ODT" : "LibreOffice Writer",
 	"ODS" : "LibreOffice Calc",
 	"ODG" : "LibreOffice Draw",
-	"ODP" : "LibreOffice Impress"
+	"ODP" : "LibreOffice Impress",
+	"RTF" : "Rich Text Format",
+	"BMD" : "Blumind",
+	"DSS" : "Synology Config Backup",
+	"XSPF" : "XML Shareable Playlist Format"
 }
