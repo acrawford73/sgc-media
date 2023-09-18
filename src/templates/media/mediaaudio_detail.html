@@ -27,11 +27,16 @@
               <tr>
                 <td><strong>Artwork</strong></td>
                 {% if asset.image %}
-                  <td><img src='data:image;base64,{{ asset.image }}'></img></td>
+                  <td><img width="100%" src='data:image;base64,{{ asset.image }}'></img></td>
                 {% else %}
                   <td>None</td>
                 {% endif %}
-              </tr>              
+              </tr>
+              <tr>
+                <td><strong>Download</strong></td>
+                <td><a href="/media/{{asset.media_path}}" target="_blank"><button class="btn btn-primary rounded-pill px-3" type="button">{{ asset.file_name }}</button></a>
+                </td>
+              </tr>
               <tr>
                 <td><strong>Created</strong></td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }} (UTC)</td>
