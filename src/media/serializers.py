@@ -52,10 +52,9 @@ class MediaAudioSerializerDetail(serializers.ModelSerializer):
 class MediaPhotoSerializerList(serializers.ModelSerializer):
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
-	format = serializers.CharField(source='photo_format')
 	class Meta:
 		model = MediaPhoto
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'format', 'width', 'height', 'media_path', 'sha256', 'created', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'photo_format', 'width', 'height', 'media_path', 'sha256', 'created', 'size', 'categories']
 
 class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -68,7 +67,7 @@ class MediaDocSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	class Meta:
 		model = MediaDoc
-		fields = ['id', 'title', 'description', 'doc_format', 'media_path', 'sha256', 'created', 'size', 'keywords']
+		fields = ['id', 'title', 'description', 'media_path', 'sha256', 'created', 'size', 'keywords']
 
 class MediaDocSerializerDetail(serializers.ModelSerializer):
 	class Meta:
