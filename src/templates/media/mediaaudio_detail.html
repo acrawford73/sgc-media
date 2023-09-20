@@ -11,14 +11,20 @@
   <div class="container">
     <p>&nbsp;</p>
     <h2 class="mt-5"><strong>Audio Asset:</strong> {{ asset.id }}</h2>
-    <h4><a href="{% url 'media-audio-update' asset.id %}">Edit this asset</a></h4>
+    <!-- <h4><a href="{% url 'media-audio-update' asset.id %}">Edit this asset</a></h4> -->
+    <h4><a href="{% url 'media-audio-update' asset.id %}"><button class="btn btn-primary rounded-pill px-3" type="button">Edit Asset</button></a>
+    </h4>
     <div class="row">
       <div class="col-lg-12">
         <div class="table-responsive">
           <p>&nbsp;</p>
            <p align="left">
             <audio controls style="width: 500px;">
-              <source src="/media/{{ asset.media_path }}" />
+              <source src="/media/{{ asset.media_path }}" type="audio/mp3"/>
+              <source src="/media/{{ asset.media_path }}" type="audio/m4a"/>
+              <source src="/media/{{ asset.media_path }}" type="audio/wav"/>
+              <source src="/media/{{ asset.media_path }}" type="audio/ogg"/>
+              <source src="/media/{{ asset.media_path }}" type="audio/flac"/>
             </audio>
           </p>
 <!--           <h3>Overview</h3> -->

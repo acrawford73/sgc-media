@@ -1,6 +1,9 @@
 #from __future__ import unicode_literals
-from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
+from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import Atom1Feed
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService, \
 					MediaAudio, MediaAudioFormat, \
 					MediaPhoto, MediaPhotoFormat, MediaDoc, MediaDocFormat
@@ -72,6 +75,40 @@ class MediaVideoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaVideo.objects.all()
 	serializer_class = MediaVideoSerializerDetail
 
+class MediaVideoGalleryListView(ListView):
+	model = MediaVideo
+	template_name = 'media/mediavideo_gallery.html'
+	context_object_name = 'assets'
+	ordering = ['-created']
+	paginate_by = 24
+
+class MediaVideoRSSFeed(Feed):
+	title = "Video Feed"
+	link = "/videos/"
+	feed_type = Atom1Feed
+	def items(self):
+		return MediaVideo.objects.filter(is_public=True).order_by("-created")[:10]
+	def item_title(self, item):
+		return item.title
+	def item_description(self, item):
+		#if (item.short_description is None) or (item.short_description == ""):
+		#	item.short_description = "Short description is not available"
+		if (item.long_description is None) or (item.long_description == ""):
+			item.long_description = "Long description is not available"
+		#return item.short_description + "</br>" + item.long_description
+		return item.long_description
+	def item_link(self, item):
+		return "/videos/%s/" % (item.id)
+	def item_author_name(self, item):
+		if (item.username is None) or (item.username == ""):
+			return "Unknown"
+		else:
+			return item.username
+	def get_feed(self, obj, request):
+		feedgen = super().get_feed(obj, request)
+		feedgen.content_type = "application/xml; charset=utf-8"
+		return feedgen
+
 
 ### Audio
 class MediaAudioListView(ListView):
@@ -89,6 +126,12 @@ class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
 	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes']
+
+# class MediaAudioDeleteView(DeleteView):
+# 	model = MediaAudio
+# 	template_name = 'media/mediaaudio_confirm_delete.html'
+# 	context_object_name = 'asset'
+# 	success_url = reverse_lazy('media-audio-list')
 
 class MediaAudioListAPI(generics.ListAPIView):
 	queryset = MediaAudio.objects.all().filter(is_public=True)
@@ -121,6 +164,13 @@ class MediaAudioListAPISearch(generics.ListAPIView):
 class MediaAudioDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaAudio.objects.all()
 	serializer_class = MediaAudioSerializerDetail
+
+class MediaAudioGalleryListView(ListView):
+	model = MediaAudio
+	template_name = 'media/mediaaudio_gallery.html'
+	context_object_name = 'assets'
+	ordering = ['-created']
+	paginate_by = 24
 
 
 ### Photo
@@ -159,6 +209,13 @@ class MediaPhotoListAPISearch(generics.ListAPIView):
 class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhoto.objects.all()
 	serializer_class = MediaPhotoSerializerDetail
+
+class MediaPhotoGalleryListView(ListView):
+	model = MediaPhoto
+	template_name = 'media/mediaphoto_gallery.html'
+	context_object_name = 'assets'
+	ordering = ['-created']
+	paginate_by = 24
 
 
 ### Documents

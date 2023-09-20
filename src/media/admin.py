@@ -7,10 +7,10 @@ from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoSer
 
 # Video
 class MediaVideoAdmin(admin.ModelAdmin):
-	list_display = ['file_name', 'size', 'media_video_format', 'created']
+	list_display = ['file_name', 'size', 'media_video_format', 'service', 'created', 'updated']
 	search_fields = ['file_name', 'media_video_format']
 	list_filter = ['media_video_format', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'media_video_duration', \
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'updated', 'media_video_duration', \
 	'media_video_width', 'media_video_height', 'media_video_format', 'media_video_frame_rate', \
 	'media_video_codec', 'media_audio_codec', 'media_audio_channels', 'media_audio_sample_rate', 'doc_format']
 	class Meta:
@@ -36,10 +36,10 @@ class MediaVideoServiceAdmin(admin.ModelAdmin):
 
 # Audio
 class MediaAudioAdmin(admin.ModelAdmin):
-	list_display = ['file_name', 'size', 'artist', 'album', 'created']
+	list_display = ['file_name', 'size', 'artist', 'album', 'created', 'updated']
 	search_fields = ['file_name', 'artist', 'album', 'genre', 'year']
 	list_filter = ['genre', 'year', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format']
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'updated', 'doc_format']
 	class Meta:
 		model = MediaAudio
 
@@ -57,10 +57,10 @@ class MediaAudioFormatAdmin(admin.ModelAdmin):
 
 # Photo
 class MediaPhotoAdmin(admin.ModelAdmin):
-	list_display = ['file_name', 'size', 'orientation', 'created']
+	list_display = ['file_name', 'size', 'orientation', 'service', 'created', 'updated']
 	search_fields = ['file_name']
 	list_filter = ['orientation', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format']
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'updated', 'doc_format']
 	class Meta:
 		model = MediaPhoto
 
@@ -73,10 +73,10 @@ class MediaPhotoFormatAdmin(admin.ModelAdmin):
 
 # Documents
 class MediaDocAdmin(admin.ModelAdmin):
-	list_display = ['file_name', 'title', 'doc_format', 'size', 'created']
+	list_display = ['file_name', 'title', 'doc_format', 'size', 'created', 'updated']
 	search_fields = ['file_name', 'title']
 	list_filter = ['doc_format_id', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format']
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'updated', 'doc_format']
 	class Meta:
 		model = MediaDoc
 

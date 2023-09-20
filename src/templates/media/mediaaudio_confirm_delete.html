@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+  <div class="container">
+    <p>&nbsp;</p>
+    <h2 class="mt-5"><strong>Audio Asset:</strong> {{ asset.id }}</h2>
+    <p>&nbsp;</p>
+<!--     <h2 class="mt-5"><strong>Are you sure you wish to delete asset: </strong>{{ asset.id }} ?</h2>
+    <h4><a href="{% url 'media-audio-update' asset.id %}"><button class="btn btn-primary rounded-pill px-3" type="button">Yes</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'media-audio-delete' asset.id %}"><button class="btn btn-danger rounded-pill px-3" type="button">No</button></a></h4>
+ -->    <div class="row">
+      <form method="post">{% csrf_token %}
+        <h4>Are you sure you want to delete the following asset ?</h4>
+        <p>&nbsp;</p>
+        <h4><strong>ID:</strong> {{ asset.id }}</h4>
+        <h4><strong>Title:</strong> {{ asset.title }}</h4>
+        <h4><strong>Artist:</strong> {{ asset.artist }}</h4>
+        <h4><strong>Album:</strong> {{ asset.album }}</h4>
+        {{ form }}
+        <p>&nbsp;</p>
+        <input type="submit" value="Confirm">
+    </form>
+
+    <!-- row end -->
+    </div>
+
+  <!-- container end -->
+  </div>
+
+</main>
+
+{% endblock %}

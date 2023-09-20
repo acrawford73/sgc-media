@@ -27,11 +27,14 @@
               preload="auto"
               crossorigin="anonymous"
               width="800"
-	      <!-- height={{ asset.media_video_height }} -->
+              <!-- height="50%" -->
               poster=""
-              data-setup='{"playbackRates":[1,1.5,2]}'
+              data-setup='{"playbackRates":[1,1.25,1.5,2]}'
               class="video-js vjs-fluid vjs-big-play-centered">
               <source src="/media/{{ asset.media_path }}" type="video/mp4" />
+              <source src="/media/{{ asset.media_path }}" type="video/m4v" />
+              <source src="/media/{{ asset.media_path }}" type="video/mov" />
+              <source src="/media/{{ asset.media_path }}" type="video/wmv" />
 <!--                <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
                 web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video.</a> -->
