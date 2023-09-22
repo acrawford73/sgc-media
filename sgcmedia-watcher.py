@@ -9,7 +9,7 @@
 # _/_/_/      _/_/_/    _/_/_/
 
 ### SGC-MEDIA:
-# Acts as an ingest host for media files.
+# An ingest host for media files.
 # Files are uploaded via SSH or SFTP. 
 # CMS like interface for reviewing ingested media.
 # API for querying media content.

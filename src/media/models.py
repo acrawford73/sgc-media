@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from datetime import datetime
 
 #
 
@@ -81,7 +82,6 @@ class MediaVideo(models.Model):
 	location_latitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES)
@@ -157,7 +157,6 @@ class MediaAudio(models.Model):
 	audio_codec = models.CharField(max_length=32, default="", null=True, blank=True)
 	audio_encoder = models.CharField(max_length=32, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
 	is_public = models.BooleanField(default=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -219,7 +218,6 @@ class MediaPhoto(models.Model):
 	location_latitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	doc_format = models.ForeignKey("MediaPhotoFormat", on_delete=models.SET_NULL, blank=True, null=True)
@@ -257,7 +255,7 @@ class MediaDoc(models.Model):
 	###
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
-	updated = models.DateTimeField(auto_now=True)
+	#updated = models.DateTimeField(auto_now=True)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
 

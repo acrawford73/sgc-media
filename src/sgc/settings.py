@@ -96,7 +96,6 @@ DATABASES = {
         'HOST': '192.168.0.13',
         'PORT': '5432',
     }
-        
 }
 
 # Password validation
@@ -117,9 +116,10 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
 
+# Time Zone
 # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 USE_TZ = True
-TIME_ZONE = 'America/Halifax'
+TIME_ZONE = 'UTC'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

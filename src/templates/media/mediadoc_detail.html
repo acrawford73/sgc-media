@@ -24,6 +24,13 @@
                 </td>
               </tr>
               <tr>
+                <td>&nbsp;</td>
+                <td>
+                  <!-- <iframe src="{% static 'js/ViewerJS/index.html#' %}/media/{{asset.media_path}}" width="100%" height="500" allowfullscreen webkitallowfullscreen></iframe> -->
+                <iframe src="/static/js/ViewerJS/index.html#/media/{{asset.media_path}}" width="100%" height="500" allowfullscreen webkitallowfullscreen></iframe>
+                </td>
+              </tr>
+              <tr>
                 <td><strong>Created</strong></td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }} (UTC)</td>
               </tr>
