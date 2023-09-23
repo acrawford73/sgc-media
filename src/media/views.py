@@ -6,18 +6,15 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService, \
 					MediaAudio, MediaAudioFormat, \
-					MediaPhoto, MediaPhotoFormat, MediaDoc, MediaDocFormat
+					MediaPhoto, MediaPhotoFormat, \
+					MediaDoc, MediaDocFormat
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 #from url_filter.filtersets import ModelFilterSet
-from .serializers import MediaVideoSerializerList, \
-						 MediaVideoSerializerDetail, \
-						 MediaVideoGenreSerializerList
-from .serializers import MediaAudioSerializerList, \
-						 MediaAudioSerializerDetail, \
-						 MediaAudioSerializerListArtists, \
-						 MediaAudioSerializerListAlbums
+from .serializers import MediaVideoSerializerList, MediaVideoSerializerDetail, MediaVideoGenreSerializerList
+from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail, \
+						 MediaAudioSerializerListArtists, MediaAudioSerializerListAlbums
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail
 from .serializers import MediaDocSerializerList, MediaDocSerializerDetail
 
@@ -82,20 +79,19 @@ class MediaVideoGalleryListView(ListView):
 	ordering = ['-created']
 	paginate_by = 24
 
+
 class MediaVideoRSSFeed(Feed):
 	title = "Video Feed"
-	link = "/videos/"
-	feed_type = Atom1Feed
+	link = "/videos/rss/"
+	description = "Latest videos"
+	feed_copyright = "SGC-MEDIA-~2023"
 	def items(self):
 		return MediaVideo.objects.filter(is_public=True).order_by("-created")[:10]
 	def item_title(self, item):
 		return item.title
 	def item_description(self, item):
-		#if (item.short_description is None) or (item.short_description == ""):
-		#	item.short_description = "Short description is not available"
 		if (item.long_description is None) or (item.long_description == ""):
 			item.long_description = "Long description is not available"
-		#return item.short_description + "</br>" + item.long_description
 		return item.long_description
 	def item_link(self, item):
 		return "/videos/%s/" % (item.id)
@@ -104,10 +100,22 @@ class MediaVideoRSSFeed(Feed):
 			return "Unknown"
 		else:
 			return item.username
+	def item_guid(self, item):
+		guid = item.file_uuid
+		return guid.upper()
+	def item_pubdate(self, item):
+		return item.created
+	### should implement
+	#def item_updateddate(self, item):
+	#	return item.updated
 	def get_feed(self, obj, request):
 		feedgen = super().get_feed(obj, request)
 		feedgen.content_type = "application/xml; charset=utf-8"
 		return feedgen
+
+class MediaVideoAtomFeed(MediaVideoRSSFeed):
+    feed_type = Atom1Feed
+    subtitle = MediaVideoRSSFeed.description
 
 
 ### Audio
@@ -233,7 +241,7 @@ class MediaDocDetailView(DetailView):
 class MediaDocUpdateView(UpdateView):
 	model = MediaDoc
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'doc_format', 'keywords', 'tags']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'keywords', 'tags']
 
 class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)
