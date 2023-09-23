@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, \
 					MediaAudio, MediaAudioGenre, MediaAudioFormat, \
 					MediaPhoto, MediaPhotoFormat, \
-					MediaDoc, MediaDocFormat, MediaService
+					MediaDoc, MediaDocFormat, MediaService, MediaDocCategories
 
 
 # Video
@@ -86,8 +86,14 @@ class MediaDocFormatAdmin(admin.ModelAdmin):
 	class Meta:
 		model = MediaDocFormat
 
+class MediaDocCategoriesAdmin(admin.ModelAdmin):
+	list_display = ['category']
+	search_fields = ['category']
+	class Meta:
+		model = MediaDocCategories
 
 # Services
+# not implemented yet
 class MediaServiceAdmin(admin.ModelAdmin):
 	list_display = ['service', 'media_type']
 	class Meta:
@@ -109,7 +115,7 @@ admin.site.register(MediaPhotoFormat, MediaPhotoFormatAdmin)
 
 admin.site.register(MediaDoc, MediaDocAdmin)
 admin.site.register(MediaDocFormat, MediaDocFormatAdmin)
-
+admin.site.register(MediaDocCategories, MediaDocCategoriesAdmin)
 
 
 admin.site.register(MediaService, MediaServiceAdmin)

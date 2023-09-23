@@ -85,6 +85,7 @@ class MediaVideoRSSFeed(Feed):
 	link = "/videos/rss/"
 	description = "Latest videos"
 	feed_copyright = "SGC-MEDIA-~2023"
+	ttl = 600
 	def items(self):
 		return MediaVideo.objects.filter(is_public=True).order_by("-created")[:10]
 	def item_title(self, item):
@@ -116,6 +117,8 @@ class MediaVideoRSSFeed(Feed):
 class MediaVideoAtomFeed(MediaVideoRSSFeed):
     feed_type = Atom1Feed
     subtitle = MediaVideoRSSFeed.description
+
+#class MediaVideoRokuRSSFeed(Feed):
 
 
 ### Audio
@@ -241,7 +244,7 @@ class MediaDocDetailView(DetailView):
 class MediaDocUpdateView(UpdateView):
 	model = MediaDoc
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'keywords', 'tags']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'doi_url', 'category', 'keywords', 'tags']
 
 class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)

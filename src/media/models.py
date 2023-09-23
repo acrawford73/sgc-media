@@ -49,8 +49,8 @@ class MediaVideoFormat(models.Model):
 
 class MediaVideoGenre(models.Model):
 	genre = models.CharField(max_length=64, null=False, blank=False)
-	#class Meta:
-	#	ordering = ['genre']
+	class Meta:
+		ordering = ['genre']
 	def __str__(self):
 		return self.genre
 
@@ -110,8 +110,8 @@ MEDIA_SERVICES = (
 class MediaService(models.Model):
 	service = models.CharField(max_length=50, default="", null=True, blank=True)
 	media_type = models.CharField(max_length=50, default="NA", choices=MEDIA_SERVICES, null=False, blank=False)
-	#class Meta:
-	#	ordering = ['service']
+	class Meta:
+		ordering = ['service']
 	def __str__(self):
 		return self.service
 
@@ -124,8 +124,8 @@ class MediaAudioFormat(models.Model):
 
 class MediaAudioGenre(models.Model):
 	genre = models.CharField(max_length=50, default="", null=True, blank=True)
-	#class Meta:
-	#	ordering = ['genre']
+	class Meta:
+		ordering = ['genre']
 	def __str__(self):
 		return self.genre
 
@@ -239,6 +239,13 @@ class MediaDocFormat(models.Model):
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
+class MediaDocCategories(models.Model):
+	category = models.CharField(max_length=64, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['category']
+	def __str__(self):
+		return self.category
+
 class MediaDoc(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -250,9 +257,11 @@ class MediaDoc(models.Model):
 	size = models.PositiveIntegerField(default=0)
 	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	doi_url = models.URLField(max_length=2083, null=True, blank=True)
 	### this is actually doc_format_id
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	###
+	category = models.ForeignKey("MediaDocCategories", on_delete=models.SET_NULL, blank=True, null=True)
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	#updated = models.DateTimeField(auto_now=True)
