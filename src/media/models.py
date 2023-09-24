@@ -85,8 +85,10 @@ class MediaVideo(models.Model):
 	media_video_height= models.PositiveSmallIntegerField(default=0)
 	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD')
 	media_video_frame_rate = models.CharField(max_length=32, default="")
+	media_video_bitrate = models.IntegerField(default=0, null=False, blank=False)
 	media_video_codec = models.CharField(max_length=32, default="")
 	media_video_duration = models.DecimalField(max_digits=12, decimal_places=3, default=0.0, null=True, blank=True)
+	media_audio_bitrate = models.IntegerField(default=0, null=False, blank=False)
 	media_audio_codec = models.CharField(max_length=32, default="")
 	media_audio_channels = models.PositiveSmallIntegerField(default=0)
 	media_audio_sample_rate = models.CharField(max_length=16, default="")
@@ -104,7 +106,7 @@ class MediaVideo(models.Model):
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	genre = models.ForeignKey("MediaVideoGenre", on_delete=models.SET_NULL, blank=True, null=True)
 	doc_format = models.ForeignKey("MediaVideoFormat", on_delete=models.SET_NULL, blank=True, null=True)
-	
+
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
 

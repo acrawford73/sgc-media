@@ -39,6 +39,7 @@ import logging.handlers
 # Configuration
 from configparser import ConfigParser
 # Third Party
+import ffmpeg
 import psycopg2
 from PIL import Image
 import inotify.adapters
@@ -185,9 +186,9 @@ def pgql_find(sql, data):
 			conn.close()
 
 # Add Video asset to database
-def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id) VALUES (%s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
+def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_bitrate, media_video_codec, media_video_duration, media_audio_bitrate, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id):
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_bitrate, media_video_codec, media_video_duration, media_audio_bitrate, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_bitrate, media_video_codec, media_video_duration, media_audio_bitrate, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
 	pgql(sql, data)
 
 # Add Audio asset to database
@@ -494,6 +495,15 @@ def get_doc_formats():
 		if conn is not None:
 			conn.close()
 
+# Get Video Bitrate
+def get_video_metadata(asset_full_path):
+	try:
+		metadata = ffmpeg.probe(asset_full_path)["streams"]
+		if metadata is not None:
+			return metadata
+	except OSError as error:
+		log.error(error)
+		return False
 
 
 # ------------------------------
@@ -777,6 +787,17 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				media_audio_channels = int(media_properties[6])
 				media_audio_sample_rate = str(media_properties[7])
 
+				metadata = get_video_metadata(asset_full_path)
+				if metadata != False:
+					if metadata[0]['bit_rate'] is not None:
+						media_video_bitrate = metadata[0]['bit_rate']
+					else:
+						media_video_bitrate = 0
+					if metadata[1]['bit_rate'] is not None:
+						media_audio_bitrate = metadata[1]['bit_rate']
+					else:
+						media_audio_bitrate = 0
+
 				if media_video_width > media_video_height:
 					orientation = "Landscape"
 				elif media_video_height > media_video_width:
@@ -792,23 +813,25 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				asset_title = splitext(asset)[0]
 
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
-				log.debug("File:         " + asset)
-				log.debug("Size:         " + str(asset_size))
-				log.debug("Hash:         " + asset_sha256)
-				log.debug("UUID:         " + asset_uuid)
-				log.debug("Height:       " + str(media_video_height))
-				log.debug("Width:        " + str(media_video_width))
-				log.debug("Orientation:  " + orientation)
-				log.debug("Format:       " + media_video_format)
-				log.debug("Duration:     " + str(media_video_duration))
-				log.debug("Frame Rate:   " + media_video_frame_rate)
-				log.debug("Video Codec:  " + media_video_codec)
-				log.debug("Audio Codec:  " + media_audio_codec)
-				log.debug("Channels:     " + str(media_audio_channels))
-				log.debug("Sample Rate:  " + media_audio_sample_rate)
-				log.debug("Format ID:    " + str(doc_format_id))
+				log.debug("File:          " + asset)
+				log.debug("Size:          " + str(asset_size))
+				log.debug("Hash:          " + asset_sha256)
+				log.debug("UUID:          " + asset_uuid)
+				log.debug("Height:        " + str(media_video_height))
+				log.debug("Width:         " + str(media_video_width))
+				log.debug("Orientation:   " + orientation)
+				log.debug("Format:        " + media_video_format)
+				log.debug("Duration:      " + str(media_video_duration))
+				log.debug("Frame Rate:    " + media_video_frame_rate)
+				log.debug("Video Bitrate: " + media_video_bitrate)
+				log.debug("Video Codec:   " + media_video_codec)
+				log.debug("Audio Bitrate: " + media_audio_bitrate)
+				log.debug("Audio Codec:   " + media_audio_codec)
+				log.debug("Channels:      " + str(media_audio_channels))
+				log.debug("Sample Rate:   " + media_audio_sample_rate)
+				log.debug("Format ID:     " + str(doc_format_id))
 				
-				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_codec, media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
+				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_bitrate, media_video_codec, media_video_duration, media_audio_bitrate, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
 
 			elif ext in ext_doc:
 				

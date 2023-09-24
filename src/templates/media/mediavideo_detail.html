@@ -141,6 +141,10 @@
                 <td>{{ asset.media_video_duration }} seconds</td>
               </tr>
               <tr>
+                <td><strong>Video Bitrate</strong></td>
+                <td>{{ asset.media_videobitrate }}</td>
+              </tr>
+              <tr>
                 <td><strong>Width</strong></td>
                 <td>{{ asset.media_video_width }}</td>
               </tr>
@@ -161,8 +165,16 @@
                 <td>{{ asset.media_video_format }}</td>
               </tr>
               <tr>
+                <td><strong>Video Bitrate</strong></td>
+                <td>{{ asset.media_video_bitrate|floatformat:"-3g" }} bps</td>
+              </tr>
+              <tr>
                 <td><strong>Video Codec</strong></td>
                 <td>{{ asset.media_video_codec }}</td>
+              </tr>
+              <tr>
+                <td><strong>Audio Bitrate</strong></td>
+                <td>{{ asset.media_audio_bitrate|floatformat:"-3g" }} bps</td>
               </tr>
               <tr>
                 <td><strong>Audio Codec</strong></td>

@@ -13,7 +13,8 @@ class MediaVideoAdmin(admin.ModelAdmin):
 	list_filter = ['media_video_format', 'service', 'is_public']
 	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'media_video_duration', \
 	'media_video_width', 'media_video_height', 'media_video_format', 'media_video_frame_rate', \
-	'media_video_codec', 'media_audio_codec', 'media_audio_channels', 'media_audio_sample_rate', 'doc_format']
+	'media_video_codec', 'media_audio_codec', 'media_audio_channels', 'media_audio_sample_rate', \
+	'doc_format', 'media_video_bitrate', 'media_audio_bitrate']
 	class Meta:
 		model = MediaVideo
 
