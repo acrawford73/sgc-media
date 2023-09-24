@@ -136,7 +136,7 @@ class MediaAudioDetailView(DetailView):
 class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes']
+	fields = ['is_public', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes']
 
 # class MediaAudioDeleteView(DeleteView):
 # 	model = MediaAudio
@@ -244,7 +244,7 @@ class MediaDocDetailView(DetailView):
 class MediaDocUpdateView(UpdateView):
 	model = MediaDoc
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'doi_url', 'category', 'keywords', 'tags']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
 
 class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)
@@ -265,11 +265,3 @@ class MediaDocListAPISearch(generics.ListAPIView):
 class MediaDocDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaDoc.objects.all()
 	serializer_class = MediaDocSerializerDetail
-
-
-### Settings
-# class SettingsUpdateView(UpdateView):
-# 	model = Settings
-# 	context_object_name = 'settings'
-# 	fields = ['upload_path']
-

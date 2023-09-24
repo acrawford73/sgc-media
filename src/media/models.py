@@ -4,6 +4,17 @@ from datetime import datetime
 
 #
 
+class MediaCountry(models.Model):
+	country_name = models.CharField(max_length=64, null=False, blank=False, unique=True)
+	country_code = models.CharField(max_length=2, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['country_name']
+	def __str__(self):
+		return self.country_name
+
+
+### VIDEO
+
 # SD: Anything under 720p
 # HD: 720p
 # FHD: 1080p
@@ -38,12 +49,16 @@ VIDEO_SERVICES = (
 
 class MediaVideoService(models.Model):
 	service_name = models.CharField(max_length=32, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['service_name']
 	def __str__(self):
 		return self.service_name
 
 class MediaVideoFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
 	doc_format_name = models.CharField(max_length=64, null=False, blank=False)
+	class Meta:
+		ordering = ['doc_format']
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
@@ -99,6 +114,7 @@ class MediaVideo(models.Model):
 			return self.file_name
 
 
+
 MEDIA_SERVICES = (
 	("NA", "NA"),
 	("Audio", "Audio"),
@@ -115,10 +131,13 @@ class MediaService(models.Model):
 	def __str__(self):
 		return self.service
 
+### AUDIO
 
 class MediaAudioFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
 	doc_format_name = models.CharField(max_length=64, null=False, blank=False)
+	class Meta:
+		ordering = ['doc_format']
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
@@ -161,13 +180,14 @@ class MediaAudio(models.Model):
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
-	source = models.TextField(max_length=512, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
+	source = models.CharField(max_length=256, default="", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
 	image = models.TextField(max_length=262144, default="", null=True, blank=True)
 	extra = models.TextField(max_length=2048, default="", null=True, blank=True)
 	doc_format = models.ForeignKey("MediaAudioFormat", on_delete=models.SET_NULL, blank=True, null=True)
+	rating = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
 
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
@@ -175,8 +195,9 @@ class MediaAudio(models.Model):
 	class Meta:
 		ordering = ['-created']
 		def __unicode__(self):
-			return self.file_name
+			return self.pk
 
+### PHOTOS
 
 PHOTO_SERVICES = (
 	("NA", "NA"),
@@ -191,6 +212,8 @@ PHOTO_SERVICES = (
 class MediaPhotoFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
 	doc_format_name = models.CharField(max_length=64, null=False, blank=False)
+	class Meta:
+		ordering = ['doc_format']
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
@@ -231,11 +254,13 @@ class MediaPhoto(models.Model):
 			return self.file_name
 
 
+### DOCUMENTS
+
 class MediaDocFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
 	doc_format_name = models.CharField(max_length=64, null=False, blank=False)
-	#class Meta:
-	#	ordering = ['doc_format']
+	class Meta:
+		ordering = ['doc_format']
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
@@ -258,6 +283,7 @@ class MediaDoc(models.Model):
 	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	doi_url = models.URLField(max_length=2083, null=True, blank=True)
+	source_url = models.URLField(max_length=2083, null=True, blank=True)
 	### this is actually doc_format_id
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	###

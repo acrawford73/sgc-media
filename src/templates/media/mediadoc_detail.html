@@ -60,6 +60,15 @@
                 <td><strong>Notes</strong></td>
                 <td>{{ asset.notes }}</td>
               </tr>
+                <td><strong>Source URL</strong></td>
+                <td>
+                  {% if asset.source_url == None %}
+                    None
+                  {% else %}
+                    <a href="{{ asset.source_url }}" target="_blank">{{ asset.source_url }}</a>
+                  {% endif %}
+                </td>
+              </tr>              
               <tr>
                 <td><strong>DOI URL</strong></td>
                 <td>

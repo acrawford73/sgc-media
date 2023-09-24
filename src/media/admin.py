@@ -2,7 +2,8 @@ from django.contrib import admin
 from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, \
 					MediaAudio, MediaAudioGenre, MediaAudioFormat, \
 					MediaPhoto, MediaPhotoFormat, \
-					MediaDoc, MediaDocFormat, MediaService, MediaDocCategories
+					MediaDoc, MediaDocFormat, MediaService, MediaDocCategories, \
+					MediaCountry
 
 
 # Video
@@ -92,6 +93,12 @@ class MediaDocCategoriesAdmin(admin.ModelAdmin):
 	class Meta:
 		model = MediaDocCategories
 
+class MediaCountryAdmin(admin.ModelAdmin):
+	list_display = ['country_name', 'country_code']
+	search_fields = ['country_name', 'country_code']
+	class Meta:
+		model = MediaCountry
+
 # Services
 # not implemented yet
 class MediaServiceAdmin(admin.ModelAdmin):
@@ -117,5 +124,6 @@ admin.site.register(MediaDoc, MediaDocAdmin)
 admin.site.register(MediaDocFormat, MediaDocFormatAdmin)
 admin.site.register(MediaDocCategories, MediaDocCategoriesAdmin)
 
+admin.site.register(MediaCountry, MediaCountryAdmin)
 
 admin.site.register(MediaService, MediaServiceAdmin)

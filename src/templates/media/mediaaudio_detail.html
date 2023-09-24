@@ -44,6 +44,12 @@
                 </td>
               </tr>
               <tr>
+                <td><strong>Rating</strong></td>
+                <td>
+                  <b-form-rating v-model="value">{{ asset.rating }}</b-form-rating>
+                </td>
+              </tr>
+              <tr>
                 <td><strong>Created</strong></td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }} (UTC)</td>
               </tr>
@@ -199,5 +205,15 @@
   </div>
 
 </main>
+
+<script>
+  export default {
+    data() {
+      return {
+        value: null
+      }
+    }
+  }
+</script>
 
 {% endblock %}

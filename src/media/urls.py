@@ -62,6 +62,7 @@ urlpatterns = [
 	re_path('^api/docs/(?P<doc_format>.+)/$', views.MediaDocListAPI.as_view()),
 
 
+
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),
 #
