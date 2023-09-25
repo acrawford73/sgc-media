@@ -495,14 +495,37 @@ def get_doc_formats():
 		if conn is not None:
 			conn.close()
 
+### FFMPEG Functions
+
 # Get Video Bitrate
 def get_video_metadata(asset_full_path):
 	try:
 		metadata = ffmpeg.probe(asset_full_path)["streams"]
 		if metadata is not None:
 			return metadata
-	except OSError as error:
+	except (Exception, ffmpeg.Error) as error:
 		log.error(error)
+		return False
+
+# Get Video Thumbnail
+def get_video_thumbnail(asset_full_path, asset_thumb_path):
+	probe = ffmpeg.probe(asset_full_path)
+	time = float(probe['streams'][0]['duration']) // 2
+	width = probe['streams'][0]['width']
+	try:
+		(
+			ffmpeg
+			.input(asset_full_path, ss=time)
+			.filter('scale', width, -1)
+			.output(asset_thumb_path, vframes=1)
+			.overwrite_output()
+			.run(capture_stdout=True, capture_stderr=True)
+		)
+		log.info("Thumbnail created for asset: " + asset_thumb_path)
+		return True
+	except ffmpeg.Error as e:
+		log.error(e.stderr.decode())
+		#print(e.stderr.decode(), file=sys.stderr)
 		return False
 
 
@@ -769,6 +792,15 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					continue
 
 				asset_uuid = str(uuid.uuid4())
+
+				# Thumbnails
+				thumb_file = "thumb.png"
+				asset_thumb_path = os.path.join(path, "thumbs/", asset_uuid)
+				make_sure_path_exists(asset_thumb_path)
+				asset_thumb_path = os.path.join(path, "thumbs/", asset_uuid, thumb_file)
+				#get_video_thumbnail(asset_full_path, asset_thumb_path)
+
+				# Metadata
 				media_properties = get_v_properties(asset_full_path)
 				media_video_codec = str(media_properties[0])
 				media_video_width = int(media_properties[1])
@@ -787,6 +819,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				media_audio_channels = int(media_properties[6])
 				media_audio_sample_rate = str(media_properties[7])
 
+				# Metadata
 				metadata = get_video_metadata(asset_full_path)
 				if metadata != False:
 					if metadata[0]['bit_rate'] is not None:
@@ -797,7 +830,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 						media_audio_bitrate = metadata[1]['bit_rate']
 					else:
 						media_audio_bitrate = 0
-
+				
+				# Orientation
 				if media_video_width > media_video_height:
 					orientation = "Landscape"
 				elif media_video_height > media_video_width:
@@ -805,6 +839,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				else:
 					orientation = "Square"
 
+				# File format
 				doc_format_ext = ext
 				result = get_video_format_id(doc_format_ext)
 				if result != False:
@@ -833,6 +868,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				
 				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, media_video_bitrate, media_video_codec, media_video_duration, media_audio_bitrate, media_audio_codec, media_audio_channels, media_audio_sample_rate, created, is_public, tags, doc_format_id)
 
+			# Documents
 			elif ext in ext_doc:
 				
 				asset_sha256 = str(hash_file(asset_full_path))
@@ -866,6 +902,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")
 
+
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':
 			asset_full_path = os.path.join(path, asset)
@@ -892,6 +929,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				else:
 					#log.info("Asset " + asset_sha256 + " deleted from file system: {}".format(asset_full_path))
 					log.info("Asset deleted from file system: {}".format(asset_full_path))
+
 
 		## FILE UPDATE EVENT ##
 		elif type_names[0] == "IN_MOVED_TO":
@@ -925,14 +963,12 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					if asset_exists > 0:
 						asset_update_doc(asset_full_path, asset_sha256)
 						log.info("Asset " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
-
 			else:
 				log.error("Invalid file extension ." + ext)
-			
 
 
 
-### STARTS HERE ###
+### SCRIPT STARTS HERE ###
 if __name__ == "__main__":
 
 	# ------------------------------
@@ -982,28 +1018,33 @@ if __name__ == "__main__":
 	#asset_audit()
 
 	ext_video = get_video_formats()
-	log.debug(ext_video)
 	if ext_video == False:
 		log.error("There are no video formats listed in the database.")
-		quit()
+		quit(1)
+	else:
+		log.debug(ext_video)
 	
 	ext_audio = get_audio_formats()
-	log.debug(ext_audio)
 	if ext_audio == False:
 		log.error("There are no audio formats listed in the database.")
-		quit()
+		quit(1)
+	else:
+		log.debug(ext_audio)
 
 	ext_photo = get_photo_formats()
-	log.debug(ext_photo)
 	if ext_photo == False:
 		log.error("There are no photo formats listed in the database.")
-		quit()
+		quit(1)
+	else:
+		log.debug(ext_photo)
 
 	ext_doc = get_doc_formats()
-	log.debug(ext_doc)
 	if ext_doc == False:
 		log.error("There are no document formats listed in the database.")
-		quit()
+		quit(1)
+	else:
+		log.debug(ext_doc)
+
 
 	# Start watcher loop
 	Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc)

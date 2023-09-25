@@ -69,6 +69,14 @@ class MediaVideoGenre(models.Model):
 	def __str__(self):
 		return self.genre
 
+class MediaVideoThumbnail(models.Model):
+	mediavideo = models.ForeignKey("MediaVideo", on_delete=models.CASCADE)
+	image = models.TextField(max_length=1048576, null=False, blank=False)
+	# class Meta:
+	# 	ordering = ['mediavideo_id']
+	def __str__(self):
+		return self.mediavideo_id
+
 class MediaVideo(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -224,7 +232,7 @@ class MediaPhoto(models.Model):
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
-	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp4
+	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.jpg
 	media_path = models.CharField(max_length=4096, default="")
 	size = models.PositiveIntegerField(default=0)
 	sha256 = models.CharField(max_length=64, default="")

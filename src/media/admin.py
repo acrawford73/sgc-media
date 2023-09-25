@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, \
+from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, MediaVideoThumbnail, \
 					MediaAudio, MediaAudioGenre, MediaAudioFormat, \
 					MediaPhoto, MediaPhotoFormat, \
 					MediaDoc, MediaDocFormat, MediaService, MediaDocCategories, \
