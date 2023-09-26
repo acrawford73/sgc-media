@@ -4,16 +4,19 @@ import os,sys
 import ffmpeg
 
 def get_video_metadata(media_path):
-	try:
-		metadata = ffmpeg.probe(media_path)["streams"]
-		if metadata is not None:
-			return metadata
-	except:
-		log.error(error)
+	#try:
+	metadata = ffmpeg.probe(media_path)["streams"]
+	if metadata is not None:
+		return metadata
+	#except ffmpeg.Error as error:
+	#except (Exception, ffmpeg.Error) as error:
+		#print(error)
+		#print(ffmpeg.Error.stderr)
+	else:
 		return False
 
 #media_path = "media_assets/drink-one-cup-per-day-as-a.mp4"
-media_path = "media_assets/Dr. Cody at Tech for Psych typing with his brain in 2023 sep 24 2023.mp4"
+media_path = "media_assets/6G From Connecting Things to Connected Intelligence (World Government Summit 2022).mp4"
 metadata = get_video_metadata(media_path)
 print(metadata)
 if metadata != False:
@@ -26,7 +29,8 @@ if metadata != False:
 	else:
 		audio_bitrate = 0
 
-print(video_bitrate)
-print(audio_bitrate)
-
-quit()
+	print(video_bitrate)
+	print(audio_bitrate)
+	quit(0)
+else:
+	quit(1)

@@ -75,7 +75,7 @@ class MediaVideoThumbnail(models.Model):
 	# class Meta:
 	# 	ordering = ['mediavideo_id']
 	def __str__(self):
-		return self.mediavideo_id
+		return self.mediavideo
 
 class MediaVideo(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -92,14 +92,22 @@ class MediaVideo(models.Model):
 	media_video_width = models.PositiveSmallIntegerField(default=0)
 	media_video_height= models.PositiveSmallIntegerField(default=0)
 	media_video_format = models.CharField(max_length=16, choices=MEDIA_FORMATS, default='HD')
-	media_video_frame_rate = models.CharField(max_length=32, default="")
+	media_video_frame_rate = models.CharField(max_length=32, default="", null=True, blank=True)
+	media_video_frame_rate_calc = models.PositiveSmallIntegerField(default=0)
 	media_video_bitrate = models.IntegerField(default=0, null=False, blank=False)
-	media_video_codec = models.CharField(max_length=32, default="")
+	media_video_codec = models.CharField(max_length=32, null=True, blank=True)
+	media_video_codec_long_name = models.CharField(max_length=128, null=True, blank=True)
+	media_video_codec_tag_string = models.CharField(max_length=128, null=True, blank=True)
 	media_video_duration = models.DecimalField(max_digits=12, decimal_places=3, default=0.0, null=True, blank=True)
+	media_video_aspect_ratio = models.CharField(max_length=16, null=True, blank=True)
+	media_video_pixel_format = models.CharField(max_length=16, null=True, blank=True)
+	media_video_is_avc = models.BooleanField(default=False)
 	media_audio_bitrate = models.IntegerField(default=0, null=False, blank=False)
-	media_audio_codec = models.CharField(max_length=32, default="")
+	media_audio_codec = models.CharField(max_length=32, null=True, blank=True)
+	media_audio_codec_long_name = models.CharField(max_length=128, null=True, blank=True)
+	media_audio_codec_tag_string = models.CharField(max_length=128, null=True, blank=True)
 	media_audio_channels = models.PositiveSmallIntegerField(default=0)
-	media_audio_sample_rate = models.CharField(max_length=16, default="")
+	media_audio_sample_rate = models.CharField(max_length=16, null=True, blank=True)
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_city = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_state = models.CharField(max_length=64, default="", null=True, blank=True)
