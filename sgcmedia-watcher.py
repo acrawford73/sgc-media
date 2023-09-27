@@ -191,25 +191,25 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-					media_video_is_avc, media_audio_bitrate, media_audio_codec, media_audio_codec_long_name, \
-					media_audio_codec_tag_string, media_audio_channels,	media_audio_sample_rate, \
-					created, is_public, tags, doc_format_id):
+					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
+					media_audio_sample_rate, created, is_public, tags, doc_format_id):
 	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, \
 	media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, \
 	media_video_frame_rate_calc, media_video_bitrate, media_video_codec, media_video_codec_long_name, \
 	media_video_codec_tag_string, media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-	media_video_is_avc, media_audio_bitrate, media_audio_codec, media_audio_codec_long_name, \
-	media_audio_codec_tag_string, media_audio_channels, media_audio_sample_rate, \
+	media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+	media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, media_audio_sample_rate, \
 	created, is_public, tags, doc_format_id) \
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-					media_video_is_avc, media_audio_bitrate, media_audio_codec, media_audio_codec_long_name, \
-					media_audio_codec_tag_string, media_audio_channels,	media_audio_sample_rate, \
-					created, is_public, tags, doc_format_id)
+					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
+					media_audio_sample_rate, created, is_public, tags, doc_format_id)
 	pgql(sql, data)
 
 # Add Audio asset to database
@@ -824,50 +824,90 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				# Metadata
 				metadata = get_video_metadata(asset_full_path)
 				if metadata != False:
-					if metadata[0]['bit_rate'] is not None:
+					if metadata[0]['codec_type'] == "video":
 						media_video_bitrate = metadata[0]['bit_rate']
-					else:
-						media_video_bitrate = 0
-					if metadata[1]['bit_rate'] is not None:
+						media_video_height = int(metadata[0]['height'])
+						media_video_width = int(metadata[0]['width'])
+						if media_video_width > 1920:
+							media_video_format = "UHD"
+						elif media_video_width >= 1920:
+							media_video_format = "FHD"
+						elif media_video_width >= 1280:
+							media_video_format = "HD"
+						else:
+							media_video_format = "SD"
+						if media_video_width > media_video_height:
+							orientation = "Landscape"
+						elif media_video_height > media_video_width:
+							orientation = "Portrait"
+						else:
+							orientation = "Square"
+						media_video_codec = metadata[0]['codec_name']
+						media_video_codec_long_name = metadata[0]['codec_long_name']
+						media_video_codec_tag_string = metadata[0]['codec_tag_string']
+						media_video_frame_rate = metadata[0]['r_frame_rate']
+						frame_rate = media_video_frame_rate.split("/")
+						media_video_frame_rate_calc = round(Decimal(frame_rate[0]) / Decimal(frame_rate[1]),2)
+						media_video_duration = round(Decimal(metadata[0]['duration']),3)
+						# Removed because not always available
+						# if metadata[0]['display_aspect_ratio'] is not None:
+						# 	media_video_aspect_ratio = metadata[0]['display_aspect_ratio']
+						# else:
+						media_video_aspect_ratio = ""
+						media_video_pixel_format = metadata[0]['pix_fmt']
+						media_video_color_space = metadata[0]['color_space']
+						if metadata[0]['is_avc'].lower() == "true":
+							media_video_is_avc = True
+						else:
+							media_video_is_avc = False
 						media_audio_bitrate = metadata[1]['bit_rate']
-					else:
-						media_audio_bitrate = 0
-				
-					media_video_height = int(metadata[0]['height'])
-					media_video_width = int(metadata[0]['width'])
-					if media_video_width > 1920:
-						media_video_format = "UHD"
-					elif media_video_width >= 1920:
-						media_video_format = "FHD"
-					elif media_video_width >= 1280:
-						media_video_format = "HD"
-					else:
-						media_video_format = "SD"
-					if media_video_width > media_video_height:
-						orientation = "Landscape"
-					elif media_video_height > media_video_width:
-						orientation = "Portrait"
-					else:
-						orientation = "Square"
-
-					media_video_codec = metadata[0]['codec_name']
-					media_video_codec_long_name = metadata[0]['codec_long_name']
-					media_video_codec_tag_string = metadata[0]['codec_tag_string'].upper()
-					media_video_frame_rate = metadata[0]['r_frame_rate']
-					frame_rate = media_video_frame_rate.split("/")
-					media_video_frame_rate_calc = int(frame_rate[0]) / int(frame_rate[1])
-					media_video_duration = round(Decimal(metadata[0]['duration']),3)
-					media_video_aspect_ratio = metadata[0]['display_aspect_ratio']
-					media_video_pixel_format = metadata[0]['pix_fmt']
-					if metadata[0]['is_avc'].lower() == "true":
-						media_video_is_avc = True
-					else:
-						media_video_is_avc = False
-					media_audio_codec = metadata[1]['codec_name'].upper()
-					media_audio_codec_long_name = metadata[1]['codec_long_name']
-					media_audio_codec_tag_string = metadata[1]['codec_tag_string'].upper()
-					media_audio_channels = int(metadata[1]['channels'])
-					media_audio_sample_rate = metadata[1]['sample_rate']
+						media_audio_codec = metadata[1]['codec_name']
+						media_audio_codec_long_name = metadata[1]['codec_long_name']
+						media_audio_codec_tag_string = metadata[1]['codec_tag_string']
+						media_audio_channels = int(metadata[1]['channels'])
+						media_audio_sample_rate = metadata[1]['sample_rate']
+					elif metadata[0]['codec_type'] == "audio":
+						media_video_bitrate = metadata[1]['bit_rate']
+						media_video_height = int(metadata[1]['height'])
+						media_video_width = int(metadata[1]['width'])
+						if media_video_width > 1920:
+							media_video_format = "UHD"
+						elif media_video_width >= 1920:
+							media_video_format = "FHD"
+						elif media_video_width >= 1280:
+							media_video_format = "HD"
+						else:
+							media_video_format = "SD"
+						if media_video_width > media_video_height:
+							orientation = "Landscape"
+						elif media_video_height > media_video_width:
+							orientation = "Portrait"
+						else:
+							orientation = "Square"
+						media_video_codec = metadata[1]['codec_name']
+						media_video_codec_long_name = metadata[1]['codec_long_name']
+						media_video_codec_tag_string = metadata[1]['codec_tag_string']
+						media_video_frame_rate = metadata[1]['r_frame_rate']
+						frame_rate = media_video_frame_rate.split("/")
+						media_video_frame_rate_calc = round(Decimal(frame_rate[1]) / Decimal(frame_rate[1]),2)
+						media_video_duration = round(Decimal(metadata[1]['duration']),3)
+						# Removed because not always available
+						# if metadata[1]['display_aspect_ratio'] is not None:
+						# 	media_video_aspect_ratio = metadata[1]['display_aspect_ratio']
+						# else:
+						media_video_aspect_ratio = ""
+						media_video_pixel_format = metadata[1]['pix_fmt']
+						media_video_color_space = metadata[1]['color_space']
+						if metadata[1]['is_avc'].lower() == "true":
+							media_video_is_avc = True
+						else:
+							media_video_is_avc = False
+						media_audio_bitrate = metadata[0]['bit_rate']
+						media_audio_codec = metadata[0]['codec_name']
+						media_audio_codec_long_name = metadata[0]['codec_long_name']
+						media_audio_codec_tag_string = metadata[0]['codec_tag_string']
+						media_audio_channels = int(metadata[0]['channels'])
+						media_audio_sample_rate = metadata[0]['sample_rate']
 				else:
 					log.error("Failed to get video properties for asset: " + asset_full_path)
 					continue
@@ -914,9 +954,9 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-					media_video_is_avc, media_audio_bitrate, media_audio_codec, media_audio_codec_long_name, \
-					media_audio_codec_tag_string, media_audio_channels,	media_audio_sample_rate, \
-					created, is_public, tags, doc_format_id)
+					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
+					media_audio_sample_rate, created, is_public, tags, doc_format_id)
 
 
 			# Documents

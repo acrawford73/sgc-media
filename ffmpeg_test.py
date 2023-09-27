@@ -16,7 +16,7 @@ def get_video_metadata(media_path):
 		return False
 
 #media_path = "media_assets/drink-one-cup-per-day-as-a.mp4"
-media_path = "media_assets/6G From Connecting Things to Connected Intelligence (World Government Summit 2022).mp4"
+media_path = "media_assets/Engine room nite kap sep 26 2023.MOV"
 metadata = get_video_metadata(media_path)
 print(metadata)
 if metadata != False:

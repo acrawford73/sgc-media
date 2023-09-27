@@ -127,13 +127,14 @@
                 <td>{{ asset.file_uuid|upper }}</td>
               </tr>
               <tr>
-                <td><strong>Format</strong></td>
+                <td><strong>File Format</strong></td>
                 <td>{{ asset.doc_format }}</td>
               </tr>
             </tbody>
           </table>
           <p>&nbsp;</p>
           <h3>Media Properties</h3>
+          <h5>Video Properties</h5>
           <table class="table table-striped table-hover table-md">
             <tbody>
               <tr>
@@ -149,39 +150,72 @@
                 <td>{{ asset.media_video_height }}</td>
               </tr>
               <tr>
-                <td><strong>Format</strong></td>
+                <td><strong>Display Format</strong></td>
                 <td>{{ asset.media_video_format }}</td>
               </tr>
               <tr>
                 <td><strong>Frame Rate</strong></td>
-                <td>{{ asset.media_video_frame_rate }}</td>
+                <td>{{ asset.media_video_frame_rate }}, {{ asset.media_video_frame_rate_calc }} fps</td>
               </tr>
               <tr>
-                <td><strong>Format</strong></td>
-                <td>{{ asset.media_video_format }}</td>
-              </tr>
-              <tr>
-                <td><strong>Video Bitrate</strong></td>
+                <td><strong>Bitrate</strong></td>
                 <td>{{ asset.media_video_bitrate|floatformat:"-3g" }} bps</td>
               </tr>
               <tr>
-                <td><strong>Video Codec</strong></td>
+                <td><strong>Codec</strong></td>
                 <td>{{ asset.media_video_codec }}</td>
               </tr>
               <tr>
-                <td><strong>Audio Bitrate</strong></td>
+                <td><strong>Codec Long Name</strong></td>
+                <td>{{ asset.media_video_codec_long_name }}</td>
+              </tr>
+              <tr>
+                <td><strong>Codec Tag</strong></td>
+                <td>{{ asset.media_video_codec_tag_string }}</td>
+              </tr>
+<!--               <tr>
+                <td><strong>Aspect Ratio</strong></td>
+                <td>{{ asset.media_video_aspect_ratio }}</td>
+              </tr> -->
+              <tr>
+                <td><strong>Pixel Format</strong></td>
+                <td>{{ asset.media_video_pixel_format }}</td>
+              </tr>
+              <tr>
+                <td><strong>Color Space</strong></td>
+                <td>{{ asset.media_video_color_space }}</td>
+              </tr>
+              <tr>
+                <td><strong>Is AVC</strong></td>
+                <td>{{ asset.media_video_is_avc }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h5>Audio Properties</h5>
+          <table class="table table-striped table-hover table-md">
+            <tbody>
+              <tr>
+                <td><strong>Bitrate</strong></td>
                 <td>{{ asset.media_audio_bitrate|floatformat:"-3g" }} bps</td>
               </tr>
               <tr>
-                <td><strong>Audio Codec</strong></td>
+                <td><strong>Codec</strong></td>
                 <td>{{ asset.media_audio_codec }}</td>
               </tr>
               <tr>
-                <td><strong>Audio Channel(s)</strong></td>
+                <td><strong>Codec Long Name</strong></td>
+                <td>{{ asset.media_audio_codec_long_name }}</td>
+              </tr>
+              <tr>
+                <td><strong>Codec Tag</strong></td>
+                <td>{{ asset.media_audio_codec_tag_string }}</td>
+              </tr>
+              <tr>
+                <td><strong>Channels</strong></td>
                 <td>{{ asset.media_audio_channels }}</td>
               </tr>
               <tr>
-                <td><strong>Audio Sample Rate</strong></td>
+                <td><strong>Sample Rate</strong></td>
                 <td>{{ asset.media_audio_sample_rate }}</td>
               </tr>
             </tbody>
