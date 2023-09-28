@@ -43,7 +43,7 @@ import ffmpeg
 import psycopg2
 from PIL import Image
 import inotify.adapters
-from videoprops import get_video_properties, get_audio_properties
+#from videoprops import get_video_properties, get_audio_properties
 from tinytag import TinyTag
 # TinyTag supported formats:
 # MP3/MP2/MP1 (ID3 v1, v1.1, v2.2, v2.3+)
@@ -115,36 +115,29 @@ def hash_file(asset):
 	# return the hex representation of digest
 	return h.hexdigest()
 
-def get_v_properties(asset_full_path):
-	props = get_video_properties(asset_full_path)
-	media_video_codec = props['codec_name']
-	media_video_width = props['width']
-	media_video_height = props['height']
-	media_video_frame_rate = props['r_frame_rate']
-	media_video_duration = props['duration']
-	try:
-		media_audio_codec = "NA"
-		media_audio_channels = 0
-		media_audio_sample_rate = 0
-		props = get_audio_properties(asset_full_path)
-		if 'codec_name' in props:
-			media_audio_codec = props['codec_name']
-		if 'channels' in props:
-			media_audio_channels = props['channels']
-		if 'sample_rate' in props:
-			media_audio_sample_rate = props['sample_rate']
-	except RuntimeError as error:
-		print(error)
-	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, \
-		media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
-
-
-#def asset_audit():
-#	log.info("Auditing existing assets with database...")
-#	# Get assets in database
-#	# Get assets in storage
-#	# Determine which assets are not in database, add to database.
-#	# Determine which assets are not in storage, delete in DB.
+## old method to get video properties
+# def get_v_properties(asset_full_path):
+# 	props = get_video_properties(asset_full_path)
+# 	media_video_codec = props['codec_name']
+# 	media_video_width = props['width']
+# 	media_video_height = props['height']
+# 	media_video_frame_rate = props['r_frame_rate']
+# 	media_video_duration = props['duration']
+# 	try:
+# 		media_audio_codec = "NA"
+# 		media_audio_channels = 0
+# 		media_audio_sample_rate = 0
+# 		props = get_audio_properties(asset_full_path)
+# 		if 'codec_name' in props:
+# 			media_audio_codec = props['codec_name']
+# 		if 'channels' in props:
+# 			media_audio_channels = props['channels']
+# 		if 'sample_rate' in props:
+# 			media_audio_sample_rate = props['sample_rate']
+# 	except RuntimeError as error:
+# 		print(error)
+# 	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, \
+# 		media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
 
 
 ## NOTE:
@@ -167,6 +160,7 @@ def pgql(sql, data):
 			conn.commit()
 			conn.close()
 
+# Find if asset exists
 def pgql_find(sql, data):
 	log.debug("SQL:  " + sql)
 	for df in data:
@@ -217,16 +211,18 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
-	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra, doc_format_id):
+	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
+	media_audio_extra, doc_format_id, rating):
 	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
 	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, \
 	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, \
-	is_public, tags, image, extra, doc_format_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	is_public, tags, image, extra, doc_format_id, rating) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
-	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, media_audio_extra, doc_format_id)
+	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
+	media_audio_extra, doc_format_id, rating)
 	pgql(sql, data)
 
 # Add Photo asset to database
@@ -761,6 +757,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				result = get_audio_format_id(doc_format_ext)
 				if result != False:
 					doc_format_id = result
+				rating = 0
 
 				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
 				log.debug("File:        " + asset)
@@ -785,14 +782,15 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Comment:      " + media_audio_comments)
 				log.debug("Extra:        " + media_audio_extra)
 				log.debug("Format ID:    " + str(doc_format_id))
-
+				log.debug("Rating:       " + str(rating))
+				
 				asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
 					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
 					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
 					media_audio_comments, media_audio_duration, media_audio_bitrate, \
 					media_audio_samplerate, created, is_public, tags, media_audio_image, \
-					media_audio_extra, doc_format_id)
+					media_audio_extra, doc_format_id, rating)
 
 
 			# Ingest video asset

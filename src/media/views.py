@@ -44,7 +44,7 @@ class MediaVideoDetailView(DetailView):
 class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_name', 'media_video_width', 'media_video_height', 'orientation', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_name', 'orientation', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
