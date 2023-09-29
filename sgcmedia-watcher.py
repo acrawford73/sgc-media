@@ -1082,7 +1082,7 @@ if __name__ == "__main__":
 	# Initialize Logging
 	# ------------------------------
 	#log_file = strftime('sgcmedia_%Y%m%d_%H%M%S.log')
-	log_file = strftime('sgcmedia.log')
+	log_file = strftime('sgcmedia-watcher.log')
 	log_path = config.get('sgc', 'log_path')
 	logfile = os.path.join(log_path, log_file)
 	make_sure_path_exists(log_path)

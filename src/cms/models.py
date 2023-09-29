@@ -247,7 +247,7 @@ class tvSpecial(models.Model):
 
 class Content(models.Model):
 	date_added = models.DateTimeField(auto_now_add=True)
-
+	
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -427,13 +427,3 @@ class Credit(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.id)
-
-class Genre(models.Model):
-	genre = models.CharField(max_length=32, default="", null=False, blank=False)
-	class Meta:
-		ordering = ['id']
-		def __unicode__(self):
-			return self.id
-	def __str__(self):
-		return str(self.id)
-
