@@ -1,6 +1,6 @@
 #!bin/python3
 
-# Copyright (c) 2021 Anthony Crawford
+# Copyright (c) 2023
 
 #       _/_/_/    _/_/_/    _/_/_/
 #    _/        _/        _/
@@ -47,11 +47,7 @@ import inotify.adapters
 from tinytag import TinyTag
 # TinyTag supported formats:
 # MP3/MP2/MP1 (ID3 v1, v1.1, v2.2, v2.3+)
-# Wave/RIFF
-# OGG
-# OPUS
-# FLAC
-# WMA
+# Wave/RIFF, OGG, OPUS, FLAC, WMA
 # MP4/M4A/M4B/M4R/M4V/ALAC/AAX/AAXC
 # AIFF/AIFF-C
 
@@ -60,9 +56,9 @@ from tinytag import TinyTag
 # ------------------------------
 # string to boolean
 def str_to_bool(s):
-	if s in ("True", "TRUE", "true", "1"):
+	if s.lower() in ("true", "1"):
 		return True
-	elif s in ("False", "FALSE", "false", "0"):
+	elif s.lower() in ("false", "0"):
 		return False
 	else:
 		return None
@@ -101,19 +97,21 @@ def hash_file(asset):
 	# make a hash object
 	h = hashlib.sha256()
 	# open file for reading in binary mode
-	with open(asset,'rb') as file:
+	try:
+		with open(asset,'rb') as file:
+			# loop till the end of the file
+			chunk = 0
+			while chunk != b'':
+				# read only 1024 bytes at a time
+				chunk = file.read(65536)
+				h.update(chunk)
+		# return the hex representation of digest
+		return str(h.hexdigest())
+	except IOError as e:
+		log.error("Could not retrieve file for sha256 creation. ")
+		log.error()
+		return False
 
-		## check for file open errors here - if so return False
-
-		# loop till the end of the file
-		chunk = 0
-		while chunk != b'':
-			# read only 1024 bytes at a time
-			chunk = file.read(65536)
-			h.update(chunk)
-	file.close()
-	# return the hex representation of digest
-	return h.hexdigest()
 
 ## old method to get video properties
 # def get_v_properties(asset_full_path):
@@ -226,9 +224,14 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	pgql(sql, data)
 
 # Add Photo asset to database
-def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, file_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
+def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+		asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, \
+		tags, doc_format_id):
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, \
+		file_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id) \
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
+		asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
 	pgql(sql, data)
 
 # Add Document asset to database
@@ -596,7 +599,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			# Ingest photo asset
 			if ext in ext_photo:
 				
-				asset_sha256 = str(hash_file(asset_full_path))
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_photo(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
@@ -650,7 +653,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			# Ingest audio/music asset
 			elif ext in ext_audio:
 				
-				asset_sha256 = str(hash_file(asset_full_path))
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_audio(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
@@ -797,7 +800,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			elif ext in ext_video:
 
 				# If asset already exists in database, ignore it
-				asset_sha256 = str(hash_file(asset_full_path))
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_video(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
@@ -960,7 +963,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			# Documents
 			elif ext in ext_doc:
 				
-				asset_sha256 = str(hash_file(asset_full_path))
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_doc(asset_sha256)
 				if asset_exists is not None:
 					if asset_exists > 0:
@@ -1000,7 +1003,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			if ext != "":
 				ext = ext.split(".")[1].upper()
 			
-				#asset_sha256 = str(hash_file(asset_full_path))
+				asset_sha256 = hash_file(asset_full_path)
 				if delete_db_on_fs_delete == True:
 					if ext in ext_photo:
 						asset_delete_photo(asset_full_path)
@@ -1027,7 +1030,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			file, ext = os.path.splitext(asset)
 			ext = ext.split(".")[1].upper()
 
-			asset_sha256 = str(hash_file(asset_full_path))
+			asset_sha256 = hash_file(asset_full_path)
 			if ext in ext_video:
 				asset_exists = asset_find_video(asset_sha256)
 				if asset_exists is not None:

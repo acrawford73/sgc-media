@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from datetime import datetime
+import datetime,time
 
 #
 
@@ -303,7 +303,7 @@ class MediaDoc(models.Model):
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	doi_url = models.URLField(max_length=2083, null=True, blank=True)
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
-	### this is actually doc_format_id
+	### this is actually doc_format_id in the database
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	###
 	category = models.ForeignKey("MediaDocCategories", on_delete=models.SET_NULL, blank=True, null=True)
