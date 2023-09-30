@@ -38,12 +38,13 @@ class Category(models.Model):
 
 class Playlist(models.Model):
 	#playlist_id = models.PositiveBigIntegerField(primary_key=True)
-	platlist_name = models.CharField(max_length=20, default="", null=True, blank=True)
+	playlist_name = models.CharField(max_length=20, default="", null=True, blank=True)
 	# list of video items
 	item_ids = models.JSONField(default=list, null=True, blank=True)
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
+	# extra
 	is_public = models.BooleanField(default=True)
 
 	def get_absolute_url(self):
@@ -222,7 +223,7 @@ class ShortFormVideo(models.Model):
 	def __str__(self):
 		return str(self.short_form_video_id)
 
-class tvSpecial(models.Model):
+class TVSpecial(models.Model):
 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False)
 	title = models.CharField(max_length=64, null=False, blank=False)
 	content = models.URLField(max_length=2083, null=False, blank=False)

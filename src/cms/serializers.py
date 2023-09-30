@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import Category, Playlist, Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Genre, ExternalID, Rating, RatingSource, ParentalRating, Credit
+from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, RatingSource, ParentalRating, Credit
 
 
 ### Content Categories
@@ -16,7 +16,7 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 	categories = serializers.JSONField(source='category')
 	class Meta:
 		model = Playlist
-		fields = ['id', 'title', 'short_description', 'created', 'category']
+		fields = ['id', 'playlist_name', 'item_ids', 'short_description', 'notes', 'created']
 
 
 ### Content Types
@@ -70,6 +70,69 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 
 
 ### Content Properties
+
+class ContentSerializerList(serializers.ModelSerializer):
+	dateAdded = models.DateField(source='date_added')
+	trickPlayFiles = models.JSONField(source='trick_play_files')
+	validityPeriodStart = models.DateField(source='validity_period_start')
+	validityPeriodEnd = models.DateField(source='validity_period_end')
+	adBreaks = models.CharField(source='ad_breaks')
+	class Meta:
+		model = Content
+		fields = ['date_added', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_period_start', 'validity_period_end', 'ad_breaks']
+
+class VideoSerializerList(serializers.ModelSerializer):
+	videoType = models.CharField(source='video_type')
+	class Meta:
+		model = Video
+		fields = ['url', 'quality', 'video_type']
+
+class CaptionSerializerList(serializers.ModelSerializer):
+	captionType = models.CharField(source='caption_type')
+	class Meta:
+		model = Caption
+		fields = ['url', 'language', 'caption_type']
+
+class TrickPlayFileSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = TrickPlayFile
+		fields = ['url', 'language']
+
+class GenreFileSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = Genre
+		fields = ['genre']
+
+class ExternalIDSerializerList(serializers.ModelSerializer):
+	id = models.CharField(source='external_id')
+	idType = models.CharField(source='id_type')
+	class Meta:
+		model = ExternalID
+		fields = ['external_id', 'id_type']
+
+class RatingSerializerList(serializers.ModelSerializer):
+	ratingSource = models.CharField(source='rating_source')
+	class Meta:
+		model = Rating
+		fields = ['rating', 'rating_source']
+
+class RatingSourceSerializerList(serializers.ModelSerializer):
+	ratingSource = models.CharField(source='source_name')
+	class Meta:
+		model = RatingSource
+		fields = ['source_name']
+
+class ParentalRatingSourceSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = ParentRating
+		fields = ['rating']
+
+class CreditSerializerList(serializers.ModelSerializer):
+	name = models.CharField(source='credit_name')
+	birthDate = models.CharField(source='birth_date')
+	class Meta:
+		model = Credit
+		fields = ['credit_name', 'role', 'birth_date']
 
 
 
