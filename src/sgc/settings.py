@@ -26,11 +26,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 if config('PRODUCTION', default=False, cast=bool) == True:
     DEBUG = False
-    PROD_ALLOWED_HOSTS = config('PROD_ALLOWED_HOSTS')
+    ALLOWED_HOSTS = ['domain.com']
     SECRET_KEY = config('PROD_SECRET_KEY')
 else:
     DEBUG = True
-    DEBUG_ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS')
+    ALLOWED_HOSTS = ['localhost', '192.168.0.13']
     SECRET_KEY = config('DEBUG_SECRET_KEY')
 
 

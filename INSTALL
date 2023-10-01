@@ -28,8 +28,6 @@ Example: gw^9ej(l4vq%d_06xig$vw+b(-@#00@8l7jlv77=sq5r_sf3nu
 
 # Create a new '.env' file in project root ~/sgc-media, add the following:
 PRODUCTION=True
-PROD_ALLOWED_HOSTS=['domain.com']
-DEBUG_ALLOWED_HOSTS=['localhost']
 PROD_SECRET_KEY=<random key from previous step
 DEBUG_SECRET_KEY=<another random key from previous step>
 DB_ENGINE=django.db.backends.postgresql_psycopg2
