@@ -11,6 +11,7 @@ class CategorySerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Content
 		fields = ['id', 'category_name', 'playlist_name', 'query_string', 'order']
+		#fields = '__all__'  ## provide all fields
 
 class PlaylistSerializerList(serializers.ModelSerializer):
 	categories = serializers.JSONField(source='category')
@@ -133,13 +134,3 @@ class CreditSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Credit
 		fields = ['credit_name', 'role', 'birth_date']
-
-
-
-
-
-
-# class MovieSerializerDetail(serializers.ModelSerializer):
-# 	class Meta:
-# 		model = Movie
-# 		fields = '__all__'

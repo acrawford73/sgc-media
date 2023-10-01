@@ -2,7 +2,6 @@ import uuid
 import datetime,time
 from django.db import models
 from django.urls import reverse
-from media.models import MediaVideo, MediaAudio, MediaPhoto
 
 ## For the Roku Direct Publisher Feed info check this website:
 # https://developer.roku.com/en-ca/docs/specs/direct-publisher-feed-specs/json-dp-spec.md
