@@ -1,17 +1,2 @@
-bin/
-lib/
-man/
-include/
-share/
-src/*/migrations/
-src/sgc/__pycache__/
-media_assets/
-log/
-static_cdn/
-db.py
-*.pyc
-image.py
-check.py
-export_pretty.json
-importer.py
-.env
+# created by virtualenv automatically
+*
