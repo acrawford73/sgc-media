@@ -1008,8 +1008,6 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 
 			if ext != "":
 				ext = ext.split(".")[1].upper()
-			
-				#asset_sha256 = hash_file(asset_full_path)
 				if delete_db_on_fs_delete == True:
 					if ext in ext_photo:
 						asset_delete_photo(asset_full_path, db_meta)

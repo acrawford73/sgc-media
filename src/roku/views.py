@@ -117,15 +117,68 @@ class PlaylistDetailAPI(generics.RetrieveAPIView):
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['playlist_name', 'short_description', 'notes', 'created']
 
+
+#Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
+## Roku Content Types
+
+
+
+
+
+
+#Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, RatingSource, ParentalRating, Credit
+## Roku ContentPoperties
+# Content
+class ContentCreateView(CreateView):
+	model = Content
+	template_name = 'roku/content_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+
+class ContentListView(ListView):
+	model = Content
+	template_name = 'roku/content_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'content'
+	ordering = ['-id']
+	paginate_by = 15
+
+class ContentDetailView(DetailView):
+	model = Content
+	context_object_name = 'content'
+
+class ContentUpdateView(UpdateView):
+	model = Content
+	context_object_name = 'content'
+	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+
+class ContentListAPI(generics.ListAPIView):
+	queryset = Content.objects.all()
+	serializer_class = ContentSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+class ContentListAPISearch(generics.ListAPIView):
+	queryset = Content.objects.all()
+	serializer_class = ContentSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'short_description', 'long_description', '@tags']
+	ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+class ContentDetailAPI(generics.RetrieveAPIView):
+	queryset = Content.objects.all()
+	serializer_class = ContentSerializerDetail
+
 # Video
 class VideoCreateView(CreateView):
 	model = Video
-	template_name = 'cms/video_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku/video_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
 
 class VideoListView(ListView):
 	model = Video
-	template_name = 'cms/video_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku/video_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'video'
 	ordering = ['-id']
 	paginate_by = 15
@@ -151,10 +204,98 @@ class VideoListAPISearch(generics.ListAPIView):
 	queryset = Video.objects.all()
 	serializer_class = VideoSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	search_fields = ['title', 'short_description', 'long_description', 'username', '@tags']
 	ordering_fields = ['id', 'category_name', 'playlist_name']
 	ordering = ['-id']
 
 class VideoDetailAPI(generics.RetrieveAPIView):
 	queryset = Video.objects.all()
 	serializer_class = VideoSerializerDetail
+
+# Caption
+class CaptionCreateView(CreateView):
+	model = Caption
+	template_name = 'roku/caption_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+
+class CaptionListView(ListView):
+	model = Caption
+	template_name = 'roku/caption_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'caption'
+	ordering = ['-id']
+	paginate_by = 15
+
+class CaptionDetailView(DetailView):
+	model = Caption
+	context_object_name = 'caption'
+
+class CaptionUpdateView(UpdateView):
+	model = Caption
+	context_object_name = 'caption'
+	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+
+class CaptionListAPI(generics.ListAPIView):
+	queryset = Caption.objects.all()
+	serializer_class = CaptionSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+class CaptionListAPISearch(generics.ListAPIView):
+	queryset = Caption.objects.all()
+	serializer_class = CaptionSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'short_description', 'long_description', '@tags']
+	ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+class CaptionDetailAPI(generics.RetrieveAPIView):
+	queryset = Caption.objects.all()
+	serializer_class = CaptionSerializerDetail
+
+# TrickPlayFile
+class TrickPlayFileCreateView(CreateView):
+	model = TrickPlayFile
+	template_name = 'roku/trickplayfile_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+
+class TrickPlayFileListView(ListView):
+	model = TrickPlayFile
+	template_name = 'roku/trickplayfile_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'trickplayfile'
+	ordering = ['-id']
+	paginate_by = 15
+
+class TrickPlayFileDetailView(DetailView):
+	model = TrickPlayFile
+	context_object_name = 'trickplayfile'
+
+class TrickPlayFileUpdateView(UpdateView):
+	model = TrickPlayFile
+	context_object_name = 'trickplayfile'
+	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+
+class TrickPlayFileListAPI(generics.ListAPIView):
+	queryset = TrickPlayFile.objects.all()
+	serializer_class = TrickPlayFileSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+class TrickPlayFileListAPISearch(generics.ListAPIView):
+	queryset = TrickPlayFile.objects.all()
+	serializer_class = TrickPlayFileSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'short_description', 'long_description', '@tags']
+	ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+class TrickPlayFileDetailAPI(generics.RetrieveAPIView):
+	queryset = TrickPlayFile.objects.all()
+	serializer_class = TrickPlayFileSerializerDetail
+
+# Genre
+
+
