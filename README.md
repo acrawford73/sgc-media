@@ -10,7 +10,7 @@ File information is consumed through API
 
 Media is consumed via public webserver
 
-Django 3.2.3
+Django 4.2.x
 
 ## Install ##
 
