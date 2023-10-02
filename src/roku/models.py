@@ -14,6 +14,57 @@ from django.urls import reverse
 # ISO 639.2 Codes:       https://www.loc.gov/standards/iso639-2/php/code_list.php
 
 
+class Language(models.Model):
+	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False)
+	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)
+	language_name_eng = models.CharField(max_length=64, null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+### Roku content data feeds
+# Content
+class RokuContentFeed(models.Model):
+	provider_name = models.CharField(max_length=32, null=False, blank=False)
+	last_updated = models.DateTimeField(auto_now_add=True)
+	language = models.CharField(max_length=8, null=False, blank=False)
+	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL)
+	categories = models.ForeignKey("Category", on_delete=models.SET_NULL)
+	playlists = models.ForeignKey("Playlist", on_delete=models.SET_NULL)
+	movies = models.ForeignKey("Movie", on_delete=models.SET_NULL)
+	live_feeds = models.ForeignKey("LiveFeed", on_delete=models.SET_NULL)
+	series = models.ForeignKey("Series", on_delete=models.SET_NULL)
+	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.SET_NULL)
+	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.SET_NULL)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+# Search
+class RokuSearchFeed(models.Model):
+	provider_name = models.CharField(max_length=32, null=False, blank=False)
+	last_updated = models.DateTimeField(auto_now_add=True)
+	language = models.ForeignKey("Language", on_delete=models.SET_NULL)
+	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL)
+	movies = models.ForeignKey("Movie", on_delete=models.SET_NULL)
+	series = models.ForeignKey("Series", on_delete=models.SET_NULL)
+	seasons = models.ForeignKey("Season", on_delete=models.SET_NULL)
+	episodes = models.ForeignKey("Episode", on_delete=models.SET_NULL)
+	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.SET_NULL)
+	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.SET_NULL)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
 ### Content Categories
 
 CONTENT_CATEGORY_ORDER = (

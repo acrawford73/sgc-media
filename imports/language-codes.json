@@ -1,0 +1,13 @@
+# Language Codes
+[
+	["eng", "en", "English"],
+	["fre", "fr", "French"],
+	["deu", "de", "German"],
+	["ita", "it", "Italian"],
+	["jpn", "ja", "Japanese"],
+	["kor", "ko", "Korean"],
+	["por", "pt", "Portuguese"],
+	["rus", "ru", "Russian"],
+	["spa", "es", "Spanish"],
+	["chi", "zh", "Chinese"]
+]
