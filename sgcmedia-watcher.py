@@ -151,8 +151,10 @@ def pgql(sql, data, db_meta):
 		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
+		return True
 	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
+		return False
 	finally:
 		if conn is not None:
 			conn.commit()
@@ -202,7 +204,8 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	return psql_result
 
 # Add Audio asset to database
 def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
@@ -221,7 +224,8 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
 	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
 	media_audio_extra, doc_format_id, rating)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	return psql_result
 
 # Add Photo asset to database
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
@@ -232,7 +236,8 @@ def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, as
 	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
 		asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	return psql_result
 
 # Add Document asset to database
 def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
@@ -241,32 +246,41 @@ def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asse
 	file_uuid, doc_format_id, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
 	asset_uuid, doc_format_id, created, is_public, tags)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	return psql_result
 
 # Delete
 def asset_delete_photo(asset_full_path, db_meta):
 	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
 	data = (asset_full_path,)
-	pgql(sql, data, db_meta)
-	log.debug("Asset deleted from database: {}".format(asset_full_path))
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset deleted from database: {}".format(asset_full_path))
+	return psql_result
 
 def asset_delete_video(asset_full_path, db_meta):
 	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
 	data = (asset_full_path,) # comma required!
-	pgql(sql, data, db_meta)
-	log.debug("Asset deleted from database: {}".format(asset_full_path))
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset deleted from database: {}".format(asset_full_path))
+	return psql_result
 
 def asset_delete_audio(asset_full_path, db_meta):
 	sql = "DELETE FROM media_mediaaudio WHERE file_path=%s"
 	data = (asset_full_path,)
-	pgql(sql, data, db_meta)
-	log.debug("Asset deleted from database: {}".format(asset_full_path))
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset deleted from database: {}".format(asset_full_path))
+	return psql_result
 
 def asset_delete_doc(asset_full_path, db_meta):
 	sql = "DELETE FROM media_mediadoc WHERE file_path=%s"
 	data = (asset_full_path,)
-	pgql(sql, data, db_meta)
-	log.debug("Asset deleted from database: {}".format(asset_full_path))
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset deleted from database: {}".format(asset_full_path))
+	return psql_result
 
 # Query
 def asset_find_photo(asset_sha256, db_meta):
@@ -297,22 +311,34 @@ def asset_find_doc(asset_sha256, db_meta):
 def asset_update_photo(asset_full_path, asset_media_path, asset_sha256, db_meta):
 	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s WHERE sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
 
 def asset_update_video(asset_full_path, asset_media_path, asset_sha256, db_meta):
 	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
 	
 def asset_update_audio(asset_full_path, asset_media_path, asset_sha256, db_meta):
 	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
 	
 def asset_update_doc(asset_full_path, asset_media_path, asset_sha256, db_meta):
 	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s WHERE sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
-	pgql(sql, data, db_meta)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
 
 def get_video_format_id(doc_format_ext, db_meta):
 	sql = "SELECT id,doc_format FROM media_mediavideoformat WHERE doc_format=%s"
@@ -640,7 +666,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					doc_format_id = result
 
 				asset_title = splitext(asset)[0]
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
+				
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
 				log.debug("Hash:         " + asset_sha256)
@@ -650,10 +676,14 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Orientation:  " + orientation)
 				log.debug("Format ID:    " + str(doc_format_id))
 
-				asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				result = asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, width, height, photo_format, orientation, created, \
 					is_public, tags, doc_format_id, db_meta)
-
+				
+				if result == True:
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
+				else:
+					log.error("Failed to ingest asset: " + asset_full_path)
 
 			# Ingest audio/music asset
 			elif ext in ext_audio:
@@ -767,7 +797,6 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					doc_format_id = result
 				rating = 0
 
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size) + " bytes")
 				log.debug("Hash:        " + asset_sha256)
@@ -792,14 +821,18 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format ID:    " + str(doc_format_id))
 				log.debug("Rating:       " + str(rating))
 				
-				asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
+				result = asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
 					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
 					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
 					media_audio_comments, media_audio_duration, media_audio_bitrate, \
 					media_audio_samplerate, created, is_public, tags, media_audio_image, \
 					media_audio_extra, doc_format_id, rating, db_meta)
-
+				
+				if result == True:
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
+				else:
+					log.error("Failed to ingest asset: " + asset_full_path)
 
 			# Ingest video asset
 			elif ext in ext_video:
@@ -926,7 +959,6 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 
 				asset_title = splitext(asset)[0]
 
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
 				log.debug("File:            " + asset)
 				log.debug("Size:            " + str(asset_size))
 				log.debug("Hash:            " + asset_sha256)
@@ -955,7 +987,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Sample Rate:     " + media_audio_sample_rate)
 				log.debug("Format ID:       " + str(doc_format_id))
 				
-				asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				result = asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
@@ -963,7 +995,11 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta)
-
+				
+				if result == True:
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
+				else:
+					log.error("Failed to ingest asset: " + asset_full_path)
 
 			# Documents
 			elif ext in ext_doc:
@@ -986,7 +1022,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					doc_format_id = result
 
 				asset_title = splitext(asset)[0]
-				log.info("Asset created: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
+
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size))
 				log.debug("Hash:        " + asset_sha256)
@@ -994,8 +1030,13 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format:      " + doc_format_ext)
 				log.debug("Format ID:   " + str(doc_format_id))
 
-				asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				result = asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
+				
+				if result == True:
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
+				else:
+					log.error("Failed to ingest asset: " + asset_full_path)
 
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")

@@ -4,6 +4,7 @@ from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenr
 
 # Video
 class MediaVideoSerializerList(serializers.ModelSerializer):
+	id = serializers.CharField(source="file_uuid")
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
 	width = serializers.IntegerField(source='media_video_width')
@@ -36,6 +37,7 @@ class MediaAudioSerializerListAlbums(serializers.ModelSerializer):
 		fields = ['id', 'album', 'artist']
 
 class MediaAudioSerializerList(serializers.ModelSerializer):
+	id = serializers.CharField(source="file_uuid")
 	description = serializers.CharField(source='short_description')
 	bitrate = serializers.CharField(source='audio_bitrate')
 	class Meta:
@@ -50,6 +52,7 @@ class MediaAudioSerializerDetail(serializers.ModelSerializer):
 
 # Photo
 class MediaPhotoSerializerList(serializers.ModelSerializer):
+	id = serializers.CharField(source="file_uuid")
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
 	class Meta:
@@ -64,6 +67,7 @@ class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 
 # Documents
 class MediaDocSerializerList(serializers.ModelSerializer):
+	id = serializers.CharField(source="file_uuid")
 	description = serializers.CharField(source='short_description')
 	class Meta:
 		model = MediaDoc

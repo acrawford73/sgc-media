@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.urls import reverse
 import datetime,time
@@ -88,6 +89,7 @@ class MediaVideo(models.Model):
 	size = models.PositiveIntegerField(default=0)
 	sha256 = models.CharField(max_length=64, default="")
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	#file_uuid = models.UUIDField(default=uuid.uuid4, editable=False, null=False, blank=False)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
 	media_video_width = models.PositiveSmallIntegerField(default=0)
 	media_video_height= models.PositiveSmallIntegerField(default=0)
