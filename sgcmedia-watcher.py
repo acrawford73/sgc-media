@@ -40,7 +40,7 @@ import logging.handlers
 from configparser import ConfigParser
 # Third Party
 import ffmpeg
-import psycopg2
+import psycopg
 from PIL import Image
 import inotify.adapters
 #from videoprops import get_video_properties, get_audio_properties
@@ -148,10 +148,10 @@ def pgql(sql, data, db_meta):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -165,13 +165,13 @@ def pgql_find(sql, data, db_meta):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		res_count = cur.rowcount  #int
 		conn.close()
 		return res_count
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -322,7 +322,7 @@ def get_video_format_id(doc_format_ext, db_meta):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		if cur.rowcount > 0:
@@ -332,9 +332,9 @@ def get_video_format_id(doc_format_ext, db_meta):
 			return result
 		else:
 			conn.close()
-			log.error("Document format missing from MediaVideoFormat table.")
+			log.error("Document format missing from table.")
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -348,7 +348,7 @@ def get_audio_format_id(doc_format_ext, db_meta):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		if cur.rowcount > 0:
@@ -358,9 +358,9 @@ def get_audio_format_id(doc_format_ext, db_meta):
 			return result
 		else:
 			conn.close()
-			log.error("Document format missing from MediaAudioFormat table.")
+			log.error("Document format missing from table.")
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -374,7 +374,7 @@ def get_photo_format_id(doc_format_ext, db_meta):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		if cur.rowcount > 0:
@@ -384,9 +384,9 @@ def get_photo_format_id(doc_format_ext, db_meta):
 			return result
 		else:
 			conn.close()
-			log.error("Document format missing from MediaPhotoFormat table.")
+			log.error("Document format missing from table.")
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -400,7 +400,7 @@ def get_doc_format_id(doc_format_ext, db_meta):
 		log.debug("DATA: " + str(df))
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql, data)
 		if cur.rowcount > 0:
@@ -410,9 +410,9 @@ def get_doc_format_id(doc_format_ext, db_meta):
 			return result
 		else:
 			conn.close()
-			log.error("Document format missing from MediaDocFormat table.")
+			log.error("Document format missing from table.")
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -424,7 +424,7 @@ def get_video_formats(db_meta):
 	log.debug("SQL:  " + sql)
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql)
 		if cur.rowcount > 0:
@@ -437,7 +437,7 @@ def get_video_formats(db_meta):
 			log.error("No video formats available.")
 			conn.close()
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -448,7 +448,7 @@ def get_audio_formats(db_meta):
 	log.debug("SQL:  " + sql)
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql)
 		if cur.rowcount > 0:
@@ -461,7 +461,7 @@ def get_audio_formats(db_meta):
 			log.error("No audio formats available.")
 			conn.close()
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -472,7 +472,7 @@ def get_photo_formats(db_meta):
 	log.debug("SQL:  " + sql)
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql)
 		if cur.rowcount > 0:
@@ -485,7 +485,7 @@ def get_photo_formats(db_meta):
 			log.error("No photo formats available.")
 			conn.close()
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
@@ -496,7 +496,7 @@ def get_doc_formats(db_meta):
 	log.debug("SQL:  " + sql)
 	conn = None
 	try:
-		conn = psycopg2.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
+		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
 		cur = conn.cursor()
 		cur.execute(sql)
 		if cur.rowcount > 0:
@@ -509,7 +509,7 @@ def get_doc_formats(db_meta):
 			log.error("No document formats available.")
 			conn.close()
 			return False
-	except (Exception, psycopg2.DatabaseError) as error:
+	except (Exception, psycopg.DatabaseError) as error:
 		log.error(error)
 	finally:
 		if conn is not None:
