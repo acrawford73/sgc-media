@@ -1,6 +1,38 @@
 from rest_framework import serializers
-from .models import Category, Playlist, Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, RatingSource, ParentalRating, Credit
+from .models import RokuContentFeed, RokuSearchFeed
+from .models import Language, Category, Playlist
+from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
+from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
+					RatingSource, ParentalRating, Credit
+
+### Roku Feeds
+
+# This class provides the data used to populate the Roku channel menus and content
+class RokuContentFeedSerializerList(serializers.ModelSerializer):
+	providerName = models.CharField(source='provider_name')
+	lastUpdated = models.CharField(source='last_updated')
+	shortFormVideos = serializers.JSONField(source='short_form_videos')
+	#movies = serializers.JSONField(source='movies')
+	#series = serializers.JSONField(source='series')
+	#playlists = serializers.JSONField(source='playlists')
+	#categories = serializers.JSONField(source='categories')
+	class Meta:
+		model = RokuContentFeed
+		fields = ['provider_name', 'language', 'rating', 'last_updated', 'short_form_videos', 'movies', 'series', 'playlists', 'categories']
+
+# This class provides the data for Roku search
+class RokuSearchFeedSerializerList(serializers.ModelSerializer):
+	providerName = models.CharField(source='provider_name')
+	lastUpdated = models.CharField(source='last_updated')
+	shortFormVideos = serializers.JSONField(source='short_form_videos')
+	#movies = serializers.JSONField(source='movies')
+	#series = serializers.JSONField(source='series')
+	#seasons = serializers.JSONField(source='seasons')
+	#episodes = serializers.JSONField(source='episodes')
+	tvSpecials = serializers.JSONField(source='tv_specials')
+	class Meta:
+		model = RokuSearchFeed
+		fields = ['provider_name', 'language', 'rating', 'last_updated', 'short_form_videos', 'movies', 'series', 'seasons', 'episodes', 'tv_specials']
 
 
 ### Content Categories

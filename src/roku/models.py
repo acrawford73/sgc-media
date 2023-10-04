@@ -14,16 +14,17 @@ from django.urls import reverse
 # ISO 639.2 Codes:       https://www.loc.gov/standards/iso639-2/php/code_list.php
 
 
+# Language
 class Language(models.Model):
 	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False)
 	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)
 	language_name_eng = models.CharField(max_length=64, null=False, blank=False)
 	class Meta:
-		ordering = ['code_iso_639_1']
+		ordering = ['id']
 		def __unicode__(self):
-			return self.code_iso_639_1
+			return self.id
 	def __str__(self):
-		return str(self.code_iso_639_1)
+		return str(self.id)
 
 
 ### Roku content data feeds
@@ -97,8 +98,7 @@ class Playlist(models.Model):
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	# extra
-	is_public = models.BooleanField(default=True)
-
+	is_public = models.BooleanField(default=False)
 	def get_absolute_url(self):
 		return reverse('playlists', kwargs={'pk': self.pk})
 

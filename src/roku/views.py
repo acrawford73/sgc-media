@@ -1,21 +1,21 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-# Templates
+### Templates
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-# Models
-### Roku Content Categories, Types, Properties
-from .models import Category, Playlist
+### Models
+## Roku Content Feeds, Categories, Types, Properties
+from .models import RokuContentFeed, RokuSearchFeed
+from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, RatingSource, ParentalRating, Credit
-
 ### Rest Framework
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
-
-# Serializers
-
+### Serializers
 ## Roku Content
+# Feeds
+from .serializers import RokuContentFeedSerializerList, RokuSearchFeedSerializerList
 # Categories
 from .serializers import CategorySerializerList, PlaylistSerializerList
 # Types
@@ -28,19 +28,107 @@ from .serializers import TrickPlayFileSerializerList, GenreSerializerList, Exter
 from .serializers import RatingSerializerList, RatingSourceSerializerList, ParentalRatingSerializerList
 from .serializers import CreditSerializerList
 
-#
+
+## Roku Feeds
+
+# Roku Content Feed
+class RokuContentFeedCreateView(CreateView):
+	model = RokuContentFeed
+	template_name = 'roku/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+
+class RokuContentFeedListView(ListView):
+	model = RokuContentFeed
+	template_name = 'roku/rokucontentfeed_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'rokucontentfeed'
+	ordering = ['-id']
+	#paginate_by = 15
+
+class RokuContentFeedDetailView(DetailView):
+	model = RokuContentFeed
+	context_object_name = 'rokucontentfeed'
+
+class RokuContentFeedUpdateView(UpdateView):
+	model = RokuContentFeed
+	context_object_name = 'rokucontentfeed'
+	fields = fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+
+class RokuContentFeedListAPI(generics.ListAPIView):
+	queryset = RokuContentFeed.objects.all()
+	serializer_class = RokuContentFeedSerializerList
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	#ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
+# Roku Search Feed
+class RokuSearchFeedCreateView(CreateView):
+	model = RokuSearchFeed
+	template_name = 'roku/rokusearchfeed_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['provider_name', 'language', 'rating', 'movies', 'series', 'seasons', \
+		'episodes', 'short_form_videos', 'tv_specials']
+
+class RokuSearchFeedListView(ListView):
+	model = RokuSearchFeed
+	template_name = 'roku/rokusearchfeed_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'rokusearchfeed'
+	ordering = ['-id']
+	#paginate_by = 15
+
+class RokuSearchFeedDetailView(DetailView):
+	model = RokuSearchFeed
+	context_object_name = 'rokusearchfeed'
+
+class RokuSearchFeedUpdateView(UpdateView):
+	model = RokuSearchFeed
+	context_object_name = 'rokusearchfeed'
+	fields = fields = ['provider_name', 'language', 'rating', 'movies', 'series', 'seasons', \
+		'episodes', 'short_form_videos', 'tv_specials']
+
+class RokuSearchFeedListAPI(generics.ListAPIView):
+	queryset = RokuSearchFeed.objects.all()
+	serializer_class =RokuSearchFeedSerializerList
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	#ordering_fields = ['id', 'category_name', 'playlist_name']
+	ordering = ['-id']
+
 
 ## Roku Content Categories
+
+# Language
+class LanguageCreateView(CreateView):
+	model = Language
+	template_name = 'roku/language_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
+
+class LanguageListView(ListView):
+	model = Language
+	template_name = 'roku/language_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'language'
+	ordering = ['-id']
+	paginate_by = 15
+
+class LanguageDetailView(DetailView):
+	model = Language
+	context_object_name = 'language'
+
+class LanguageUpdateView(UpdateView):
+	model = Language
+	context_object_name = 'language'
+	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
 
 # Category
 class CategoryCreateView(CreateView):
 	model = Category
-	template_name = 'cms/category_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku/category_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
 
 class CategoryListView(ListView):
 	model = Category
-	template_name = 'cms/category_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku/category_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'category'
 	ordering = ['-id']
 	paginate_by = 15
@@ -77,12 +165,12 @@ class CategoryDetailAPI(generics.RetrieveAPIView):
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
-	template_name = 'cms/playlist_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku/playlist_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['playlist_name', 'item_ids', 'short_description', 'notes']
 
 class PlaylistListView(ListView):
 	model = Playlist
-	template_name = 'cms/playlist_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku/playlist_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'playlist'
 	ordering = ['-id']
 	paginate_by = 15
