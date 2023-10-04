@@ -9,7 +9,7 @@ class CategorySerializerList(serializers.ModelSerializer):
 	category = serializers.JSONField(source='category_name')
 	playlist = serializers.JSONField(source='playlist_name')
 	class Meta:
-		model = Content
+		model = Category
 		fields = ['id', 'category_name', 'playlist_name', 'query_string', 'order']
 		#fields = '__all__'  ## provide all fields
 
@@ -77,10 +77,10 @@ class ContentSerializerList(serializers.ModelSerializer):
 	trickPlayFiles = models.JSONField(source='trick_play_files')
 	validityPeriodStart = models.DateField(source='validity_period_start')
 	validityPeriodEnd = models.DateField(source='validity_period_end')
-	adBreaks = models.CharField(source='ad_breaks')
+	#adBreaks = models.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
-		fields = ['date_added', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_period_start', 'validity_period_end', 'ad_breaks']
+		fields = ['date_added', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_period_start', 'validity_period_end']
 
 class VideoSerializerList(serializers.ModelSerializer):
 	videoType = models.CharField(source='video_type')
@@ -97,7 +97,7 @@ class CaptionSerializerList(serializers.ModelSerializer):
 class TrickPlayFileSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = TrickPlayFile
-		fields = ['url', 'language']
+		fields = ['url', 'quality']
 
 class GenreFileSerializerList(serializers.ModelSerializer):
 	class Meta:
@@ -121,7 +121,7 @@ class RatingSourceSerializerList(serializers.ModelSerializer):
 	ratingSource = models.CharField(source='source_name')
 	class Meta:
 		model = RatingSource
-		fields = ['source_name']
+		fields = ['source_name', 'source_long_name']
 
 class ParentalRatingSourceSerializerList(serializers.ModelSerializer):
 	class Meta:

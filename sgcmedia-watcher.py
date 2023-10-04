@@ -39,7 +39,7 @@ import logging.handlers
 # Configuration
 from configparser import ConfigParser
 # Third Party
-import ffmpeg
+import ffmpeg  ## https://kkroening.github.io/ffmpeg-python/
 import psycopg
 from PIL import Image
 import inotify.adapters
@@ -676,11 +676,11 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Orientation:  " + orientation)
 				log.debug("Format ID:    " + str(doc_format_id))
 
-				result = asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				ingested = asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, width, height, photo_format, orientation, created, \
 					is_public, tags, doc_format_id, db_meta)
 				
-				if result == True:
+				if ingested == True:
 					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
@@ -821,7 +821,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format ID:    " + str(doc_format_id))
 				log.debug("Rating:       " + str(rating))
 				
-				result = asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
+				ingested = asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
 					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
 					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
@@ -829,7 +829,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					media_audio_samplerate, created, is_public, tags, media_audio_image, \
 					media_audio_extra, doc_format_id, rating, db_meta)
 				
-				if result == True:
+				if ingested == True:
 					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
@@ -987,7 +987,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Sample Rate:     " + media_audio_sample_rate)
 				log.debug("Format ID:       " + str(doc_format_id))
 				
-				result = asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				ingested = asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
@@ -996,7 +996,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta)
 				
-				if result == True:
+				if ingested == True:
 					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
@@ -1030,10 +1030,10 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format:      " + doc_format_ext)
 				log.debug("Format ID:   " + str(doc_format_id))
 
-				result = asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				ingested = asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
 				
-				if result == True:
+				if ingested == True:
 					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)

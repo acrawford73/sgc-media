@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+from decouple import Csv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # ~/<virtualenv-folder>/
@@ -28,11 +29,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if config('PRODUCTION', default=False, cast=bool) == True:
     DEBUG = False
     SECRET_KEY = config('PROD_SECRET_KEY')
-    ALLOWED_HOSTS = ['domain.com']
+    ALLOWED_HOSTS = config('PROD_ALLOWED_HOSTS', cast=Csv())
 else:
     DEBUG = True
     SECRET_KEY = config('DEBUG_SECRET_KEY')
-    ALLOWED_HOSTS = ['localhost', '192.168.0.13']
+    ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
 
 SITE_ID = 1
 

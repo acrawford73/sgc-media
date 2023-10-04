@@ -1,3 +1,4 @@
+import uuid
 import datetime,time
 from django.db import models
 from django.urls import reverse
@@ -5,7 +6,7 @@ from django.urls import reverse
 ## For the Roku Direct Publisher Feed info check this website:
 # https://developer.roku.com/en-ca/docs/specs/direct-publisher-feed-specs/json-dp-spec.md
 
-## References
+## References:
 # JSON Schema Draft 4:   http://json-schema.org/draft/2020-12/json-schema-core.html
 # ISO 8601:              http://www.iso.org/iso/home/standards/iso8601.htm
 # JSON Schema Validator: http://www.jsonschemavalidator.net/
@@ -18,13 +19,15 @@ class Language(models.Model):
 	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)
 	language_name_eng = models.CharField(max_length=64, null=False, blank=False)
 	class Meta:
-		ordering = ['id']
+		ordering = ['code_iso_639_1']
 		def __unicode__(self):
-			return self.id
+			return self.code_iso_639_1
 	def __str__(self):
-		return str(self.id)
+		return str(self.code_iso_639_1)
+
 
 ### Roku content data feeds
+
 # Content
 class RokuContentFeed(models.Model):
 	provider_name = models.CharField(max_length=32, null=False, blank=False)
@@ -103,41 +106,6 @@ class Playlist(models.Model):
 		ordering = ['-id']
 		def __unicode__(self):
 			return self.title
-
-# Playlist items for each playlist
-class PlaylistItemsVideo(models.Model):
-	playlist_id = models.ForeignKey('Playlist', on_delete=models.CASCADE,)
-	media_id = models.ForeignKey('MediaVideo', on_delete=models.CASCADE,)
-
-	def get_absolute_url(self):
-		return reverse('playlist-item', kwargs={'pk': self.pk})
-
-	class Meta:
-		ordering = ['id']
-		def __unicode__(self):
-			return self.id
-
-class PlaylistItemsAudio(models.Model):
-	playlist_id = models.ForeignKey('Playlist', on_delete=models.CASCADE,)
-	media_id = models.ForeignKey('MediaAudio', on_delete=models.CASCADE,)
-	def get_absolute_url(self):
-		return reverse('playlist-item', kwargs={'pk': self.pk})
-	class Meta:
-		ordering = ['id']
-		def __unicode__(self):
-			return self.id
-
-class PlaylistItemsPhoto(models.Model):
-	playlist_id = models.ForeignKey('Playlist', on_delete=models.CASCADE,)
-	media_id = models.ForeignKey('MediaPhoto', on_delete=models.CASCADE,)
-
-	def get_absolute_url(self):
-		return reverse('playlist-item', kwargs={'pk': self.pk})
-
-	class Meta:
-		ordering = ['id']
-		def __unicode__(self):
-			return self.id
 
 
 ### Content Types
@@ -295,9 +263,29 @@ class TVSpecial(models.Model):
 
 ### Content Properties
 
+LANGUAGES_ISO639 = (
+	("en", "English"),
+	("fr", "French"),
+	("de", "German"),
+	("it", "Italian"),
+	("ja", "Japanese"),
+	("ko", "Korean"),
+	("pt", "Portuguese"),
+	("ru", "Russian"),
+	("es", "Spanish"),
+	("zh", "Chinese"),
+)
+
 class Content(models.Model):
 	date_added = models.DateTimeField(auto_now_add=True)
-	
+	videos = ForeignKey("Video", on_delete=models.SET_NULL, null=True, blank=False)
+	duration = models.IntegerField(default=0, null=False, blank=False)
+	captions = ForeignKey("Caption", on_delete=models.SET_NULL, null=True, blank=False)
+	trick_play_files = ForeignKey("TrickPlayFile", on_delete=models.SET_NULL, null=True, blank=True) # Optional
+	language = models.CharField(length=8, default="en", choices=LANGUAGES_ISO639, null=False, blank=False)
+	validity_start_period = models.DateTimeField(null=True, blank=True) # Optional
+	validity_end_period = models.DateTimeField(null=True, blank=True) # Optional
+	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
