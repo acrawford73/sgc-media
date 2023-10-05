@@ -322,13 +322,3 @@ class MediaDoc(models.Model):
 		ordering = ['-created']
 		def __unicode__(self):
 			return self.file_name
-
-# class Settings(models.Model):
-# 	upload_path = models.CharField(max_length=4096, default="", null=True, blank=True)
-
-# 	# def get_absolute_url(self):
-# 	# 	return reverse('settings-detail', kwargs={'pk': self.pk})
-
-# 	class Meta:
-# 		def __unicode__(self):
-# 			return self.upload_path
