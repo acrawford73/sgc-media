@@ -184,7 +184,7 @@ if __name__ == "__main__":
 
 	
 	# Countries
-	f = open("country_list.json", "r")
+	f = open("country-list.json", "r")
 	data = json.load(f)
 	f.close()
 	import_countries(data,host)
@@ -193,21 +193,21 @@ if __name__ == "__main__":
 	### Video
 
 	# Video Services
-	#f = open("video_services.json", "r")
+	#f = open("video-services.json", "r")
 	#data = json.load(f)
 	#f.close()
 	#import_video_services(data,host)
 	#print()
 	
 	# Video Genres
-	# f = open("video_genres.json", "r")
+	# f = open("video-genres.json", "r")
 	# data = json.load(f)
 	# f.close()
 	# import_video_genres(data,host)
 	# print()
 
 	#Video Formats
-	# f = open("video_formats.json", "r")
+	# f = open("video-formats.json", "r")
 	# data = json.load(f)
 	# f.close()
 	# import_video_formats(data,host)
@@ -216,14 +216,14 @@ if __name__ == "__main__":
 
 	### Audio
 	# Audio Genres
-	# f = open("audio_genres.json", "r")
+	# f = open("audio-genres.json", "r")
 	# data = json.load(f)
 	# f.close()
 	# import_audio_genres(data,host)
 	# print()
 
 	#Audio Formats
-	# f = open("audio_formats.json", "r")
+	# f = open("audio-formats.json", "r")
 	# data = json.load(f)
 	# f.close()
 	# import_audio_formats(data,host)
@@ -232,7 +232,7 @@ if __name__ == "__main__":
 
 	### Photo
 	#Photo Formats
-	# f = open("photo_formats.json", "r")
+	# f = open("photo-formats.json", "r")
 	# data = json.load(f)
 	# f.close()
 	# import_photo_formats(data,host)
@@ -240,7 +240,7 @@ if __name__ == "__main__":
 
 	### Documents
 	#Doc Formats
-	# f = open("doc_formats.json", "r")
+	# f = open("doc-formats.json", "r")
 	# data = json.load(f)
 	# f.close()
 	# import_doc_formats(data,host)

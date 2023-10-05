@@ -282,7 +282,7 @@ class Content(models.Model):
 	duration = models.IntegerField(default=0, null=False, blank=False)
 	captions = ForeignKey("Caption", on_delete=models.SET_NULL, null=True, blank=False)
 	trick_play_files = ForeignKey("TrickPlayFile", on_delete=models.SET_NULL, null=True, blank=True) # Optional
-	language = models.CharField(length=8, default="en", choices=LANGUAGES_ISO639, null=False, blank=False)
+	language = models.CharField(max_length=8, default="en", choices=LANGUAGES_ISO639, null=False, blank=False)
 	validity_start_period = models.DateTimeField(null=True, blank=True) # Optional
 	validity_end_period = models.DateTimeField(null=True, blank=True) # Optional
 	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
@@ -459,6 +459,93 @@ class Credit(models.Model):
 	credit_name = models.CharField(max_length=64, default="", null=False, blank=False)
 	role = models.CharField(max_length=16, choices=CREDIT_ROLES, default="actor", null=True, blank=True)
 	birth_date = models.CharField(max_length=10, default="0000-00-00", null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+
+# Thumbnail storage: DB or CDN URL
+
+class ThumbnailMovie(models.Model):
+	movie_id = models.ForeignKey("Movie", on_delete=CASCADE)
+	url = models.URLField(max_length=2083, null=False, blank=False)
+	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	sha256 = models.CharField(max_length=64, default="")
+	image_data = models.TextField(default="", null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+class ThumbnailLiveFeed(models.Model):
+	live_feed_id = models.ForeignKey("LiveFeed", on_delete=CASCADE)
+	url = models.URLField(max_length=2083, null=False, blank=False)
+	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	sha256 = models.CharField(max_length=64, default="")
+	image_data = models.TextField(default="", null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+class ThumbnailSeries(models.Model):
+	series_id = models.ForeignKey("Series", on_delete=CASCADE)
+	url = models.URLField(max_length=2083, null=False, blank=False)
+	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	sha256 = models.CharField(max_length=64, default="")
+	image_data = models.TextField(default="", null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+class ThumbnailEpisode(models.Model):
+	episode_id = models.ForeignKey("Episode", on_delete=CASCADE)
+	url = models.URLField(max_length=2083, null=False, blank=False)
+	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	sha256 = models.CharField(max_length=64, default="")
+	image_data = models.TextField(default="", null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+class ThumbnailShortFormVideo(models.Model):
+	short_form_video_id = models.ForeignKey("ShortFormVideo", on_delete=CASCADE)
+	url = models.URLField(max_length=2083, null=False, blank=False)
+	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	sha256 = models.CharField(max_length=64, default="")
+	image_data = models.TextField(default="", null=False, blank=False)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
+
+class ThumbnailTVSpecial(models.Model):
+	tv_special_id = models.ForeignKey("TVSpecial", on_delete=CASCADE)
+	url = models.URLField(max_length=2083, null=False, blank=False)
+	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
+	file_uuid = models.CharField(max_length=36, null=False, blank=False)
+	sha256 = models.CharField(max_length=64, default="")
+	image_data = models.TextField(default="", null=False, blank=False)
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):

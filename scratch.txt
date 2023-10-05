@@ -1,0 +1,22 @@
+              <li><a class="dropdown-item" href="{% url 'category-list' %}">Category</a></li>
+              <li><a class="dropdown-item" href="{% url 'playlist-list' %}">Playlist</a></li>
+
+              <li><a class="dropdown-item" href="{% url 'movie-list' %}">Movie</a></li>
+              <li><a class="dropdown-item" href="{% url 'livefeed-list' %}">Live Feed</a></li>
+              <li><a class="dropdown-item" href="{% url 'series-list' %}">Series</a></li>
+              <li><a class="dropdown-item" href="{% url 'season-list' %}">Season</a></li>
+              <li><a class="dropdown-item" href="{% url 'episode-list' %}">Episode</a></li>
+              <li><a class="dropdown-item" href="{% url 'shortformvideo-list' %}">Short Form Video</a></li>
+              <li><a class="dropdown-item" href="{% url 'tvspecial-list' %}">TV Special</a></li>
+
+              <li><a class="dropdown-item" href="{% url 'content-list' %}">Content</a></li>
+              <li><a class="dropdown-item" href="{% url 'video-list' %}">Video</a></li>
+              <li><a class="dropdown-item" href="{% url 'caption-list' %}">Caption</a></li>
+              <li><a class="dropdown-item" href="{% url 'trickplayfile-list' %}">Trick Play File</a></li>
+              <li><a class="dropdown-item" href="{% url 'genre-list' %}">Genre</a></li>
+              <li><a class="dropdown-item" href="{% url 'externalid-list' %}">External ID</a></li>
+              <li><a class="dropdown-item" href="{% url 'rating-list' %}">Rating</a></li>
+              <li><a class="dropdown-item" href="{% url 'ratingsource-list' %}">Rating Source</a></li>
+              <li><a class="dropdown-item" href="{% url 'parentalrating-list' %}">Parental Rating</a></li>
+              <li><a class="dropdown-item" href="{% url 'credit-list' %}">Credit</a></li>
+              <li><a class="dropdown-item" href="{% url 'language-list' %}">Language</a></li>
