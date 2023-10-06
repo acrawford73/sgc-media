@@ -50,7 +50,7 @@ class RokuContentFeed(models.Model):
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
 	categories = models.ForeignKey("Category", on_delete=models.PROTECT, null=True, blank=True)
-	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, null=True, blank=True)
+	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, limit_choices_to={"is_public": True}, null=True, blank=True)
 	movies = models.ForeignKey("Movie", on_delete=models.PROTECT, null=True, blank=True)
 	live_feeds = models.ForeignKey("LiveFeed", on_delete=models.PROTECT, null=True, blank=True)
 	series = models.ForeignKey("Series", on_delete=models.PROTECT, null=True, blank=True)
