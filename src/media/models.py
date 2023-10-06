@@ -1,7 +1,7 @@
 import uuid
+import datetime,time
 from django.db import models
 from django.urls import reverse
-import datetime,time
 
 #
 
@@ -131,8 +131,8 @@ class MediaVideo(models.Model):
 
 	class Meta:
 		ordering = ['-created']
-		def __unicode__(self):
-			return self.file_name
+	def __unicode__(self):
+		return self.file_name
 
 
 
@@ -215,8 +215,8 @@ class MediaAudio(models.Model):
 
 	class Meta:
 		ordering = ['-created']
-		def __unicode__(self):
-			return self.pk
+	def __unicode__(self):
+		return self.pk
 
 ### PHOTOS
 
@@ -271,8 +271,8 @@ class MediaPhoto(models.Model):
 
 	class Meta:
 		ordering = ['-created']
-		def __unicode__(self):
-			return self.file_name
+	def __unicode__(self):
+		return self.file_name
 
 
 ### DOCUMENTS

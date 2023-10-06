@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 ### Templates
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 ### Models
 ## Roku Content Feeds, Categories, Types, Properties
 from .models import RokuContentFeed, RokuSearchFeed
@@ -35,13 +35,13 @@ from .serializers import CreditSerializerList
 # Roku Content Feed
 class RokuContentFeedCreateView(CreateView):
 	model = RokuContentFeed
-	template_name = 'roku/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
 		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListView(ListView):
 	model = RokuContentFeed
-	template_name = 'roku/rokucontentfeed_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/rokucontentfeed_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rokucontentfeed'
 	ordering = ['-id']
 	#paginate_by = 15
@@ -67,13 +67,13 @@ class RokuContentFeedListAPI(generics.ListAPIView):
 # Roku Search Feed
 class RokuSearchFeedCreateView(CreateView):
 	model = RokuSearchFeed
-	template_name = 'roku/rokusearchfeed_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/rokusearchfeed_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['provider_name', 'language', 'rating', 'movies', 'series', 'seasons', \
 		'episodes', 'short_form_videos', 'tv_specials']
 
 class RokuSearchFeedListView(ListView):
 	model = RokuSearchFeed
-	template_name = 'roku/rokusearchfeed_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/rokusearchfeed_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rokusearchfeed'
 	ordering = ['-id']
 	#paginate_by = 15
@@ -102,12 +102,12 @@ class RokuSearchFeedListAPI(generics.ListAPIView):
 # Language
 class LanguageCreateView(CreateView):
 	model = Language
-	template_name = 'roku/language_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/language_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
 
 class LanguageListView(ListView):
 	model = Language
-	template_name = 'roku/language_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/language_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'language'
 	ordering = ['-id']
 	paginate_by = 15
@@ -124,12 +124,12 @@ class LanguageUpdateView(UpdateView):
 # Category
 class CategoryCreateView(CreateView):
 	model = Category
-	template_name = 'roku/category_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/category_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
 
 class CategoryListView(ListView):
 	model = Category
-	template_name = 'roku/category_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/category_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'category'
 	ordering = ['-id']
 	paginate_by = 15
@@ -166,12 +166,12 @@ class CategoryDetailAPI(generics.RetrieveAPIView):
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
-	template_name = 'roku/playlist_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/playlist_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['playlist_name', 'item_ids', 'short_description', 'notes']
 
 class PlaylistListView(ListView):
 	model = Playlist
-	template_name = 'roku/playlist_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/playlist_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'playlist'
 	ordering = ['-id']
 	paginate_by = 15
@@ -213,13 +213,13 @@ class PlaylistDetailAPI(generics.RetrieveAPIView):
 # Movie
 class MovieCreateView(CreateView):
 	model = Movie
-	template_name = 'roku/movie_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/movie_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 
 class MovieListView(ListView):
 	model = Movie
-	template_name = 'roku/movie_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/movie_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'movie'
 	ordering = ['-id']
 	paginate_by = 15
@@ -259,13 +259,13 @@ class MovieDetailAPI(generics.RetrieveAPIView):
 # LiveFeed
 class LiveFeedCreateView(CreateView):
 	model = LiveFeed
-	template_name = 'roku/livefeed_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/livefeed_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
 		'short_description', 'long_description', 'tags', 'rating', 'genres']
 
 class LiveFeedListView(ListView):
 	model = LiveFeed
-	template_name = 'roku/livefeed_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/livefeed_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'livefeed'
 	ordering = ['-id']
 	paginate_by = 15
@@ -304,13 +304,13 @@ class LiveFeedDetailAPI(generics.RetrieveAPIView):
 # Series
 class SeriesCreateView(CreateView):
 	model = Series
-	template_name = 'roku/series_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/series_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'seasons', 'episodes', 'genres', 'thumbnail', 'release_date', \
 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
 
 class SeriesListView(ListView):
 	model = Series
-	template_name = 'roku/series_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/series_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'series'
 	ordering = ['-id']
 	paginate_by = 15
@@ -349,12 +349,12 @@ class SeriesDetailAPI(generics.RetrieveAPIView):
 # Season
 class SeasonCreateView(CreateView):
 	model = Season
-	template_name = 'roku/season_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/season_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['season_number', 'episodes']
 
 class SeasonListView(ListView):
 	model = Season
-	template_name = 'roku/season_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/season_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'season'
 	ordering = ['-id']
 	paginate_by = 15
@@ -391,13 +391,13 @@ class SeriesDetailAPI(generics.RetrieveAPIView):
 # Episode
 class EpisodeCreateView(CreateView):
 	model = Episode
-	template_name = 'roku/episode_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/episode_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
 
 class EpisodeListView(ListView):
 	model = Episode
-	template_name = 'roku/episode_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/episode_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'episode'
 	ordering = ['-id']
 	paginate_by = 15
@@ -436,13 +436,13 @@ class EpisodeDetailAPI(generics.RetrieveAPIView):
 # ShortFormVideo
 class ShortFormVideoCreateView(CreateView):
 	model = ShortFormVideo
-	template_name = 'roku/shortformvideo_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/shortformvideo_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'short_description', 'long_description', \
 		'release_date', 'tags', 'genres', 'credits', 'rating']
 
 class ShortFormVideoListView(ListView):
 	model = ShortFormVideo
-	template_name = 'roku/shortformvideo_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/shortformvideo_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'shortformvideo'
 	ordering = ['-id']
 	paginate_by = 15
@@ -481,13 +481,13 @@ class ShortFormVideoDetailAPI(generics.RetrieveAPIView):
 # TVSpecial
 class TVSpecialCreateView(CreateView):
 	model = TVSpecial
-	template_name = 'roku/tvspecial_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/tvspecial_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
 		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
 
 class TVSpecialListView(ListView):
 	model = TVSpecial
-	template_name = 'roku/tvspecial_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/tvspecial_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'tvspecial'
 	ordering = ['-id']
 	paginate_by = 15
@@ -529,12 +529,12 @@ class TVSpecialDetailAPI(generics.RetrieveAPIView):
 # Content
 class ContentCreateView(CreateView):
 	model = Content
-	template_name = 'roku/content_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/content_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
 
 class ContentListView(ListView):
 	model = Content
-	template_name = 'roku/content_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/content_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'content'
 	ordering = ['-id']
 	paginate_by = 15
@@ -571,12 +571,12 @@ class ContentDetailAPI(generics.RetrieveAPIView):
 # Video
 class VideoCreateView(CreateView):
 	model = Video
-	template_name = 'roku/video_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/video_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['url', 'quality', 'video_type']
 
 class VideoListView(ListView):
 	model = Video
-	template_name = 'roku/video_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/video_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'video'
 	ordering = ['-id']
 	paginate_by = 15
@@ -613,12 +613,12 @@ class VideoDetailAPI(generics.RetrieveAPIView):
 # Caption
 class CaptionCreateView(CreateView):
 	model = Caption
-	template_name = 'roku/caption_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/caption_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['url', 'language', 'caption_type']
 
 class CaptionListView(ListView):
 	model = Caption
-	template_name = 'roku/caption_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/caption_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'caption'
 	ordering = ['-id']
 	paginate_by = 15
@@ -655,12 +655,12 @@ class CaptionDetailAPI(generics.RetrieveAPIView):
 # TrickPlayFile
 class TrickPlayFileCreateView(CreateView):
 	model = TrickPlayFile
-	template_name = 'roku/trickplayfile_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/trickplayfile_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['url', 'quality']
 
 class TrickPlayFileListView(ListView):
 	model = TrickPlayFile
-	template_name = 'roku/trickplayfile_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/trickplayfile_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'trickplayfile'
 	ordering = ['-id']
 	paginate_by = 15
@@ -697,12 +697,12 @@ class TrickPlayFileDetailAPI(generics.RetrieveAPIView):
 # Genre
 class GenreCreateView(CreateView):
 	model = Genre
-	template_name = 'roku/genre_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/genre_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['genre']
 
 class GenreListView(ListView):
 	model = Genre
-	template_name = 'roku/genre_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/genre_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'genre'
 	ordering = ['-id']
 	paginate_by = 15
@@ -739,12 +739,12 @@ class GenreDetailAPI(generics.RetrieveAPIView):
 # ExternalID
 class ExternalIDCreateView(CreateView):
 	model = ExternalID
-	template_name = 'roku/externalid_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/externalid_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['external_id', 'id_type']
 
 class ExternalIDListView(ListView):
 	model = ExternalID
-	template_name = 'roku/externalid_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/externalid_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'externalid'
 	ordering = ['-id']
 	paginate_by = 15
@@ -781,12 +781,12 @@ class ExternalIDDetailAPI(generics.RetrieveAPIView):
 # Rating
 class RatingCreateView(CreateView):
 	model = Rating
-	template_name = 'roku/rating_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/rating_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['rating', 'rating_source']
 
 class RatingListView(ListView):
 	model = Rating
-	template_name = 'roku/rating_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/rating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rating'
 	ordering = ['-id']
 	paginate_by = 15
@@ -823,12 +823,12 @@ class RatingDetailAPI(generics.RetrieveAPIView):
 # RatingSource
 class RatingSourceCreateView(CreateView):
 	model = RatingSource
-	template_name = 'roku/ratingsource_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/ratingsource_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['source_name', 'source_long_name']
 
 class RatingSourceListView(ListView):
 	model = RatingSource
-	template_name = 'roku/ratingsource_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/ratingsource_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'ratingsource'
 	ordering = ['-id']
 	paginate_by = 15
@@ -865,12 +865,12 @@ class RatingSourceDetailAPI(generics.RetrieveAPIView):
 # ParentalRating
 class ParentalRatingCreateView(CreateView):
 	model = ParentalRating
-	template_name = 'roku/parentalrating_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/parentalrating_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['rating']
 
 class ParentalRatingListView(ListView):
 	model = ParentalRating
-	template_name = 'roku/parentalrating_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/parentalrating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'parentalrating'
 	ordering = ['-id']
 	paginate_by = 15
@@ -907,12 +907,12 @@ class ParentalRatingDetailAPI(generics.RetrieveAPIView):
 # Credit
 class CreditCreateView(CreateView):
 	model = Credit
-	template_name = 'roku/credit_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/credit_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['credit_name', 'role', 'birth_date']
 
 class CreditListView(ListView):
 	model = Credit
-	template_name = 'roku/credit_list.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'roku_content/credit_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'credit'
 	ordering = ['-id']
 	paginate_by = 15
