@@ -11,7 +11,7 @@ from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, R
 # This class provides the data used to populate the Roku channel menus and content
 class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	providerName = models.CharField(source='provider_name')
-	lastUpdated = models.CharField(source='last_updated')
+	lastUpdated = models.DateTimeField(source='last_updated')
 	shortFormVideos = serializers.JSONField(source='short_form_videos')
 	#movies = serializers.JSONField(source='movies')
 	#series = serializers.JSONField(source='series')
@@ -101,7 +101,8 @@ class ContentSerializerList(serializers.ModelSerializer):
 	#adBreaks = models.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
-		fields = ['date_added', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_period_start', 'validity_period_end']
+		fields = ['date_added', 'videos', 'duration', 'captions', 'trick_play_files', \
+			'language', 'validity_period_start', 'validity_period_end']
 
 class VideoSerializerList(serializers.ModelSerializer):
 	videoType = models.CharField(source='video_type')

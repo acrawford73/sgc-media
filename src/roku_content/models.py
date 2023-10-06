@@ -47,15 +47,18 @@ from django.urls import reverse
 class RokuContentFeed(models.Model):
 	provider_name = models.CharField(max_length=32, null=False, blank=False)
 	last_updated = models.DateTimeField(auto_now_add=True)
-	language = models.CharField(max_length=8, null=False, blank=False)
-	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL)
-	categories = models.ForeignKey("Category", on_delete=models.SET_NULL)
-	playlists = models.ForeignKey("Playlist", on_delete=models.SET_NULL)
-	movies = models.ForeignKey("Movie", on_delete=models.SET_NULL)
-	live_feeds = models.ForeignKey("LiveFeed", on_delete=models.SET_NULL)
-	series = models.ForeignKey("Series", on_delete=models.SET_NULL)
-	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.SET_NULL)
-	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.SET_NULL)
+	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
+	categories = models.ForeignKey("Category", on_delete=models.PROTECT, null=True, blank=True)
+	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, null=True, blank=True)
+	movies = models.ForeignKey("Movie", on_delete=models.PROTECT, null=True, blank=True)
+	live_feeds = models.ForeignKey("LiveFeed", on_delete=models.PROTECT, null=True, blank=True)
+	series = models.ForeignKey("Series", on_delete=models.PROTECT, null=True, blank=True)
+	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.PROTECT, null=True, blank=True)
+	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.PROTECT, null=True, blank=True)
+	# !Roku
+	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
+	is_public = models.BooleanField(default=False)
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -115,9 +118,8 @@ class Playlist(models.Model):
 	playlist_name = models.CharField(max_length=20, default="", null=False, blank=False)
 	# List of mixed Movies, Series, Short Form Videos, TV Specials
 	item_ids = models.JSONField(default=list, null=True, blank=True)
-	# extra
+	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
-	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	is_public = models.BooleanField(default=False)
 	class Meta:
@@ -204,7 +206,6 @@ class Series(models.Model):
 # }
 
 class Season(models.Model):
-	# Sequential season number (for example, 3 or 2015).
 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	# One or more episodes of this particular season.
 	episodes = models.CharField(max_length=10, null=False, blank=False)
@@ -418,7 +419,7 @@ class TrickPlayFile(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-ROKU_GENRES = (
+ROKU_CONTENT_GENRES = (
 	("Action", "Action"),
 	("Adventure", "Adventure"),
 	("Animals", "Animals"),
@@ -454,7 +455,7 @@ ROKU_GENRES = (
 )
 
 class Genre(models.Model):
-	genre = models.CharField(max_length=16, choices=ROKU_GENRES, default="educational", null=False, blank=False)
+	genre = models.CharField(max_length=16, choices=ROKU_CONTENT_GENRES, default="educational", null=False, blank=False)
 	class Meta:
 		ordering = ['genre']
 		def __str__(self):
