@@ -1,6 +1,6 @@
 from datetime import datetime
 from rest_framework import serializers
-from .models import RokuContentFeed, RokuSearchFeed
+from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
@@ -19,21 +19,8 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	#categories = serializers.JSONField(source='categories')
 	class Meta:
 		model = RokuContentFeed
-		fields = ['provider_name', 'language', 'rating', 'last_updated', 'short_form_videos', 'movies', 'series', 'playlists', 'categories']
-
-# This class provides the data for Roku search
-class RokuSearchFeedSerializerList(serializers.ModelSerializer):
-	providerName = models.CharField(source='provider_name')
-	lastUpdated = models.CharField(source='last_updated')
-	shortFormVideos = serializers.JSONField(source='short_form_videos')
-	#movies = serializers.JSONField(source='movies')
-	#series = serializers.JSONField(source='series')
-	#seasons = serializers.JSONField(source='seasons')
-	#episodes = serializers.JSONField(source='episodes')
-	tvSpecials = serializers.JSONField(source='tv_specials')
-	class Meta:
-		model = RokuSearchFeed
-		fields = ['provider_name', 'language', 'rating', 'last_updated', 'short_form_videos', 'movies', 'series', 'seasons', 'episodes', 'tv_specials']
+		fields = ['provider_name', 'language', 'rating', 'last_updated', \
+			'short_form_videos', 'movies', 'series', 'playlists', 'categories']
 
 
 ### Content Categories
@@ -47,10 +34,11 @@ class CategorySerializerList(serializers.ModelSerializer):
 		#fields = '__all__'  ## provide all fields
 
 class PlaylistSerializerList(serializers.ModelSerializer):
-	categories = serializers.JSONField(source='category')
+	name = models.CharField(source='playlist_name')
+	itemIds = serializers.JSONField(source='item_ids')
 	class Meta:
 		model = Playlist
-		fields = ['id', 'playlist_name', 'item_ids', 'short_description', 'notes', 'created']
+		fields = ['playlist_name', 'item_ids']
 
 
 ### Content Types

@@ -14,22 +14,36 @@ from django.urls import reverse
 # ISO 639.2 Codes:       https://www.loc.gov/standards/iso639-2/php/code_list.php
 
 
-# Language
-class Language(models.Model):
-	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False)
-	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)
-	language_name_eng = models.CharField(max_length=64, null=False, blank=False)
-	class Meta:
-		ordering = ['id']
-		def __unicode__(self):
-			return self.id
-	def __str__(self):
-		return str(self.id)
+### Roku content feed
 
+# Example:
+# {
+#     "providerName": "Roku Media Productions",
+#     "lastUpdated": "2015-08-08T11:16:00+00:00",
+#     "language": "en",
+#     "categories": [
+#         ...
+#     ],
+#     "playlists": [
+#         ...
+#     ],
+#     "movies": [
+#         ...
+#     ],
+#     "liveFeeds": [
+#         ...
+#     ],
+#     "series": [
+#         ...
+#     ],
+#     "shortFormVideos":  [
+#         ...
+#     ],
+#     "tvSpecials": [
+#         ...
+#     ]
+# }
 
-### Roku content data feeds
-
-# Content
 class RokuContentFeed(models.Model):
 	provider_name = models.CharField(max_length=32, null=False, blank=False)
 	last_updated = models.DateTimeField(auto_now_add=True)
@@ -49,18 +63,13 @@ class RokuContentFeed(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-# Search
-class RokuSearchFeed(models.Model):
-	provider_name = models.CharField(max_length=32, null=False, blank=False)
-	last_updated = models.DateTimeField(auto_now_add=True)
-	language = models.ForeignKey("Language", on_delete=models.SET_NULL)
-	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL)
-	movies = models.ForeignKey("Movie", on_delete=models.SET_NULL)
-	series = models.ForeignKey("Series", on_delete=models.SET_NULL)
-	seasons = models.ForeignKey("Season", on_delete=models.SET_NULL)
-	episodes = models.ForeignKey("Episode", on_delete=models.SET_NULL)
-	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.SET_NULL)
-	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.SET_NULL)
+
+### Content Categories
+
+class Language(models.Model):
+	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False)  # "eng"
+	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)  # "en"
+	language_name_eng = models.CharField(max_length=64, null=False, blank=False)  # English"
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -68,14 +77,18 @@ class RokuSearchFeed(models.Model):
 	def __str__(self):
 		return str(self.id)
 
-### Content Categories
-
 CONTENT_CATEGORY_ORDER = (
 	("manual", "Manual"),
 	("most_recent", "Most Recent"),
 	("chronological", "Chronological"),
 	("most_popular", "Most Popular"),
 )
+
+# The Category object defines a new category your channel will display, and the content 
+# included in it based either on a playlist (see object description below), or a query 
+# containing one or multiple tags. You can also create them directly in Direct Publisher.
+# There are three default categories in every channel: "Continue Watching", "Most Popular", 
+# and "Recently Added". Each category is displayed as a separate row to end-users.
 
 class Category(models.Model):
 	category_name = models.CharField(max_length=128, default="", null=False, blank=False)
@@ -89,23 +102,35 @@ class Category(models.Model):
 	def __str__(self):
 		return str(self.id)
 
+# A Playlist is an ordered list of videos that may contain a mix of Movies, Series, 
+# Short-form videos, and TV Specials. It references a list of video IDs that are defined 
+# elsewhere in the feed. The same video can be referenced in multiple playlists.
+# Playlists are similar to tags: they help define the content that a channel's categories 
+# will display. The main difference is that playlists enable the order of the content to be 
+# manually specified; therefore, playlists are ideal for creating a "Featured" category in 
+# a channel, for example.
+
 class Playlist(models.Model):
 	#playlist_id = models.PositiveBigIntegerField(primary_key=True)
-	playlist_name = models.CharField(max_length=20, default="", null=True, blank=True)
-	# list of video items
+	playlist_name = models.CharField(max_length=20, default="", null=False, blank=False)
+	# List of mixed Movies, Series, Short Form Videos, TV Specials
 	item_ids = models.JSONField(default=list, null=True, blank=True)
+	# extra
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
-	# extra
 	is_public = models.BooleanField(default=False)
 	class Meta:
 		ordering = ['-id']
 		def __unicode__(self):
-			return self.title
+			return self.id
+	def __str__(self):
+		return str(self.id)
 
 
 ### Content Types
+
+# This object represents a movie object.
 
 class Movie(models.Model):
 	movie_id = models.UUIDField(default=uuid.uuid4, editable=False)
@@ -128,6 +153,8 @@ class Movie(models.Model):
 	def __str__(self):
 		return str(self.movie_id)
 
+# This object represents a live linear stream.
+
 class LiveFeed(models.Model):
 	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
@@ -145,6 +172,8 @@ class LiveFeed(models.Model):
 			return self.livefeed_id
 	def __str__(self):
 		return str(self.livefeed_id)
+
+# This object represents a series, such as a season of a TV Show or a mini-series.
 
 class Series(models.Model):
 	series_id = models.UUIDField(default=uuid.uuid4, editable=False)
@@ -166,6 +195,14 @@ class Series(models.Model):
 	def __str__(self):
 		return str(self.series_id)
 
+# This object represents a single season of a series.
+# {
+#   "seasonNumber": "1",
+#   "episodes": [
+#     ...
+#   ]
+# }
+
 class Season(models.Model):
 	# Sequential season number (for example, 3 or 2015).
 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
@@ -177,6 +214,8 @@ class Season(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.id)
+
+# This object represents a single episode in a series or a season.
 
 class Episode(models.Model):
 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False)
@@ -196,6 +235,8 @@ class Episode(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.id)
+
+# Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies.
 
 class ShortFormVideo(models.Model):
 	# An immutable string reference ID for the video that does not exceed 50 characters. 
@@ -237,6 +278,8 @@ class ShortFormVideo(models.Model):
 	def __str__(self):
 		return str(self.short_form_video_id)
 
+# Shorter or longer than 15 minutes. Special ad rules apply.
+
 class TVSpecial(models.Model):
 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False)
 	title = models.CharField(max_length=64, null=False, blank=False)
@@ -273,6 +316,9 @@ LANGUAGES_ISO639 = (
 	("zh", "Chinese"),
 )
 
+# The Content object represents the details about a single video content item such as a movie, 
+# episode, short-form video, or TV special.
+
 class Content(models.Model):
 	date_added = models.DateTimeField(auto_now_add=True)
 	videos = ForeignKey("Video", on_delete=models.SET_NULL, null=True, blank=False)
@@ -305,7 +351,14 @@ VIDEO_TYPE = (
 	("SMOOTH", "SMOOTH"),
 )
 
-# {"url": "https://example.org/cdn/videos/1509428502952", "quality": "UHD", "videoType": "HLS"}
+# This object represents the details of a single video file. 
+# The preferred videoType format is HLS (at minimum, DASH should be used).
+# {
+#	"url": "https://example.org/cdn/videos/1509428502952", 
+#	"quality": "UHD", 
+#	"videoType": "HLS"
+# }
+
 class Video(models.Model):
 	url = models.URLField(max_length=2083, null=False, blank=False)
 	quality = models.CharField(max_length=16, choices=VIDEO_QUALITY, default='HD', null=False, blank=False)
@@ -322,7 +375,15 @@ CAPTION_TYPE = (
 	("SUBTITLE", "SUBTITLE"),
 )
 
-# {"url": "https://example.org/cdn/subtitles/1509428502952/sub-fr.srt", "language": "fr", "captionType": "CLOSED_CAPTION"}
+# This object represents a single video caption file of a video content. The supported 
+# formats are described in Closed Caption Support. The preferred closed caption formats 
+# are: WebVTT, SRT.
+# {
+#	"url": "https://example.org/cdn/subtitles/1509428502952/sub-fr.srt", 
+#	"language": "fr", 
+#	"captionType": "CLOSED_CAPTION"
+# }
+
 class Caption(models.Model):
 	url = models.URLField(max_length=2083, null=False, blank=False)
 	language = models.CharField(max_length=16, default='en', null=False, blank=False)
@@ -339,7 +400,14 @@ TRICK_QUALITY = (
 	("FHD", "FHD (1080p)"),
 )
 
-# {"url": "https://example.org/cdn/trickplayFiles/1509428502952/1", "quality": "FHD"}
+# This object represents a single trickplay file. Trickplay files are the images shown 
+# when a user scrubs through a video, either fast-forwarding or rewinding. The file must 
+# be in the Roku BIF format, as described in Trick Mode.
+# {
+#	"url": "https://example.org/cdn/trickplayFiles/1509428502952/1", 
+#	"quality": "FHD"
+# }
+
 class TrickPlayFile(models.Model):
 	url = models.URLField(max_length=2083, null=False, blank=False)
 	quality = models.CharField(max_length=16, choices=TRICK_QUALITY, default="HD", null=False, blank=False)
@@ -399,7 +467,12 @@ EXTERNAL_ID_TYPE = (
 	("EIDR", "EIDR (Entertainment Identifier ID)"),
 )
 
-# {"id": "tt0371724", "idType": "IMDB"}
+# The third-party metadata provider ID for the video content.
+# {
+#	"id": "tt0371724", 
+#	"idType": "IMDB"
+# }
+
 class ExternalID(models.Model);
 	external_id = models.CharField(max_length=16, default="0", null=False, blank=False)
 	id_type = models.CharField(max_length=16, choices=EXTERNAL_ID_TYPE, default="IMDB", null=False, blank=False)
@@ -410,7 +483,14 @@ class ExternalID(models.Model);
 	def __str__(self):
 		return str(self.id)
 
-# {"rating": "PG", "ratingSource": "USA_PR"}
+# This object represents the rating for the video content. The parental rating, as well as 
+# the source must be defined (for example, USA Parental Rating, UK Content Provider, 
+# and so on). See Parental Ratings and Rating Sources for acceptable values.
+# {
+#	"rating": "PG", 
+#	"ratingSource": "USA_PR"
+# }
+
 class Rating(models.Model):
 	rating = models.ForeignKey("ParentalRating", on_delete=models.SET_NULL, blank=True, null=True)
 	rating_source = models.ForeignKey("RatingSource", on_delete=models.SET_NULL, blank=True, null=True)
@@ -451,7 +531,13 @@ CREDIT_ROLES = (
 	("voice", "Voice"),
 )
 
-# {"name": "Douglas N. Adams", "role": "screenwriter", "birthDate": "1952-03-11"}
+# The Credit object represents a single person in the credits of a video content.
+# {
+#	"name": "Douglas N. Adams", 
+#	"role": "screenwriter", 
+#	"birthDate": "1952-03-11"
+# }
+
 class Credit(models.Model):
 	credit_name = models.CharField(max_length=64, default="", null=False, blank=False)
 	role = models.CharField(max_length=16, choices=CREDIT_ROLES, default="actor", null=True, blank=True)

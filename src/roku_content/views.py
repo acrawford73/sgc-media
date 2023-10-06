@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 ### Models
 ## Roku Content Feeds, Categories, Types, Properties
-from .models import RokuContentFeed, RokuSearchFeed
+from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
@@ -59,38 +59,6 @@ class RokuContentFeedUpdateView(UpdateView):
 class RokuContentFeedListAPI(generics.ListAPIView):
 	queryset = RokuContentFeed.objects.all()
 	serializer_class = RokuContentFeedSerializerList
-	#filter_backends = [DjangoFilterBackend]
-	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
-	#ordering_fields = ['id', 'category_name', 'playlist_name']
-	ordering = ['-id']
-
-# Roku Search Feed
-class RokuSearchFeedCreateView(CreateView):
-	model = RokuSearchFeed
-	template_name = 'roku_content/rokusearchfeed_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['provider_name', 'language', 'rating', 'movies', 'series', 'seasons', \
-		'episodes', 'short_form_videos', 'tv_specials']
-
-class RokuSearchFeedListView(ListView):
-	model = RokuSearchFeed
-	template_name = 'roku_content/rokusearchfeed_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'rokusearchfeed'
-	ordering = ['-id']
-	#paginate_by = 15
-
-class RokuSearchFeedDetailView(DetailView):
-	model = RokuSearchFeed
-	context_object_name = 'rokusearchfeed'
-
-class RokuSearchFeedUpdateView(UpdateView):
-	model = RokuSearchFeed
-	context_object_name = 'rokusearchfeed'
-	fields = fields = ['provider_name', 'language', 'rating', 'movies', 'series', 'seasons', \
-		'episodes', 'short_form_videos', 'tv_specials']
-
-class RokuSearchFeedListAPI(generics.ListAPIView):
-	queryset = RokuSearchFeed.objects.all()
-	serializer_class =RokuSearchFeedSerializerList
 	#filter_backends = [DjangoFilterBackend]
 	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
 	#ordering_fields = ['id', 'category_name', 'playlist_name']
@@ -151,23 +119,23 @@ class CategoryListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'category_name', 'playlist_name']
 	ordering = ['-id']
 
-class CategoryListAPISearch(generics.ListAPIView):
-	queryset = Category.objects.all()
-	serializer_class = CategorySerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
-	ordering_fields = ['id', 'category_name', 'playlist_name']
-	ordering = ['-id']
+# class CategoryListAPISearch(generics.ListAPIView):
+# 	queryset = Category.objects.all()
+# 	serializer_class = CategorySerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
+# 	ordering_fields = ['id', 'category_name', 'playlist_name']
+# 	ordering = ['-id']
 
-class CategoryDetailAPI(generics.RetrieveAPIView):
-	queryset = Category.objects.all()
-	serializer_class = CategorySerializerDetail
+# class CategoryDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Category.objects.all()
+# 	serializer_class = CategorySerializerDetail
 
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
 	template_name = 'roku_content/playlist_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['playlist_name', 'item_ids', 'short_description', 'notes']
+	fields = ['playlist_name', 'item_ids', 'short_description', 'notes', 'is_public']
 
 class PlaylistListView(ListView):
 	model = Playlist
@@ -186,26 +154,24 @@ class PlaylistUpdateView(UpdateView):
 	fields = ['playlist_name', 'item_ids', 'short_description', 'notes', 'is_public']
 
 class PlaylistListAPI(generics.ListAPIView):
-	queryset = Playlist.objects.all()
+	queryset = Playlist.objects.all().filter(is_public=True)
 	serializer_class = PlaylistSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['playlist_name', 'short_description', 'notes', 'is_public']
+	filterset_fields = ['playlist_name']
 	ordering_fields = ['id', 'playlist_name']
 	ordering = ['-id']
 
-class PlaylistListAPISearch(generics.ListAPIView):
-	queryset = Playlist.objects.all()
-	serializer_class = PlaylistSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['playlist_name', 'short_description', 'notes', 'created', 'is_public']
-	ordering_fields = ['id', 'playlist_name', 'created']
-	ordering = ['-id']
+# class PlaylistListAPISearch(generics.ListAPIView):
+# 	queryset = Playlist.objects.all().filter(is_public=True)
+# 	serializer_class = PlaylistSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['playlist_name']
+# 	ordering_fields = ['id', 'playlist_name']
+# 	ordering = ['-id']
 
-class PlaylistDetailAPI(generics.RetrieveAPIView):
-	queryset = Playlist.objects.all()
-	serializer_class = PlaylistSerializerDetail
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['playlist_name', 'short_description', 'notes', 'created']
+# class PlaylistDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Playlist.objects.all().filter(is_public=True)
+# 	serializer_class = PlaylistSerializerDetail
 
 
 ## Roku Content Types
@@ -243,18 +209,18 @@ class MovieListAPI(generics.ListAPIView):
 	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
 	ordering = ['-id']
 
-class MovieListAPISearch(generics.ListAPIView):
-	queryset = Movie.objects.all()
-	serializer_class = MovieSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
-	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
-	ordering = ['-id']
+# class MovieListAPISearch(generics.ListAPIView):
+# 	queryset = Movie.objects.all()
+# 	serializer_class = MovieSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+# 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+# 	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
+# 	ordering = ['-id']
 
-class MovieDetailAPI(generics.RetrieveAPIView):
-	queryset = Movie.objects.all()
-	serializer_class = MovieSerializerDetail
+# class MovieDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Movie.objects.all()
+# 	serializer_class = MovieSerializerDetail
 
 # LiveFeed
 class LiveFeedCreateView(CreateView):
@@ -288,18 +254,18 @@ class LiveFeedListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
 	ordering = ['-id']
 
-class LiveFeedListAPISearch(generics.ListAPIView):
-	queryset = LiveFeed.objects.all()
-	serializer_class =LiveFeedSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['livefeed_id', 'title', 'content', 'short_description', \
-		'long_description', 'tags', 'rating', 'genres']
-	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
-	ordering = ['-id']
+# class LiveFeedListAPISearch(generics.ListAPIView):
+# 	queryset = LiveFeed.objects.all()
+# 	serializer_class =LiveFeedSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['livefeed_id', 'title', 'content', 'short_description', \
+# 		'long_description', 'tags', 'rating', 'genres']
+# 	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
+# 	ordering = ['-id']
 
-class LiveFeedDetailAPI(generics.RetrieveAPIView):
-	queryset = LiveFeed.objects.all()
-	serializer_class = LiveFeedSerializerDetail
+# class LiveFeedDetailAPI(generics.RetrieveAPIView):
+# 	queryset = LiveFeed.objects.all()
+# 	serializer_class = LiveFeedSerializerDetail
 
 # Series
 class SeriesCreateView(CreateView):
@@ -333,18 +299,18 @@ class SeriesListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
 	ordering = ['-id']
 
-class SeriesListAPISearch(generics.ListAPIView):
-	queryset = Series.objects.all()
-	serializer_class = SeriesSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
-	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
-	ordering = ['-id']
+# class SeriesListAPISearch(generics.ListAPIView):
+# 	queryset = Series.objects.all()
+# 	serializer_class = SeriesSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date', \
+# 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
+# 	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
+# 	ordering = ['-id']
 
-class SeriesDetailAPI(generics.RetrieveAPIView):
-	queryset = Series.objects.all()
-	serializer_class = SeriesSerializerDetail
+# class SeriesDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Series.objects.all()
+# 	serializer_class = SeriesSerializerDetail
 
 # Season
 class SeasonCreateView(CreateView):
@@ -376,17 +342,17 @@ class SeasonListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'season_number', 'episodes']
 	ordering = ['-id']
 
-class SeasonListAPISearch(generics.ListAPIView):
-	queryset = Season.objects.all()
-	serializer_class = SeasonSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['season_number', 'episodes']
-	ordering_fields = ['id', 'season_number', 'episodes']
-	ordering = ['-id']
+# class SeasonListAPISearch(generics.ListAPIView):
+# 	queryset = Season.objects.all()
+# 	serializer_class = SeasonSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['season_number', 'episodes']
+# 	ordering_fields = ['id', 'season_number', 'episodes']
+# 	ordering = ['-id']
 
-class SeriesDetailAPI(generics.RetrieveAPIView):
-	queryset = Season.objects.all()
-	serializer_class = SeasonSerializerDetail
+# class SeriesDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Season.objects.all()
+# 	serializer_class = SeasonSerializerDetail
 
 # Episode
 class EpisodeCreateView(CreateView):
@@ -420,18 +386,18 @@ class EpisodeListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
 	ordering = ['-id']
 
-class EpisodeListAPISearch(generics.ListAPIView):
-	queryset = Episode.objects.all()
-	serializer_class = EpisodeSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['episode_id', 'title', 'content', 'release_date', 'episode_number', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
-	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
-	ordering = ['-id']
+# class EpisodeListAPISearch(generics.ListAPIView):
+# 	queryset = Episode.objects.all()
+# 	serializer_class = EpisodeSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['episode_id', 'title', 'content', 'release_date', 'episode_number', \
+# 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# 	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
+# 	ordering = ['-id']
 
-class EpisodeDetailAPI(generics.RetrieveAPIView):
-	queryset = Episode.objects.all()
-	serializer_class = EpisodeSerializerDetail
+# class EpisodeDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Episode.objects.all()
+# 	serializer_class = EpisodeSerializerDetail
 
 # ShortFormVideo
 class ShortFormVideoCreateView(CreateView):
@@ -465,18 +431,18 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'credits', 'rating']
 	ordering = ['-id']
 
-class ShortFormVideoListAPISearch(generics.ListAPIView):
-	queryset = ShortFormVideo.objects.all()
-	serializer_class = ShortFormVideoSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['short_form_video_id', 'title', 'short_description', 'long_description', \
-		'release_date', 'tags', 'genres', 'credits', 'rating']
-	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'credits', 'rating']
-	ordering = ['-id']
+# class ShortFormVideoListAPISearch(generics.ListAPIView):
+# 	queryset = ShortFormVideo.objects.all()
+# 	serializer_class = ShortFormVideoSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['short_form_video_id', 'title', 'short_description', 'long_description', \
+# 		'release_date', 'tags', 'genres', 'credits', 'rating']
+# 	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'credits', 'rating']
+# 	ordering = ['-id']
 
-class ShortFormVideoDetailAPI(generics.RetrieveAPIView):
-	queryset = ShortFormVideo.objects.all()
-	serializer_class = ShortFormVideoSerializerDetail
+# class ShortFormVideoDetailAPI(generics.RetrieveAPIView):
+# 	queryset = ShortFormVideo.objects.all()
+# 	serializer_class = ShortFormVideoSerializerDetail
 
 # TVSpecial
 class TVSpecialCreateView(CreateView):
@@ -510,18 +476,18 @@ class TVSpecialListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'title', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
 	ordering = ['-id']
 
-class TVSpecialListAPISearch(generics.ListAPIView):
-	queryset = TVSpecial.objects.all()
-	serializer_class = TVSpecialSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['tvspecial_id', 'title', 'content', 'release_date', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
-	ordering_fields = ['id', 'title', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
-	ordering = ['-id']
+# class TVSpecialListAPISearch(generics.ListAPIView):
+# 	queryset = TVSpecial.objects.all()
+# 	serializer_class = TVSpecialSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['tvspecial_id', 'title', 'content', 'release_date', \
+# 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# 	ordering_fields = ['id', 'title', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
+# 	ordering = ['-id']
 
-class TVSpecialDetailAPI(generics.RetrieveAPIView):
-	queryset = TVSpecial.objects.all()
-	serializer_class = TVSpecialSerializerDetail
+# class TVSpecialDetailAPI(generics.RetrieveAPIView):
+# 	queryset = TVSpecial.objects.all()
+# 	serializer_class = TVSpecialSerializerDetail
 
 
 ## Roku ContentPoperties
@@ -556,17 +522,17 @@ class ContentListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'category_name', 'playlist_name']
 	ordering = ['-id']
 
-class ContentListAPISearch(generics.ListAPIView):
-	queryset = Content.objects.all()
-	serializer_class = ContentSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', '@tags']
-	ordering_fields = ['id', 'category_name', 'playlist_name']
-	ordering = ['-id']
+# class ContentListAPISearch(generics.ListAPIView):
+# 	queryset = Content.objects.all()
+# 	serializer_class = ContentSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['title', 'short_description', 'long_description', '@tags']
+# 	ordering_fields = ['id', 'category_name', 'playlist_name']
+# 	ordering = ['-id']
 
-class ContentDetailAPI(generics.RetrieveAPIView):
-	queryset = Content.objects.all()
-	serializer_class = ContentSerializerDetail
+# class ContentDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Content.objects.all()
+# 	serializer_class = ContentSerializerDetail
 
 # Video
 class VideoCreateView(CreateView):
@@ -598,17 +564,17 @@ class VideoListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'quality', 'video_type']
 	ordering = ['-id']
 
-class VideoListAPISearch(generics.ListAPIView):
-	queryset = Video.objects.all()
-	serializer_class = VideoSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['url', 'quality', 'video_type']
-	ordering_fields = ['id', 'quality', 'video_type']
-	ordering = ['-id']
+# class VideoListAPISearch(generics.ListAPIView):
+# 	queryset = Video.objects.all()
+# 	serializer_class = VideoSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['url', 'quality', 'video_type']
+# 	ordering_fields = ['id', 'quality', 'video_type']
+# 	ordering = ['-id']
 
-class VideoDetailAPI(generics.RetrieveAPIView):
-	queryset = Video.objects.all()
-	serializer_class = VideoSerializerDetail
+# class VideoDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Video.objects.all()
+# 	serializer_class = VideoSerializerDetail
 
 # Caption
 class CaptionCreateView(CreateView):
@@ -640,17 +606,17 @@ class CaptionListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'language', 'caption_type']
 	ordering = ['-id']
 
-class CaptionListAPISearch(generics.ListAPIView):
-	queryset = Caption.objects.all()
-	serializer_class = CaptionSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['url', 'language', 'caption_type']
-	ordering_fields = ['id', 'language', 'caption_type']
-	ordering = ['-id']
+# class CaptionListAPISearch(generics.ListAPIView):
+# 	queryset = Caption.objects.all()
+# 	serializer_class = CaptionSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['url', 'language', 'caption_type']
+# 	ordering_fields = ['id', 'language', 'caption_type']
+# 	ordering = ['-id']
 
-class CaptionDetailAPI(generics.RetrieveAPIView):
-	queryset = Caption.objects.all()
-	serializer_class = CaptionSerializerDetail
+# class CaptionDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Caption.objects.all()
+# 	serializer_class = CaptionSerializerDetail
 
 # TrickPlayFile
 class TrickPlayFileCreateView(CreateView):
@@ -682,17 +648,17 @@ class TrickPlayFileListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'quality']
 	ordering = ['-id']
 
-class TrickPlayFileListAPISearch(generics.ListAPIView):
-	queryset = TrickPlayFile.objects.all()
-	serializer_class = TrickPlayFileSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['url', 'quality']
-	ordering_fields = ['id', 'quality']
-	ordering = ['-id']
+# class TrickPlayFileListAPISearch(generics.ListAPIView):
+# 	queryset = TrickPlayFile.objects.all()
+# 	serializer_class = TrickPlayFileSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['url', 'quality']
+# 	ordering_fields = ['id', 'quality']
+# 	ordering = ['-id']
 
-class TrickPlayFileDetailAPI(generics.RetrieveAPIView):
-	queryset = TrickPlayFile.objects.all()
-	serializer_class = TrickPlayFileSerializerDetail
+# class TrickPlayFileDetailAPI(generics.RetrieveAPIView):
+# 	queryset = TrickPlayFile.objects.all()
+# 	serializer_class = TrickPlayFileSerializerDetail
 
 # Genre
 class GenreCreateView(CreateView):
@@ -724,17 +690,17 @@ class GenreListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'genre']
 	ordering = ['-id']
 
-class GenreListAPISearch(generics.ListAPIView):
-	queryset = Genre.objects.all()
-	serializer_class = GenreSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['genre']
-	ordering_fields = ['id', 'genre']
-	ordering = ['-id']
+# class GenreListAPISearch(generics.ListAPIView):
+# 	queryset = Genre.objects.all()
+# 	serializer_class = GenreSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['genre']
+# 	ordering_fields = ['id', 'genre']
+# 	ordering = ['-id']
 
-class GenreDetailAPI(generics.RetrieveAPIView):
-	queryset = Genre.objects.all()
-	serializer_class = GenreSerializerDetail
+# class GenreDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Genre.objects.all()
+# 	serializer_class = GenreSerializerDetail
 
 # ExternalID
 class ExternalIDCreateView(CreateView):
@@ -766,17 +732,17 @@ class ExternalIDListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'external_id', 'id_type']
 	ordering = ['-id']
 
-class ExternalIDListAPISearch(generics.ListAPIView):
-	queryset = ExternalID.objects.all()
-	serializer_class = ExternalIDSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['external_id']
-	ordering_fields = ['id', 'external_id', 'id_type']
-	ordering = ['-id']
+# class ExternalIDListAPISearch(generics.ListAPIView):
+# 	queryset = ExternalID.objects.all()
+# 	serializer_class = ExternalIDSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['external_id']
+# 	ordering_fields = ['id', 'external_id', 'id_type']
+# 	ordering = ['-id']
 
-class ExternalIDDetailAPI(generics.RetrieveAPIView):
-	queryset = ExternalID.objects.all()
-	serializer_class = ExternalIDSerializerDetail
+# class ExternalIDDetailAPI(generics.RetrieveAPIView):
+# 	queryset = ExternalID.objects.all()
+# 	serializer_class = ExternalIDSerializerDetail
 
 # Rating
 class RatingCreateView(CreateView):
@@ -808,17 +774,17 @@ class RatingListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'rating', 'rating_source']
 	ordering = ['-id']
 
-class RatingListAPISearch(generics.ListAPIView):
-	queryset = Rating.objects.all()
-	serializer_class = RatingSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['rating']
-	ordering_fields = ['id', 'rating', 'rating_source']
-	ordering = ['-id']
+# class RatingListAPISearch(generics.ListAPIView):
+# 	queryset = Rating.objects.all()
+# 	serializer_class = RatingSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['rating']
+# 	ordering_fields = ['id', 'rating', 'rating_source']
+# 	ordering = ['-id']
 
-class RatingDetailAPI(generics.RetrieveAPIView):
-	queryset = ParentalRating.objects.all()
-	serializer_class = ParentalRatingSerializerDetail
+# class RatingDetailAPI(generics.RetrieveAPIView):
+# 	queryset = ParentalRating.objects.all()
+# 	serializer_class = ParentalRatingSerializerDetail
 
 # RatingSource
 class RatingSourceCreateView(CreateView):
@@ -850,17 +816,17 @@ class RatingSourceListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'source_name']
 	ordering = ['-id']
 
-class RatingSourceListAPISearch(generics.ListAPIView):
-	queryset = RatingSource.objects.all()
-	serializer_class = RatingSourceSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['source_name']
-	ordering_fields = ['id', 'source_name']
-	ordering = ['-id']
+# class RatingSourceListAPISearch(generics.ListAPIView):
+# 	queryset = RatingSource.objects.all()
+# 	serializer_class = RatingSourceSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['source_name']
+# 	ordering_fields = ['id', 'source_name']
+# 	ordering = ['-id']
 
-class RatingSourceDetailAPI(generics.RetrieveAPIView):
-	queryset = RatingSource.objects.all()
-	serializer_class = RatingSourceSerializerDetail
+# class RatingSourceDetailAPI(generics.RetrieveAPIView):
+# 	queryset = RatingSource.objects.all()
+# 	serializer_class = RatingSourceSerializerDetail
 
 # ParentalRating
 class ParentalRatingCreateView(CreateView):
@@ -892,17 +858,17 @@ class ParentalRatingListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'rating']
 	ordering = ['-id']
 
-class ParentalRatingListAPISearch(generics.ListAPIView):
-	queryset = ParentalRating.objects.all()
-	serializer_class = ParentalRatingSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['rating']
-	ordering_fields = ['id', 'rating']
-	ordering = ['-id']
+# class ParentalRatingListAPISearch(generics.ListAPIView):
+# 	queryset = ParentalRating.objects.all()
+# 	serializer_class = ParentalRatingSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['rating']
+# 	ordering_fields = ['id', 'rating']
+# 	ordering = ['-id']
 
-class ParentalRatingDetailAPI(generics.RetrieveAPIView):
-	queryset = ParentalRating.objects.all()
-	serializer_class = ParentalRatingSerializerDetail
+# class ParentalRatingDetailAPI(generics.RetrieveAPIView):
+# 	queryset = ParentalRating.objects.all()
+# 	serializer_class = ParentalRatingSerializerDetail
 
 # Credit
 class CreditCreateView(CreateView):
@@ -934,14 +900,14 @@ class CreditListAPI(generics.ListAPIView):
 	ordering_fields = ['id', 'credit_name', 'role', 'birth_date']
 	ordering = ['-id']
 
-class CreditListAPISearch(generics.ListAPIView):
-	queryset = Credit.objects.all()
-	serializer_class = CreditSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['credit_name']
-	ordering_fields = ['id', 'credit_name', 'role', 'birth_date']
-	ordering = ['-id']
+# class CreditListAPISearch(generics.ListAPIView):
+# 	queryset = Credit.objects.all()
+# 	serializer_class = CreditSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['credit_name']
+# 	ordering_fields = ['id', 'credit_name', 'role', 'birth_date']
+# 	ordering = ['-id']
 
-class CreditDetailAPI(generics.RetrieveAPIView):
-	queryset = Credit.objects.all()
-	serializer_class = CreditSerializerDetail
+# class CreditDetailAPI(generics.RetrieveAPIView):
+# 	queryset = Credit.objects.all()
+# 	serializer_class = CreditSerializerDetail

@@ -69,7 +69,7 @@ class MediaVideoGenreListAPI(generics.ListAPIView):
 	filterset_fields = ['genre']
 
 class MediaVideoDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaVideo.objects.all()
+	queryset = MediaVideo.objects.all().filter(is_public=True)
 	serializer_class = MediaVideoSerializerDetail
 
 class MediaVideoGalleryListView(ListView):

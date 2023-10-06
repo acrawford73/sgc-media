@@ -1,29 +1,21 @@
 from django.contrib import admin
 
 ## Roku Content Feed, Categories, Types, Properties
-from .models import RokuContentFeed, RokuSearchFeed
+from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, RatingSource, ParentalRating, Credit
+from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
+					RatingSource, ParentalRating, Credit
 
-# Roku Feeds
+# Roku Content Feed
 
 class RokuContentFeedAdmin(admin.ModelAdmin):
 	list_display = ['provider_name']
 	search_fields = ['provider_name']
-	#list_filter = ['language']
+	list_filter = ['language']
 	readonly_fields = ['last_updated']
 	class Meta:
 		model = RokuContentFeed
-
-class RokuSearchFeedAdmin(admin.ModelAdmin):
-	list_display = ['provider_name']
-	search_fields = ['provider_name']
-	#list_filter = ['language']
-	readonly_fields = ['last_updated']
-	class Meta:
-		model = RokuSearchFeed
-
 
 # Roku Categories
 
@@ -66,7 +58,8 @@ class LiveFeedAdmin(admin.ModelAdmin):
 
 class SeriesAdmin(admin.ModelAdmin):
 	list_display = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date']
-	search_fields = ['series_id', 'title', 'genres', 'short_description', 'long_description', 'credits', 'tags', 'external_ids', 'release_date']
+	search_fields = ['series_id', 'title', 'genres', 'short_description', \
+		'long_description', 'credits', 'tags', 'external_ids', 'release_date']
 	list_filter = ['seasons', 'episodes', 'genres', 'tags', 'rating', 'external_ids']
 	class Meta:
 		model = Series
@@ -80,21 +73,24 @@ class SeasonAdmin(admin.ModelAdmin):
 
 class EpisodeAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'episode_number', 'release_date']
-	search_fields = ['episode_id', 'title', 'episode_number', 'short_description', 'long_description', 'credits', 'rating', 'external_ids', 'release_date']
+	search_fields = ['episode_id', 'title', 'episode_number', 'short_description', \
+		'long_description', 'credits', 'rating', 'external_ids', 'release_date']
 	list_filter = ['episode_number', 'rating', 'external_ids']
 	class Meta:
 		model = Episode
 
 class ShortFormVideoAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'genres', 'release_date']
-	search_fields = ['short_form_video_id', 'title', 'short_description', 'long_description', 'genres', 'credits', 'rating', 'tags', 'release_date']
+	search_fields = ['short_form_video_id', 'title', 'short_description', \
+		'long_description', 'genres', 'credits', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'genres', 'rating', 'tags']
 	class Meta:
 		model = ShortFormVideo
 
 class TVSpecialAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'genres', 'release_date']
-	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', 'genres', 'rating', 'tags', 'release_date']
+	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', \
+		'genres', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'genres', 'rating', 'tags']
 	class Meta:
 		model = TVSpecial
@@ -171,3 +167,30 @@ class CreditAdmin(admin.ModelAdmin):
 	list_filter = ['credit_name', 'role', 'birth_date']
 	class Meta:
 		model = Credit
+
+
+# Register with Admin
+admin.site.register(RokuContentFeed, RokuContentFeedAdmin)
+
+admin.site.register(Language, LanguageAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Playlist, PlaylistAdmin)
+
+admin.site.register(Movie, MovieAdmin)
+admin.site.register(LiveFeed, LiveFeedAdmin)
+admin.site.register(Series, SeriesAdmin)
+admin.site.register(Season, SeasonAdmin)
+admin.site.register(Episode, EpisodeAdmin)
+admin.site.register(ShortFormVideo, ShortFormVideoAdmin)
+admin.site.register(TVSpecial, TVSpecialAdmin)
+
+admin.site.register(Content, ContentAdmin)
+admin.site.register(Video, VideoAdmin)
+admin.site.register(Caption, CaptionAdmin)
+admin.site.register(TrickPlayFile, TrickPlayFileAdmin)
+admin.site.register(Genre, GenreAdmin)
+admin.site.register(ExternalID, ExternalIDAdmin)
+admin.site.register(Rating, RatingAdmin)
+admin.site.register(RatingSource, RatingSourceAdmin)
+admin.site.register(ParentalRating, ParentalRatingAdmin)
+admin.site.register(Credit, CreditAdmin)
