@@ -22,6 +22,7 @@ urlpatterns = [
 	re_path('^api/videos/(?P<username>.+)/$', views.MediaVideoListAPI.as_view()),
 	re_path('^api/videos/(?P<service>.+)/$', views.MediaVideoListAPI.as_view()),
 	re_path('^api/videos/(?P<orientation>.+)/$', views.MediaVideoListAPI.as_view()),
+	re_path('^api/videos/(?P<doc_format>.+)/$', views.MediaVideoListAPI.as_view()),
 
 	# Photo
 	path('photos/', views.MediaPhotoListView.as_view(), name='media-photo-list'),

@@ -13,7 +13,6 @@ class SystemConfig(models.Model):
 	
 	# External Services
 	roku_support = models.BooleanField(default=True)
-	amazon_support = models.BooleanField(default=False)
 	
 	# System Features
 	live_feed_enable = models.BooleanField(default=True)

@@ -29,7 +29,26 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 if config('PRODUCTION', default=False, cast=bool) == True:
     DEBUG = False
     SECRET_KEY = config('PROD_SECRET_KEY')
+    SECRET_KEY_FALLBACK = config('PROD_SECRET_KEY_FALLBACK')
     ALLOWED_HOSTS = config('PROD_ALLOWED_HOSTS', cast=Csv())
+    # Security
+    SECURE_SSL_HOST = "domain.com"
+    SECURE_SSL_REDIRECT = True
+    SECURE_REFERRER_POLICY = 'same-origin'
+    SECURE_HSTS_SECONDS = 3600
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    X_FRAME_OPTIONS = 'DENY'
+    #Cookies
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_AGE = 3600
+    SESSION_COOKIE_DOMAIN = 'domain.com'
+    SESSION_COOKIE_NAME = 'this-is-howie-dewitt'
+    SESSION_COOKIE_SAMESITE = 'Strict'
+    # Proxy Use Only
+    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # USE_X_FORWARDED_HOST = False
 else:
     DEBUG = True
     SECRET_KEY = config('DEBUG_SECRET_KEY')
@@ -38,10 +57,7 @@ else:
 SITE_ID = 1
 
 ### HOST SECURITY
-#SECURE_HSTS_SECONDS = 3600
-#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#SECURE_HSTS_PRELOAD = True
-#SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT_ENABLED') != 'False'
+
 
 
 # Application definition
@@ -121,6 +137,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
+USE_THOUSAND_SEPARATOR = True
+THOUSAND_SEPARATOR = ','
 
 # Time Zone
 # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
