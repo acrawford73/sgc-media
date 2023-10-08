@@ -125,6 +125,7 @@ class MediaVideo(models.Model):
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	genre = models.ForeignKey("MediaVideoGenre", on_delete=models.SET_NULL, blank=True, null=True)
 	doc_format = models.ForeignKey("MediaVideoFormat", on_delete=models.SET_NULL, blank=True, null=True)
+	transcribe = models.TextField(default="", null=True, blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
@@ -209,7 +210,8 @@ class MediaAudio(models.Model):
 	extra = models.TextField(max_length=2048, default="", null=True, blank=True)
 	doc_format = models.ForeignKey("MediaAudioFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	rating = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
-
+	transcribe = models.TextField(default="", null=True, blank=True)
+	
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
 

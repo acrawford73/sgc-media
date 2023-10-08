@@ -6,7 +6,8 @@ from django.views.generic import TemplateView, CreateView, ListView, DetailView,
 ## Roku Content Feeds, Categories, Types, Properties
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
-from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
+from .models import ShortFormVideo
+#from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
 					RatingSource, ParentalRating, Credit
 ### Rest Framework
@@ -20,9 +21,10 @@ from .serializers import RokuContentFeedSerializerList, RokuSearchFeedSerializer
 # Categories
 from .serializers import CategorySerializerList, PlaylistSerializerList
 # Types
-from .serializers import MovieSerializerList, LiveFeedSerializerList, SeriesSerializerList
-from .serializers import SeasonSerializerList, EpisodeSerializerList, ShortFormVideoSerializerList
-from .serializers import TVSpecialSerializerList
+from .serializers import ShortFormVideoSerializerList
+#from .serializers import MovieSerializerList, LiveFeedSerializerList, SeriesSerializerList
+#from .serializers import SeasonSerializerList, EpisodeSerializerList, ShortFormVideoSerializerList
+#from .serializers import TVSpecialSerializerList
 # Properties
 from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
 from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
@@ -34,6 +36,18 @@ from .serializers import CreditSerializerList
 
 # Roku Content Feed
 class RokuContentFeedCreateView(CreateView):
+	"""
+	Display Roku Content Feed fields for CreateView :model:`roku_content.RokuContentFeed`.
+
+	**Context**
+
+	``rokucontentfeed``
+		An instance of :model:`roku_content.RokuContentFeed``.
+
+	**Template:**
+
+	:template:`roku_content/rokucontentfeed_create.html`
+	"""
 	model = RokuContentFeed
 	template_name = 'roku_content/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
@@ -177,227 +191,227 @@ class PlaylistListAPI(generics.ListAPIView):
 ## Roku Content Types
 
 # Movie
-class MovieCreateView(CreateView):
-	model = Movie
-	template_name = 'roku_content/movie_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+# class MovieCreateView(CreateView):
+# 	model = Movie
+# 	template_name = 'roku_content/movie_create.html'  #<app>/<model>_<viewtype>.html
+# 	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+# 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 
-class MovieListView(ListView):
-	model = Movie
-	template_name = 'roku_content/movie_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'movie'
-	ordering = ['-id']
-	paginate_by = 15
+# class MovieListView(ListView):
+# 	model = Movie
+# 	template_name = 'roku_content/movie_list.html'  #<app>/<model>_<viewtype>.html
+# 	context_object_name = 'movie'
+# 	ordering = ['-id']
+# 	paginate_by = 15
 
-class MovieDetailView(DetailView):
-	model = Movie
-	context_object_name = 'movie'
+# class MovieDetailView(DetailView):
+# 	model = Movie
+# 	context_object_name = 'movie'
 
-class MovieUpdateView(UpdateView):
-	model = Movie
-	context_object_name = 'movie'
-	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+# class MovieUpdateView(UpdateView):
+# 	model = Movie
+# 	context_object_name = 'movie'
+# 	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+# 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 
-class MovieListAPI(generics.ListAPIView):
-	queryset = Movie.objects.all()
-	serializer_class = MovieSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
-	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
-	ordering = ['-id']
-
-# class MovieListAPISearch(generics.ListAPIView):
+# class MovieListAPI(generics.ListAPIView):
 # 	queryset = Movie.objects.all()
 # 	serializer_class = MovieSerializerList
-# 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
 # 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 # 	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
 # 	ordering = ['-id']
 
-# class MovieDetailAPI(generics.RetrieveAPIView):
-# 	queryset = Movie.objects.all()
-# 	serializer_class = MovieSerializerDetail
+# # class MovieListAPISearch(generics.ListAPIView):
+# # 	queryset = Movie.objects.all()
+# # 	serializer_class = MovieSerializerList
+# # 	filter_backends = [filters.SearchFilter]
+# # 	search_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+# # 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+# # 	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
+# # 	ordering = ['-id']
 
-# LiveFeed
-class LiveFeedCreateView(CreateView):
-	model = LiveFeed
-	template_name = 'roku_content/livefeed_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
-		'short_description', 'long_description', 'tags', 'rating', 'genres']
+# # class MovieDetailAPI(generics.RetrieveAPIView):
+# # 	queryset = Movie.objects.all()
+# # 	serializer_class = MovieSerializerDetail
 
-class LiveFeedListView(ListView):
-	model = LiveFeed
-	template_name = 'roku_content/livefeed_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'livefeed'
-	ordering = ['-id']
-	paginate_by = 15
+# # LiveFeed
+# class LiveFeedCreateView(CreateView):
+# 	model = LiveFeed
+# 	template_name = 'roku_content/livefeed_create.html'  #<app>/<model>_<viewtype>.html
+# 	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
+# 		'short_description', 'long_description', 'tags', 'rating', 'genres']
 
-class LiveFeedDetailView(DetailView):
-	model = LiveFeed
-	context_object_name = 'livefeed'
+# class LiveFeedListView(ListView):
+# 	model = LiveFeed
+# 	template_name = 'roku_content/livefeed_list.html'  #<app>/<model>_<viewtype>.html
+# 	context_object_name = 'livefeed'
+# 	ordering = ['-id']
+# 	paginate_by = 15
 
-class LiveFeedUpdateView(UpdateView):
-	model = LiveFeed
-	context_object_name = 'livefeed'
-	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
-		'short_description', 'long_description', 'tags', 'rating', 'genres']
+# class LiveFeedDetailView(DetailView):
+# 	model = LiveFeed
+# 	context_object_name = 'livefeed'
 
-class LiveFeedListAPI(generics.ListAPIView):
-	queryset = LiveFeed.objects.all()
-	serializer_class = LiveFeedSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['title', 'content', 'tags', 'rating', 'genres']
-	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
-	ordering = ['-id']
+# class LiveFeedUpdateView(UpdateView):
+# 	model = LiveFeed
+# 	context_object_name = 'livefeed'
+# 	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
+# 		'short_description', 'long_description', 'tags', 'rating', 'genres']
 
-# class LiveFeedListAPISearch(generics.ListAPIView):
+# class LiveFeedListAPI(generics.ListAPIView):
 # 	queryset = LiveFeed.objects.all()
-# 	serializer_class =LiveFeedSerializerList
-# 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['livefeed_id', 'title', 'content', 'short_description', \
-# 		'long_description', 'tags', 'rating', 'genres']
+# 	serializer_class = LiveFeedSerializerList
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['title', 'content', 'tags', 'rating', 'genres']
 # 	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
 # 	ordering = ['-id']
 
-# class LiveFeedDetailAPI(generics.RetrieveAPIView):
-# 	queryset = LiveFeed.objects.all()
-# 	serializer_class = LiveFeedSerializerDetail
+# # class LiveFeedListAPISearch(generics.ListAPIView):
+# # 	queryset = LiveFeed.objects.all()
+# # 	serializer_class =LiveFeedSerializerList
+# # 	filter_backends = [filters.SearchFilter]
+# # 	search_fields = ['livefeed_id', 'title', 'content', 'short_description', \
+# # 		'long_description', 'tags', 'rating', 'genres']
+# # 	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
+# # 	ordering = ['-id']
 
-# Series
-class SeriesCreateView(CreateView):
-	model = Series
-	template_name = 'roku_content/series_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['title', 'seasons', 'episodes', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
+# # class LiveFeedDetailAPI(generics.RetrieveAPIView):
+# # 	queryset = LiveFeed.objects.all()
+# # 	serializer_class = LiveFeedSerializerDetail
 
-class SeriesListView(ListView):
-	model = Series
-	template_name = 'roku_content/series_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'series'
-	ordering = ['-id']
-	paginate_by = 15
+# # Series
+# class SeriesCreateView(CreateView):
+# 	model = Series
+# 	template_name = 'roku_content/series_create.html'  #<app>/<model>_<viewtype>.html
+# 	fields = ['title', 'seasons', 'episodes', 'genres', 'thumbnail', 'release_date', \
+# 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
 
-class SeriesDetailView(DetailView):
-	model = Series
-	context_object_name = 'series'
+# class SeriesListView(ListView):
+# 	model = Series
+# 	template_name = 'roku_content/series_list.html'  #<app>/<model>_<viewtype>.html
+# 	context_object_name = 'series'
+# 	ordering = ['-id']
+# 	paginate_by = 15
 
-class SeriesUpdateView(UpdateView):
-	model = Series
-	context_object_name = 'series'
-	fields = ['title', 'seasons', 'episodes', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
+# class SeriesDetailView(DetailView):
+# 	model = Series
+# 	context_object_name = 'series'
 
-class SeriesListAPI(generics.ListAPIView):
-	queryset = Series.objects.all()
-	serializer_class = SeriesSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['title', 'seasons', 'episodes', 'genres', 'tags', 'credits', 'external_ids']
-	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
-	ordering = ['-id']
+# class SeriesUpdateView(UpdateView):
+# 	model = Series
+# 	context_object_name = 'series'
+# 	fields = ['title', 'seasons', 'episodes', 'genres', 'thumbnail', 'release_date', \
+# 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
 
-# class SeriesListAPISearch(generics.ListAPIView):
+# class SeriesListAPI(generics.ListAPIView):
 # 	queryset = Series.objects.all()
 # 	serializer_class = SeriesSerializerList
-# 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date', \
-# 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['title', 'seasons', 'episodes', 'genres', 'tags', 'credits', 'external_ids']
 # 	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
 # 	ordering = ['-id']
 
-# class SeriesDetailAPI(generics.RetrieveAPIView):
-# 	queryset = Series.objects.all()
-# 	serializer_class = SeriesSerializerDetail
+# # class SeriesListAPISearch(generics.ListAPIView):
+# # 	queryset = Series.objects.all()
+# # 	serializer_class = SeriesSerializerList
+# # 	filter_backends = [filters.SearchFilter]
+# # 	search_fields = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date', \
+# # 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
+# # 	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
+# # 	ordering = ['-id']
 
-# Season
-class SeasonCreateView(CreateView):
-	model = Season
-	template_name = 'roku_content/season_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['season_number', 'episodes']
+# # class SeriesDetailAPI(generics.RetrieveAPIView):
+# # 	queryset = Series.objects.all()
+# # 	serializer_class = SeriesSerializerDetail
 
-class SeasonListView(ListView):
-	model = Season
-	template_name = 'roku_content/season_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'season'
-	ordering = ['-id']
-	paginate_by = 15
+# # Season
+# class SeasonCreateView(CreateView):
+# 	model = Season
+# 	template_name = 'roku_content/season_create.html'  #<app>/<model>_<viewtype>.html
+# 	fields = ['season_number', 'episodes']
 
-class SeasonDetailView(DetailView):
-	model = Season
-	context_object_name = 'season'
+# class SeasonListView(ListView):
+# 	model = Season
+# 	template_name = 'roku_content/season_list.html'  #<app>/<model>_<viewtype>.html
+# 	context_object_name = 'season'
+# 	ordering = ['-id']
+# 	paginate_by = 15
 
-class SeasonUpdateView(UpdateView):
-	model = Season
-	context_object_name = 'season'
-	fields = ['season_number', 'episodes']
+# class SeasonDetailView(DetailView):
+# 	model = Season
+# 	context_object_name = 'season'
 
-class SeasonListAPI(generics.ListAPIView):
-	queryset = Season.objects.all()
-	serializer_class = SeasonSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['season_number', 'episodes']
-	ordering_fields = ['id', 'season_number', 'episodes']
-	ordering = ['-id']
+# class SeasonUpdateView(UpdateView):
+# 	model = Season
+# 	context_object_name = 'season'
+# 	fields = ['season_number', 'episodes']
 
-# class SeasonListAPISearch(generics.ListAPIView):
+# class SeasonListAPI(generics.ListAPIView):
 # 	queryset = Season.objects.all()
 # 	serializer_class = SeasonSerializerList
-# 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['season_number', 'episodes']
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['season_number', 'episodes']
 # 	ordering_fields = ['id', 'season_number', 'episodes']
 # 	ordering = ['-id']
 
-# class SeriesDetailAPI(generics.RetrieveAPIView):
-# 	queryset = Season.objects.all()
-# 	serializer_class = SeasonSerializerDetail
+# # class SeasonListAPISearch(generics.ListAPIView):
+# # 	queryset = Season.objects.all()
+# # 	serializer_class = SeasonSerializerList
+# # 	filter_backends = [filters.SearchFilter]
+# # 	search_fields = ['season_number', 'episodes']
+# # 	ordering_fields = ['id', 'season_number', 'episodes']
+# # 	ordering = ['-id']
 
-# Episode
-class EpisodeCreateView(CreateView):
-	model = Episode
-	template_name = 'roku_content/episode_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# # class SeriesDetailAPI(generics.RetrieveAPIView):
+# # 	queryset = Season.objects.all()
+# # 	serializer_class = SeasonSerializerDetail
 
-class EpisodeListView(ListView):
-	model = Episode
-	template_name = 'roku_content/episode_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'episode'
-	ordering = ['-id']
-	paginate_by = 15
+# # Episode
+# class EpisodeCreateView(CreateView):
+# 	model = Episode
+# 	template_name = 'roku_content/episode_create.html'  #<app>/<model>_<viewtype>.html
+# 	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
+# 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
 
-class EpisodeDetailView(DetailView):
-	model = Episode
-	context_object_name = 'episode'
+# class EpisodeListView(ListView):
+# 	model = Episode
+# 	template_name = 'roku_content/episode_list.html'  #<app>/<model>_<viewtype>.html
+# 	context_object_name = 'episode'
+# 	ordering = ['-id']
+# 	paginate_by = 15
 
-class EpisodeUpdateView(UpdateView):
-	model = Episode
-	context_object_name = 'episode'
-	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# class EpisodeDetailView(DetailView):
+# 	model = Episode
+# 	context_object_name = 'episode'
 
-class EpisodeListAPI(generics.ListAPIView):
-	queryset = Episode.objects.all()
-	serializer_class = EpisodeSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['release_date', 'episode_number', 'rating']
-	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
-	ordering = ['-id']
+# class EpisodeUpdateView(UpdateView):
+# 	model = Episode
+# 	context_object_name = 'episode'
+# 	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
+# 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
 
-# class EpisodeListAPISearch(generics.ListAPIView):
+# class EpisodeListAPI(generics.ListAPIView):
 # 	queryset = Episode.objects.all()
 # 	serializer_class = EpisodeSerializerList
-# 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['episode_id', 'title', 'content', 'release_date', 'episode_number', \
-# 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['release_date', 'episode_number', 'rating']
 # 	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
 # 	ordering = ['-id']
 
-# class EpisodeDetailAPI(generics.RetrieveAPIView):
-# 	queryset = Episode.objects.all()
-# 	serializer_class = EpisodeSerializerDetail
+# # class EpisodeListAPISearch(generics.ListAPIView):
+# # 	queryset = Episode.objects.all()
+# # 	serializer_class = EpisodeSerializerList
+# # 	filter_backends = [filters.SearchFilter]
+# # 	search_fields = ['episode_id', 'title', 'content', 'release_date', 'episode_number', \
+# # 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# # 	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
+# # 	ordering = ['-id']
+
+# # class EpisodeDetailAPI(generics.RetrieveAPIView):
+# # 	queryset = Episode.objects.all()
+# # 	serializer_class = EpisodeSerializerDetail
 
 # ShortFormVideo
 class ShortFormVideoCreateView(CreateView):
@@ -445,49 +459,49 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 # 	serializer_class = ShortFormVideoSerializerDetail
 
 # TVSpecial
-class TVSpecialCreateView(CreateView):
-	model = TVSpecial
-	template_name = 'roku_content/tvspecial_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
-		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
+# class TVSpecialCreateView(CreateView):
+# 	model = TVSpecial
+# 	template_name = 'roku_content/tvspecial_create.html'  #<app>/<model>_<viewtype>.html
+# 	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
+# 		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
 
-class TVSpecialListView(ListView):
-	model = TVSpecial
-	template_name = 'roku_content/tvspecial_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'tvspecial'
-	ordering = ['-id']
-	paginate_by = 15
+# class TVSpecialListView(ListView):
+# 	model = TVSpecial
+# 	template_name = 'roku_content/tvspecial_list.html'  #<app>/<model>_<viewtype>.html
+# 	context_object_name = 'tvspecial'
+# 	ordering = ['-id']
+# 	paginate_by = 15
 
-class TVSpecialDetailView(DetailView):
-	model = TVSpecial
-	context_object_name = 'tvspecial'
+# class TVSpecialDetailView(DetailView):
+# 	model = TVSpecial
+# 	context_object_name = 'tvspecial'
 
-class TVSpecialUpdateView(UpdateView):
-	model = TVSpecial
-	context_object_name = 'tvspecial'
-	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
-		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
+# class TVSpecialUpdateView(UpdateView):
+# 	model = TVSpecial
+# 	context_object_name = 'tvspecial'
+# 	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
+# 		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
 
-class TVSpecialListAPI(generics.ListAPIView):
-	queryset = TVSpecial.objects.all()
-	serializer_class = TVSpecialSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['genres', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
-	ordering_fields = ['id', 'title', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
-	ordering = ['-id']
-
-# class TVSpecialListAPISearch(generics.ListAPIView):
+# class TVSpecialListAPI(generics.ListAPIView):
 # 	queryset = TVSpecial.objects.all()
 # 	serializer_class = TVSpecialSerializerList
-# 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['tvspecial_id', 'title', 'content', 'release_date', \
-# 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['genres', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
 # 	ordering_fields = ['id', 'title', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
 # 	ordering = ['-id']
 
-# class TVSpecialDetailAPI(generics.RetrieveAPIView):
-# 	queryset = TVSpecial.objects.all()
-# 	serializer_class = TVSpecialSerializerDetail
+# # class TVSpecialListAPISearch(generics.ListAPIView):
+# # 	queryset = TVSpecial.objects.all()
+# # 	serializer_class = TVSpecialSerializerList
+# # 	filter_backends = [filters.SearchFilter]
+# # 	search_fields = ['tvspecial_id', 'title', 'content', 'release_date', \
+# # 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+# # 	ordering_fields = ['id', 'title', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
+# # 	ordering = ['-id']
+
+# # class TVSpecialDetailAPI(generics.RetrieveAPIView):
+# # 	queryset = TVSpecial.objects.all()
+# # 	serializer_class = TVSpecialSerializerDetail
 
 
 ## Roku ContentPoperties

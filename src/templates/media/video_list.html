@@ -20,7 +20,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>File</th>
+                <th>Title</th>
                 <!-- <th>Size</th> -->
                 <th>Duration</th>
                 <th>Format</th>
@@ -33,7 +33,7 @@
               {% for asset in assets %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td align="left"><a href="{% url 'media-video-detail' asset.id %}">{{ asset.file_name }}</a></td>
+                <td align="left"><a href="{% url 'media-video-detail' asset.id %}">{{ asset.title }}</a></td>
                 <!-- <td>{{ asset.size|floatformat:"-3g" }}</td> -->
                 <td>{{ asset.media_video_duration|floatformat:2 }}</td>
                 <td>{{ asset.media_video_format }}</td>

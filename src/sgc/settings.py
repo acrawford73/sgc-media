@@ -32,19 +32,19 @@ if config('PRODUCTION', default=False, cast=bool) == True:
     SECRET_KEY_FALLBACK = config('PROD_SECRET_KEY_FALLBACK')
     ALLOWED_HOSTS = config('PROD_ALLOWED_HOSTS', cast=Csv())
     # Security
-    SECURE_SSL_HOST = "domain.com"
+    SECURE_SSL_HOST = 'domain.com'
     SECURE_SSL_REDIRECT = True
     SECURE_REFERRER_POLICY = 'same-origin'
     SECURE_HSTS_SECONDS = 3600
     SECURE_HSTS_PRELOAD = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     X_FRAME_OPTIONS = 'DENY'
-    #Cookies
+    # Cookies
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
     SESSION_COOKIE_AGE = 3600
+    SESSION_COOKIE_NAME = 'sessionid'
     SESSION_COOKIE_DOMAIN = 'domain.com'
-    SESSION_COOKIE_NAME = 'this-is-howie-dewitt'
     SESSION_COOKIE_SAMESITE = 'Strict'
     # Proxy Use Only
     # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -55,10 +55,6 @@ else:
     ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
 
 SITE_ID = 1
-
-### HOST SECURITY
-
-
 
 # Application definition
 
@@ -148,10 +144,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# if PRODUCTION == True:
+#LOCAL_STATIC_CDN = 
+#STATIC_URL = '/static/'
+# else:
 LOCAL_STATIC_CDN = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
 STATIC_URL = '/static/'
 
-# CDN
 STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN, 'static')
 
 STATICFILES_DIRS = [
@@ -175,7 +174,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# DRF
+# Django Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],

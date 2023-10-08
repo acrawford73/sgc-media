@@ -41,7 +41,7 @@ class MediaAudioAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'artist', 'album', 'created']
 	search_fields = ['file_name', 'artist', 'album', 'genre', 'year']
 	list_filter = ['genre', 'year', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format']
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format', 'image']
 	class Meta:
 		model = MediaAudio
 
@@ -62,7 +62,7 @@ class MediaPhotoAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'orientation', 'service', 'created']
 	search_fields = ['file_name']
 	list_filter = ['orientation', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format']
+	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format', 'height', 'width', 'photo_format', 'orientation']
 	class Meta:
 		model = MediaPhoto
 
