@@ -846,7 +846,7 @@ class RatingSourceListAPI(generics.ListAPIView):
 class ParentalRatingCreateView(CreateView):
 	model = ParentalRating
 	template_name = 'roku_content/parentalrating_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['rating']
+	fields = ['parental_rating']
 
 class ParentalRatingListView(ListView):
 	model = ParentalRating
@@ -862,14 +862,14 @@ class ParentalRatingDetailView(DetailView):
 class ParentalRatingUpdateView(UpdateView):
 	model = ParentalRating
 	context_object_name = 'parentalrating'
-	fields = ['rating']
+	fields = ['parental_rating']
 
 class ParentalRatingListAPI(generics.ListAPIView):
 	queryset = ParentalRating.objects.all()
 	serializer_class = ParentalRatingSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['rating']
-	ordering_fields = ['id', 'rating']
+	filterset_fields = ['parental_rating']
+	ordering_fields = ['id', 'parental_rating']
 	ordering = ['-id']
 
 # class ParentalRatingListAPISearch(generics.ListAPIView):

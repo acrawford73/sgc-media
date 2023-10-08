@@ -149,7 +149,7 @@ class RatingSourceSerializerList(serializers.ModelSerializer):
 class ParentalRatingSourceSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = ParentRating
-		fields = ['rating']
+		fields = ['parental_rating']
 
 class CreditSerializerList(serializers.ModelSerializer):
 	name = models.CharField(source='credit_name')

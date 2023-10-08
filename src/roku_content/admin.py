@@ -3,7 +3,8 @@ from django.contrib import admin
 ## Roku Content Feed, Categories, Types, Properties
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
-from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
+from .models import ShortFormVideo
+#from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
 					RatingSource, ParentalRating, Credit
 
@@ -42,42 +43,42 @@ class PlaylistAdmin(admin.ModelAdmin):
 
 # Roku Types
 
-class MovieAdmin(admin.ModelAdmin):
-	list_display = ['movie_id', 'title', 'release_date']
-	search_fields = ['movie_id', 'title', 'tags', 'credits', 'rating', 'release_date']
-	list_filter = ['genres', 'tags', 'rating']
-	class Meta:
-		model = Movie
+# class MovieAdmin(admin.ModelAdmin):
+# 	list_display = ['movie_id', 'title', 'release_date']
+# 	search_fields = ['movie_id', 'title', 'tags', 'credits', 'rating', 'release_date']
+# 	list_filter = ['genres', 'tags', 'rating']
+# 	class Meta:
+# 		model = Movie
 
-class LiveFeedAdmin(admin.ModelAdmin):
-	list_display = ['livefeed_id', 'title']
-	search_fields = ['livefeed_id', 'title', 'tags', 'rating', 'genres']
-	list_filter = ['genres', 'tags', 'rating']
-	class Meta:
-		model = LiveFeed
+# class LiveFeedAdmin(admin.ModelAdmin):
+# 	list_display = ['livefeed_id', 'title']
+# 	search_fields = ['livefeed_id', 'title', 'tags', 'rating', 'genres']
+# 	list_filter = ['genres', 'tags', 'rating']
+# 	class Meta:
+# 		model = LiveFeed
 
-class SeriesAdmin(admin.ModelAdmin):
-	list_display = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date']
-	search_fields = ['series_id', 'title', 'genres', 'short_description', \
-		'long_description', 'credits', 'tags', 'external_ids', 'release_date']
-	list_filter = ['seasons', 'episodes', 'genres', 'tags', 'rating', 'external_ids']
-	class Meta:
-		model = Series
+# class SeriesAdmin(admin.ModelAdmin):
+# 	list_display = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date']
+# 	search_fields = ['series_id', 'title', 'genres', 'short_description', \
+# 		'long_description', 'credits', 'tags', 'external_ids', 'release_date']
+# 	list_filter = ['seasons', 'episodes', 'genres', 'tags', 'rating', 'external_ids']
+# 	class Meta:
+# 		model = Series
 
-class SeasonAdmin(admin.ModelAdmin):
-	list_display = ['id', 'season_number', 'episodes']
-	search_fields = ['season_number', 'episodes']
-	list_filter = ['season_number', 'episodes']
-	class Meta:
-		model = Season
+# class SeasonAdmin(admin.ModelAdmin):
+# 	list_display = ['id', 'season_number', 'episodes']
+# 	search_fields = ['season_number', 'episodes']
+# 	list_filter = ['season_number', 'episodes']
+# 	class Meta:
+# 		model = Season
 
-class EpisodeAdmin(admin.ModelAdmin):
-	list_display = ['id', 'title', 'episode_number', 'release_date']
-	search_fields = ['episode_id', 'title', 'episode_number', 'short_description', \
-		'long_description', 'credits', 'rating', 'external_ids', 'release_date']
-	list_filter = ['episode_number', 'rating', 'external_ids']
-	class Meta:
-		model = Episode
+# class EpisodeAdmin(admin.ModelAdmin):
+# 	list_display = ['id', 'title', 'episode_number', 'release_date']
+# 	search_fields = ['episode_id', 'title', 'episode_number', 'short_description', \
+# 		'long_description', 'credits', 'rating', 'external_ids', 'release_date']
+# 	list_filter = ['episode_number', 'rating', 'external_ids']
+# 	class Meta:
+# 		model = Episode
 
 class ShortFormVideoAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'genres', 'release_date']
@@ -87,13 +88,13 @@ class ShortFormVideoAdmin(admin.ModelAdmin):
 	class Meta:
 		model = ShortFormVideo
 
-class TVSpecialAdmin(admin.ModelAdmin):
-	list_display = ['id', 'title', 'genres', 'release_date']
-	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', \
-		'genres', 'rating', 'tags', 'release_date']
-	list_filter = ['title', 'genres', 'rating', 'tags']
-	class Meta:
-		model = TVSpecial
+# class TVSpecialAdmin(admin.ModelAdmin):
+# 	list_display = ['id', 'title', 'genres', 'release_date']
+# 	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', \
+# 		'genres', 'rating', 'tags', 'release_date']
+# 	list_filter = ['title', 'genres', 'rating', 'tags']
+# 	class Meta:
+# 		model = TVSpecial
 
 # Roku Properties
 
@@ -155,9 +156,8 @@ class RatingSourceAdmin(admin.ModelAdmin):
 		model = RatingSource
 
 class ParentalRatingAdmin(admin.ModelAdmin):
-	list_display = ['rating']
-	search_fields = ['rating']
-	list_filter = ['rating']
+	list_display = ['parental_rating']
+	search_fields = ['parental_rating']
 	class Meta:
 		model = ParentalRating
 
@@ -176,13 +176,13 @@ admin.site.register(Language, LanguageAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 
-admin.site.register(Movie, MovieAdmin)
-admin.site.register(LiveFeed, LiveFeedAdmin)
-admin.site.register(Series, SeriesAdmin)
-admin.site.register(Season, SeasonAdmin)
-admin.site.register(Episode, EpisodeAdmin)
+#admin.site.register(Movie, MovieAdmin)
+#admin.site.register(LiveFeed, LiveFeedAdmin)
+#admin.site.register(Series, SeriesAdmin)
+#admin.site.register(Season, SeasonAdmin)
+#admin.site.register(Episode, EpisodeAdmin)
 admin.site.register(ShortFormVideo, ShortFormVideoAdmin)
-admin.site.register(TVSpecial, TVSpecialAdmin)
+#admin.site.register(TVSpecial, TVSpecialAdmin)
 
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Video, VideoAdmin)

@@ -1,5 +1,6 @@
 import uuid
 import datetime,time
+from datetime import date
 from django.db import models
 from django.urls import reverse
 
@@ -246,18 +247,18 @@ class ShortFormVideo(models.Model):
 	# The date the video first became available.
 	# This field is used to sort programs chronologically and group related content in Roku Search. 
 	# Conforms to ISO 8601 format: {YYYY}-{MM}-{DD}. For example, 2020-11-11
-	release_date = models.DateField(default=datetime.date.today(), null=False, blank=False)
+	release_date = models.DateField(auto_now=False, default=date.today, null=True, blank=True)
 	# One or more tags (e.g., “dramas”, “korean”, etc). 
 	# Each tag is a string and is limited to 20 characters. 
 	# Tags are used to define what content will be shown within a category.
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	# A list of strings describing the genre(s) of the video.
 	# Must be one of the values listed in genres.
-	genres = models.ForeignKey("Genre", on_delete=models.SET_NULL, blank=True, null=True)  # Optional
+	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	# One or more credits. The cast and crew of the video.
-	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=False, null=False)
+	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=False, null=False)
 	# A parental rating for the content.
-	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=True, null=True)  # Optional
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	class Meta:
 		ordering = ['short_form_video_id']
 		def __unicode__(self):
@@ -308,10 +309,10 @@ class Content(models.Model):
 	such as a movie, episode, short-form video, or TV special.
 	"""
 	date_added = models.DateTimeField(auto_now_add=True)
-	videos = ForeignKey("Video", on_delete=models.SET_NULL, null=True, blank=False)
-	duration = models.IntegerField(default=0, null=False, blank=False)
-	captions = ForeignKey("Caption", on_delete=models.SET_NULL, null=True, blank=False)
-	trick_play_files = ForeignKey("TrickPlayFile", on_delete=models.SET_NULL, null=True, blank=True) # Optional
+	videos = models.ForeignKey("Video", on_delete=models.PROTECT, null=True, blank=True)
+	duration = models.IntegerField(default=0, null=False, blank=True)
+	captions = models.ForeignKey("Caption", on_delete=models.PROTECT, null=True, blank=True)
+	trick_play_files = models.ForeignKey("TrickPlayFile", on_delete=models.PROTECT, null=True, blank=True) # Optional
 	language = models.CharField(max_length=8, default="en", choices=LANGUAGES_ISO639, null=False, blank=False)
 	validity_start_period = models.DateTimeField(null=True, blank=True) # Optional
 	validity_end_period = models.DateTimeField(null=True, blank=True) # Optional
@@ -485,8 +486,8 @@ class Rating(models.Model):
 		"ratingSource": "USA_PR"
 	}
 	"""
-	rating = models.ForeignKey("ParentalRating", on_delete=models.SET_NULL, blank=True, null=True)
-	rating_source = models.ForeignKey("RatingSource", on_delete=models.SET_NULL, blank=True, null=True)
+	rating = models.ForeignKey("ParentalRating", on_delete=models.PROTECT, blank=True, null=True)
+	rating_source = models.ForeignKey("RatingSource", on_delete=models.PROTECT, blank=True, null=True)
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -503,17 +504,17 @@ class RatingSource(models.Model):
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.id)
+		return str(self.source_name)
 
 class ParentalRating(models.Model):
 	""" Model provides a list of parental ratings as determined by standards associations. """
-	rating = models.CharField(max_length=16, default="", null=False, blank=False)
+	parental_rating = models.CharField(max_length=16, default="", null=False, blank=False, unique=True)
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.id)
+		return str(self.parental_rating)
 
 CREDIT_ROLES = (
 	("actor", "Actor"),
@@ -610,7 +611,7 @@ class Credit(models.Model):
 
 class ThumbnailShortFormVideo(models.Model):
 	""" Model for Short Form Video thumbnail storage in database. May not be supported. """
-	short_form_video_id = models.ForeignKey("ShortFormVideo", on_delete=CASCADE)
+	short_form_video_id = models.ForeignKey("ShortFormVideo", on_delete=models.CASCADE)
 	url = models.URLField(max_length=2083, null=False, blank=False)
 	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)

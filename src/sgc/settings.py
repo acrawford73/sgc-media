@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_filters',
     'media',
+    'roku_content',
 ]
 
 MIDDLEWARE = [
