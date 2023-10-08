@@ -1,14 +1,14 @@
 {
-	"NA" : "Not Available",
-	"JPG" : "Joint Photographic Experts Group",
-	"JPEG" : "Joint Photographic Experts Group",
-	"PNG" : "Portable Network Graphic",
-	"GIF" : "Graphical Interchange Format",
-	"BMP" : "Bitmap Image",
-	"DNG" : "Adobe Digital Negative",
-	"PSD" : "Adobe Photoshop",
-	"AI" : "Adobe Illustrator Document",
-	"EPS" : "Encapsulated Postscript",
-	"TIFF" : "Tagged Image File",
-	"RAW" : "Raw Image Formats"
+"NA" : "Not Available",
+"JPG" : "Joint Photographic Experts Group",
+"JPEG" : "Joint Photographic Experts Group",
+"PNG" : "Portable Network Graphic",
+"GIF" : "Graphical Interchange Format",
+"BMP" : "Bitmap Image",
+"DNG" : "Adobe Digital Negative",
+"PSD" : "Adobe Photoshop",
+"AI" : "Adobe Illustrator Document",
+"EPS" : "Encapsulated Postscript",
+"TIFF" : "Tagged Image File",
+"RAW" : "Raw Image Formats"
 }

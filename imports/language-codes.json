@@ -1,13 +1,12 @@
-# Language Codes
 [
-	["eng", "en", "English"],
-	["fre", "fr", "French"],
-	["deu", "de", "German"],
-	["ita", "it", "Italian"],
-	["jpn", "ja", "Japanese"],
-	["kor", "ko", "Korean"],
-	["por", "pt", "Portuguese"],
-	["rus", "ru", "Russian"],
-	["spa", "es", "Spanish"],
-	["chi", "zh", "Chinese"]
+{"code_iso_639_2": "eng", "code_iso_639_1": "en", "language_name_eng": "English"},
+{"code_iso_639_2": "fre", "code_iso_639_1": "fr", "language_name_eng": "French"},
+{"code_iso_639_2": "deu", "code_iso_639_1": "de", "language_name_eng": "German"},
+{"code_iso_639_2": "ita", "code_iso_639_1": "it", "language_name_eng": "Italian"},
+{"code_iso_639_2": "jpn", "code_iso_639_1": "ja", "language_name_eng": "Japanese"},
+{"code_iso_639_2": "kor", "code_iso_639_1": "ko", "language_name_eng": "Korean"},
+{"code_iso_639_2": "por", "code_iso_639_1": "pt", "language_name_eng": "Portuguese"},
+{"code_iso_639_2": "spa", "code_iso_639_1": "es", "language_name_eng": "Spanish"},
+{"code_iso_639_2": "rus", "code_iso_639_1": "ru", "language_name_eng": "Russian"},
+{"code_iso_639_2": "chi", "code_iso_639_1": "zh", "language_name_eng": "Chinese"}
 ]
