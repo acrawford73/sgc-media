@@ -17,7 +17,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 ### Serializers
 ## Roku Content
 # Feeds
-from .serializers import RokuContentFeedSerializerList, RokuSearchFeedSerializerList
+from .serializers import RokuContentFeedSerializerList #, RokuSearchFeedSerializerList
 # Categories
 from .serializers import CategorySerializerList, PlaylistSerializerList
 # Types
@@ -77,6 +77,10 @@ class RokuContentFeedListAPI(generics.ListAPIView):
 	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
 	#ordering_fields = ['id', 'category_name', 'playlist_name']
 	ordering = ['-id']
+
+# class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
+# 	queryset = RokuContentFeed.objects.all()
+# 	serializer_class = RokuContentFeedSerializerDetail
 
 
 ## Roku Content Categories

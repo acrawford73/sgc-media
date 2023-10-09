@@ -5,8 +5,8 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import ShortFormVideo
 #from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, Credit
+from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, ExternalIDType, \
+					Rating, RatingSource, ParentalRating, Credit
 
 # Roku Content Feed
 
@@ -130,21 +130,26 @@ class TrickPlayFileAdmin(admin.ModelAdmin):
 class GenreAdmin(admin.ModelAdmin):
 	list_display = ['genre']
 	search_fields = ['genre']
-	list_filter = ['genre']
 	class Meta:
 		model = Genre
 
 class ExternalIDAdmin(admin.ModelAdmin):
 	list_display = ['external_id', 'id_type']
 	search_fields = ['external_id', 'id_type']
-	list_filter = ['external_id', 'id_type']
+	list_filter = ['id_type']
 	class Meta:
 		model = ExternalID
+
+class ExternalIDTypeAdmin(admin.ModelAdmin):
+	list_display = ['external_id_type', 'external_id_long_name']
+	search_fields = ['external_id_type', 'external_id_long_name']
+	class Meta:
+		model = ExternalIDType
 
 class RatingAdmin(admin.ModelAdmin):
 	list_display = ['rating', 'rating_source']
 	search_fields = ['rating', 'rating_source']
-	list_filter = ['rating', 'rating_source']
+	list_filter = ['rating_source']
 	class Meta:
 		model = Rating
 
@@ -164,7 +169,7 @@ class ParentalRatingAdmin(admin.ModelAdmin):
 class CreditAdmin(admin.ModelAdmin):
 	list_display = ['credit_name', 'role', 'birth_date']
 	search_fields = ['credit_name', 'role', 'birth_date']
-	list_filter = ['credit_name', 'role', 'birth_date']
+	list_filter = ['role']
 	class Meta:
 		model = Credit
 
@@ -190,6 +195,7 @@ admin.site.register(Caption, CaptionAdmin)
 admin.site.register(TrickPlayFile, TrickPlayFileAdmin)
 admin.site.register(Genre, GenreAdmin)
 admin.site.register(ExternalID, ExternalIDAdmin)
+admin.site.register(ExternalIDType, ExternalIDTypeAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(RatingSource, RatingSourceAdmin)
 admin.site.register(ParentalRating, ParentalRatingAdmin)

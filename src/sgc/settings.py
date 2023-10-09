@@ -65,11 +65,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.admindocs',
     'rest_framework',
     'crispy_forms',
     'django_filters',
-    'media',
     'roku_content',
+    'media',
 ]
 
 MIDDLEWARE = [
@@ -177,8 +178,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Django Rest Framework
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    #'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'PAGE_SIZE': 100,
-    'default_limit': 100
+    #'PAGE_SIZE': 100,
+    #'default_limit': 100
 }

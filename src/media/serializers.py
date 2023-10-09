@@ -5,7 +5,7 @@ from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenr
 
 # Video
 class MediaVideoSerializerList(serializers.ModelSerializer):
-	id = serializers.CharField(source="file_uuid")
+	id = serializers.CharField(source='file_uuid')
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
 	width = serializers.IntegerField(source='media_video_width')

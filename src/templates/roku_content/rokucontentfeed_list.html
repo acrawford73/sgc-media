@@ -8,9 +8,7 @@
 <main class="flex-shrink-0">
   <div class="container">
     <p>&nbsp;</p>
-    <h1 class="mt-5">Videos</h1>
-
-    <p><a href="{% url 'rokucontentfeed-list' %}"><button class="btn btn-primary rounded-pill px-3" type="button">List View</button></a></p>
+    <h1 class="mt-5">Roku Content Feeds</h1>
 
     <div class="row">
       <div class="col-lg-12">
@@ -20,25 +18,20 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>Title</th>
-                <!-- <th>Size</th> -->
-                <th>Duration</th>
-                <th>Format</th>
-                <th>Orientation</th>
-                <th>Added UTC</th>
+                <th>Provider Name</th>
+                <th>Rating</th>
+                <th>Last Updated</th>
                 <th>Public</th>
               </tr>
             </thead>
             <tbody>
-              {% for asset in assets %}
+              {% for asset in rokucontentfeed %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td align="left"><a href="{% url 'media-video-detail' asset.id %}">{{ asset.title }}</a></td>
+                <td align="left"><a href="{% url 'rokucontentfeed-detail' asset.id %}">{{ asset.provider_name }}</a></td>
                 <!-- <td>{{ asset.size|floatformat:"-3g" }}</td> -->
-                <td>{{ asset.media_video_duration|floatformat:2 }}</td>
-                <td>{{ asset.media_video_format }}</td>
-                <td>{{ asset.orientation }}</td>
-                <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
+                <td>{{ asset.rating }}</td>
+                <td>{{ asset.last_updated|date:"F d Y, g:i:s A" }}</td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
               {% endfor %}

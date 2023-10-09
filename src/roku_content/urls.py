@@ -9,7 +9,7 @@ urlpatterns = [
 	path('roku-content-feed/', views.RokuContentFeedListView.as_view(), name='rokucontentfeed-list'),
 	path('roku-content-feed/<int:pk>/', views.RokuContentFeedDetailView.as_view(), name='rokucontentfeed-detail'),
 	path('roku-content-feed/edit/<int:pk>/', views.RokuContentFeedUpdateView.as_view(), name='rokucontentfeed-update'),
-	path('api/roku-content-feed/', views.RokuContentFeedAPI.as_view(), name='rokucontentfeed-api'),
+	path('api/roku-content-feed/', views.RokuContentFeedListAPI.as_view(), name='rokucontentfeed-api'),
 	#path('api/roku-content-feed/search/', views.RokuContentFeedAPISearch.as_view()),
 	#path('api/roku-content-feed/<int:pk>', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
 
@@ -30,7 +30,7 @@ urlpatterns = [
 	path('category/', views.CategoryListView.as_view(), name='category-list'),
 	path('category/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
 	path('category/edit/<int:pk>/', views.CategoryUpdateView.as_view(), name='category-update'),
-	path('api/category/', views.CategoryAPI.as_view(), name='category-api'),
+	path('api/category/', views.CategoryListAPI.as_view(), name='category-api'),
 	# path('api/category/search/', views.CategoryAPISearch.as_view()),
 	# path('api/category/<int:pk>', views.CategoryDetailAPI.as_view(), name='category-detail-api'),
 	
@@ -38,7 +38,7 @@ urlpatterns = [
 	path('playlist/', views.PlaylistListView.as_view(), name='playlist-list'),
 	path('playlist/<int:pk>/', views.PlaylistDetailView.as_view(), name='playlist-detail'),
 	path('playlist/edit/<int:pk>/', views.PlaylistUpdateView.as_view(), name='playlist-update'),
-	path('api/playlist/', views.PlaylistAPI.as_view(), name='playlist-api'),
+	path('api/playlist/', views.PlaylistListAPI.as_view(), name='playlist-api'),
 	# path('api/playlist/search/', views.PlaylistAPISearch.as_view()),
 	# path('api/playlist/<int:pk>', views.PlaylistDetailAPI.as_view(), name='playlist-detail-api'),
 	
@@ -86,7 +86,7 @@ urlpatterns = [
 	path('shortformvideo/', views.ShortFormVideoListView.as_view(), name='shortformvideo-list'),
 	path('shortformvideo/<int:pk>/', views.ShortFormVideoDetailView.as_view(), name='shortformvideo-detail'),
 	path('shortformvideo/edit/<int:pk>/', views.ShortFormVideoUpdateView.as_view(), name='shortformvideo-update'),
-	path('api/shortformvideo/', views.ShortFormVideoAPI.as_view(), name='shortformvideo-api'),
+	path('api/shortformvideo/', views.ShortFormVideoListAPI.as_view(), name='shortformvideo-api'),
 	# path('api/shortformvideo/search/', views.ShortFormVideoAPISearch.as_view()),
 	# path('api/shortformvideo/<int:pk>', views.ShortFormVideoDetailAPI.as_view(), name='shortformvideo-detail-api'),
 	
@@ -102,7 +102,7 @@ urlpatterns = [
 	path('content/', views.ContentListView.as_view(), name='content-list'),
 	path('content/<int:pk>/', views.ContentDetailView.as_view(), name='content-detail'),
 	path('content/edit/<int:pk>/', views.ContentUpdateView.as_view(), name='content-update'),
-	path('api/content/', views.ContentAPI.as_view(), name='content-api'),
+	path('api/content/', views.ContentListAPI.as_view(), name='content-api'),
 	# path('api/content/search/', views.ContentAPISearch.as_view()),
 	# path('api/content/<int:pk>', views.ContentDetailAPI.as_view(), name='content-detail-api'),
 	
@@ -110,7 +110,7 @@ urlpatterns = [
 	path('video/', views.VideoListView.as_view(), name='video-list'),
 	path('video/<int:pk>/', views.VideoDetailView.as_view(), name='video-detail'),
 	path('video/edit/<int:pk>/', views.VideoUpdateView.as_view(), name='video-update'),
-	path('api/video/', views.VideoAPI.as_view(), name='video-api'),
+	path('api/video/', views.VideoListAPI.as_view(), name='video-api'),
 	# path('api/video/search/', views.VideoAPISearch.as_view()),
 	# path('api/video/<int:pk>', views.VideoDetailAPI.as_view(), name='video-detail-api'),
 	
@@ -118,7 +118,7 @@ urlpatterns = [
 	path('caption/', views.CaptionListView.as_view(), name='caption-list'),
 	path('caption/<int:pk>/', views.CaptionDetailView.as_view(), name='caption-detail'),
 	path('caption/edit/<int:pk>/', views.CaptionUpdateView.as_view(), name='caption-update'),
-	path('api/caption/', views.CaptionAPI.as_view(), name='caption-api'),
+	path('api/caption/', views.CaptionListAPI.as_view(), name='caption-api'),
 	# path('api/caption/search/', views.CaptionAPISearch.as_view()),
 	# path('api/caption/<int:pk>', views.CaptionDetailAPI.as_view(), name='caption-detail-api'),
 	
@@ -126,7 +126,7 @@ urlpatterns = [
 	path('trickplayfile/', views.TrickPlayFileListView.as_view(), name='trickplayfile-list'),
 	path('trickplayfile/<int:pk>/', views.TrickPlayFileDetailView.as_view(), name='trickplayfile-detail'),
 	path('trickplayfile/edit/<int:pk>/', views.TrickPlayFileUpdateView.as_view(), name='trickplayfile-update'),
-	path('api/trickplayfile/', views.TrickPlayFileAPI.as_view(), name='trickplayfile-api'),
+	path('api/trickplayfile/', views.TrickPlayFileListAPI.as_view(), name='trickplayfile-api'),
 	# path('api/trickplayfile/search/', views.TrickPlayFileAPISearch.as_view()),
 	# path('api/trickplayfile/<int:pk>', views.TrickPlayFileDetailAPI.as_view(), name='trickplayfile-detail-api'),
 	
@@ -134,7 +134,7 @@ urlpatterns = [
 	path('genre/', views.GenreListView.as_view(), name='genre-list'),
 	path('genre/<int:pk>/', views.GenreDetailView.as_view(), name='genre-detail'),
 	path('genre/edit/<int:pk>/', views.GenreUpdateView.as_view(), name='genre-update'),
-	path('api/genre/', views.GenreAPI.as_view(), name='genre-api'),
+	path('api/genre/', views.GenreListAPI.as_view(), name='genre-api'),
 	# path('api/genre/search/', views.GenreAPISearch.as_view()),
 	# path('api/genre/<int:pk>', views.GenreDetailAPI.as_view(), name='genre-detail-api'),
 	
@@ -142,7 +142,7 @@ urlpatterns = [
 	path('externalid/', views.ExternalIDListView.as_view(), name='externalid-list'),
 	path('externalid/<int:pk>/', views.ExternalIDDetailView.as_view(), name='externalid-detail'),
 	path('externalid/edit/<int:pk>/', views.ExternalIDUpdateView.as_view(), name='externalid-update'),
-	path('api/externalid/', views.ExternalIDAPI.as_view(), name='externalid-api'),
+	path('api/externalid/', views.ExternalIDListAPI.as_view(), name='externalid-api'),
 	# path('api/externalid/search/', views.ExternalIDAPISearch.as_view()),
 	# path('api/externalid/<int:pk>', views.ExternalIDDetailAPI.as_view(), name='externalid-detail-api'),
 	
@@ -150,7 +150,7 @@ urlpatterns = [
 	path('rating/', views.RatingListView.as_view(), name='rating-list'),
 	path('rating/<int:pk>/', views.RatingDetailView.as_view(), name='rating-detail'),
 	path('rating/edit/<int:pk>/', views.RatingUpdateView.as_view(), name='rating-update'),
-	path('api/rating/', views.RatingAPI.as_view(), name='rating-api'),
+	path('api/rating/', views.RatingListAPI.as_view(), name='rating-api'),
 	# path('api/rating/search/', views.RatingAPISearch.as_view()),
 	# path('api/rating/<int:pk>', views.RatingDetailAPI.as_view(), name='rating-detail-api'),
 	
@@ -158,7 +158,7 @@ urlpatterns = [
 	path('ratingsource/', views.RatingSourceListView.as_view(), name='ratingsource-list'),
 	path('ratingsource/<int:pk>/', views.RatingSourceDetailView.as_view(), name='ratingsource-detail'),
 	path('ratingsource/edit/<int:pk>/', views.RatingSourceUpdateView.as_view(), name='ratingsource-update'),
-	path('api/ratingsource/', views.RatingSourceAPI.as_view(), name='ratingsource-api'),
+	path('api/ratingsource/', views.RatingSourceListAPI.as_view(), name='ratingsource-api'),
 	# path('api/ratingsource/search/', views.RatingSourceAPISearch.as_view()),
 	# path('api/ratingsource/<int:pk>', views.RatingSourceDetailAPI.as_view(), name='ratingsource-detail-api'),
 	
@@ -166,7 +166,7 @@ urlpatterns = [
 	path('parentalrating/', views.ParentalRatingListView.as_view(), name='parentalrating-list'),
 	path('parentalrating/<int:pk>/', views.ParentalRatingDetailView.as_view(), name='parentalrating-detail'),
 	path('parentalrating/edit/<int:pk>/', views.VideoUpdateView.as_view(), name='parentalrating-update'),
-	path('api/parentalrating/', views.ParentalRatingAPI.as_view(), name='parentalrating-api'),
+	path('api/parentalrating/', views.ParentalRatingListAPI.as_view(), name='parentalrating-api'),
 	# path('api/parentalrating/search/', views.ParentalRatingAPISearch.as_view()),
 	# path('api/parentalrating/<int:pk>', views.ParentalRatingDetailAPI.as_view(), name='parentalrating-detail-api'),
 	
@@ -174,7 +174,7 @@ urlpatterns = [
 	path('credit/', views.CreditListView.as_view(), name='credit-list'),
 	path('credit/<int:pk>/', views.CreditDetailView.as_view(), name='credit-detail'),
 	path('credit/edit/<int:pk>/', views.CreditUpdateView.as_view(), name='credit-update'),
-	path('api/credit/', views.CreditAPI.as_view(), name='credit-api'),
+	path('api/credit/', views.CreditListAPI.as_view(), name='credit-api'),
 	# path('api/credit/search/', views.CreditAPISearch.as_view()),
 	# path('api/credit/<int:pk>', views.CreditDetailAPI.as_view(), name='credit-detail-api'),
 
