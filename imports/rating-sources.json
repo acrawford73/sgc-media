@@ -1,10 +1,10 @@
-{
-"BBFC" : "British Board of Film Classification",
-"CHVRS" : "Canadian Home Video Rating System",
-"CLASSIND" : "Brazilian advisory rating system",
-"CPR" : "Canadian Parental Rating",
-"FSF" : "Freiwillige Selbstkontrolle Fernsehen (Germany)",
-"FSK" : "Freiwillige Selbstkontrolle der Filmwirtschaft (Germany)",
-"MPAA" : "Motion Picture Association of America",
-"USA_PR" : "USA Parental Rating"
-}
+[
+	{"source_name":"BBFC", "source_long_name":"British Board of Film Classification"},
+	{"source_name":"CHVRS", "source_long_name":"Canadian Home Video Rating System"},
+	{"source_name":"CLASSIND", "source_long_name":"Brazilian advisory rating system"},
+	{"source_name":"CPR", "source_long_name":"Canadian Parental Rating"},
+	{"source_name":"FSF", "source_long_name":"Freiwillige Selbstkontrolle Fernsehen (Germany)"},
+	{"source_name":"FSK", "source_long_name":"Freiwillige Selbstkontrolle der Filmwirtschaft (Germany)"},
+	{"source_name":"MPAA", "source_long_name":"Motion Picture Association of America"},
+	{"source_name":"USA_PR", "source_long_name":"USA Parental Rating"}
+]

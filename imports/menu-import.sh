@@ -100,8 +100,8 @@ fourteen(){
 }
 
 fifteen(){
-	echo "Importing External IDs..."
-	python3 imports.py ei
+	echo "Importing External ID Types..."
+	python3 imports.py eit
 	pause
 }
 
@@ -154,7 +154,7 @@ show_menus() {
 	echo "11. Document Formats"
 	echo
 	echo "Schema: ROKU_CONTENT"
-	echo	
+	echo
 	echo "12. Language"
 	echo "13. Countries"
 	echo "14. Content Genres"
