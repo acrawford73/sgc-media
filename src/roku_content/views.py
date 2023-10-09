@@ -782,14 +782,14 @@ class RatingDetailView(DetailView):
 class RatingUpdateView(UpdateView):
 	model = Rating
 	context_object_name = 'rating'
-	fields = ['rating']
+	fields = ['rating', 'rating_source']
 
 class RatingListAPI(generics.ListAPIView):
 	queryset = Rating.objects.all()
 	serializer_class = RatingSerializerList
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['rating']
-	ordering_fields = ['id', 'rating', 'rating_source']
+	ordering_fields = ['rating', 'rating_source']
 	ordering = ['-id']
 
 # class RatingListAPISearch(generics.ListAPIView):

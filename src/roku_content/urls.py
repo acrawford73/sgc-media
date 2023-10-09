@@ -6,6 +6,7 @@ urlpatterns = [
 	## Roku Support
 
 	# Roku Content Feed
+	path('roku-content-feed/create/', views.RokuContentFeedCreateView.as_view(), name='rokucontentfeed-create'),
 	path('roku-content-feed/', views.RokuContentFeedListView.as_view(), name='rokucontentfeed-list'),
 	path('roku-content-feed/<int:pk>/', views.RokuContentFeedDetailView.as_view(), name='rokucontentfeed-detail'),
 	path('roku-content-feed/edit/<int:pk>/', views.RokuContentFeedUpdateView.as_view(), name='rokucontentfeed-update'),
