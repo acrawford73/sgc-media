@@ -485,7 +485,7 @@ class ExternalID(models.Model):
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.id_type)
+		return str(self.external_id)
 
 class ExternalIDType(models.Model):
 	""" 

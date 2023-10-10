@@ -945,7 +945,7 @@ class CreditListView(ListView):
 	model = Credit
 	template_name = 'roku_content/credit_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'credit'
-	ordering = ['-id']
+	ordering = ['credit_name']
 	paginate_by = 15
 
 class CreditDetailView(DetailView):
@@ -963,7 +963,7 @@ class CreditListAPI(generics.ListAPIView):
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['credit_name']
 	ordering_fields = ['id', 'credit_name', 'role', 'birth_date']
-	ordering = ['-id']
+	ordering = ['credit_name']
 
 # class CreditListAPISearch(generics.ListAPIView):
 # 	queryset = Credit.objects.all()

@@ -4,7 +4,7 @@
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'media-video-list' %}"><strong>MMXXIII Media Server</strong></a>
+      <a class="navbar-brand" href="{% url 'media-video-list' %}"><strong>Roku Media Server</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -39,20 +39,20 @@
               <li><a class="dropdown-item" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a></li>
               <li><a class="dropdown-item" href="#">Search Feeds</a></li>
               <li><a class="dropdown-item" href="{% url 'playlist-list' %}">Playlists</a></li>
-              <li><a class="dropdown-item" href="{% url 'category-list' %}">Categorys</a></li>
+              <li><a class="dropdown-item" href="{% url 'category-list' %}">Categories</a></li>
 
-              <li><a class="dropdown-item" href="#">Movies</a></li>
-              <li><a class="dropdown-item" href="#">Live Feeds</a></li>
-              <li><a class="dropdown-item" href="#">Series</a></li>
-              <li><a class="dropdown-item" href="#">Seasons</a></li>
-              <li><a class="dropdown-item" href="#">Episodes</a></li>
-              <li><a class="dropdown-item" href="{% url 'shortformvideo-list' %}">Short Form Videos</a></li>
-              <li><a class="dropdown-item" href="#">TV Specials</a></li>
+              <li><a class="dropdown-item" href="{% url 'movie-list' %}">Movies</a></li>
+              <li><a class="dropdown-item" href="{% url 'livefeed-list' %}">Live Feeds</a></li>
+              <li><a class="dropdown-item" href="{% url 'series-list' %}">Series</a></li>
+              <li><a class="dropdown-item" href="{% url 'season-list' %}">Seasons</a></li>
+              <li><a class="dropdown-item" href="{% url 'episode-list' %}">Episodes</a></li>
+              <li><a class="dropdown-item" href="{% url 'shortformvideo-list' %}">Short-Form Videos</a></li>
+              <li><a class="dropdown-item" href="{% url 'tvspecial-list' %}">TV Specials</a></li>
 
               <li><a class="dropdown-item" href="{% url 'content-list' %}">Content</a></li>
               <li><a class="dropdown-item" href="{% url 'video-list' %}">Videos</a></li>
               <li><a class="dropdown-item" href="{% url 'caption-list' %}">Captions</a></li>
-              <li><a class="dropdown-item" href="{% url 'trickplayfile-list' %}">Trick Play Files</a></li>
+              <li><a class="dropdown-item" href="{% url 'trickplayfile-list' %}">Trickplay Files</a></li>
               <li><a class="dropdown-item" href="{% url 'genre-list' %}">Genres</a></li>
               <li><a class="dropdown-item" href="{% url 'externalid-list' %}">External IDs</a></li>
               <li><a class="dropdown-item" href="{% url 'rating-list' %}">Ratings</a></li>
@@ -62,31 +62,7 @@
               <li><a class="dropdown-item" href="{% url 'language-list' %}">Languages</a></li>
             </ul>
           </li>          
- <!--          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-video-list' %}">Videos</a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-video-list-api' %}">Videos API</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-photo-list-gallery' %}">Photos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-photo-list-api' %}">Photos API</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-audio-list-gallery' %}">Audio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-audio-list-api' %}">Audio API</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-doc-list' %}">Docs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url 'media-doc-list-api' %}">Docs API</a>
-          </li>
- -->          <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="#">Settings</a>
           </li>
 

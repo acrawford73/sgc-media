@@ -73,7 +73,7 @@ urlpatterns = [
 	# path('api/series/<int:pk>', views.SeriesDetailAPI.as_view(), name='series-detail-api'),
 	
 	# Season
-	path('season/create/', views.SeriesCreateView.as_view(), name='season-create'),
+	path('season/create/', views.SeasonCreateView.as_view(), name='season-create'),
 	path('season/', views.SeasonListView.as_view(), name='season-list'),
 	path('season/<int:pk>/', views.SeasonDetailView.as_view(), name='season-detail'),
 	path('season/edit/<int:pk>/', views.SeasonUpdateView.as_view(), name='season-update'),

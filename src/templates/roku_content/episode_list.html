@@ -10,7 +10,9 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Episode</h1>
 
-     <p><a href="{% url 'episode-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create New Episode</button></a></p>
+    <p>This section represents Episodes in a <a href="{% url 'series-list' %}"><strong>Series</strong></a> or a <a href="{% url 'season-list' %}"><strong>Season</strong></a>.</p>
+
+    <p><a href="{% url 'episode-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create Episode</button></a></p>
 
     <div class="row">
       <div class="col-lg-12">
@@ -20,7 +22,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>Title/th>
+                <th>Title</th>
                 <th>Release Date</th>
                 <th>Episode Number</th>
               </tr>

@@ -10,7 +10,9 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Content</h1>
 
-     <p><a href="{% url 'content-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create New Content</button></a></p>
+    <p>The Content section represents the details about video content item such as a <a href="{% url 'movie-list' %}"><strong>Movie</strong></a>, <a href="{% url 'episode-list' %}"><strong>Episode</strong></a>, <a href="{% url 'shortformvideo-list' %}"><strong>Short-Form Video</strong></a>, or <a href="{% url 'tvspecial-list' %}"><strong>TV Special</strong></a>.</p>
+
+    <p><a href="{% url 'content-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create Content</button></a></p>
 
     <div class="row">
       <div class="col-lg-12">

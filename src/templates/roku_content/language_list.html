@@ -10,7 +10,9 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Languages</h1>
 
-     <p><a href="{% url 'language-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create New Language</button></a></p>
+    <p>This section defines the languages that are supported in the <a href="{% url 'rokucontentfeed-list' %}"><strong>Roku Content Feed.</strong></a></p>
+
+    <p><a href="{% url 'language-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Add Language</button></a></p>
 
     <div class="row">
       <div class="col-lg-12">
@@ -29,7 +31,7 @@
               {% for asset in language %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td align="left"><a href="{% url 'language-detail' asset.id %}">{{ asset.code_iso_639_2 }}</a></td>
+                <td><a href="{% url 'language-detail' asset.id %}">{{ asset.code_iso_639_2 }}</a></td>
                 <td>{{ asset.code_iso_639_1 }}</td>
                 <td>{{ asset.language_name_eng }}</td>
               </tr>
