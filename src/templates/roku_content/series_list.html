@@ -10,7 +10,9 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Series</h1>
 
-    <p>This section represents a Series, such as a season of a TV show or a mini-series.</p>
+    <p>This section represents a <strong>Series</strong>, such as a season of a TV show or a mini-series.</p>
+
+    <p>The properties that define a <strong>Series</strong> are <a href="{% url 'credit-list' %}"><strong>Credits</strong></a>, <a href="{% url 'genre-list' %}"><strong>Genres</strong></a>, <a href="#"><strong>Tags</strong></a>, and <a href="{% url 'externalid-list' %}"><strong>External IDs</strong></a>.</p>
 
     <p><a href="{% url 'series-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create Series</button></a></p>
 
@@ -21,7 +23,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>Title/th>
+                <th>Title</th>
                 <th>Release Date</th>
               </tr>
             </thead>

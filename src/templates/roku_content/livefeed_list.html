@@ -10,7 +10,9 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Live Feed</h1>
 
-    <p>This section represents a live linear stream. Live streams are typically Adaptive Bit Rate (ABR) streams such as Apple HLS, Microsoft Smooth Streaming, or DASH. Live stream URLs usually contain an *.m3u8 extension.</p>
+    <p>A <strong>Live Feed</strong> represents a live linear stream. Live streams are typically Adaptive Bit Rate (ABR) streams such as Apple HLS, Microsoft Smooth Streaming, or DASH. Live stream URLs usually contain an *.m3u8 extension.</p>
+
+    <p>The properties that define <strong>Live Feeds</strong> are <a href="{% url 'rating-list' %}"><strong>Ratings</strong></a>, <a href="{% url 'genre-list' %}"><strong>Genres</strong></a>, and <a href="#"><strong>Tags</strong></a>.</p>
 
     <p><a href="{% url 'livefeed-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create Live Feed</button></a></p>
 
@@ -21,7 +23,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>Title/th>
+                <th>Title</th>
                 <th>Content</th>
               </tr>
             </thead>
@@ -30,7 +32,7 @@
               <tr align="center">
                 <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'livefeed-detail' asset.id %}">{{ asset.title }}</a></td>
-                <th>{{ asset.content }}</th>
+                <td>{{ asset.content }}</td>
               </tr>
               {% endfor %}
 

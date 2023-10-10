@@ -48,9 +48,8 @@ class RokuContentFeedCreateView(CreateView):
 	"""
 	model = RokuContentFeed
 	template_name = 'roku_content/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
-	#fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-	#	'live_feeds', 'series', 'short_form_videos', 'tv_specials']
-	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'short_form_videos']
+	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListView(ListView):
 	"""
@@ -102,21 +101,20 @@ class RokuContentFeedUpdateView(UpdateView):
 	"""
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
-	#fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-	#	'live_feeds', 'series', 'short_form_videos', 'tv_specials']
-	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'short_form_videos']
-
+	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListAPI(generics.ListAPIView):
 	"""
 	Display Roku Content Feed fields for ListAPIView :model:`roku_content.RokuContentFeed`.
 	"""
-	queryset = RokuContentFeed.objects.all()
+	queryset = RokuContentFeed.objects.all().filter(is_public=True)
 	serializer_class = RokuContentFeedSerializerList
 	#filter_backends = [DjangoFilterBackend]
-	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
-	#ordering_fields = ['id', 'category_name', 'playlist_name']
+	#filterset_fields = ['is_public']
+	ordering_fields = ['id']
 	ordering = ['-id']
+	pagination_class=None
 
 # class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
 # 	queryset = RokuContentFeed.objects.all()
@@ -245,7 +243,7 @@ class PlaylistListAPI(generics.ListAPIView):
 class MovieCreateView(CreateView):
 	model = Movie
 	template_name = 'roku_content/movie_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+	fields = ['title', 'content', 'genres', 'thumbnail', 'release_date', \
 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 
 class MovieListView(ListView):
@@ -262,16 +260,16 @@ class MovieDetailView(DetailView):
 class MovieUpdateView(UpdateView):
 	model = Movie
 	context_object_name = 'movie'
-	fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+	fields = ['title', 'content', 'genres', 'thumbnail', 'release_date', \
 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 
 class MovieListAPI(generics.ListAPIView):
 	queryset = Movie.objects.all()
 	serializer_class = MovieSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
-	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
+	filterset_fields = ['title', 'genres', 'release_date', \
+		'tags', 'credits', 'rating', 'external_ids']
+	ordering_fields = ['title', 'release_date', 'tags', 'rating']
 	ordering = ['-id']
 
 # class MovieListAPISearch(generics.ListAPIView):

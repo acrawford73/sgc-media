@@ -10,7 +10,9 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Movies</h1>
 
-    <p>This section defines a Movie object that will contain a <a href="{% url 'content-list' %}"><strong>Content</strong></a> object with <a href="{% url 'video-list' %}"><strong>Video</strong></a> content added.</p>
+    <p>A <strong>Movie</strong> contains a <a href="{% url 'content-list' %}"><strong>Content</strong></a> object, which contains <a href="{% url 'video-list' %}"><strong>Video</strong></a> media and <a href="{% url 'caption-list' %}"><strong>Caption</strong></a> data.</p>
+
+    <p>The properties that define <strong>Movies</strong> are <a href="{% url 'rating-list' %}"><strong>Ratings</strong></a>, <a href="{% url 'credit-list' %}"><strong>Credits</strong></a>, <a href="{% url 'genre-list' %}"><strong>Genres</strong></a>, <a href="#"><strong>Tags</strong></a>, and <a href="{% url 'externalid-list' %}"><strong>External IDs</strong></a>.</p>
 
     <p><a href="{% url 'movie-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create Movie</button></a></p>
 
@@ -21,7 +23,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>Title/th>
+                <th>Title</th>
                 <th>Content</th>
                 <th>Release Date</th>
               </tr>
@@ -31,7 +33,7 @@
               <tr align="center">
                 <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'movie-detail' asset.id %}">{{ asset.title }}</a></td>
-                <th>{{ asset.content }}</th>
+                <td>{{ asset.content }}</td>
                 <td>{{ asset.release_date }}</td>
               </tr>
               {% endfor %}
