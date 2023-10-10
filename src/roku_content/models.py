@@ -1,6 +1,5 @@
 import uuid
-import datetime,time
-from datetime import date
+from datetime import date,time
 from django.db import models
 from django.urls import reverse
 
@@ -153,115 +152,115 @@ class Playlist(models.Model):
 
 ### Content Types
 
-# class Movie(models.Model):
-# 	""" Represents a movie object. """
-# 	movie_id = models.UUIDField(default=uuid.uuid4, editable=False)
-# 	title = models.CharField(max_length=64, default="", null=False, blank=False)
-# 	content = models.URLField(max_length=2083, null=False, blank=False)
-# 	genres = models.ForeignKey("Genre", on_delete=models.SET_NULL, blank=True, null=True)
-# 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-# 	release_date = models.DateField(default=datetime.date.today(), null=True, blank=True)
-# 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-# 	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
-# 	tags = models.CharField(max_length=200, default="", null=False, blank=False)
-# 	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=True, null=True)
-# 	# object, One or more third-party metadata provider IDs.
-# 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	def get_absolute_url(self):
-#		return reverse('movie-list')
-#	class Meta:
-# 		ordering = ['movie_id']
-# 		def __unicode__(self):
-# 			return self.movie_id
-# 	def __str__(self):
-# 		return str(self.movie_id)
+class Movie(models.Model):
+	""" Represents a movie object. """
+	movie_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	title = models.CharField(max_length=64, default="", null=False, blank=False)
+	content = models.URLField(max_length=2083, null=False, blank=False)
+	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	release_date = models.DateField(default="", null=True, blank=True)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	tags = models.CharField(max_length=200, default="", null=False, blank=False)
+	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
+	# object, One or more third-party metadata provider IDs.
+	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	def get_absolute_url(self):
+		return reverse('movie-list')
+	class Meta:
+		ordering = ['movie_id']
+		def __unicode__(self):
+			return self.movie_id
+	def __str__(self):
+		return str(self.movie_id)
 
-# class LiveFeed(models.Model):
-# 	""" Represents a live linear stream. """
-# 	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False)
-# 	title = models.CharField(max_length=64, default="", null=False, blank=False)
-# 	content = models.URLField(max_length=2083, null=False, blank=False)
-# 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-# 	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-# 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-# 	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
-# 	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
-# 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=True, null=True)
-# 	genres = models.ForeignKey("Genre", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-#	def get_absolute_url(self):
-#		return reverse('livefeed-list')
-# 	class Meta:
-# 		ordering = ['livefeed_id']
-# 		def __unicode__(self):
-# 			return self.livefeed_id
-# 	def __str__(self):
-# 		return str(self.livefeed_id)
+class LiveFeed(models.Model):
+	""" Represents a live linear stream. """
+	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	title = models.CharField(max_length=64, default="", null=False, blank=False)
+	content = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
+	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	def get_absolute_url(self):
+		return reverse('livefeed-list')
+	class Meta:
+		ordering = ['livefeed_id']
+		def __unicode__(self):
+			return self.livefeed_id
+	def __str__(self):
+		return str(self.livefeed_id)
 
-# class Series(models.Model):
-# 	""" Represents a series, such as a season of a TV Show or a mini-series. """
-# 	series_id = models.UUIDField(default=uuid.uuid4, editable=False)
-# 	title = models.CharField(max_length=64, default="", null=False, blank=False)
-# 	seasons = models.ForeignKey("Season", on_delete=models.SET_NULL, blank=False, null=False)
-# 	episodes = models.ForeignKey("Episode", on_delete=models.SET_NULL, blank=False, null=False)
-# 	genres = models.ForeignKey("Genre", on_delete=models.SET_NULL, blank=False, null=False)
-# 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-# 	release_date = models.DateField(auto_now=True, null=False, blank=False)
-# 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-# 	long_description = models.CharField(max_length=500, null=True, blank=True) # Optional
-# 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
-# 	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-#	def get_absolute_url(self):
-#		return reverse('series-list')
-# 	class Meta:
-# 		ordering = ['series_id']
-# 		def __unicode__(self):
-# 			return self.series_id
-# 	def __str__(self):
-# 		return str(self.series_id)
+class Series(models.Model):
+	""" Represents a series, such as a season of a TV Show or a mini-series. """
+	series_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	title = models.CharField(max_length=64, default="", null=False, blank=False)
+	seasons = models.ForeignKey("Season", on_delete=models.PROTECT, blank=False, null=False)
+	episodes = models.ForeignKey("Episode", on_delete=models.PROTECT, blank=False, null=False)
+	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=False, null=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	release_date = models.DateField(default="", null=True, blank=True)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, null=True, blank=True) # Optional
+	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
+	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	def get_absolute_url(self):
+		return reverse('series-list')
+	class Meta:
+		ordering = ['series_id']
+		def __unicode__(self):
+			return self.series_id
+	def __str__(self):
+		return str(self.series_id)
 
-# class Season(models.Model):
-# 	"""
-# 	Represents a single season of a series.
-# 	{
-# 	"seasonNumber": "1",
-# 	"episodes": [ ... ]
-# 	}
-# 	"""
-# 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
-# 	# One or more episodes of this particular season.
-# 	episodes = models.CharField(max_length=10, null=False, blank=False)
-#	def get_absolute_url(self):
-#		return reverse('season-list')
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
+class Season(models.Model):
+	"""
+	Represents a single season of a series.
+	{
+	"seasonNumber": "1",
+	"episodes": [ ... ]
+	}
+	"""
+	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
+	# One or more episodes of this particular season.
+	episodes = models.CharField(max_length=10, null=False, blank=False)
+	def get_absolute_url(self):
+		return reverse('season-list')
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
 
-# class Episode(models.Model):
-# 	""" This Model represents a single episode in a series or a season. """
-# 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False)
-# 	title = models.CharField(max_length=64, null=False, blank=False)
-# 	content = models.URLField(max_length=2083, null=False, blank=False)
-# 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-# 	release_date = models.DateField(auto_now=True, null=False, blank=False)
-# 	episode_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
-# 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-# 	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
-# 	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=False, null=False)
-# 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-#	def get_absolute_url(self):
-#		return reverse('episode-list')
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
+class Episode(models.Model):
+	""" This Model represents a single episode in a series or a season. """
+	episode_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	title = models.CharField(max_length=64, null=False, blank=False)
+	content = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	release_date = models.DateField(default="", null=True, blank=True)
+	episode_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=False, null=False)
+	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	def get_absolute_url(self):
+		return reverse('episode-list')
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.id)
 
 class ShortFormVideo(models.Model):
 	""" Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
@@ -285,7 +284,7 @@ class ShortFormVideo(models.Model):
 	# The date the video first became available.
 	# This field is used to sort programs chronologically and group related content in Roku Search. 
 	# Conforms to ISO 8601 format: {YYYY}-{MM}-{DD}. For example, 2020-11-11
-	release_date = models.DateField(auto_now=False, default=date.today, null=True, blank=True)
+	release_date = models.DateField(default="", null=True, blank=True)
 	# One or more tags (e.g., “dramas”, “korean”, etc). 
 	# Each tag is a string and is limited to 20 characters. 
 	# Tags are used to define what content will be shown within a category.
@@ -306,26 +305,26 @@ class ShortFormVideo(models.Model):
 	def __str__(self):
 		return str(self.short_form_video_id)
 
-# class TVSpecial(models.Model):
-# 	""" TV Specials are shorter or longer than 15 minutes. Special ad rules apply. """
-# 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False)
-# 	title = models.CharField(max_length=64, null=False, blank=False)
-# 	content = models.URLField(max_length=2083, null=False, blank=False)
-# 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-# 	genres = models.ForeignKey("Genre", on_delete=models.SET_NULL, blank=True, null=True)
-# 	release_date = models.DateField(auto_now=True, null=False, blank=False)
-# 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-# 	long_description = models.CharField(max_length=500, default="", null=True, blank=True) # Optional
-# 	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=False, null=False)
-# 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
-# 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	class Meta:
-# 		ordering = ['tv_special_id']
-# 		def __unicode__(self):
-# 			return self.tv_special_id
-# 	def __str__(self):
-# 		return str(self.tv_special_id)
+class TVSpecial(models.Model):
+	""" TV Specials are shorter or longer than 15 minutes. Special ad rules apply. """
+	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	title = models.CharField(max_length=64, null=False, blank=False)
+	content = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
+	release_date = models.DateField(default="", null=True, blank=True)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=True, blank=True) # Optional
+	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=False, null=False)
+	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
+	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	class Meta:
+		ordering = ['tv_special_id']
+		def __unicode__(self):
+			return self.tv_special_id
+	def __str__(self):
+		return str(self.tv_special_id)
 
 
 ### Content Properties

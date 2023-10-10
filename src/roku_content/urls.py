@@ -48,45 +48,45 @@ urlpatterns = [
 	# path('api/playlist/search/', views.PlaylistAPISearch.as_view()),
 	# path('api/playlist/<int:pk>', views.PlaylistDetailAPI.as_view(), name='playlist-detail-api'),
 	
-	# # Movie
-	# path('movie/create/', views.MovieCreateView.as_view(), name='movie-create'),
-	# path('movies/', views.MovieListView.as_view(), name='movie-list'),
-	# path('movie/<int:pk>/', views.MovieDetailView.as_view(), name='movie-detail'),
-	# path('movie/edit/<int:pk>/', views.MovieUpdateView.as_view(), name='movie-update'),
-	# path('api/movies/', views.MovieAPI.as_view(), name='movie-api'),
-	# # path('api/movie/<int:pk>', views.MovieDetailAPI.as_view(), name='movie-detail-api'),
+	# Movie
+	path('movie/create/', views.MovieCreateView.as_view(), name='movie-create'),
+	path('movies/', views.MovieListView.as_view(), name='movie-list'),
+	path('movie/<int:pk>/', views.MovieDetailView.as_view(), name='movie-detail'),
+	path('movie/edit/<int:pk>/', views.MovieUpdateView.as_view(), name='movie-update'),
+	path('api/movies/', views.MovieListAPI.as_view(), name='movie-api'),
+	# path('api/movie/<int:pk>', views.MovieDetailAPI.as_view(), name='movie-detail-api'),
 	
-	# # LiveFeed
-	# path('livefeed/create/', views.LiveFeedCreateView.as_view(), name='livefeed-create'),
-	# path('livefeed/', views.LiveFeedListView.as_view(), name='livefeed-list'),
-	# path('livefeed/<int:pk>/', views.LiveFeedDetailView.as_view(), name='livefeed-detail'),
-	# path('livefeed/edit/<int:pk>/', views.LiveFeedUpdateView.as_view(), name='livefeed-update'),
-	# path('api/livefeed/', views.LiveFeedAPI.as_view(), name='livefeed-api'),
-	# # path('api/livefeed/<int:pk>', views.LiveFeedDetailAPI.as_view(), name='livefeed-detail-api'),
+	# LiveFeed
+	path('livefeed/create/', views.LiveFeedCreateView.as_view(), name='livefeed-create'),
+	path('livefeed/', views.LiveFeedListView.as_view(), name='livefeed-list'),
+	path('livefeed/<int:pk>/', views.LiveFeedDetailView.as_view(), name='livefeed-detail'),
+	path('livefeed/edit/<int:pk>/', views.LiveFeedUpdateView.as_view(), name='livefeed-update'),
+	path('api/livefeed/', views.LiveFeedListAPI.as_view(), name='livefeed-api'),
+	# path('api/livefeed/<int:pk>', views.LiveFeedDetailAPI.as_view(), name='livefeed-detail-api'),
 	
-	# # Series
-	# path('series/create/', views.SeriesCreateView.as_view(), name='series-create'),
-	# path('series/', views.SeriesListView.as_view(), name='series-list'),
-	# path('series/<int:pk>/', views.SeriesDetailView.as_view(), name='series-detail'),
-	# path('series/edit/<int:pk>/', views.SeriesUpdateView.as_view(), name='series-update'),
-	# path('api/series/', views.SeriesAPI.as_view(), name='series-api'),
-	# # path('api/series/<int:pk>', views.SeriesDetailAPI.as_view(), name='series-detail-api'),
+	# Series
+	path('series/create/', views.SeriesCreateView.as_view(), name='series-create'),
+	path('series/', views.SeriesListView.as_view(), name='series-list'),
+	path('series/<int:pk>/', views.SeriesDetailView.as_view(), name='series-detail'),
+	path('series/edit/<int:pk>/', views.SeriesUpdateView.as_view(), name='series-update'),
+	path('api/series/', views.SeriesListAPI.as_view(), name='series-api'),
+	# path('api/series/<int:pk>', views.SeriesDetailAPI.as_view(), name='series-detail-api'),
 	
-	# # Season
-	# path('season/create/', views.SeriesCreateView.as_view(), name='season-create'),
-	# path('season/', views.SeasonListView.as_view(), name='season-list'),
-	# path('season/<int:pk>/', views.SeasonDetailView.as_view(), name='season-detail'),
-	# path('season/edit/<int:pk>/', views.SeasonUpdateView.as_view(), name='season-update'),
-	# path('api/season/', views.SeasonAPI.as_view(), name='season-api'),
-	# # path('apepisodei/season/<int:pk>', views.SeasonDetailAPI.as_view(), name='season-detail-api'),
+	# Season
+	path('season/create/', views.SeriesCreateView.as_view(), name='season-create'),
+	path('season/', views.SeasonListView.as_view(), name='season-list'),
+	path('season/<int:pk>/', views.SeasonDetailView.as_view(), name='season-detail'),
+	path('season/edit/<int:pk>/', views.SeasonUpdateView.as_view(), name='season-update'),
+	path('api/season/', views.SeasonListAPI.as_view(), name='season-api'),
+	# path('apepisodei/season/<int:pk>', views.SeasonDetailAPI.as_view(), name='season-detail-api'),
 	
-	# # Episode
-	# path('episode/create/', views.EpisodeCreateView.as_view(), name='episode-create'),
-	# path('episode/', views.EpisodeListView.as_view(), name='episode-list'),
-	# path('episode/<int:pk>/', views.EpisodeDetailView.as_view(), name='episode-detail'),
-	# path('episode/edit/<int:pk>/', views.EpisodeUpdateView.as_view(), name='episode-update'),
-	# path('api/episode/', views.EpisodeAPI.as_view(), name='episode-api'),
-	# # path('api/episode/<int:pk>', views.EpisodeDetailAPI.as_view(), name='episode-detail-api'),
+	# Episode
+	path('episode/create/', views.EpisodeCreateView.as_view(), name='episode-create'),
+	path('episode/', views.EpisodeListView.as_view(), name='episode-list'),
+	path('episode/<int:pk>/', views.EpisodeDetailView.as_view(), name='episode-detail'),
+	path('episode/edit/<int:pk>/', views.EpisodeUpdateView.as_view(), name='episode-update'),
+	path('api/episode/', views.EpisodeListAPI.as_view(), name='episode-api'),
+	# path('api/episode/<int:pk>', views.EpisodeDetailAPI.as_view(), name='episode-detail-api'),
 	
 	# ShortFormVideo
 	path('shortformvideo/create/', views.ShortFormVideoCreateView.as_view(), name='shortformvideo-create'),
@@ -96,13 +96,13 @@ urlpatterns = [
 	path('api/shortformvideos/', views.ShortFormVideoListAPI.as_view(), name='shortformvideo-api'),
 	# path('api/shortformvideo/<int:pk>', views.ShortFormVideoDetailAPI.as_view(), name='shortformvideo-detail-api'),
 	
-	# # TVSpecial
-	# path('tvspecial/create/', views.TVSpecialCreateView.as_view(), name='tvspecial-create'),
-	# path('tvspecial/', views.TVSpecialListView.as_view(), name='tvspecial-list'),
-	# path('tvspecial/<int:pk>/', views.TVSpecialDetailView.as_view(), name='tvspecial-detail'),
-	# path('tvspecial/edit/<int:pk>/', views.TVSpecialUpdateView.as_view(), name='tvspecial-update'),
-	# path('api/tvspecial/', views.TVSpecialAPI.as_view(), name='tvspecial-api'),
-	# # path('api/tvspecial/<int:pk>', views.TVSpecialDetailAPI.as_view(), name='tvspecial-detail-api'),
+	# TVSpecial
+	path('tvspecial/create/', views.TVSpecialCreateView.as_view(), name='tvspecial-create'),
+	path('tvspecial/', views.TVSpecialListView.as_view(), name='tvspecial-list'),
+	path('tvspecial/<int:pk>/', views.TVSpecialDetailView.as_view(), name='tvspecial-detail'),
+	path('tvspecial/edit/<int:pk>/', views.TVSpecialUpdateView.as_view(), name='tvspecial-update'),
+	path('api/tvspecial/', views.TVSpecialListAPI.as_view(), name='tvspecial-api'),
+	# path('api/tvspecial/<int:pk>', views.TVSpecialDetailAPI.as_view(), name='tvspecial-detail-api'),
 	
 	# Content
 	path('content/create/', views.ContentCreateView.as_view(), name='content-create'),
