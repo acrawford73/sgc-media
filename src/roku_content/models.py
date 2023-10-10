@@ -39,12 +39,12 @@ class RokuContentFeed(models.Model):
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
 	categories = models.ForeignKey("Category", on_delete=models.PROTECT, null=True, blank=True)
-	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, limit_choices_to={"is_public": True}, null=True, blank=True)
-	#movies = models.ForeignKey("Movie", on_delete=models.PROTECT, null=True, blank=True)
-	#live_feeds = models.ForeignKey("LiveFeed", on_delete=models.PROTECT, null=True, blank=True)
-	#series = models.ForeignKey("Series", on_delete=models.PROTECT, null=True, blank=True)
+	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, limit_choices_to={'is_public': True}, null=True, blank=True)
+	movies = models.ForeignKey("Movie", on_delete=models.PROTECT, null=True, blank=True)
+	live_feeds = models.ForeignKey("LiveFeed", on_delete=models.PROTECT, null=True, blank=True)
+	series = models.ForeignKey("Series", on_delete=models.PROTECT, null=True, blank=True)
 	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.PROTECT, null=True, blank=True)
-	#tv_specials = models.ForeignKey("TVSpecial", on_delete=models.PROTECT, null=True, blank=True)
+	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.PROTECT, null=True, blank=True)
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	is_public = models.BooleanField(default=False)
@@ -335,7 +335,7 @@ class Content(models.Model):
 	such as a Movie, Episode, Short-Form Video, or TV Special.
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False)
-	date_added = models.DateTimeField(auto_now_add=True)
+	date_added = models.DateField(auto_now_add=True)
 	videos = models.ForeignKey("Video", on_delete=models.PROTECT, null=True, blank=True)
 	duration = models.IntegerField(default=0, null=False, blank=True)
 	captions = models.ForeignKey("Caption", on_delete=models.PROTECT, null=True, blank=True)

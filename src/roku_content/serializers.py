@@ -99,8 +99,8 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 class ContentSerializerList(serializers.ModelSerializer):
 	dateAdded = serializers.DateField(source='date_added')
 	trickPlayFiles = serializers.JSONField(source='trick_play_files')
-	validityPeriodStart = serializers.DateField(source='validity_period_start')
-	validityPeriodEnd = serializers.DateField(source='validity_period_end')
+	validityPeriodStart = serializers.DateField(source='validity_start_period')
+	validityPeriodEnd = serializers.DateField(source='validity_end_period')
 	#adBreaks = serializers.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
