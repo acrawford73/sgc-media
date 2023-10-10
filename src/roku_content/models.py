@@ -49,6 +49,8 @@ class RokuContentFeed(models.Model):
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	is_public = models.BooleanField(default=False)
+	def get_absolute_url(self):
+		return reverse('rokucontentfeed-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -64,6 +66,8 @@ class Language(models.Model):
 	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False, unique=True)  # "eng"
 	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)  # "en"
 	language_name_eng = models.CharField(max_length=64, null=False, blank=False)  # English"
+	def get_absolute_url(self):
+		return reverse('language-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -110,6 +114,8 @@ class Category(models.Model):
 	query_string = models.CharField(max_length=1024, default="", null=True, blank=True)
 	# The order of the category in the channel.
 	order = models.CharField(max_length=16, choices=CONTENT_CATEGORY_ORDER, default='most_recent')
+	def get_absolute_url(self):
+		return reverse('category-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -135,6 +141,8 @@ class Playlist(models.Model):
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	is_public = models.BooleanField(default=False)
+	def get_absolute_url(self):
+		return reverse('playlist-list')
 	class Meta:
 		ordering = ['-id']
 		def __unicode__(self):
@@ -160,7 +168,9 @@ class Playlist(models.Model):
 # 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=True, null=True)
 # 	# object, One or more third-party metadata provider IDs.
 # 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
-# 	class Meta:
+# 	def get_absolute_url(self):
+#		return reverse('movie-list')
+#	class Meta:
 # 		ordering = ['movie_id']
 # 		def __unicode__(self):
 # 			return self.movie_id
@@ -179,6 +189,8 @@ class Playlist(models.Model):
 # 	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
 # 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=True, null=True)
 # 	genres = models.ForeignKey("Genre", on_delete=models.SET_NULL, blank=True, null=True) # Optional
+#	def get_absolute_url(self):
+#		return reverse('livefeed-list')
 # 	class Meta:
 # 		ordering = ['livefeed_id']
 # 		def __unicode__(self):
@@ -200,6 +212,8 @@ class Playlist(models.Model):
 # 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 # 	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=True, null=True) # Optional
 # 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
+#	def get_absolute_url(self):
+#		return reverse('series-list')
 # 	class Meta:
 # 		ordering = ['series_id']
 # 		def __unicode__(self):
@@ -218,6 +232,8 @@ class Playlist(models.Model):
 # 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 # 	# One or more episodes of this particular season.
 # 	episodes = models.CharField(max_length=10, null=False, blank=False)
+#	def get_absolute_url(self):
+#		return reverse('season-list')
 # 	class Meta:
 # 		ordering = ['id']
 # 		def __unicode__(self):
@@ -238,6 +254,8 @@ class Playlist(models.Model):
 # 	credits = models.ForeignKey("Credit", on_delete=models.SET_NULL, blank=True, null=True) # Optional
 # 	rating = models.ForeignKey("Rating", on_delete=models.SET_NULL, blank=False, null=False)
 # 	external_ids = models.ForeignKey("ExternalID", on_delete=models.SET_NULL, blank=True, null=True) # Optional
+#	def get_absolute_url(self):
+#		return reverse('episode-list')
 # 	class Meta:
 # 		ordering = ['id']
 # 		def __unicode__(self):
@@ -279,6 +297,8 @@ class ShortFormVideo(models.Model):
 	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=False, null=False)
 	# A parental rating for the content.
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)  # Optional
+	def get_absolute_url(self):
+		return reverse('shortformvideo-list')
 	class Meta:
 		ordering = ['short_form_video_id']
 		def __unicode__(self):
@@ -313,7 +333,7 @@ class ShortFormVideo(models.Model):
 class Content(models.Model):
 	""" 
 	The Content model represents the details about a single video content item 
-	such as a movie, episode, short-form video, or TV special.
+	such as a Movie, Episode, Short-Form Video, or TV Special.
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False)
 	date_added = models.DateTimeField(auto_now_add=True)
@@ -325,6 +345,8 @@ class Content(models.Model):
 	validity_start_period = models.DateTimeField(null=True, blank=True) # Optional
 	validity_end_period = models.DateTimeField(null=True, blank=True) # Optional
 	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
+	def get_absolute_url(self):
+		return reverse('content-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -340,10 +362,10 @@ VIDEO_QUALITY = (
 )
 VIDEO_TYPE = (
 	("DASH", "DASH (Dynamic Adaptive Streaming over HTTP)"),
-	("HLS", "HLS (HTTP Live Streaming"),
-	("M4V", "M4V (MPEG-4 Apple"),
-	("MOV", "MOV (Apple Quicktime"),
-	("MP4", "MP4 (MPEG-4 H.264/H.265"),
+	("HLS", "HLS (HTTP Live Streaming)"),
+	("M4V", "M4V (MPEG-4 Apple)"),
+	("MOV", "MOV (Apple Quicktime)"),
+	("MP4", "MP4 (MPEG-4 H.264/H.265)"),
 	("SMOOTH", "SMOOTH"),
 )
 
@@ -358,9 +380,11 @@ class Video(models.Model):
 	"videoType": "HLS"
 	}
 	"""
-	url = models.URLField(max_length=2083, null=False, blank=False)
+	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	quality = models.CharField(max_length=16, choices=VIDEO_QUALITY, default='HD', null=False, blank=False)
 	video_type = models.CharField(max_length=16, choices=VIDEO_TYPE, default='MP4', null=False, blank=False)
+	def get_absolute_url(self):
+		return reverse('video-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -385,9 +409,11 @@ class Caption(models.Model):
 	"captionType": "CLOSED_CAPTION"
 	}
 	"""
-	url = models.URLField(max_length=2083, null=False, blank=False)
-	language = models.CharField(max_length=16, default='en', null=False, blank=False)
+	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
+	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
 	caption_type = models.CharField(max_length=16, choices=CAPTION_TYPE, default='SUBTITLE', null=False, blank=False)
+	def get_absolute_url(self):
+		return reverse('caption-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -411,8 +437,10 @@ class TrickPlayFile(models.Model):
 	"quality": "FHD"
 	}
 	"""
-	url = models.URLField(max_length=2083, null=False, blank=False)
+	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	quality = models.CharField(max_length=16, choices=TRICK_QUALITY, default="HD", null=False, blank=False)
+	def get_absolute_url(self):
+		return reverse('trickplayfile-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -422,8 +450,10 @@ class TrickPlayFile(models.Model):
 
 
 class Genre(models.Model):
-	"""	Provides a list of Roku content specific genres. """
-	genre = models.CharField(max_length=16, default="", null=False, blank=False, unique=True)
+	"""	Provides a list of Roku content specific genres. Maximum length of 30 characters. """
+	genre = models.CharField(max_length=30, default="", null=False, blank=False, unique=True)
+	def get_absolute_url(self):
+		return reverse('genre-list')
 	class Meta:
 		ordering = ['genre']
 		def __unicode__(self):
@@ -449,6 +479,8 @@ class ExternalID(models.Model):
 	"""
 	external_id = models.CharField(max_length=16, default="0", null=False, blank=False)
 	id_type = models.ForeignKey("ExternalIDType", on_delete=models.PROTECT, blank=True, null=True)
+	def get_absolute_url(self):
+		return reverse('externalid-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -483,6 +515,8 @@ class Rating(models.Model):
 	"""
 	rating = models.ForeignKey("ParentalRating", on_delete=models.PROTECT, blank=True, null=True)
 	rating_source = models.ForeignKey("RatingSource", on_delete=models.PROTECT, blank=True, null=True)
+	def get_absolute_url(self):
+		return reverse('rating-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -494,6 +528,8 @@ class RatingSource(models.Model):
 	""" Model provides a list of rating sources, such as the Motion Picture Association (MPA). """
 	source_name = models.CharField(max_length=16, default="", null=False, blank=False)
 	source_long_name = models.CharField(max_length=128, null=True, blank=True)
+	def get_absolute_url(self):
+		return reverse('ratingsource-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -504,6 +540,8 @@ class RatingSource(models.Model):
 class ParentalRating(models.Model):
 	""" Model provides a list of parental ratings as determined by standards associations. """
 	parental_rating = models.CharField(max_length=16, default="", null=False, blank=False, unique=True)
+	def get_absolute_url(self):
+		return reverse('parentalrating-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
@@ -535,6 +573,8 @@ class Credit(models.Model):
 	credit_name = models.CharField(max_length=64, default="", null=False, blank=False)
 	role = models.CharField(max_length=16, choices=CREDIT_ROLES, default="actor", null=True, blank=True)
 	birth_date = models.CharField(max_length=10, default="0000-00-00", null=False, blank=False)
+	def get_absolute_url(self):
+		return reverse('credit-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):

@@ -1,5 +1,6 @@
 from datetime import datetime
 from rest_framework import serializers
+from rest_framework.renderers import JSONRenderer
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import ShortFormVideo
@@ -29,7 +30,7 @@ class CategorySerializerList(serializers.ModelSerializer):
 	playlist = serializers.JSONField(source='playlist_name')
 	class Meta:
 		model = Category
-		fields = ['id', 'category_name', 'playlist_name', 'query_string', 'order']
+		fields = ['id', 'category', 'playlist', 'query_string', 'order']
 		#fields = '__all__'  ## provide all fields
 
 class PlaylistSerializerList(serializers.ModelSerializer):
@@ -37,7 +38,12 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 	itemIds = serializers.JSONField(source='item_ids')
 	class Meta:
 		model = Playlist
-		fields = ['playlist_name', 'item_ids']
+		fields = ['name', 'itemIds']
+
+class LanguageSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = Language
+		fields = ['code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
 
 
 ### Content Types
@@ -79,7 +85,7 @@ class ShortFormVideoSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='short_form_video_id')
 	class Meta:
 		model = ShortFormVideo
-		fields = ['short_form_video_id', 'title', 'content', 'thumbnail', 'short_description', \
+		fields = ['id', 'title', 'content', 'thumbnail', 'short_description', \
 		'long_description', 'release_date', 'tags', 'genres', 'credits', 'rating']
 
 # class TVSpecialSerializerList(serializers.ModelSerializer):
@@ -100,14 +106,14 @@ class ContentSerializerList(serializers.ModelSerializer):
 	#adBreaks = serializers.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
-		fields = ['date_added', 'videos', 'duration', 'captions', 'trick_play_files', \
-			'language', 'validity_period_start', 'validity_period_end']
+		fields = ['dateAdded', 'videos', 'duration', 'captions', 'trickPlayFiles', \
+			'language', 'validityPeriodStart', 'validityPeriodEnd']
 
 class VideoSerializerList(serializers.ModelSerializer):
 	videoType = serializers.CharField(source='video_type')
 	class Meta:
 		model = Video
-		fields = ['url', 'quality', 'video_type']
+		fields = ['url', 'quality', 'videoType']
 
 class CaptionSerializerList(serializers.ModelSerializer):
 	captionType = serializers.CharField(source='caption_type')
@@ -130,19 +136,19 @@ class ExternalIDSerializerList(serializers.ModelSerializer):
 	idType = serializers.CharField(source='id_type')
 	class Meta:
 		model = ExternalID
-		fields = ['external_id', 'id_type']
+		fields = ['external_id', 'idType']
 
 class RatingSerializerList(serializers.ModelSerializer):
 	ratingSource = serializers.CharField(source='rating_source')
 	class Meta:
 		model = Rating
-		fields = ['rating', 'rating_source']
+		fields = ['rating', 'ratingSource']
 
 class RatingSourceSerializerList(serializers.ModelSerializer):
 	ratingSource = serializers.CharField(source='source_name')
 	class Meta:
 		model = RatingSource
-		fields = ['source_name', 'source_long_name']
+		fields = ['ratingSource', 'source_long_name']
 
 class ParentalRatingSerializerList(serializers.ModelSerializer):
 	class Meta:
@@ -154,4 +160,4 @@ class CreditSerializerList(serializers.ModelSerializer):
 	birthDate = serializers.CharField(source='birth_date')
 	class Meta:
 		model = Credit
-		fields = ['credit_name', 'role', 'birth_date']
+		fields = ['name', 'role', 'birthDate']

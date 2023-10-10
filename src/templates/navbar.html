@@ -4,7 +4,7 @@
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'media-video-list' %}"><strong>Media Server</strong></a>
+      <a class="navbar-brand" href="{% url 'media-video-list' %}"><strong>MMXXIII Media Server</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -36,28 +36,30 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Roku</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Playlist</a></li>
-              <li><a class="dropdown-item" href="#">Category</a></li>
+              <li><a class="dropdown-item" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a></li>
+              <li><a class="dropdown-item" href="#">Search Feeds</a></li>
+              <li><a class="dropdown-item" href="{% url 'playlist-list' %}">Playlists</a></li>
+              <li><a class="dropdown-item" href="{% url 'category-list' %}">Categorys</a></li>
 
-              <li><a class="dropdown-item" href="#">Movie</a></li>
-              <li><a class="dropdown-item" href="#">Live Feed</a></li>
+              <li><a class="dropdown-item" href="#">Movies</a></li>
+              <li><a class="dropdown-item" href="#">Live Feeds</a></li>
               <li><a class="dropdown-item" href="#">Series</a></li>
-              <li><a class="dropdown-item" href="#">Season</a></li>
-              <li><a class="dropdown-item" href="#">Episode</a></li>
-              <li><a class="dropdown-item" href="#">Short Form Video</a></li>
-              <li><a class="dropdown-item" href="#">TV Special</a></li>
+              <li><a class="dropdown-item" href="#">Seasons</a></li>
+              <li><a class="dropdown-item" href="#">Episodes</a></li>
+              <li><a class="dropdown-item" href="{% url 'shortformvideo-list' %}">Short Form Videos</a></li>
+              <li><a class="dropdown-item" href="#">TV Specials</a></li>
 
-              <li><a class="dropdown-item" href="#">Content</a></li>
-              <li><a class="dropdown-item" href="#">Video</a></li>
-              <li><a class="dropdown-item" href="#">Caption</a></li>
-              <li><a class="dropdown-item" href="#">Trick Play File</a></li>
-              <li><a class="dropdown-item" href="#">Genre</a></li>
-              <li><a class="dropdown-item" href="#">External ID</a></li>
-              <li><a class="dropdown-item" href="#">Rating</a></li>
-              <li><a class="dropdown-item" href="#">Rating Source</a></li>
-              <li><a class="dropdown-item" href="#">Parental Rating</a></li>
-              <li><a class="dropdown-item" href="#">Credit</a></li>
-              <li><a class="dropdown-item" href="#">Language</a></li>
+              <li><a class="dropdown-item" href="{% url 'content-list' %}">Content</a></li>
+              <li><a class="dropdown-item" href="{% url 'video-list' %}">Videos</a></li>
+              <li><a class="dropdown-item" href="{% url 'caption-list' %}">Captions</a></li>
+              <li><a class="dropdown-item" href="{% url 'trickplayfile-list' %}">Trick Play Files</a></li>
+              <li><a class="dropdown-item" href="{% url 'genre-list' %}">Genres</a></li>
+              <li><a class="dropdown-item" href="{% url 'externalid-list' %}">External IDs</a></li>
+              <li><a class="dropdown-item" href="{% url 'rating-list' %}">Ratings</a></li>
+              <li><a class="dropdown-item" href="{% url 'ratingsource-list' %}">Rating Sources</a></li>
+              <li><a class="dropdown-item" href="{% url 'parentalrating-list' %}">Parental Ratings</a></li>
+              <li><a class="dropdown-item" href="{% url 'credit-list' %}">Credits</a></li>
+              <li><a class="dropdown-item" href="{% url 'language-list' %}">Languages</a></li>
             </ul>
           </li>          
  <!--          <li class="nav-item">

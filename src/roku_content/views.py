@@ -29,7 +29,7 @@ from .serializers import ShortFormVideoSerializerList
 from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
 from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
 from .serializers import RatingSerializerList, RatingSourceSerializerList, ParentalRatingSerializerList
-from .serializers import CreditSerializerList
+from .serializers import CreditSerializerList, LanguageSerializerList
 
 
 ## Roku Feeds
@@ -50,10 +50,23 @@ class RokuContentFeedCreateView(CreateView):
 	"""
 	model = RokuContentFeed
 	template_name = 'roku_content/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+	#fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+	#	'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'short_form_videos']
 
 class RokuContentFeedListView(ListView):
+	"""
+	Display Roku Content Feed fields for ListView :model:`roku_content.RokuContentFeed`.
+
+	**Context**
+
+	``rokucontentfeed``
+		An instance of :model:`roku_content.RokuContentFeed``.
+
+	**Template:**
+
+	:template:`roku_content/rokucontentfeed_list.html`
+	"""
 	model = RokuContentFeed
 	template_name = 'roku_content/rokucontentfeed_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rokucontentfeed'
@@ -61,16 +74,45 @@ class RokuContentFeedListView(ListView):
 	#paginate_by = 15
 
 class RokuContentFeedDetailView(DetailView):
+	"""
+	Display Roku Content Feed fields for DetailView :model:`roku_content.RokuContentFeed`.
+
+	**Context**
+
+	``rokucontentfeed``
+		An instance of :model:`roku_content.RokuContentFeed``.
+
+	**Template:**
+
+	:template:`roku_content/rokucontentfeed_detail.html`
+	"""
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
 
 class RokuContentFeedUpdateView(UpdateView):
+	"""
+	Display Roku Content Feed fields for UpdateView :model:`roku_content.RokuContentFeed`.
+
+	**Context**
+
+	``rokucontentfeed``
+		An instance of :model:`roku_content.RokuContentFeed``.
+
+	**Template:**
+
+	:template:`roku_content/rokucontentfeed_form.html`
+	"""
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
-	fields = fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+	#fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+	#	'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'short_form_videos']
+
 
 class RokuContentFeedListAPI(generics.ListAPIView):
+	"""
+	Display Roku Content Feed fields for ListAPIView :model:`roku_content.RokuContentFeed`.
+	"""
 	queryset = RokuContentFeed.objects.all()
 	serializer_class = RokuContentFeedSerializerList
 	#filter_backends = [DjangoFilterBackend]
@@ -95,7 +137,7 @@ class LanguageListView(ListView):
 	model = Language
 	template_name = 'roku_content/language_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'language'
-	ordering = ['-id']
+	ordering = ['id']
 	paginate_by = 15
 
 class LanguageDetailView(DetailView):
@@ -106,6 +148,13 @@ class LanguageUpdateView(UpdateView):
 	model = Language
 	context_object_name = 'language'
 	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
+
+class LanguageListAPI(generics.ListAPIView):
+	queryset = Language.objects.all()
+	serializer_class = LanguageSerializerList
+	filter_backends = [DjangoFilterBackend]
+	ordering_fields = ['id']
+	ordering = ['id']
 
 # Category
 class CategoryCreateView(CreateView):
@@ -445,8 +494,8 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 	queryset = ShortFormVideo.objects.all()
 	serializer_class = ShortFormVideoSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['release_date', 'tags', 'genres', 'credits', 'rating']
-	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'credits', 'rating']
+	filterset_fields = ['release_date', 'tags', 'genres', 'rating']
+	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'rating']
 	ordering = ['-id']
 
 # class ShortFormVideoListAPISearch(generics.ListAPIView):
@@ -514,7 +563,7 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 class ContentCreateView(CreateView):
 	model = Content
 	template_name = 'roku_content/content_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	fields = ['title', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_start_period', 'validity_end_period']
 
 class ContentListView(ListView):
 	model = Content
@@ -530,14 +579,14 @@ class ContentDetailView(DetailView):
 class ContentUpdateView(UpdateView):
 	model = Content
 	context_object_name = 'content'
-	fields = ['category_name', 'playlist_name', 'query_string', 'order']
+	fields = ['title', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_start_period', 'validity_end_period']
 
 class ContentListAPI(generics.ListAPIView):
 	queryset = Content.objects.all()
 	serializer_class = ContentSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
-	ordering_fields = ['id', 'category_name', 'playlist_name']
+	filterset_fields = ['language', 'validity_start_period', 'validity_end_period']
+	ordering_fields = ['id', 'date_added', 'language', 'validity_start_period', 'validity_end_period']
 	ordering = ['-id']
 
 # class ContentListAPISearch(generics.ListAPIView):
@@ -688,7 +737,7 @@ class GenreListView(ListView):
 	model = Genre
 	template_name = 'roku_content/genre_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'genre'
-	ordering = ['-id']
+	ordering = ['genre']
 	paginate_by = 15
 
 class GenreDetailView(DetailView):
@@ -706,7 +755,7 @@ class GenreListAPI(generics.ListAPIView):
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['genre']
 	ordering_fields = ['id', 'genre']
-	ordering = ['-id']
+	ordering = ['genre']
 
 # class GenreListAPISearch(generics.ListAPIView):
 # 	queryset = Genre.objects.all()
@@ -772,7 +821,7 @@ class RatingListView(ListView):
 	model = Rating
 	template_name = 'roku_content/rating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rating'
-	ordering = ['-id']
+	ordering = ['rating']
 	paginate_by = 15
 
 class RatingDetailView(DetailView):
@@ -814,7 +863,7 @@ class RatingSourceListView(ListView):
 	model = RatingSource
 	template_name = 'roku_content/ratingsource_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'ratingsource'
-	ordering = ['-id']
+	ordering = ['source_name']
 	paginate_by = 15
 
 class RatingSourceDetailView(DetailView):
@@ -856,7 +905,7 @@ class ParentalRatingListView(ListView):
 	model = ParentalRating
 	template_name = 'roku_content/parentalrating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'parentalrating'
-	ordering = ['-id']
+	ordering = ['parental_rating']
 	paginate_by = 15
 
 class ParentalRatingDetailView(DetailView):

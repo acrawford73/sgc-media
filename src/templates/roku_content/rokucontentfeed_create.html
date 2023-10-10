@@ -10,14 +10,13 @@
   <div class="container">
     <p>&nbsp;</p>
     <p>&nbsp;</p>
-    <h2 class="mt-5"><strong>Upload Video:</strong> {{ asset.id }}</h2>
+    <h2 class="mt-5"><strong>Create New Roku Content Feed:</strong></h2>
     <div class="row">
       <div class="col-lg-8">
 
         <form method="POST">
           {% csrf_token %}
           <fieldset class="form-group">
-            <legend class="border-bottom mb-6">{{ asset.file_name }}</legend>
             {{ form|crispy }}
           </fieldset>
           <div class="form-group">
