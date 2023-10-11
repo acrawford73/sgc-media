@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_filters',
     'roku_content',
+    #'roku_search',
     'media',
 ]
 
@@ -166,6 +167,9 @@ STATICFILES_DIRS = [
 
 # Media files
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets')
+# if config('PRODUCTION', default=False, cast=bool) == True:
+#     MEDIA_URL = '/media/'
+# else:
 MEDIA_URL = '/media/'
 
 # Default primary key field type

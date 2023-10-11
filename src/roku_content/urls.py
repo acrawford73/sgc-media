@@ -184,4 +184,11 @@ urlpatterns = [
 	path('api/credits/', views.CreditListAPI.as_view(), name='credit-api'),
 	# path('api/credit/<int:pk>', views.CreditDetailAPI.as_view(), name='credit-detail-api'),
 
+	# Tags
+	path('tag/create/', views.TagCreateView.as_view(), name='tag-create'),
+	path('tags/', views.TagListView.as_view(), name='tag-list'),
+	path('tag/<int:pk>/', views.TagDetailView.as_view(), name='tag-detail'),
+	path('tag/edit/<int:pk>/', views.TagUpdateView.as_view(), name='tag-update'),
+	path('api/tags/', views.TagListAPI.as_view(), name='tag-api'),
+	
 ]

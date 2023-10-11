@@ -9,6 +9,7 @@ from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
 					RatingSource, ParentalRating, Credit
+from .models import Tag #, MovieTag, SeriesTag, LiveFeedTag, ShortFormVideoTag, TVSpecialTag
 ### Rest Framework
 from rest_framework import generics
 from rest_framework import filters
@@ -27,7 +28,7 @@ from .serializers import TVSpecialSerializerList
 from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
 from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
 from .serializers import RatingSerializerList, RatingSourceSerializerList, ParentalRatingSerializerList
-from .serializers import CreditSerializerList, LanguageSerializerList
+from .serializers import CreditSerializerList, LanguageSerializerList, TagSerializerList
 
 
 ## Roku Feeds
@@ -974,3 +975,32 @@ class CreditListAPI(generics.ListAPIView):
 # class CreditDetailAPI(generics.RetrieveAPIView):
 # 	queryset = Credit.objects.all()
 # 	serializer_class = CreditSerializerDetail
+
+# Tags
+
+class TagCreateView(CreateView):
+	model = Tag
+	template_name = 'roku_content/tag_create.html'  #<app>/<model>_<viewtype>.html
+	fields = ['tag_name']
+
+class TagListView(ListView):
+	model = Tag
+	template_name = 'roku_content/tag_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'tag'
+	ordering = ['tag_name']
+	paginate_by = 15
+
+class TagDetailView(DetailView):
+	model = Tag
+	context_object_name = 'tag'
+
+class TagUpdateView(UpdateView):
+	model = Tag
+	context_object_name = 'tag'
+	fields = ['tag_name']
+
+class TagListAPI(generics.ListAPIView):
+	queryset = Tag.objects.all()
+	serializer_class = TagSerializerList
+	ordering_fields = ['id', 'tag_name']
+	ordering = ['tag_name']

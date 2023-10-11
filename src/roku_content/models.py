@@ -258,9 +258,9 @@ class Episode(models.Model):
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
-			return self.id
+			return self.episode_id
 	def __str__(self):
-		return str(self.id)
+		return str(self.episode_id)
 
 class ShortFormVideo(models.Model):
 	""" Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
@@ -315,8 +315,8 @@ class TVSpecial(models.Model):
 	release_date = models.DateField(default="", null=True, blank=True)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
 	long_description = models.CharField(max_length=500, default="", null=True, blank=True) # Optional
-	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=False, null=False)
+	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, null=True, blank=True) # Optional
+	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
 	class Meta:
@@ -425,16 +425,27 @@ TRICK_QUALITY = (
 	("FHD", "FHD (1080p)"),
 )
 
+# Trickplay files should be created during content ingest.
+# https://developer.roku.com/en-gb/docs/developer-program/media-playback/trick-mode/bif-file-creation.md
 class TrickPlayFile(models.Model):
 	"""
 	Represents a single trickplay file. Trickplay files are the images shown 
-	when a user scrubs through a video, either fast-forwarding or rewinding. The file must 
-	be in the Roku BIF format, as described in Trick Mode.
+	when a user scrubs through a video, either fast-forwarding or rewinding. 
+	The file must be in the Roku BIF format.
 
 	{
 	"url": "https://example.org/cdn/trickplayFiles/1509428502952/1", 
 	"quality": "FHD"
 	}
+
+	Trick mode provides visual feedback during playback operations such as seek, forward, and rewind. 
+	This function lets a user visualize the timestamp of the content they are seeking. The Roku platform 
+	supports two types of trick mode. For channels generating and publishing image archives in the 
+	Roku BIF (Base Index Frame), HLS, or DASH standard file formats, a scene-based trick mode using 
+	index frames is supported. When the thumbnails necessary to support scene-based trick mode are 
+	not available at playback time, a time-based method of supporting trick modes is used instead.
+
+	Channels must display thumbnails during trick play for VOD content longer than 15 minutes to pass certification.
 	"""
 	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	quality = models.CharField(max_length=16, choices=TRICK_QUALITY, default="HD", null=False, blank=False)
@@ -509,11 +520,11 @@ class Rating(models.Model):
 
 	{
 	"rating": "PG", 
-	"ratingSource": "USA_PR"
+	"ratingSource": "MPAA"
 	}
 	"""
-	rating = models.ForeignKey("ParentalRating", on_delete=models.PROTECT, blank=True, null=True)
-	rating_source = models.ForeignKey("RatingSource", on_delete=models.PROTECT, blank=True, null=True)
+	rating = models.ForeignKey("ParentalRating", on_delete=models.PROTECT, null=False, blank=False)
+	rating_source = models.ForeignKey("RatingSource", on_delete=models.PROTECT, null=False, blank=False)
 	def get_absolute_url(self):
 		return reverse('rating-list')
 	class Meta:
@@ -525,8 +536,9 @@ class Rating(models.Model):
 
 class RatingSource(models.Model):
 	""" Model provides a list of rating sources, such as the Motion Picture Association (MPA). """
-	source_name = models.CharField(max_length=16, default="", null=False, blank=False)
+	source_name = models.CharField(max_length=16, default="", null=False, blank=False, unique=True)
 	source_long_name = models.CharField(max_length=128, null=True, blank=True)
+	source_url = models.URLField(max_length=2083, null=True, blank=True)
 	def get_absolute_url(self):
 		return reverse('ratingsource-list')
 	class Meta:
@@ -581,95 +593,59 @@ class Credit(models.Model):
 	def __str__(self):
 		return str(self.credit_name)
 
-
-# Thumbnails
-
-# class ThumbnailMovie(models.Model):
-# 	""" Model for Movie thumbnail storage in database. May not be supported. """
-# 	movie_id = models.ForeignKey("Movie", on_delete=CASCADE)
-# 	url = models.URLField(max_length=2083, null=False, blank=False)
-# 	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
-# 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-# 	sha256 = models.CharField(max_length=64, default="")
-# 	image_data = models.TextField(default="", null=False, blank=False)
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
-
-# class ThumbnailLiveFeed(models.Model):
-# 	""" Model for Live Feed Thumbnail storage in database. May not be supported. """
-# 	live_feed_id = models.ForeignKey("LiveFeed", on_delete=CASCADE)
-# 	url = models.URLField(max_length=2083, null=False, blank=False)
-# 	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
-# 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-# 	sha256 = models.CharField(max_length=64, default="")
-# 	image_data = models.TextField(default="", null=False, blank=False)
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
-
-# class ThumbnailSeries(models.Model):
-# 	""" Model for Series thumbnail storage in database. May not be supported. """
-# 	series_id = models.ForeignKey("Series", on_delete=CASCADE)
-# 	url = models.URLField(max_length=2083, null=False, blank=False)
-# 	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
-# 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-# 	sha256 = models.CharField(max_length=64, default="")
-# 	image_data = models.TextField(default="", null=False, blank=False)
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
-
-# class ThumbnailEpisode(models.Model):
-# 	""" Model for Episode thumbnail storage in database. May not be supported. """
-# 	episode_id = models.ForeignKey("Episode", on_delete=CASCADE)
-# 	url = models.URLField(max_length=2083, null=False, blank=False)
-# 	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
-# 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-# 	sha256 = models.CharField(max_length=64, default="")
-# 	image_data = models.TextField(default="", null=False, blank=False)
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
-
-class ThumbnailShortFormVideo(models.Model):
-	""" Model for Short Form Video thumbnail storage in database. May not be supported. """
-	short_form_video_id = models.ForeignKey("ShortFormVideo", on_delete=models.CASCADE)
-	url = models.URLField(max_length=2083, null=False, blank=False)
-	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
-	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-	sha256 = models.CharField(max_length=64, default="")
-	image_data = models.TextField(default="", null=False, blank=False)
+# Catch all for Tags
+class Tag(models.Model):
+	tag_name = models.CharField(max_length=30, default="", null=False, blank=False, unique=True)
+	def get_absolute_url(self):
+		return reverse('tag-list')
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.id)
+		return str(self.tag_name)
 
-# class ThumbnailTVSpecial(models.Model):
-# 	""" Model for TV Special thumbnail storage in database. May not be supported. """
-# 	tv_special_id = models.ForeignKey("TVSpecial", on_delete=CASCADE)
-# 	url = models.URLField(max_length=2083, null=False, blank=False)
-# 	file_path = models.CharField(max_length=4096, default="", null=False, blank=False)
-# 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
-# 	sha256 = models.CharField(max_length=64, default="")
-# 	image_data = models.TextField(default="", null=False, blank=False)
-# 	class Meta:
-# 		ordering = ['id']
-# 		def __unicode__(self):
-# 			return self.id
-# 	def __str__(self):
-# 		return str(self.id)
+# Movie Tags
+class MovieTag(models.Model):
+	movie = models.ManyToManyField("Movie")
+	tag = models.ForeignKey("Tag", on_delete=models.PROTECT)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+
+# Series Tags
+class SeriesTag(models.Model):
+	series = models.ManyToManyField("Series")
+	tag = models.ForeignKey("Tag", on_delete=models.PROTECT)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+
+# Live Feed Tags
+class LiveFeedTag(models.Model):
+	live_feed = models.ManyToManyField("LiveFeed")
+	tag = models.ForeignKey("Tag", on_delete=models.PROTECT)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+
+# Short Form Video Tags
+class ShortFormVideoTag(models.Model):
+	short_form_video = models.ManyToManyField("ShortFormVideo")
+	tag = models.ForeignKey("Tag", on_delete=models.PROTECT)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+
+# TV Special Tags
+class TVSpecialTag(models.Model):
+	tv_special = models.ManyToManyField("TVSpecial", )
+	tag = models.ForeignKey("Tag", on_delete=models.PROTECT)
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
