@@ -19,7 +19,6 @@
           <table class="table table-striped table-hover table-md">
             <thead>
               <tr align="center" class="table-primary">
-                <th>#</th>
                 <th>Rating</th>
                 <th>Rating Source</th>
               </tr>
@@ -27,7 +26,6 @@
             <tbody>
               {% for asset in rating %}
               <tr align="center">
-                <td>{{ asset.id }}</td>
                 <td><a href="{% url 'rating-detail' asset.id %}">{{ asset.rating }}</a></td>
                 <td>{{ asset.rating_source }}</td>
               </tr>

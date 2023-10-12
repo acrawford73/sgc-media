@@ -1,0 +1,8 @@
+{
+	"DASH" : "Dynamic Adaptive Streaming over HTTP",
+	"HLS" : "HTTP Live Streaming",
+	"M4V" : "MPEG-4 Apple",
+	"MOV" : "Apple Quicktime",
+	"MP4" : "MPEG-4 H.264/H.265",
+	"SMOOTH" : "Microsoft Smooth Streaming"
+}

@@ -4,7 +4,7 @@ from django.contrib import admin
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, ExternalIDType, \
+from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID, ExternalIDType, \
 					Rating, RatingSource, ParentalRating, Credit
 from .models import Tag #, MovieTag, SeriesTag, LiveFeedTag, ShortFormVideoTag, TVSpecialTag
 
@@ -113,6 +113,12 @@ class VideoAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Video
 
+class VideoTypeAdmin(admin.ModelAdmin):
+	list_display = ['video_type_short', 'video_type_long']
+	search_fields = ['video_type_short', 'video_type_long']
+	class Meta:
+		model = VideoType
+
 class CaptionAdmin(admin.ModelAdmin):
 	list_display = ['url', 'language', 'caption_type']
 	search_fields = ['url', 'language', 'caption_type']
@@ -197,6 +203,7 @@ admin.site.register(TVSpecial, TVSpecialAdmin)
 
 admin.site.register(Content, ContentAdmin)
 admin.site.register(Video, VideoAdmin)
+admin.site.register(VideoType, VideoTypeAdmin)
 admin.site.register(Caption, CaptionAdmin)
 admin.site.register(TrickPlayFile, TrickPlayFileAdmin)
 admin.site.register(Genre, GenreAdmin)
