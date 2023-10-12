@@ -10,7 +10,7 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Rating Sources</h1>
 
-    <p>These are the standards associations that provide content ratings.</p>
+    <p>These are the standards organisations that provide content ratings.</p>
 
     <p><a href="{% url 'ratingsource-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Add Rating Source</button></a></p>
 
@@ -31,9 +31,9 @@
               {% for asset in ratingsource %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td><a href="{% url 'ratingsource-detail' asset.id %}">{{ asset.source_name }}</a></td>
-                <td>{{ asset.source_long_name }}</td>
-                <td>{{ asset.source_url }}</td>
+                <td align="left"><a href="{% url 'ratingsource-detail' asset.id %}">{{ asset.source_name }}</a></td>
+                <td align="left">{{ asset.source_long_name }}</td>
+                <td align="left">{{ asset.source_url }}</td>
               </tr>
               {% endfor %}
 

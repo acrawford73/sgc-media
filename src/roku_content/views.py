@@ -854,7 +854,7 @@ class RatingListAPI(generics.ListAPIView):
 class RatingSourceCreateView(CreateView):
 	model = RatingSource
 	template_name = 'roku_content/ratingsource_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['source_name', 'source_long_name']
+	fields = ['source_name', 'source_long_name', 'source_url']
 
 class RatingSourceListView(ListView):
 	model = RatingSource
@@ -870,7 +870,7 @@ class RatingSourceDetailView(DetailView):
 class RatingSourceUpdateView(UpdateView):
 	model = RatingSource
 	context_object_name = 'ratingsource'
-	fields = ['source_name', 'source_long_name']
+	fields = ['source_name', 'source_long_name', 'source_url']
 
 class RatingSourceListAPI(generics.ListAPIView):
 	queryset = RatingSource.objects.all()
