@@ -18,7 +18,7 @@ from django.urls import reverse
 
 class RokuContentFeed(models.Model):
 	"""
-	Model for Roku Content JSON Feed.
+	Model for Roku Content JSON Feed. Top level JSON data structure for the entire content feed.
 
 	{
 	"providerName": "Roku Media Productions",
@@ -35,6 +35,9 @@ class RokuContentFeed(models.Model):
 
 	"""
 	provider_name = models.CharField(max_length=32, null=False, blank=False)
+	# The date that the feed was last modified in ISO 8601 format: {YYYY}-{MM}-{DD}T{hh}:{mm}:{ss}+{TZ}.
+	# For example, 2020-11-11T22:21:37+00:00
+	#              YYYY-MM-DDTHH:MM:SS+? :?
 	last_updated = models.DateTimeField(auto_now=True)
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
@@ -46,7 +49,9 @@ class RokuContentFeed(models.Model):
 	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.PROTECT, null=True, blank=True)
 	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.PROTECT, null=True, blank=True)
 	# !Roku
+	roku_content_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
+	created = models.DateTimeField(auto_now_add=True)
 	is_public = models.BooleanField(default=False)
 	def get_absolute_url(self):
 		return reverse('rokucontentfeed-list')
@@ -110,7 +115,8 @@ class Category(models.Model):
 	playlist_name = models.CharField(max_length=128, default="", null=True, blank=True)
 	# The query that will specify the content for this category.
 	# Tags: "movie AND dramas", "action OR dramas".
-	query_string = models.CharField(max_length=1024, default="", null=True, blank=True)
+	query_string = models.CharField(max_length=1024, default="", null=True, blank=True, \
+		help_text="Please see documentation for correct query syntax.")
 	# The order of the category in the channel.
 	order = models.CharField(max_length=16, choices=CONTENT_CATEGORY_ORDER, default='most_recent')
 	def get_absolute_url(self):
@@ -138,6 +144,7 @@ class Playlist(models.Model):
 	item_ids = models.JSONField(default=list, null=True, blank=True)
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
+	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
 	is_public = models.BooleanField(default=False)
 	def get_absolute_url(self):
@@ -154,7 +161,7 @@ class Playlist(models.Model):
 
 class Movie(models.Model):
 	""" Represents a movie object. """
-	movie_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	movie_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
 	content = models.URLField(max_length=2083, null=False, blank=False)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
@@ -172,13 +179,13 @@ class Movie(models.Model):
 	class Meta:
 		ordering = ['movie_id']
 		def __unicode__(self):
-			return self.movie_id
+			return self.id
 	def __str__(self):
-		return str(self.movie_id)
+		return str(self.title)
 
 class LiveFeed(models.Model):
 	""" Represents a live linear stream. """
-	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
 	content = models.URLField(max_length=2083, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
@@ -199,7 +206,7 @@ class LiveFeed(models.Model):
 
 class Series(models.Model):
 	""" Represents a series, such as a season of a TV Show or a mini-series. """
-	series_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	series_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
 	seasons = models.ForeignKey("Season", on_delete=models.PROTECT, blank=False, null=False)
 	episodes = models.ForeignKey("Episode", on_delete=models.PROTECT, blank=False, null=False)
@@ -242,7 +249,7 @@ class Season(models.Model):
 
 class Episode(models.Model):
 	""" This Model represents a single episode in a series or a season. """
-	episode_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	episode_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, null=False, blank=False)
 	content = models.URLField(max_length=2083, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
@@ -266,7 +273,7 @@ class ShortFormVideo(models.Model):
 	""" Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
 	# An immutable string reference ID for the video that does not exceed 50 characters. 
 	# This should serve as a unique identifier for the episode across different locales.
-	short_form_video_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	short_form_video_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	# The title of the video in plain text. This field is used for matching in Roku Search. 
 	# Do not include extra information such as year, version label, and so on.
 	title = models.CharField(max_length=64, null=False, blank=False)
@@ -307,7 +314,7 @@ class ShortFormVideo(models.Model):
 
 class TVSpecial(models.Model):
 	""" TV Specials are shorter or longer than 15 minutes. Special ad rules apply. """
-	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False)
+	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, null=False, blank=False)
 	content = models.URLField(max_length=2083, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)

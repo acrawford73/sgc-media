@@ -6,15 +6,15 @@ from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID, ExternalIDType, \
 					Rating, RatingSource, ParentalRating, Credit
-from .models import Tag #, MovieTag, SeriesTag, LiveFeedTag, ShortFormVideoTag, TVSpecialTag
+from .models import Tag
 
 # Roku Content Feed
 
 class RokuContentFeedAdmin(admin.ModelAdmin):
-	list_display = ['provider_name']
-	search_fields = ['provider_name']
+	list_display = ['provider_name', 'language', 'last_updated', 'created']
+	search_fields = ['provider_name', 'roku_content_feed_id']
 	list_filter = ['language']
-	readonly_fields = ['last_updated']
+	readonly_fields = ['last_updated', 'created', 'roku_content_feed_id']
 	class Meta:
 		model = RokuContentFeed
 

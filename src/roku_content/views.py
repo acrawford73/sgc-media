@@ -9,7 +9,7 @@ from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
 					RatingSource, ParentalRating, Credit
-from .models import Tag #, MovieTag, SeriesTag, LiveFeedTag, ShortFormVideoTag, TVSpecialTag
+from .models import Tag
 ### Rest Framework
 from rest_framework import generics
 from rest_framework import filters
@@ -102,7 +102,7 @@ class RokuContentFeedUpdateView(UpdateView):
 	"""
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
-	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
+	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
 		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListAPI(generics.ListAPIView):
@@ -115,7 +115,7 @@ class RokuContentFeedListAPI(generics.ListAPIView):
 	#filterset_fields = ['is_public']
 	ordering_fields = ['id']
 	ordering = ['-id']
-	pagination_class=None
+	pagination_class = None
 
 # class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
 # 	queryset = RokuContentFeed.objects.all()
