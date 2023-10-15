@@ -429,7 +429,7 @@ class EpisodeListView(ListView):
 	model = Episode
 	template_name = 'roku_content/episode_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'episode'
-	ordering = ['-id']
+	ordering = ['title']
 	paginate_by = 15
 
 class EpisodeDetailView(DetailView):
@@ -776,7 +776,7 @@ class ExternalIDListView(ListView):
 	model = ExternalID
 	template_name = 'roku_content/externalid_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'externalid'
-	ordering = ['-id']
+	ordering = ['external_id']
 	paginate_by = 15
 
 class ExternalIDDetailView(DetailView):
