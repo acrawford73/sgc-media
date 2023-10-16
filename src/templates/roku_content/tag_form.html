@@ -10,14 +10,20 @@
   <div class="container">
     <p>&nbsp;</p>
     <p>&nbsp;</p>
+    {% if not form.instance.pk %}
+    <h2 class="mt-5"><strong>Create New Tag:</strong></h2>
+    {% else %}
     <h2 class="mt-5"><strong>Editing Tag ID:</strong> {{ tag.id }}</h2>
+    {% endif %}
     <div class="row">
       <div class="col-lg-8">
 
         <form method="POST">
           {% csrf_token %} 
           <fieldset class="form-group">
+            {% if form.instance.pk %}
             <legend class="border-bottom mb-6">{{ tag.tag_name }}</legend>
+            {% endif %}
             {{ form|crispy }}
           </fieldset>
           <div class="form-group">

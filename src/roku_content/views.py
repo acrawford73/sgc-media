@@ -48,7 +48,6 @@ class RokuContentFeedCreateView(CreateView):
 	:template:`roku_content/rokucontentfeed_create.html`
 	"""
 	model = RokuContentFeed
-	template_name = 'roku_content/rokucontentfeed_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
 		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
@@ -127,7 +126,6 @@ class RokuContentFeedListAPI(generics.ListAPIView):
 # Language
 class LanguageCreateView(CreateView):
 	model = Language
-	template_name = 'roku_content/language_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
 
 class LanguageListView(ListView):
@@ -156,7 +154,6 @@ class LanguageListAPI(generics.ListAPIView):
 # Category
 class CategoryCreateView(CreateView):
 	model = Category
-	template_name = 'roku_content/category_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
 
 class CategoryListView(ListView):
@@ -198,7 +195,6 @@ class CategoryListAPI(generics.ListAPIView):
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
-	template_name = 'roku_content/playlist_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['playlist_name', 'item_ids', 'short_description', 'notes', 'is_public']
 
 class PlaylistListView(ListView):
@@ -243,7 +239,6 @@ class PlaylistListAPI(generics.ListAPIView):
 # Movie
 class MovieCreateView(CreateView):
 	model = Movie
-	template_name = 'roku_content/movie_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'genres', 'thumbnail', 'release_date', \
 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
 
@@ -289,7 +284,6 @@ class MovieListAPI(generics.ListAPIView):
 # LiveFeed
 class LiveFeedCreateView(CreateView):
 	model = LiveFeed
-	template_name = 'roku_content/livefeed_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
 		'short_description', 'long_description', 'tags', 'rating', 'genres']
 
@@ -334,7 +328,6 @@ class LiveFeedListAPI(generics.ListAPIView):
 # Series
 class SeriesCreateView(CreateView):
 	model = Series
-	template_name = 'roku_content/series_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'seasons', 'episodes', 'genres', 'thumbnail', 'release_date', \
 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
 
@@ -379,7 +372,6 @@ class SeriesListAPI(generics.ListAPIView):
 # Season
 class SeasonCreateView(CreateView):
 	model = Season
-	template_name = 'roku_content/season_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['season_number', 'episodes']
 
 class SeasonListView(ListView):
@@ -421,7 +413,6 @@ class SeasonListAPI(generics.ListAPIView):
 # Episode
 class EpisodeCreateView(CreateView):
 	model = Episode
-	template_name = 'roku_content/episode_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
 
@@ -466,7 +457,6 @@ class EpisodeListAPI(generics.ListAPIView):
 # ShortFormVideo
 class ShortFormVideoCreateView(CreateView):
 	model = ShortFormVideo
-	template_name = 'roku_content/shortformvideo_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'short_description', 'long_description', \
 		'release_date', 'tags', 'genres', 'credits', 'rating']
 
@@ -511,7 +501,6 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 # TVSpecial
 class TVSpecialCreateView(CreateView):
 	model = TVSpecial
-	template_name = 'roku_content/tvspecial_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
 		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
 
@@ -559,7 +548,6 @@ class TVSpecialListAPI(generics.ListAPIView):
 # Content
 class ContentCreateView(CreateView):
 	model = Content
-	template_name = 'roku_content/content_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_start_period', 'validity_end_period']
 
 class ContentListView(ListView):
@@ -601,7 +589,6 @@ class ContentListAPI(generics.ListAPIView):
 # Video
 class VideoCreateView(CreateView):
 	model = Video
-	template_name = 'roku_content/video_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['url', 'quality', 'video_type']
 
 class VideoListView(ListView):
@@ -643,7 +630,6 @@ class VideoListAPI(generics.ListAPIView):
 # Caption
 class CaptionCreateView(CreateView):
 	model = Caption
-	template_name = 'roku_content/caption_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['url', 'language', 'caption_type']
 
 class CaptionListView(ListView):
@@ -685,7 +671,6 @@ class CaptionListAPI(generics.ListAPIView):
 # TrickPlayFile
 class TrickPlayFileCreateView(CreateView):
 	model = TrickPlayFile
-	template_name = 'roku_content/trickplayfile_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['url', 'quality']
 
 class TrickPlayFileListView(ListView):
@@ -727,7 +712,6 @@ class TrickPlayFileListAPI(generics.ListAPIView):
 # Genre
 class GenreCreateView(CreateView):
 	model = Genre
-	template_name = 'roku_content/genre_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['genre']
 
 class GenreListView(ListView):
@@ -769,7 +753,6 @@ class GenreListAPI(generics.ListAPIView):
 # ExternalID
 class ExternalIDCreateView(CreateView):
 	model = ExternalID
-	template_name = 'roku_content/externalid_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['external_id', 'id_type']
 
 class ExternalIDListView(ListView):
@@ -811,7 +794,6 @@ class ExternalIDListAPI(generics.ListAPIView):
 # Rating
 class RatingCreateView(CreateView):
 	model = Rating
-	template_name = 'roku_content/rating_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['rating', 'rating_source']
 
 class RatingListView(ListView):
@@ -853,7 +835,6 @@ class RatingListAPI(generics.ListAPIView):
 # RatingSource
 class RatingSourceCreateView(CreateView):
 	model = RatingSource
-	template_name = 'roku_content/ratingsource_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['source_name', 'source_long_name', 'source_url']
 
 class RatingSourceListView(ListView):
@@ -895,7 +876,6 @@ class RatingSourceListAPI(generics.ListAPIView):
 # ParentalRating
 class ParentalRatingCreateView(CreateView):
 	model = ParentalRating
-	template_name = 'roku_content/parentalrating_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['parental_rating']
 
 class ParentalRatingListView(ListView):
@@ -937,7 +917,6 @@ class ParentalRatingListAPI(generics.ListAPIView):
 # Credit
 class CreditCreateView(CreateView):
 	model = Credit
-	template_name = 'roku_content/credit_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['credit_name', 'role', 'birth_date']
 
 class CreditListView(ListView):
@@ -980,7 +959,6 @@ class CreditListAPI(generics.ListAPIView):
 
 class TagCreateView(CreateView):
 	model = Tag
-	template_name = 'roku_content/tag_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['tag_name']
 
 class TagListView(ListView):
