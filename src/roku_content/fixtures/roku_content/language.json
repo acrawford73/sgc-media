@@ -1,0 +1,91 @@
+[
+{
+  "model": "roku_content.language",
+  "pk": 4,
+  "fields": {
+    "code_iso_639_2": "eng",
+    "code_iso_639_1": "en",
+    "language_name_eng": "English"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 5,
+  "fields": {
+    "code_iso_639_2": "fre",
+    "code_iso_639_1": "fr",
+    "language_name_eng": "French"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 6,
+  "fields": {
+    "code_iso_639_2": "deu",
+    "code_iso_639_1": "de",
+    "language_name_eng": "German"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 7,
+  "fields": {
+    "code_iso_639_2": "ita",
+    "code_iso_639_1": "it",
+    "language_name_eng": "Italian"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 8,
+  "fields": {
+    "code_iso_639_2": "jpn",
+    "code_iso_639_1": "ja",
+    "language_name_eng": "Japanese"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 9,
+  "fields": {
+    "code_iso_639_2": "kor",
+    "code_iso_639_1": "ko",
+    "language_name_eng": "Korean"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 10,
+  "fields": {
+    "code_iso_639_2": "por",
+    "code_iso_639_1": "pt",
+    "language_name_eng": "Portuguese"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 11,
+  "fields": {
+    "code_iso_639_2": "spa",
+    "code_iso_639_1": "es",
+    "language_name_eng": "Spanish"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 12,
+  "fields": {
+    "code_iso_639_2": "rus",
+    "code_iso_639_1": "ru",
+    "language_name_eng": "Russian"
+  }
+},
+{
+  "model": "roku_content.language",
+  "pk": 13,
+  "fields": {
+    "code_iso_639_2": "chi",
+    "code_iso_639_1": "zh",
+    "language_name_eng": "Chinese"
+  }
+}

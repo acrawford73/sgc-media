@@ -5,6 +5,11 @@ from django.urls import reverse
 ### System Configuration
 
 class SystemConfig(models.Model):
+	"""
+	The SystemConfig model must only have one record. Therefore, the CreateView is not supported.
+	
+	Defaults will be loaded as a fixture.
+	"""
 	version = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	
 	# Media Sources
@@ -22,8 +27,6 @@ class SystemConfig(models.Model):
 	created = models.DateTime(auto_now_add=True)
 	updated = models.DateTime(auto_now=True)
 	class Meta:
-		ordering = ['-version']
+		ordering = ['-id']
 		def __unicode__(self):
 			return self.id
-	def __str__(self):
-		return str(self.id)

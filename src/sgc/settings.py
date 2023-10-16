@@ -19,7 +19,6 @@ from decouple import Csv
 # ~/<virtualenv-folder>/
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -171,6 +170,15 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets')
 #     MEDIA_URL = '/media/'
 # else:
 MEDIA_URL = '/media/'
+
+# Data files for database defaults
+# Load data by calling manage.py loaddata <fixturename>, 
+#  where <fixturename> is the name of the fixture file.
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, '/roku_content/fixtures/roku_content/'),
+    os.path.join(BASE_DIR, '/media/fixtures/media/'),
+    os.path.join(BASE_DIR, '/system_config/fixtures/system_config/')
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

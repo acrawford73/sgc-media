@@ -11,8 +11,6 @@ urlpatterns = [
 	path('roku-content-feed/<int:pk>/', views.RokuContentFeedDetailView.as_view(), name='rokucontentfeed-detail'),
 	path('roku-content-feed/edit/<int:pk>/', views.RokuContentFeedUpdateView.as_view(), name='rokucontentfeed-update'),
 	path('api/roku-content-feed/', views.RokuContentFeedListAPI.as_view(), name='rokucontentfeed-api'),
-	#path('api/roku-content-feed/search/', views.RokuContentFeedAPISearch.as_view()),
-	#path('api/roku-content-feed/<int:pk>', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
 
 	# Roku Search Feed
 	# path('roku-search-feed/create/', views.RokuSearchFeedCreateView.as_view(), name='rokusearchfeed-create'),
@@ -20,8 +18,6 @@ urlpatterns = [
 	# path('roku-search-feed/<int:pk>/', views.RokuSearchFeedDetailView.as_view(), name='rokusearchfeed-detail'),
 	# path('roku-search-feed/edit/<int:pk>/', views.RokuSearchFeedUpdateView.as_view(), name='rokusearchfeed-update'),
 	# path('api/roku-search-feed/', views.RokuSearchFeedAPI.as_view(), name='rokusearchfeed-api'),
-	# #path('api/roku-search-feed/search/', views.RokuSearchFeedAPISearch.as_view()),
-	# #path('api/roku-search-feed/<int:pk>', views.RokuSearchFeedDetailAPI.as_view(), name='rokusearchfeed-detail-api'),
 
 	# Language
 	path('language/create/', views.LanguageCreateView.as_view(), name='language-create'),

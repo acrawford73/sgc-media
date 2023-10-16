@@ -41,6 +41,7 @@ class RokuContentFeed(models.Model):
 	last_updated = models.DateTimeField(auto_now=True)
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
+	### These are lists [] not foreignkeys
 	categories = models.ForeignKey("Category", on_delete=models.PROTECT, null=True, blank=True)
 	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, limit_choices_to={'is_public': True}, null=True, blank=True)
 	movies = models.ForeignKey("Movie", on_delete=models.PROTECT, null=True, blank=True)
@@ -48,6 +49,7 @@ class RokuContentFeed(models.Model):
 	series = models.ForeignKey("Series", on_delete=models.PROTECT, null=True, blank=True)
 	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.PROTECT, null=True, blank=True)
 	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.PROTECT, null=True, blank=True)
+	###
 	# !Roku
 	roku_content_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
@@ -339,7 +341,7 @@ class TVSpecial(models.Model):
 class Content(models.Model):
 	""" 
 	The Content model represents the details about a single video content item 
-	such as a Movie, Episode, Short-Form Video, or TV Special.
+	such as a Movie, Episode, Short-Form Video, or TV Show/Special.
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
 	date_added = models.DateField(auto_now_add=True)

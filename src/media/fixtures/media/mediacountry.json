@@ -1,0 +1,1954 @@
+[
+{
+  "model": "media.mediacountry",
+  "pk": 1,
+  "fields": {
+    "country_name": "Afghanistan",
+    "country_code": "AF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 2,
+  "fields": {
+    "country_name": "Aland Islands",
+    "country_code": "AX"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 3,
+  "fields": {
+    "country_name": "Albania",
+    "country_code": "AL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 4,
+  "fields": {
+    "country_name": "Algeria",
+    "country_code": "DZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 5,
+  "fields": {
+    "country_name": "American Samoa",
+    "country_code": "AS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 6,
+  "fields": {
+    "country_name": "Andorra",
+    "country_code": "AD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 7,
+  "fields": {
+    "country_name": "Angola",
+    "country_code": "AO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 8,
+  "fields": {
+    "country_name": "Anguilla",
+    "country_code": "AI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 9,
+  "fields": {
+    "country_name": "Antarctica",
+    "country_code": "AQ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 10,
+  "fields": {
+    "country_name": "Antigua and Barbuda",
+    "country_code": "AG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 11,
+  "fields": {
+    "country_name": "Argentina",
+    "country_code": "AR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 12,
+  "fields": {
+    "country_name": "Armenia",
+    "country_code": "AM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 13,
+  "fields": {
+    "country_name": "Aruba",
+    "country_code": "AW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 14,
+  "fields": {
+    "country_name": "Australia",
+    "country_code": "AU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 15,
+  "fields": {
+    "country_name": "Austria",
+    "country_code": "AT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 16,
+  "fields": {
+    "country_name": "Azerbaijan",
+    "country_code": "AZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 17,
+  "fields": {
+    "country_name": "Bahamas",
+    "country_code": "BS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 18,
+  "fields": {
+    "country_name": "Bahrain",
+    "country_code": "BH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 19,
+  "fields": {
+    "country_name": "Bangladesh",
+    "country_code": "BD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 20,
+  "fields": {
+    "country_name": "Barbados",
+    "country_code": "BB"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 21,
+  "fields": {
+    "country_name": "Belarus",
+    "country_code": "BY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 22,
+  "fields": {
+    "country_name": "Belgium",
+    "country_code": "BE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 23,
+  "fields": {
+    "country_name": "Belize",
+    "country_code": "BZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 24,
+  "fields": {
+    "country_name": "Benin",
+    "country_code": "BJ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 25,
+  "fields": {
+    "country_name": "Bermuda",
+    "country_code": "BM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 26,
+  "fields": {
+    "country_name": "Bhutan",
+    "country_code": "BT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 27,
+  "fields": {
+    "country_name": "Bolivia",
+    "country_code": "BO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 28,
+  "fields": {
+    "country_name": "Bosnia and Herzegovina",
+    "country_code": "BA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 29,
+  "fields": {
+    "country_name": "Botswana",
+    "country_code": "BW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 30,
+  "fields": {
+    "country_name": "Bouvet Island",
+    "country_code": "BV"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 31,
+  "fields": {
+    "country_name": "Brazil",
+    "country_code": "BR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 32,
+  "fields": {
+    "country_name": "British Indian Ocean Territory",
+    "country_code": "IO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 33,
+  "fields": {
+    "country_name": "Brunei Darussalam",
+    "country_code": "BN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 34,
+  "fields": {
+    "country_name": "Bulgaria",
+    "country_code": "BG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 35,
+  "fields": {
+    "country_name": "Burkina Faso",
+    "country_code": "BF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 36,
+  "fields": {
+    "country_name": "Burundi",
+    "country_code": "BI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 37,
+  "fields": {
+    "country_name": "Cambodia",
+    "country_code": "KH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 38,
+  "fields": {
+    "country_name": "Cameroon",
+    "country_code": "CM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 39,
+  "fields": {
+    "country_name": "Canada",
+    "country_code": "CA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 40,
+  "fields": {
+    "country_name": "Cape Verde",
+    "country_code": "CV"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 41,
+  "fields": {
+    "country_name": "Cayman Islands",
+    "country_code": "KY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 42,
+  "fields": {
+    "country_name": "Central African Republic",
+    "country_code": "CF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 43,
+  "fields": {
+    "country_name": "Chad",
+    "country_code": "TD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 44,
+  "fields": {
+    "country_name": "Chile",
+    "country_code": "CL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 45,
+  "fields": {
+    "country_name": "China",
+    "country_code": "CN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 46,
+  "fields": {
+    "country_name": "Christmas Island",
+    "country_code": "CX"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 47,
+  "fields": {
+    "country_name": "Cocos (Keeling) Islands",
+    "country_code": "CC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 48,
+  "fields": {
+    "country_name": "Colombia",
+    "country_code": "CO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 49,
+  "fields": {
+    "country_name": "Comoros",
+    "country_code": "KM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 50,
+  "fields": {
+    "country_name": "Congo",
+    "country_code": "CG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 51,
+  "fields": {
+    "country_name": "Congo, The Democratic Republic of the",
+    "country_code": "CD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 52,
+  "fields": {
+    "country_name": "Cook Islands",
+    "country_code": "CK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 53,
+  "fields": {
+    "country_name": "Costa Rica",
+    "country_code": "CR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 54,
+  "fields": {
+    "country_name": "Cote D'Ivoire",
+    "country_code": "CI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 55,
+  "fields": {
+    "country_name": "Croatia",
+    "country_code": "HR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 56,
+  "fields": {
+    "country_name": "Cuba",
+    "country_code": "CU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 57,
+  "fields": {
+    "country_name": "Cyprus",
+    "country_code": "CY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 58,
+  "fields": {
+    "country_name": "Czech Republic",
+    "country_code": "CZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 59,
+  "fields": {
+    "country_name": "Denmark",
+    "country_code": "DK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 60,
+  "fields": {
+    "country_name": "Djibouti",
+    "country_code": "DJ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 61,
+  "fields": {
+    "country_name": "Dominica",
+    "country_code": "DM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 62,
+  "fields": {
+    "country_name": "Dominican Republic",
+    "country_code": "DO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 63,
+  "fields": {
+    "country_name": "Ecuador",
+    "country_code": "EC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 64,
+  "fields": {
+    "country_name": "Egypt",
+    "country_code": "EG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 65,
+  "fields": {
+    "country_name": "El Salvador",
+    "country_code": "SV"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 66,
+  "fields": {
+    "country_name": "Equatorial Guinea",
+    "country_code": "GQ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 67,
+  "fields": {
+    "country_name": "Eritrea",
+    "country_code": "ER"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 68,
+  "fields": {
+    "country_name": "Estonia",
+    "country_code": "EE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 69,
+  "fields": {
+    "country_name": "Ethiopia",
+    "country_code": "ET"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 70,
+  "fields": {
+    "country_name": "Falkland Islands (Malvinas)",
+    "country_code": "FK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 71,
+  "fields": {
+    "country_name": "Faroe Islands",
+    "country_code": "FO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 72,
+  "fields": {
+    "country_name": "Fiji",
+    "country_code": "FJ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 73,
+  "fields": {
+    "country_name": "Finland",
+    "country_code": "FI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 74,
+  "fields": {
+    "country_name": "France",
+    "country_code": "FR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 75,
+  "fields": {
+    "country_name": "French Guiana",
+    "country_code": "GF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 76,
+  "fields": {
+    "country_name": "French Polynesia",
+    "country_code": "PF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 77,
+  "fields": {
+    "country_name": "French Southern Territories",
+    "country_code": "TF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 78,
+  "fields": {
+    "country_name": "Gabon",
+    "country_code": "GA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 79,
+  "fields": {
+    "country_name": "Gambia",
+    "country_code": "GM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 80,
+  "fields": {
+    "country_name": "Georgia",
+    "country_code": "GE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 81,
+  "fields": {
+    "country_name": "Germany",
+    "country_code": "DE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 82,
+  "fields": {
+    "country_name": "Ghana",
+    "country_code": "GH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 83,
+  "fields": {
+    "country_name": "Gibraltar",
+    "country_code": "GI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 84,
+  "fields": {
+    "country_name": "Greece",
+    "country_code": "GR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 85,
+  "fields": {
+    "country_name": "Greenland",
+    "country_code": "GL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 86,
+  "fields": {
+    "country_name": "Grenada",
+    "country_code": "GD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 87,
+  "fields": {
+    "country_name": "Guadeloupe",
+    "country_code": "GP"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 88,
+  "fields": {
+    "country_name": "Guam",
+    "country_code": "GU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 89,
+  "fields": {
+    "country_name": "Guatemala",
+    "country_code": "GT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 90,
+  "fields": {
+    "country_name": "Guernsey",
+    "country_code": "GG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 91,
+  "fields": {
+    "country_name": "Guinea",
+    "country_code": "GN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 92,
+  "fields": {
+    "country_name": "Guinea-Bissau",
+    "country_code": "GW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 93,
+  "fields": {
+    "country_name": "Guyana",
+    "country_code": "GY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 94,
+  "fields": {
+    "country_name": "Haiti",
+    "country_code": "HT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 95,
+  "fields": {
+    "country_name": "Heard Island and Mcdonald Islands",
+    "country_code": "HM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 96,
+  "fields": {
+    "country_name": "Holy See (Vatican City State)",
+    "country_code": "VA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 97,
+  "fields": {
+    "country_name": "Honduras",
+    "country_code": "HN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 98,
+  "fields": {
+    "country_name": "Hong Kong",
+    "country_code": "HK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 99,
+  "fields": {
+    "country_name": "Hungary",
+    "country_code": "HU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 100,
+  "fields": {
+    "country_name": "Iceland",
+    "country_code": "IS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 101,
+  "fields": {
+    "country_name": "India",
+    "country_code": "IN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 102,
+  "fields": {
+    "country_name": "Indonesia",
+    "country_code": "ID"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 103,
+  "fields": {
+    "country_name": "Iran, Islamic Republic Of",
+    "country_code": "IR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 104,
+  "fields": {
+    "country_name": "Iraq",
+    "country_code": "IQ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 105,
+  "fields": {
+    "country_name": "Ireland",
+    "country_code": "IE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 106,
+  "fields": {
+    "country_name": "Isle of Man",
+    "country_code": "IM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 107,
+  "fields": {
+    "country_name": "Israel",
+    "country_code": "IL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 108,
+  "fields": {
+    "country_name": "Italy",
+    "country_code": "IT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 109,
+  "fields": {
+    "country_name": "Jamaica",
+    "country_code": "JM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 110,
+  "fields": {
+    "country_name": "Japan",
+    "country_code": "JP"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 111,
+  "fields": {
+    "country_name": "Jersey",
+    "country_code": "JE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 112,
+  "fields": {
+    "country_name": "Jordan",
+    "country_code": "JO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 113,
+  "fields": {
+    "country_name": "Kazakhstan",
+    "country_code": "KZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 114,
+  "fields": {
+    "country_name": "Kenya",
+    "country_code": "KE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 115,
+  "fields": {
+    "country_name": "Kiribati",
+    "country_code": "KI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 116,
+  "fields": {
+    "country_name": "Korea, Democratic People's Republic of",
+    "country_code": "KP"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 117,
+  "fields": {
+    "country_name": "Korea, Republic of",
+    "country_code": "KR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 118,
+  "fields": {
+    "country_name": "Kuwait",
+    "country_code": "KW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 119,
+  "fields": {
+    "country_name": "Kyrgyzstan",
+    "country_code": "KG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 120,
+  "fields": {
+    "country_name": "Lao People's Democratic Republic",
+    "country_code": "LA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 121,
+  "fields": {
+    "country_name": "Latvia",
+    "country_code": "LV"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 122,
+  "fields": {
+    "country_name": "Lebanon",
+    "country_code": "LB"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 123,
+  "fields": {
+    "country_name": "Lesotho",
+    "country_code": "LS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 124,
+  "fields": {
+    "country_name": "Liberia",
+    "country_code": "LR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 125,
+  "fields": {
+    "country_name": "Libyan Arab Jamahiriya",
+    "country_code": "LY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 126,
+  "fields": {
+    "country_name": "Liechtenstein",
+    "country_code": "LI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 127,
+  "fields": {
+    "country_name": "Lithuania",
+    "country_code": "LT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 128,
+  "fields": {
+    "country_name": "Luxembourg",
+    "country_code": "LU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 129,
+  "fields": {
+    "country_name": "Macao",
+    "country_code": "MO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 130,
+  "fields": {
+    "country_name": "Macedonia, The Former Yugoslav Republic of",
+    "country_code": "MK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 131,
+  "fields": {
+    "country_name": "Madagascar",
+    "country_code": "MG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 132,
+  "fields": {
+    "country_name": "Malawi",
+    "country_code": "MW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 133,
+  "fields": {
+    "country_name": "Malaysia",
+    "country_code": "MY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 134,
+  "fields": {
+    "country_name": "Maldives",
+    "country_code": "MV"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 135,
+  "fields": {
+    "country_name": "Mali",
+    "country_code": "ML"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 136,
+  "fields": {
+    "country_name": "Malta",
+    "country_code": "MT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 137,
+  "fields": {
+    "country_name": "Marshall Islands",
+    "country_code": "MH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 138,
+  "fields": {
+    "country_name": "Martinique",
+    "country_code": "MQ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 139,
+  "fields": {
+    "country_name": "Mauritania",
+    "country_code": "MR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 140,
+  "fields": {
+    "country_name": "Mauritius",
+    "country_code": "MU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 141,
+  "fields": {
+    "country_name": "Mayotte",
+    "country_code": "YT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 142,
+  "fields": {
+    "country_name": "Mexico",
+    "country_code": "MX"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 143,
+  "fields": {
+    "country_name": "Micronesia, Federated States of",
+    "country_code": "FM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 144,
+  "fields": {
+    "country_name": "Moldova, Republic of",
+    "country_code": "MD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 145,
+  "fields": {
+    "country_name": "Monaco",
+    "country_code": "MC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 146,
+  "fields": {
+    "country_name": "Mongolia",
+    "country_code": "MN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 147,
+  "fields": {
+    "country_name": "Montenegro",
+    "country_code": "ME"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 148,
+  "fields": {
+    "country_name": "Montserrat",
+    "country_code": "MS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 149,
+  "fields": {
+    "country_name": "Morocco",
+    "country_code": "MA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 150,
+  "fields": {
+    "country_name": "Mozambique",
+    "country_code": "MZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 151,
+  "fields": {
+    "country_name": "Myanmar",
+    "country_code": "MM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 152,
+  "fields": {
+    "country_name": "Namibia",
+    "country_code": "NA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 153,
+  "fields": {
+    "country_name": "Nauru",
+    "country_code": "NR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 154,
+  "fields": {
+    "country_name": "Nepal",
+    "country_code": "NP"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 155,
+  "fields": {
+    "country_name": "Netherlands",
+    "country_code": "NL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 156,
+  "fields": {
+    "country_name": "Netherlands Antilles",
+    "country_code": "AN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 157,
+  "fields": {
+    "country_name": "New Caledonia",
+    "country_code": "NC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 158,
+  "fields": {
+    "country_name": "New Zealand",
+    "country_code": "NZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 159,
+  "fields": {
+    "country_name": "Nicaragua",
+    "country_code": "NI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 160,
+  "fields": {
+    "country_name": "Niger",
+    "country_code": "NE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 161,
+  "fields": {
+    "country_name": "Nigeria",
+    "country_code": "NG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 162,
+  "fields": {
+    "country_name": "Niue",
+    "country_code": "NU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 163,
+  "fields": {
+    "country_name": "Norfolk Island",
+    "country_code": "NF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 164,
+  "fields": {
+    "country_name": "Northern Mariana Islands",
+    "country_code": "MP"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 165,
+  "fields": {
+    "country_name": "Norway",
+    "country_code": "NO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 166,
+  "fields": {
+    "country_name": "Oman",
+    "country_code": "OM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 167,
+  "fields": {
+    "country_name": "Pakistan",
+    "country_code": "PK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 168,
+  "fields": {
+    "country_name": "Palau",
+    "country_code": "PW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 169,
+  "fields": {
+    "country_name": "Palestinian Territory, Occupied",
+    "country_code": "PS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 170,
+  "fields": {
+    "country_name": "Panama",
+    "country_code": "PA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 171,
+  "fields": {
+    "country_name": "Papua New Guinea",
+    "country_code": "PG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 172,
+  "fields": {
+    "country_name": "Paraguay",
+    "country_code": "PY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 173,
+  "fields": {
+    "country_name": "Peru",
+    "country_code": "PE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 174,
+  "fields": {
+    "country_name": "Philippines",
+    "country_code": "PH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 175,
+  "fields": {
+    "country_name": "Pitcairn",
+    "country_code": "PN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 176,
+  "fields": {
+    "country_name": "Poland",
+    "country_code": "PL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 177,
+  "fields": {
+    "country_name": "Portugal",
+    "country_code": "PT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 178,
+  "fields": {
+    "country_name": "Puerto Rico",
+    "country_code": "PR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 179,
+  "fields": {
+    "country_name": "Qatar",
+    "country_code": "QA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 180,
+  "fields": {
+    "country_name": "Reunion",
+    "country_code": "RE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 181,
+  "fields": {
+    "country_name": "Romania",
+    "country_code": "RO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 182,
+  "fields": {
+    "country_name": "Russian Federation",
+    "country_code": "RU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 183,
+  "fields": {
+    "country_name": "Rwanda",
+    "country_code": "RW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 184,
+  "fields": {
+    "country_name": "Saint Helena",
+    "country_code": "SH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 185,
+  "fields": {
+    "country_name": "Saint Kitts and Nevis",
+    "country_code": "KN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 186,
+  "fields": {
+    "country_name": "Saint Lucia",
+    "country_code": "LC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 187,
+  "fields": {
+    "country_name": "Saint Pierre and Miquelon",
+    "country_code": "PM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 188,
+  "fields": {
+    "country_name": "Saint Vincent and the Grenadines",
+    "country_code": "VC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 189,
+  "fields": {
+    "country_name": "Samoa",
+    "country_code": "WS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 190,
+  "fields": {
+    "country_name": "San Marino",
+    "country_code": "SM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 191,
+  "fields": {
+    "country_name": "Sao Tome and Principe",
+    "country_code": "ST"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 192,
+  "fields": {
+    "country_name": "Saudi Arabia",
+    "country_code": "SA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 193,
+  "fields": {
+    "country_name": "Senegal",
+    "country_code": "SN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 194,
+  "fields": {
+    "country_name": "Serbia",
+    "country_code": "RS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 195,
+  "fields": {
+    "country_name": "Seychelles",
+    "country_code": "SC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 196,
+  "fields": {
+    "country_name": "Sierra Leone",
+    "country_code": "SL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 197,
+  "fields": {
+    "country_name": "Singapore",
+    "country_code": "SG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 198,
+  "fields": {
+    "country_name": "Slovakia",
+    "country_code": "SK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 199,
+  "fields": {
+    "country_name": "Slovenia",
+    "country_code": "SI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 200,
+  "fields": {
+    "country_name": "Solomon Islands",
+    "country_code": "SB"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 201,
+  "fields": {
+    "country_name": "Somalia",
+    "country_code": "SO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 202,
+  "fields": {
+    "country_name": "South Africa",
+    "country_code": "ZA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 203,
+  "fields": {
+    "country_name": "South Georgia and the South Sandwich Islands",
+    "country_code": "GS"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 204,
+  "fields": {
+    "country_name": "Spain",
+    "country_code": "ES"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 205,
+  "fields": {
+    "country_name": "Sri Lanka",
+    "country_code": "LK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 206,
+  "fields": {
+    "country_name": "Sudan",
+    "country_code": "SD"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 207,
+  "fields": {
+    "country_name": "Suriname",
+    "country_code": "SR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 208,
+  "fields": {
+    "country_name": "Svalbard and Jan Mayen",
+    "country_code": "SJ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 209,
+  "fields": {
+    "country_name": "Swaziland",
+    "country_code": "SZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 210,
+  "fields": {
+    "country_name": "Sweden",
+    "country_code": "SE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 211,
+  "fields": {
+    "country_name": "Switzerland",
+    "country_code": "CH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 212,
+  "fields": {
+    "country_name": "Syrian Arab Republic",
+    "country_code": "SY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 213,
+  "fields": {
+    "country_name": "Taiwan, Province of China",
+    "country_code": "TW"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 214,
+  "fields": {
+    "country_name": "Tajikistan",
+    "country_code": "TJ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 215,
+  "fields": {
+    "country_name": "Tanzania, United Republic of",
+    "country_code": "TZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 216,
+  "fields": {
+    "country_name": "Thailand",
+    "country_code": "TH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 217,
+  "fields": {
+    "country_name": "Timor-Leste",
+    "country_code": "TL"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 218,
+  "fields": {
+    "country_name": "Togo",
+    "country_code": "TG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 219,
+  "fields": {
+    "country_name": "Tokelau",
+    "country_code": "TK"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 220,
+  "fields": {
+    "country_name": "Tonga",
+    "country_code": "TO"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 221,
+  "fields": {
+    "country_name": "Trinidad and Tobago",
+    "country_code": "TT"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 222,
+  "fields": {
+    "country_name": "Tunisia",
+    "country_code": "TN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 223,
+  "fields": {
+    "country_name": "Turkey",
+    "country_code": "TR"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 224,
+  "fields": {
+    "country_name": "Turkmenistan",
+    "country_code": "TM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 225,
+  "fields": {
+    "country_name": "Turks and Caicos Islands",
+    "country_code": "TC"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 226,
+  "fields": {
+    "country_name": "Tuvalu",
+    "country_code": "TV"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 227,
+  "fields": {
+    "country_name": "Uganda",
+    "country_code": "UG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 228,
+  "fields": {
+    "country_name": "Ukraine",
+    "country_code": "UA"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 229,
+  "fields": {
+    "country_name": "United Arab Emirates",
+    "country_code": "AE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 230,
+  "fields": {
+    "country_name": "United Kingdom",
+    "country_code": "GB"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 231,
+  "fields": {
+    "country_name": "United States",
+    "country_code": "US"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 232,
+  "fields": {
+    "country_name": "United States Minor Outlying Islands",
+    "country_code": "UM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 233,
+  "fields": {
+    "country_name": "Uruguay",
+    "country_code": "UY"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 234,
+  "fields": {
+    "country_name": "Uzbekistan",
+    "country_code": "UZ"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 235,
+  "fields": {
+    "country_name": "Vanuatu",
+    "country_code": "VU"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 236,
+  "fields": {
+    "country_name": "Venezuela",
+    "country_code": "VE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 237,
+  "fields": {
+    "country_name": "Vietnam",
+    "country_code": "VN"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 238,
+  "fields": {
+    "country_name": "Virgin Islands, British",
+    "country_code": "VG"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 239,
+  "fields": {
+    "country_name": "Virgin Islands, U.S.",
+    "country_code": "VI"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 240,
+  "fields": {
+    "country_name": "Wallis and Futuna",
+    "country_code": "WF"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 241,
+  "fields": {
+    "country_name": "Western Sahara",
+    "country_code": "EH"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 242,
+  "fields": {
+    "country_name": "Yemen",
+    "country_code": "YE"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 243,
+  "fields": {
+    "country_name": "Zambia",
+    "country_code": "ZM"
+  }
+},
+{
+  "model": "media.mediacountry",
+  "pk": 244,
+  "fields": {
+    "country_name": "Zimbabwe",
+    "country_code": "ZW"
+  }
+}
+]
