@@ -15,13 +15,14 @@ from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, R
 class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	providerName = serializers.CharField(source='provider_name')
 	lastUpdated = serializers.DateTimeField(source='last_updated')
-	shortFormVideos = serializers.JSONField(source='short_form_videos')
-	language = serializers.StringRelatedField()
-	rating = serializers.StringRelatedField()
+	shortFormVideos = serializers.StringRelatedField(source='short_form_videos')
+	#language = serializers.StringRelatedField()
+	#rating = serializers.StringRelatedField()
 	class Meta:
 		model = RokuContentFeed
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', \
 			'movies', 'series', 'shortFormVideos', 'playlists', 'categories']
+		depth = 2
 
 ### Content Categories
 

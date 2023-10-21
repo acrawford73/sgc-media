@@ -13,6 +13,7 @@ from .models import Tag
 ### Rest Framework
 from rest_framework import generics
 from rest_framework import filters
+from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
 ### Serializers
 ## Roku Content
@@ -195,7 +196,7 @@ class CategoryListAPI(generics.ListAPIView):
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
-	fields = ['playlist_name', 'item_ids', 'short_description', 'notes', 'is_public']
+	fields = ['playlist_name', 'item_ids', 'short_description', 'is_public']
 
 class PlaylistListView(ListView):
 	model = Playlist
@@ -211,7 +212,7 @@ class PlaylistDetailView(DetailView):
 class PlaylistUpdateView(UpdateView):
 	model = Playlist
 	context_object_name = 'playlist'
-	fields = ['playlist_name', 'item_ids', 'short_description', 'notes', 'is_public']
+	fields = ['playlist_name', 'item_ids', 'short_description', 'is_public']
 
 class PlaylistListAPI(generics.ListAPIView):
 	queryset = Playlist.objects.all().filter(is_public=True)

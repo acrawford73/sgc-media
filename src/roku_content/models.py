@@ -64,6 +64,43 @@ class RokuContentFeed(models.Model):
 	def __str__(self):
 		return str(self.provider_name)
 
+# Movie model: ManyToMany tables
+class RokuContentFeedCategory(models.Model):
+	""" ManyToMany table for Roku Content Feed model and Category model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+class RokuContentFeedPlaylist(models.Model):
+	""" ManyToMany table for Roku Content Feed model and Playlist model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	playlist = models.ForeignKey(Playlist, on_delete=models.CASCADE)
+
+class RokuContentFeedMovie(models.Model):
+	""" ManyToMany table for Roku Content Feed model and Movie model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+class RokuContentFeedLiveFeed(models.Model):
+	""" ManyToMany table for Roku Content Feed model and Live Feed model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	live_feed = models.ForeignKey(LiveFeed, on_delete=models.CASCADE)
+
+class RokuContentFeedSeries(models.Model):
+	""" ManyToMany table for Roku Content Feed model and Series model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	series = models.ForeignKey(Series, on_delete=models.CASCADE)
+
+class RokuContentFeedShortFormVideo(models.Model):
+	""" ManyToMany table for Roku Content Feed model and Short-Form Video model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	short_form_video = models.ForeignKey(ShortFormVideo, on_delete=models.CASCADE)
+
+class RokuContentFeedTVSpecial(models.Model):
+	""" ManyToMany table for Roku Content Feed model and TV Special model. """
+	roku_content_feed = models.ForeignKey(RokuContentFeed, on_delete=models.CASCADE)
+	tv_special = models.ForeignKey(TVSpecial, on_delete=models.CASCADE)
+
+
 
 ### Content Categories
 
@@ -162,19 +199,28 @@ class Playlist(models.Model):
 ### Content Types
 
 class Movie(models.Model):
-	""" Represents a movie object. """
+	""" 
+	Represents a Movie object. Movies have content attached with one or more videos. 
+	Movie objects are added to a Roku Content Feed.
+	"""
 	movie_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
+	
+	# OneToOne, links to one content object that contains one or more video files.
 	content = models.URLField(max_length=2083, null=False, blank=False)
+	
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
 	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	# ManyToMany
 	tags = models.CharField(max_length=200, default="", null=False, blank=False)
+	# ManyToMany
 	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	# OneToOne
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
-	# object, One or more third-party metadata provider IDs.
+	# ManyToMany, one or more third-party metadata provider IDs.
 	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
 	def get_absolute_url(self):
 		return reverse('movie-list')
@@ -184,6 +230,27 @@ class Movie(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
+
+class MovieContent(models.Model):
+	""" ManyToMany table for Movie model and Content model. """
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+	content = models.ForeignKey(Content, on_delete=models.CASCADE)
+
+class MovieTag(models.Model):
+	""" ManyToMany table for Movie model and Tag model. """
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+	tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+
+class MovieCredit(models.Model):
+	""" ManyToMany table for Movie model and Credit model. """
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+	credit = models.ForeignKey(Credit, on_delete=models.CASCADE)
+
+class MovieExternalID(models.Model):
+	""" ManyToMany table for Movie model and ExternalID model. """
+	movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+	external_id = models.ForeignKey(ExternalID, on_delete=models.CASCADE)
+
 
 class LiveFeed(models.Model):
 	""" Represents a live linear stream. """
@@ -248,6 +315,12 @@ class Season(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.id)
+
+class SeasonEpisode(models.Model):
+	""" ManyToMany table for Season model and Episode model. """
+	season = models.ForeignKey(Season, on_delete=models.CASCADE)
+	episode = models.ForeignKey(episode, on_delete=models.CASCADE)
+
 
 class Episode(models.Model):
 	""" This Model represents a single episode in a series or a season. """
@@ -607,7 +680,8 @@ class Credit(models.Model):
 
 # Catch all for Tags
 class Tag(models.Model):
-	tag_name = models.CharField(max_length=30, default="", null=False, blank=False, unique=True)
+	tag_name = models.CharField(max_length=30, default="", null=False, blank=False, unique=True, \
+		help_text="Enter a new tag that hasn't been added yet.")
 	def get_absolute_url(self):
 		return reverse('tag-list')
 	class Meta:
