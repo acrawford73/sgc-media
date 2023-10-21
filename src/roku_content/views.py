@@ -32,6 +32,25 @@ from .serializers import RatingSerializerList, RatingSourceSerializerList, Paren
 from .serializers import CreditSerializerList, LanguageSerializerList, TagSerializerList
 
 
+### Notes
+#
+# Get latest item
+# class BookListView(ListView):
+#     model = Book
+
+#     def head(self, *args, **kwargs):
+#         last_book = self.get_queryset().latest("publication_date")
+#         response = HttpResponse(
+#             # RFC 1123 date format.
+#             headers={
+#                 "Last-Modified": last_book.publication_date.strftime(
+#                     "%a, %d %b %Y %H:%M:%S GMT"
+#                 )
+#             },
+#         )
+#         return response
+
+
 ## Roku Feeds
 
 # Roku Content Feed
