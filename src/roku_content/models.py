@@ -56,16 +56,16 @@ class RokuContentFeed(models.Model):
 	last_updated = models.DateTimeField(auto_now=True)
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
-	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory')
-	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist')
-	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie')
-	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed')
-	series = models.ManyToManyField('Series', through='RokuContentFeedSeries')
-	short_form_videos = models.ManyToManyField('ShortFormVideo', through='RokuContentFeedShortFormVideo')
-	tv_specials = models.ManyToManyField('TVSpecial', through='RokuContentFeedTVSpecial')
+	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', blank=True)
+	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', blank=True)
+	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', blank=True)
+	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed', blank=True)
+	series = models.ManyToManyField('Series', through='RokuContentFeedSeries', blank=True)
+	short_form_videos = models.ManyToManyField('ShortFormVideo', through='RokuContentFeedShortFormVideo', blank=True)
+	tv_specials = models.ManyToManyField('TVSpecial', through='RokuContentFeedTVSpecial', blank=True)
 	# !Roku
 	roku_content_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	is_public = models.BooleanField(default=False)
 	def get_absolute_url(self):
@@ -81,6 +81,9 @@ class RokuContentFeedCategory(models.Model):
 	""" ManyToMany table for Roku Content Feed model and Category model. """
 	roku_content_feed = models.ForeignKey('RokuContentFeed', on_delete=models.CASCADE)
 	category = models.ForeignKey('Category', on_delete=models.CASCADE)
+	class Meta:
+		def __unicode__(self):
+			return self.roku_content_feed
 
 class RokuContentFeedPlaylist(models.Model):
 	""" ManyToMany table for Roku Content Feed model and Playlist model. """
@@ -263,9 +266,9 @@ class LiveFeed(models.Model):
 	class Meta:
 		ordering = ['livefeed_id']
 		def __unicode__(self):
-			return self.livefeed_id
+			return self.id
 	def __str__(self):
-		return str(self.livefeed_id)
+		return str(self.title)
 
 class Series(models.Model):
 	""" Represents a series, such as a season of a TV Show or a mini-series. """
@@ -286,9 +289,9 @@ class Series(models.Model):
 	class Meta:
 		ordering = ['series_id']
 		def __unicode__(self):
-			return self.series_id
+			return self.id
 	def __str__(self):
-		return str(self.series_id)
+		return str(self.title)
 
 class Season(models.Model):
 	"""
@@ -308,7 +311,7 @@ class Season(models.Model):
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.id)
+		return str(self.season_number)
 
 class SeasonEpisode(models.Model):
 	""" ManyToMany table for Season model and Episode model. """
@@ -334,9 +337,9 @@ class Episode(models.Model):
 	class Meta:
 		ordering = ['id']
 		def __unicode__(self):
-			return self.episode_id
+			return self.id
 	def __str__(self):
-		return str(self.episode_id)
+		return str(self.title)
 
 class ShortFormVideo(models.Model):
 	""" Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
@@ -377,9 +380,10 @@ class ShortFormVideo(models.Model):
 	class Meta:
 		ordering = ['short_form_video_id']
 		def __unicode__(self):
-			return self.short_form_video_id
+			return self.id
 	def __str__(self):
-		return str(self.short_form_video_id)
+		return str(self.title)
+
 
 class TVSpecial(models.Model):
 	""" TV Specials are shorter or longer than 15 minutes. Special ad rules apply. """
@@ -398,9 +402,9 @@ class TVSpecial(models.Model):
 	class Meta:
 		ordering = ['tv_special_id']
 		def __unicode__(self):
-			return self.tv_special_id
+			return self.id
 	def __str__(self):
-		return str(self.tv_special_id)
+		return str(self.title)
 
 
 ### Content Properties
