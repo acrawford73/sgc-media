@@ -68,8 +68,8 @@ class RokuContentFeedCreateView(CreateView):
 	:template:`roku_content/rokucontentfeed_create.html`
 	"""
 	model = RokuContentFeed
-	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
+		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListView(ListView):
 	"""
@@ -121,8 +121,8 @@ class RokuContentFeedUpdateView(UpdateView):
 	"""
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
-	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
+		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListAPI(generics.ListAPIView):
 	"""
@@ -215,7 +215,7 @@ class CategoryListAPI(generics.ListAPIView):
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
-	fields = ['playlist_name', 'item_ids', 'short_description', 'is_public']
+	fields = ['is_public', 'playlist_name', 'short_description', 'item_ids']
 
 class PlaylistListView(ListView):
 	model = Playlist
@@ -231,7 +231,7 @@ class PlaylistDetailView(DetailView):
 class PlaylistUpdateView(UpdateView):
 	model = Playlist
 	context_object_name = 'playlist'
-	fields = ['playlist_name', 'item_ids', 'short_description', 'is_public']
+	fields = ['is_public', 'playlist_name', 'short_description', 'item_ids']
 
 class PlaylistListAPI(generics.ListAPIView):
 	queryset = Playlist.objects.all().filter(is_public=True)
@@ -259,8 +259,8 @@ class PlaylistListAPI(generics.ListAPIView):
 # Movie
 class MovieCreateView(CreateView):
 	model = Movie
-	fields = ['title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+	fields = ['title', 'short_description', 'long_description', 'content', 'genres', \
+		'thumbnail', 'release_date', 'tags', 'credits', 'rating', 'external_ids']
 
 class MovieListView(ListView):
 	model = Movie
@@ -276,8 +276,8 @@ class MovieDetailView(DetailView):
 class MovieUpdateView(UpdateView):
 	model = Movie
 	context_object_name = 'movie'
-	fields = ['title', 'content', 'genres', 'thumbnail', 'release_date', \
-		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+	fields = ['title', 'short_description', 'long_description', 'content', 'genres', \
+		'thumbnail', 'release_date', 'tags', 'credits', 'rating', 'external_ids']
 
 class MovieListAPI(generics.ListAPIView):
 	queryset = Movie.objects.all()
@@ -304,8 +304,8 @@ class MovieListAPI(generics.ListAPIView):
 # LiveFeed
 class LiveFeedCreateView(CreateView):
 	model = LiveFeed
-	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
-		'short_description', 'long_description', 'tags', 'rating', 'genres']
+	fields = ['title', 'short_description', 'long_description', 'content', \
+		'thumbnail', 'branded_thumbnail', 'tags', 'rating', 'genres']
 
 class LiveFeedListView(ListView):
 	model = LiveFeed
@@ -321,8 +321,8 @@ class LiveFeedDetailView(DetailView):
 class LiveFeedUpdateView(UpdateView):
 	model = LiveFeed
 	context_object_name = 'livefeed'
-	fields = ['title', 'content', 'thumbnail', 'branded_thumbnail', \
-		'short_description', 'long_description', 'tags', 'rating', 'genres']
+	fields = ['title', 'short_description', 'long_description', 'content', \
+		'thumbnail', 'branded_thumbnail', 'tags', 'rating', 'genres']
 
 class LiveFeedListAPI(generics.ListAPIView):
 	queryset = LiveFeed.objects.all()
@@ -433,8 +433,8 @@ class SeasonListAPI(generics.ListAPIView):
 # Episode
 class EpisodeCreateView(CreateView):
 	model = Episode
-	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+	fields = ['episode_number', 'title', 'short_description', 'long_description', \
+		'content', 'thumbnail', 'release_date', 'credits', 'rating', 'external_ids']
 
 class EpisodeListView(ListView):
 	model = Episode
@@ -450,8 +450,8 @@ class EpisodeDetailView(DetailView):
 class EpisodeUpdateView(UpdateView):
 	model = Episode
 	context_object_name = 'episode'
-	fields = ['title', 'content', 'thumbnail', 'release_date', 'episode_number', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+	fields = ['episode_number', 'title', 'short_description', 'long_description', \
+		'content', 'thumbnail', 'release_date', 'credits', 'rating', 'external_ids']
 
 class EpisodeListAPI(generics.ListAPIView):
 	queryset = Episode.objects.all()
@@ -477,7 +477,7 @@ class EpisodeListAPI(generics.ListAPIView):
 # ShortFormVideo
 class ShortFormVideoCreateView(CreateView):
 	model = ShortFormVideo
-	fields = ['title', 'content', 'thumbnail', 'short_description', 'long_description', \
+	fields = ['title', 'short_description', 'long_description', 'content', 'thumbnail', \
 		'release_date', 'tags', 'genres', 'credits', 'rating']
 
 class ShortFormVideoListView(ListView):
@@ -494,7 +494,7 @@ class ShortFormVideoDetailView(DetailView):
 class ShortFormVideoUpdateView(UpdateView):
 	model = ShortFormVideo
 	context_object_name = 'shortformvideo'
-	fields = ['title', 'content', 'thumbnail', 'short_description', 'long_description', \
+	fields = ['title', 'short_description', 'long_description', 'content', 'thumbnail', \
 		'release_date', 'tags', 'genres', 'credits', 'rating']
 
 class ShortFormVideoListAPI(generics.ListAPIView):
@@ -521,8 +521,8 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 # TVSpecial
 class TVSpecialCreateView(CreateView):
 	model = TVSpecial
-	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
-		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
+	fields = ['title', 'short_description', 'long_description', 'content', \
+		'thumbnail', 'genres', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
 
 class TVSpecialListView(ListView):
 	model = TVSpecial
@@ -538,8 +538,8 @@ class TVSpecialDetailView(DetailView):
 class TVSpecialUpdateView(UpdateView):
 	model = TVSpecial
 	context_object_name = 'tvspecial'
-	fields = ['title', 'content', 'thumbnail', 'genres', 'release_date', \
-		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
+	fields = ['title', 'short_description', 'long_description', 'content', \
+		'thumbnail', 'genres', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
 
 class TVSpecialListAPI(generics.ListAPIView):
 	queryset = TVSpecial.objects.all()
@@ -568,7 +568,8 @@ class TVSpecialListAPI(generics.ListAPIView):
 # Content
 class ContentCreateView(CreateView):
 	model = Content
-	fields = ['title', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_start_period', 'validity_end_period']
+	fields = ['title', 'language', 'duration', 'videos', 'captions', 'trick_play_files', \
+		 'validity_start_period', 'validity_end_period']
 
 class ContentListView(ListView):
 	model = Content
@@ -584,7 +585,8 @@ class ContentDetailView(DetailView):
 class ContentUpdateView(UpdateView):
 	model = Content
 	context_object_name = 'content'
-	fields = ['title', 'videos', 'duration', 'captions', 'trick_play_files', 'language', 'validity_start_period', 'validity_end_period']
+	fields = ['title', 'videos', 'duration', 'captions', 'trick_play_files', \
+		'language', 'validity_start_period', 'validity_end_period']
 
 class ContentListAPI(generics.ListAPIView):
 	queryset = Content.objects.all()

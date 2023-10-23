@@ -1,7 +1,7 @@
 [
 {
   "model": "roku_content.language",
-  "pk": 4,
+  "pk": 1,
   "fields": {
     "code_iso_639_2": "eng",
     "code_iso_639_1": "en",
@@ -10,7 +10,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 5,
+  "pk": 2,
   "fields": {
     "code_iso_639_2": "fre",
     "code_iso_639_1": "fr",
@@ -19,7 +19,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 6,
+  "pk": 3,
   "fields": {
     "code_iso_639_2": "deu",
     "code_iso_639_1": "de",
@@ -28,7 +28,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 7,
+  "pk": 4,
   "fields": {
     "code_iso_639_2": "ita",
     "code_iso_639_1": "it",
@@ -37,7 +37,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 8,
+  "pk": 5,
   "fields": {
     "code_iso_639_2": "jpn",
     "code_iso_639_1": "ja",
@@ -46,7 +46,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 9,
+  "pk": 6,
   "fields": {
     "code_iso_639_2": "kor",
     "code_iso_639_1": "ko",
@@ -55,7 +55,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 10,
+  "pk": 7,
   "fields": {
     "code_iso_639_2": "por",
     "code_iso_639_1": "pt",
@@ -64,7 +64,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 11,
+  "pk": 8,
   "fields": {
     "code_iso_639_2": "spa",
     "code_iso_639_1": "es",
@@ -73,7 +73,7 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 12,
+  "pk": 9,
   "fields": {
     "code_iso_639_2": "rus",
     "code_iso_639_1": "ru",
@@ -82,10 +82,11 @@
 },
 {
   "model": "roku_content.language",
-  "pk": 13,
+  "pk": 10,
   "fields": {
     "code_iso_639_2": "chi",
     "code_iso_639_1": "zh",
     "language_name_eng": "Chinese"
   }
 }
+]

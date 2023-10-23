@@ -30,7 +30,15 @@
               </tr>
               <tr>
                 <td><strong>Content</strong></td>
-                <td>{{ shortformvideo.content }}</td>
+                <td>
+                  {% if shortformvideo.content.all.count > 0 %}
+                    {% for item in shortformvideo.content.all %}
+                      <li>{{ item }}</li>
+                    {% endfor %}
+                  {% else %}
+                    No Content added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
@@ -58,7 +66,15 @@
               </tr>
               <tr>
                 <td><strong>Credits</strong></td>
-                <td>{{ shortformvideo.credits }}</td>
+                  <td>
+                  {% if shortformvideo.credits.all.count > 0 %}
+                    {% for item in shortformvideo.credits.all %}
+                      <li>{{ item }}</li>
+                    {% endfor %}
+                  {% else %}
+                    No Credits added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Rating</strong></td>

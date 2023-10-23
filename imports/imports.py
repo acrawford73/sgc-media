@@ -92,33 +92,34 @@ if __name__ == "__main__":
 	db_meta = {'DB_HOST':DB_HOST,'DB_NAME':DB_NAME,'DB_USER':DB_USER,'DB_PASSWORD':DB_PASSWORD}
 
 	parser = argparse.ArgumentParser(prog='Importer', description='Imports JSON data files into database', epilog='Text at the bottom of help')
-	parser.add_argument('all', '--all')
-	parser.add_argument('country', '--country')
+	parser.add_argument('-all', '--all')
+	parser.add_argument('-country', '--country')
 
-	parser.add_argument('vf', '--video-format')
-	parser.add_argument('vs', '--video-service')
-	parser.add_argument('vg', '--video-genre')
+	parser.add_argument('-vf', '--video-format')
+	parser.add_argument('-vs', '--video-service')
+	parser.add_argument('-vg', '--video-genre')
 
-	parser.add_argument('af', '--audio-format')
-	parser.add_argument('as', '--audio-service')
-	parser.add_argument('ag', '--audio-genre')
+	parser.add_argument('-af', '--audio-format')
+	parser.add_argument('-as', '--audio-service')
+	parser.add_argument('-ag', '--audio-genre')
 
-	parser.add_argument('pf', '--photo-format')
-	parser.add_argument('ps', '--photo-service')
-	parser.add_argument('df', '--doc-format')
+	parser.add_argument('-pf', '--photo-format')
+	parser.add_argument('-ps', '--photo-service')
+	parser.add_argument('-df', '--doc-format')
 
-	parser.add_argument('lang', '--language')
-	parser.add_argument('cg', '--content-genre')
-	parser.add_argument('eit', '--external-id-type')
-	parser.add_argument('rs', '--rating-source')
-	parser.add_argument('pr', '--parental-rating')
-	parser.add_argument('rating', '--rating')
-	parser.add_argument('sg', '--search-genre')
+	parser.add_argument('-lang', '--language')
+	parser.add_argument('-cg', '--content-genre')
+	parser.add_argument('-eit', '--external-id-type')
+	parser.add_argument('-rs', '--rating-source')
+	parser.add_argument('-pr', '--parental-rating')
+	parser.add_argument('-rating', '--rating')
+	parser.add_argument('-sg', '--search-genre')
 
 	args = parser.parse_args()
+
 	args = args.lower()
 
-	if args == "all"
+	if args == "-all":
 
 		print();print("Importing data...");print()
 
@@ -215,7 +216,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("media_mediadocformat(doc_format,doc_format_name)", data, db_meta)
 
-	elif args == "country":
+	elif args == "-country":
 
 		# Countries
 		print();print("Importing countries...")
@@ -224,7 +225,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("media_mediacountry(country_name,country_code)", data, db_meta)
 
-	elif args == "vf":
+	elif args == "-vf":
 
 		# Video Formats
 		print();print("Importing video formats...")
@@ -233,7 +234,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("media_mediavideoformat(doc_format,doc_format_name)", data, db_meta)
 
-	elif args == "vs":
+	elif args == "-vs":
 
 		# Video Services
 		print();print("Importing video services...")
@@ -242,7 +243,7 @@ if __name__ == "__main__":
 		f.close()
 		import_list("media_mediavideoservice(service_name)", data, db_meta)
 
-	elif args == "vg":
+	elif args == "-vg":
 		
 		# Video Genres
 		print();print("Importing video genres...")
@@ -251,7 +252,7 @@ if __name__ == "__main__":
 		f.close()
 		import_list("media_mediavideogenre(genre)", data, db_meta)
 
-	elif args == "ag":
+	elif args == "-ag":
 
 		# Audio Genres
 		print();print("Importing audio genres...")
@@ -260,7 +261,7 @@ if __name__ == "__main__":
 		f.close()
 		import_list("media_mediavaudiogenre(genre)", data, db_meta)
 
-	elif args == "af":
+	elif args == "-af":
 
 		# Audio Formats
 		print();print("Importing audio formats...")
@@ -269,7 +270,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("media_mediaaudioformat(doc_format,doc_format_name)", data, db_meta)
 
-	elif args == "pf":
+	elif args == "-pf":
 
 		# Photo Formats
 		print();print("Importing photo formats...")
@@ -278,7 +279,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("media_mediaphotoformat(doc_format,doc_format_name)", data, db_meta)
 
-	elif args == "df":
+	elif args == "-df":
 
 		# Document Formats
 		print();print("Importing document formats...")
@@ -289,7 +290,7 @@ if __name__ == "__main__":
 
 	# ROKU CONTENT
 
-	elif args == "lang":
+	elif args == "-lang":
 
 		# Languages
 		print("Importing languages...")
@@ -298,7 +299,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict3("roku_content_language(code_iso_639_2,code_iso_639_1,language_name_eng)", "code_iso_639_2", "code_iso_639_1", "language_name_eng", data, db_meta)
 
-	elif args == "eit":
+	elif args == "-eit":
 
 		# External ID Types
 		print();print("Importing external IDs...")
@@ -307,7 +308,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("roku_content_externalidtype(external_id_type,external_id_long_name)", data, db_meta)
 
-	elif args == "cg":
+	elif args == "-cg":
 
 		# Content Genres
 		print();print("Importing content genres...")
@@ -316,7 +317,7 @@ if __name__ == "__main__":
 		f.close()
 		import_list("roku_content_genre(genre)", data, db_meta)
 
-	elif args == "pr":
+	elif args == "-pr":
 
 		# Parental Ratings
 		print();print("Importing parental ratings...")
@@ -325,7 +326,7 @@ if __name__ == "__main__":
 		f.close()
 		import_list("roku_content_parentalrating(parental_rating)", data, db_meta)
 
-	elif args == "rs":
+	elif args == "-rs":
 
 		# Rating Sources
 		print();print("Importing rating sources...")
@@ -334,7 +335,7 @@ if __name__ == "__main__":
 		f.close()
 		import_dict2("roku_content_ratingsource(source_name,source_long_name)", "source_name", "source_long_name", data, db_meta)
 
-	elif args == "rating":
+	elif args == "-rating":
 
 		# Ratings
 		print("Importing ratings...")
@@ -343,10 +344,11 @@ if __name__ == "__main__":
 		f.close()
 		import_dict("roku_content_rating(rating_id,rating_source_id)", data, db_meta)
 
-	elif args == "sg":
+	elif args == "-sg":
 
 		print("NOT IMPLEMENTED YET")
-		break
+		quit(1)
+
 
 		# Search Genres
 		print();print("Importing content genres...")

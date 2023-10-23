@@ -56,7 +56,7 @@ class RokuContentFeed(models.Model):
 	last_updated = models.DateTimeField(auto_now=True)
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
-	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', blank=True)
+	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', related_name='category', blank=True)
 	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', blank=True)
 	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', blank=True)
 	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed', blank=True)
@@ -149,19 +149,22 @@ class Category(models.Model):
 	}
 	"""
 	# The category name that will show up in the channel.
-	category_name = models.CharField(max_length=128, default="", null=False, blank=False)
+	category_name = models.CharField(max_length=128, default="", null=False, blank=False, \
+		help_text="The name of the category that will show up in the channel.")
 	# The name of the playlist in this feed that contains the content for this category.
-	playlist_name = models.CharField(max_length=128, default="", null=True, blank=True)
+	playlist_name = models.CharField(max_length=128, default="", null=True, blank=True, \
+		help_text="The name of the playlist in this feed that contains the content for this category.")
 	# The query that will specify the content for this category.
 	# Tags: "movie AND dramas", "action OR dramas".
 	query_string = models.CharField(max_length=1024, default="", null=True, blank=True, \
-		help_text="Please see documentation for correct query syntax.")
+		help_text="The query that will specify the content for this category. Please see documentation for correct query syntax.")
 	# The order of the category in the channel.
-	order = models.CharField(max_length=16, choices=CONTENT_CATEGORY_ORDER, default='most_recent')
+	order = models.CharField(max_length=16, choices=CONTENT_CATEGORY_ORDER, default='most_recent', \
+		null=False, blank=False, help_text="The order of content displayed within the category.")
 	def get_absolute_url(self):
 		return reverse('category-list')
 	class Meta:
-		ordering = ['id']
+		ordering = ['category_name']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
@@ -190,7 +193,7 @@ class Playlist(models.Model):
 	def get_absolute_url(self):
 		return reverse('playlist-list')
 	class Meta:
-		ordering = ['-id']
+		ordering = ['playlist_name']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
@@ -208,30 +211,29 @@ class Movie(models.Model):
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
 	
 	# OneToOne, links to one content object that contains one or more video files.
-	content = models.URLField(max_length=2083, null=False, blank=False)
-	
+	content = models.ManyToManyField('Content', through='MovieContent', blank=True)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
 	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
-	tags = models.ManyToManyField('Tag', through='MovieTag')
-	credits = models.ManyToManyField('Credit', through='MovieCredit')
-	external_ids = models.ManyToManyField('ExternalID', through='MovieExternalID')
+	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
+	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True)
+	external_ids = models.ManyToManyField('ExternalID', through='MovieExternalID', blank=True)
 	def get_absolute_url(self):
 		return reverse('movie-list')
 	class Meta:
-		ordering = ['movie_id']
+		ordering = ['title']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
 		return str(self.title)
 
-# class MovieContent(models.Model):
-# 	""" ManyToMany table for Movie model and Content model. """
-# 	movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
-# 	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+class MovieContent(models.Model):
+	""" ManyToMany table for Movie model and Content model. """
+	movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
 
 class MovieTag(models.Model):
 	""" ManyToMany table for Movie model and Tag model. """
@@ -253,11 +255,11 @@ class LiveFeed(models.Model):
 	""" Represents a live linear stream. """
 	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
-	content = models.URLField(max_length=2083, null=False, blank=False)
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
 	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	content = models.ManyToManyField('Content', through='LiveFeedContent', blank=True)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True) # Optional
@@ -270,20 +272,28 @@ class LiveFeed(models.Model):
 	def __str__(self):
 		return str(self.title)
 
+class LiveFeedContent(models.Model):
+	""" ManyToMany table for LiveFeed model and Content model. """
+	livefeed = models.ForeignKey('LiveFeed', on_delete=models.CASCADE)
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+
+
 class Series(models.Model):
 	""" Represents a series, such as a season of a TV Show or a mini-series. """
 	series_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
-	seasons = models.ForeignKey("Season", on_delete=models.PROTECT, blank=False, null=False)
-	episodes = models.ForeignKey("Episode", on_delete=models.PROTECT, blank=False, null=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, null=True, blank=True) # Optional
+	seasons = models.ManyToManyField('Season', through='SeriesSeason', blank=True, \
+		help_text="One or more seasons of the series. Seasons should be used if episodes are grouped by seasons.")
+	episodes = models.ManyToManyField('Episode', through='SeriesEpisode', blank=True, \
+		help_text="One or more episodes of the series. Episodes should be used if they are not grouped by seasons.")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=False, null=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, null=True, blank=True) # Optional
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
-	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
-	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	credits = models.ManyToManyField('Credit', through='SeriesCredit', blank=True) # Optional
+	external_ids = models.ManyToManyField('ExternalID', through='SeriesExternalID', blank=True) # Optional
 	def get_absolute_url(self):
 		return reverse('series-list')
 	class Meta:
@@ -292,6 +302,27 @@ class Series(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
+
+class SeriesSeason(models.Model):
+	""" ManyToMany table for Series model and Season model. """
+	series = models.ForeignKey('Series', on_delete=models.CASCADE)
+	season = models.ForeignKey('Season', on_delete=models.CASCADE)
+
+class SeriesEpisode(models.Model):
+	""" ManyToMany table for Series model and Episode model. """
+	series = models.ForeignKey('Series', on_delete=models.CASCADE)
+	episode = models.ForeignKey('Episode', on_delete=models.CASCADE)
+
+class SeriesCredit(models.Model):
+	""" ManyToMany table for Series model and Credit model. """
+	series = models.ForeignKey('Series', on_delete=models.CASCADE)
+	credit = models.ForeignKey('Credit', on_delete=models.CASCADE)
+
+class SeriesExternalID(models.Model):
+	""" ManyToMany table for Series model and ExternalID model. """
+	series = models.ForeignKey('Series', on_delete=models.CASCADE)
+	externalid = models.ForeignKey('ExternalID', on_delete=models.CASCADE)
+
 
 class Season(models.Model):
 	"""
@@ -323,15 +354,15 @@ class Episode(models.Model):
 	""" This Model represents a single episode in a series or a season. """
 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, null=False, blank=False)
-	content = models.URLField(max_length=2083, null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	content = models.ManyToManyField('Content', through='EpisodeContent', blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	episode_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
-	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	credits = models.ManyToManyField('Credit', through='EpisodeCredit', blank=True) # Optional
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=False, null=False)
-	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	external_ids = models.ManyToManyField('ExternalID', through='EpisodeExternalID', blank=True) # Optional
 	def get_absolute_url(self):
 		return reverse('episode-list')
 	class Meta:
@@ -341,6 +372,22 @@ class Episode(models.Model):
 	def __str__(self):
 		return str(self.title)
 
+class EpisodeContent(models.Model):
+	""" ManyToMany table for Episode model and Content model. """
+	episode = models.ForeignKey('Episode', on_delete=models.CASCADE)
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+
+class EpisodeCredit(models.Model):
+	""" ManyToMany table for Episode model and Credit model. """
+	episode = models.ForeignKey('Episode', on_delete=models.CASCADE)
+	credit = models.ForeignKey('Credit', on_delete=models.CASCADE)
+
+class EpisodeExternalID(models.Model):
+	""" ManyToMany table for Episode model and ExternalID model. """
+	episode = models.ForeignKey('Episode', on_delete=models.CASCADE)
+	externalid = models.ForeignKey('ExternalID', on_delete=models.CASCADE)
+
+
 class ShortFormVideo(models.Model):
 	""" Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
 	# An immutable string reference ID for the video that does not exceed 50 characters. 
@@ -349,17 +396,17 @@ class ShortFormVideo(models.Model):
 	# The title of the video in plain text. This field is used for matching in Roku Search. 
 	# Do not include extra information such as year, version label, and so on.
 	title = models.CharField(max_length=64, null=False, blank=False)
-	# The video content, such as the URL of the video file, subtitles, and so on.
-	content = models.URLField(max_length=2083, null=False, blank=False)
-	# The URL of the thumbnail for the video. This is used within your channel and in search results.
-	# Image dimensions must be at least 800x450 (width x height, 16x9 aspect ratio).
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
 	short_description = models.CharField(max_length=200, null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
 	long_description = models.CharField(max_length=500, null=False, blank=False)
+	# The video content, such as the URL of the video file, subtitles, and so on.
+	content = models.ManyToManyField('Content', through='ShortFormVideoContent', blank=True)
+	# The URL of the thumbnail for the video. This is used within your channel and in search results.
+	# Image dimensions must be at least 800x450 (width x height, 16x9 aspect ratio).
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	# The date the video first became available.
 	# This field is used to sort programs chronologically and group related content in Roku Search. 
 	# Conforms to ISO 8601 format: {YYYY}-{MM}-{DD}. For example, 2020-11-11
@@ -372,7 +419,7 @@ class ShortFormVideo(models.Model):
 	# Must be one of the values listed in genres.
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	# One or more credits. The cast and crew of the video.
-	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, blank=False, null=False)
+	credits = models.ManyToManyField('Credit', through='ShortFormVideoCredit', blank=True)
 	# A parental rating for the content.
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	def get_absolute_url(self):
@@ -384,27 +431,52 @@ class ShortFormVideo(models.Model):
 	def __str__(self):
 		return str(self.title)
 
+class ShortFormVideoContent(models.Model):
+	""" ManyToMany table for ShortFormVideo model and Content model. """
+	shortformvideo = models.ForeignKey('ShortFormVideo', on_delete=models.CASCADE)
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+
+class ShortFormVideoCredit(models.Model):
+	""" ManyToMany table for ShortFormVideo model and Credit model. """
+	shortformvideo = models.ForeignKey('ShortFormVideo', on_delete=models.CASCADE)
+	credit = models.ForeignKey('Credit', on_delete=models.CASCADE)
+
 
 class TVSpecial(models.Model):
-	""" TV Specials are shorter or longer than 15 minutes. Special ad rules apply. """
+	""" TV Specials (TV Shows) are usually 30 or 60 minutes. Special ad rules apply. """
 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, null=False, blank=False)
-	content = models.URLField(max_length=2083, null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=True, blank=True) # Optional
+	content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=True, blank=True) # Optional
-	credits = models.ForeignKey("Credit", on_delete=models.PROTECT, null=True, blank=True) # Optional
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
-	external_ids = models.ForeignKey("ExternalID", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	credits = models.ManyToManyField('Credit', through='TVSpecialCredit', blank=True) # Optional
+	external_ids = models.ManyToManyField('ExternalID', through='TVSpecialExternalID', blank=True) # Optional
 	class Meta:
 		ordering = ['tv_special_id']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
 		return str(self.title)
+
+class TVSpecialContent(models.Model):
+	""" ManyToMany table for TVSpecial model and Content model. """
+	tvspecial = models.ForeignKey('TVSpecial', on_delete=models.CASCADE)
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+
+class TVSpecialCredit(models.Model):
+	""" ManyToMany table for TVSpecial model and Credit model. """
+	tvspecial = models.ForeignKey('TVSpecial', on_delete=models.CASCADE)
+	credit = models.ForeignKey('Credit', on_delete=models.CASCADE)
+
+class TVSpecialExternalID(models.Model):
+	""" ManyToMany table for TVSpecial model and ExternalID model. """
+	tvspecial = models.ForeignKey('TVSpecial', on_delete=models.CASCADE)
+	externalid = models.ForeignKey('ExternalID', on_delete=models.CASCADE)
 
 
 ### Content Properties
@@ -416,10 +488,10 @@ class Content(models.Model):
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
 	date_added = models.DateField(auto_now_add=True)
-	videos = models.ForeignKey("Video", on_delete=models.PROTECT, null=True, blank=True)
+	videos = models.ManyToManyField('Video', through='ContentVideo', blank=True)
 	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The duration of the video must be in seconds.")
-	captions = models.ForeignKey("Caption", on_delete=models.PROTECT, null=True, blank=True)
-	trick_play_files = models.ForeignKey("TrickPlayFile", on_delete=models.PROTECT, null=True, blank=True) # Optional
+	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
+	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
 	validity_start_period = models.DateTimeField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
 	validity_end_period = models.DateTimeField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
@@ -432,6 +504,19 @@ class Content(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
+
+class ContentVideo(models.Model):
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+	video = models.ForeignKey('Video', on_delete=models.CASCADE)
+
+class ContentCaption(models.Model):
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+	caption = models.ForeignKey('Caption', on_delete=models.CASCADE)
+
+class ContentTrickPlayFile(models.Model):
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+	trick_play_files = models.ForeignKey('TrickPlayFile', on_delete=models.CASCADE)
+
 
 VIDEO_QUALITY = (
 	("SD", "SD (Standard Definition, <720p)"),
@@ -540,7 +625,6 @@ class TrickPlayFile(models.Model):
 	def __str__(self):
 		return str(self.url)
 
-
 class Genre(models.Model):
 	"""	Provides a list of Roku content specific genres. Maximum length of 30 characters. """
 	genre = models.CharField(max_length=30, default="", null=False, blank=False, unique=True)
@@ -552,13 +636,6 @@ class Genre(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.genre)
-
-EXTERNAL_ID_TYPE = (
-	("TMS", "TMS (Tribune Metadata Service)"),
-	("ROVI", "ROVI (Rovi ID)"),
-	("IMDB", "IMDB (Internet Movie Database ID)"),
-	("EIDR", "EIDR (Entertainment Identifier ID)"),
-)
 
 class ExternalID(models.Model):
 	"""
@@ -653,6 +730,16 @@ CREDIT_ROLES = (
 	("voice", "Voice"),
 )
 
+class CreditRole(models.Model):
+	""" Represents a role of the person credited in video content. """
+	credit_role = models.CharField(max_length=50, default="", null=False, blank=False)
+	class Meta:
+		ordering = ['credit_role']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.credit_role)
+
 class Credit(models.Model):
 	"""
 	Represents a single person in the credits of a video content.
@@ -664,7 +751,8 @@ class Credit(models.Model):
 	}
 	"""
 	credit_name = models.CharField(max_length=64, default="", null=False, blank=False)
-	role = models.CharField(max_length=16, choices=CREDIT_ROLES, default="actor", null=True, blank=True)
+	role = models.ForeignKey("CreditRole", on_delete=models.PROTECT, null=False, blank=False)
+	#role = models.CharField(max_length=64, default="", choices=CREDIT_ROLES, null=False, blank=True)
 	birth_date = models.CharField(max_length=10, default="0000-00-00", null=False, blank=False, \
 		help_text = "Please use the following birth date format: YYYY-MM-DD.")
 	def get_absolute_url(self):
@@ -675,6 +763,7 @@ class Credit(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.credit_name)
+
 
 # Catch all for Tags
 class Tag(models.Model):

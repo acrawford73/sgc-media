@@ -10,7 +10,7 @@
     <p>&nbsp;</p>
     <h1 class="mt-5">Playlists</h1>
 
-    <p>A <strong>Playlist</strong> is an ordered list of videos that may contain a mix of videos for <a href="{% url 'movie-list' %}"><strong>Movies</strong></a>, <a href="{% url 'series-list' %}"><strong>Series</strong></a>, <a href="{% url 'shortformvideo-list' %}"><strong>Short-Form Videos</strong></a>, or <a href="{% url 'tvspecial-list' %}"><strong>TV Shows</strong></a>. It is a list of <a href="{% url 'video-list' %}"><strong>Video</strong></a> IDs that are defined elsewhere in the content feed. The same video can be included in multiple playlists. Playlists are similar to Tags: they help define the content that a channel's categories will display. The main difference is that playlists enable the order of the content to be manually specified; therefore, playlists are ideal for creating a "Featured" <a href="{% url 'category-list' %}"><strong>Category</strong></a> in a channel.
+    <p>A <strong>Playlist</strong> is an ordered list of videos that may contain a mix of videos for <a href="{% url 'movie-list' %}"><strong>Movies</strong></a>, <a href="{% url 'series-list' %}"><strong>Series</strong></a>, <a href="{% url 'shortformvideo-list' %}"><strong>Short-Form Videos</strong></a>, or <a href="{% url 'tvspecial-list' %}"><strong>TV Shows</strong></a>. It is a list of <a href="{% url 'video-list' %}"><strong>Video</strong></a> IDs that are defined elsewhere in the content feed. The same video can be included in multiple playlists. Playlists are similar to Tags: they help define the content that a channel's categories will display. The main difference is that playlists enable the order of the content to be manually specified; therefore, playlists are ideal for creating a "Featured" <a href="{% url 'category-list' %}"><strong>Category</strong></a> for the Roku channel.
     </p>
 
     <p><a href="{% url 'playlist-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Create Playlist</button></a></p>
@@ -22,19 +22,17 @@
           <table class="table table-striped table-hover table-md">
             <thead>
               <tr align="center" class="table-primary">
-                <th>#</th>
                 <th>Playlist Name</th>
-                <th>Created</th>
-                <th>Is Public</th>
+                <th>Last Updated</th>
+                <th>Published</th>
               </tr>
             </thead>
             <tbody>
               {% for asset in playlist %}
               <tr align="center">
-                <td>{{ asset.id }}</td>
-                <td align="left"><a href="{% url 'playlist-detail' asset.id %}">{{ asset.playlist_name }}</a></td>
-                <td>{{ asset.created }}</td>
-                <td>{{ asset.is_public }}</td>
+                <td><a href="{% url 'playlist-detail' asset.id %}">{{ asset.playlist_name }}</a></td>
+                <td>{{ asset.updated }}</td>
+                <td>{% if asset.is_public == True %}Yes{% else %}No{% endif %}</td>
               </tr>
               {% endfor %}
 

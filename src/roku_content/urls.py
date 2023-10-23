@@ -28,10 +28,10 @@ urlpatterns = [
 	
 	# Category
 	path('category/create/', views.CategoryCreateView.as_view(), name='category-create'),
-	path('category/', views.CategoryListView.as_view(), name='category-list'),
+	path('categories/', views.CategoryListView.as_view(), name='category-list'),
 	path('category/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
 	path('category/edit/<int:pk>/', views.CategoryUpdateView.as_view(), name='category-update'),
-	path('api/category/', views.CategoryListAPI.as_view(), name='category-api'),
+	path('api/categories/', views.CategoryListAPI.as_view(), name='category-api'),
 	# path('api/category/search/', views.CategoryAPISearch.as_view()),
 	# path('api/category/<int:pk>', views.CategoryDetailAPI.as_view(), name='category-detail-api'),
 	

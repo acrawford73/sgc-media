@@ -5,7 +5,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID, \
-					ExternalIDType,	Rating, RatingSource, ParentalRating, Credit, Tag
+					ExternalIDType,	Rating, RatingSource, ParentalRating, Credit, CreditRole, Tag
 
 # Roku Content Feed
 
@@ -51,15 +51,14 @@ class MovieAdmin(admin.ModelAdmin):
 
 class LiveFeedAdmin(admin.ModelAdmin):
 	list_display = ['livefeed_id', 'title']
-	search_fields = ['livefeed_id', 'title', 'tags', 'rating', 'genres']
+	search_fields = ['livefeed_id', 'title']
 	list_filter = ['genres']
 	class Meta:
 		model = LiveFeed
 
 class SeriesAdmin(admin.ModelAdmin):
-	list_display = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date']
-	search_fields = ['series_id', 'title', 'genres', 'short_description', \
-		'long_description', 'credits', 'tags', 'external_ids', 'release_date']
+	list_display = ['series_id', 'title', 'genres', 'release_date']
+	search_fields = ['series_id', 'title', 'release_date']
 	list_filter = ['seasons', 'episodes', 'genres']
 	class Meta:
 		model = Series
@@ -178,6 +177,12 @@ class CreditAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Credit
 
+class CreditRoleAdmin(admin.ModelAdmin):
+	list_display = ['credit_role']
+	search_fields = ['credit_role']
+	class Meta:
+		model = CreditRole
+
 class TagAdmin(admin.ModelAdmin):
 	list_display = ['tag_name']
 	search_fields = ['tag_name']
@@ -212,4 +217,5 @@ admin.site.register(Rating, RatingAdmin)
 admin.site.register(RatingSource, RatingSourceAdmin)
 admin.site.register(ParentalRating, ParentalRatingAdmin)
 admin.site.register(Credit, CreditAdmin)
+admin.site.register(CreditRole, CreditRoleAdmin)
 admin.site.register(Tag, TagAdmin)

@@ -37,8 +37,8 @@
                 <td>{{ playlist.created }}</td>
               </tr>
               <tr>
-                <td><strong>Is Public</strong></td>
-                <td>{{ playlist.is_public }}</td>
+                <td><strong>Published</strong></td>
+                <td>{% if playlist.is_public == True %}Yes{% else %}No{% endif %}</td>
               </tr>
             </tbody>
           </table>
