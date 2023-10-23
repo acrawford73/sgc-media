@@ -216,7 +216,7 @@ class Movie(models.Model):
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=True, blank=True)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
 	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True)
@@ -646,7 +646,7 @@ class ExternalID(models.Model):
 	"idType": "IMDB"
 	}
 	"""
-	external_id = models.CharField(max_length=16, default="0", null=False, blank=False)
+	external_id = models.CharField(max_length=16, default="", null=False, blank=False)
 	id_type = models.ForeignKey("ExternalIDType", on_delete=models.PROTECT, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('externalid-list')

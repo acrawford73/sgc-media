@@ -260,7 +260,7 @@ class PlaylistListAPI(generics.ListAPIView):
 class MovieCreateView(CreateView):
 	model = Movie
 	fields = ['title', 'short_description', 'long_description', 'content', 'genres', \
-		'thumbnail', 'release_date', 'tags', 'credits', 'rating', 'external_ids']
+		'rating', 'thumbnail', 'release_date', 'tags', 'credits', 'external_ids']
 
 class MovieListView(ListView):
 	model = Movie
@@ -791,7 +791,7 @@ class ExternalIDDetailView(DetailView):
 class ExternalIDUpdateView(UpdateView):
 	model = ExternalID
 	context_object_name = 'externalid'
-	fields = ['external_id']
+	fields = ['external_id', 'id_type']
 
 class ExternalIDListAPI(generics.ListAPIView):
 	queryset = ExternalID.objects.all()

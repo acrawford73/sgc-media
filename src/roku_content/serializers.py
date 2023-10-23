@@ -159,6 +159,7 @@ class ParentalRatingSerializerList(serializers.ModelSerializer):
 class CreditSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='credit_name')
 	birthDate = serializers.CharField(source='birth_date')
+	role = serializers.StringRelatedField()
 	class Meta:
 		model = Credit
 		fields = ['name', 'role', 'birthDate']
