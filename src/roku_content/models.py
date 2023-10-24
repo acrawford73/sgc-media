@@ -152,7 +152,7 @@ class Category(models.Model):
 	category_name = models.CharField(max_length=128, default="", null=False, blank=False, \
 		help_text="The name of the category that will show up in the channel.")
 	# The name of the playlist in this feed that contains the content for this category.
-	playlist_name = models.CharField(max_length=128, default="", null=True, blank=True, \
+	playlist_name = models.ForeignKey('Playlist', on_delete=models.PROTECT, null=True, blank=True, \
 		help_text="The name of the playlist in this feed that contains the content for this category.")
 	# The query that will specify the content for this category.
 	# Tags: "movie AND dramas", "action OR dramas".
@@ -182,14 +182,13 @@ class Playlist(models.Model):
 	a channel.
 	"""
 	#playlist_id = models.PositiveBigIntegerField(primary_key=True)
-	playlist_name = models.CharField(max_length=20, default="", null=False, blank=False)
+	playlist_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	# List of mixed Movies, Series, Short Form Videos, TV Specials
 	item_ids = models.JSONField(default=list, null=True, blank=True)
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
 	created = models.DateTimeField(auto_now_add=True)
-	is_public = models.BooleanField(default=False)
 	def get_absolute_url(self):
 		return reverse('playlist-list')
 	class Meta:
@@ -209,7 +208,6 @@ class Movie(models.Model):
 	"""
 	movie_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
-	
 	# OneToOne, links to one content object that contains one or more video files.
 	content = models.ManyToManyField('Content', through='MovieContent', blank=True)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
@@ -486,8 +484,8 @@ class TVSpecialExternalID(models.Model):
 
 class Content(models.Model):
 	""" 
-	The Content model represents the details about a single video content item 
-	such as a Movie, Episode, Short-Form Video, or TV Show/Special.
+	The Content model represents the details about a single video content 
+	item such as a Movie, Episode, Short-Form Video, or TV Show/Special.
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
 	date_added = models.DateField(auto_now_add=True)

@@ -33,9 +33,8 @@ class CategoryAdmin(admin.ModelAdmin):
 		model = Category
 
 class PlaylistAdmin(admin.ModelAdmin):
-	list_display = ['playlist_name', 'created', 'is_public']
-	search_fields = ['playlist_name', 'is_public']
-	list_filter = ['is_public']
+	list_display = ['playlist_name', 'created']
+	search_fields = ['playlist_name']
 	readonly_fields = ['created']
 	class Meta:
 		model = Playlist
@@ -46,6 +45,7 @@ class MovieAdmin(admin.ModelAdmin):
 	list_display = ['title', 'release_date']
 	search_fields = ['movie_id', 'title', 'release_date']
 	list_filter = ['genres']
+	readonly_fields = ['movie_id']
 	class Meta:
 		model = Movie
 
@@ -53,13 +53,15 @@ class LiveFeedAdmin(admin.ModelAdmin):
 	list_display = ['livefeed_id', 'title']
 	search_fields = ['livefeed_id', 'title']
 	list_filter = ['genres']
+	readonly_fields = ['livefeed_id']
 	class Meta:
 		model = LiveFeed
 
 class SeriesAdmin(admin.ModelAdmin):
-	list_display = ['series_id', 'title', 'genres', 'release_date']
+	list_display = ['id', 'title', 'genres', 'release_date']
 	search_fields = ['series_id', 'title', 'release_date']
 	list_filter = ['seasons', 'episodes', 'genres']
+	readonly_fields = ['series_id']
 	class Meta:
 		model = Series
 
@@ -75,6 +77,7 @@ class EpisodeAdmin(admin.ModelAdmin):
 	search_fields = ['episode_id', 'title', 'episode_number', 'short_description', \
 		'long_description', 'credits', 'rating', 'external_ids', 'release_date']
 	list_filter = ['episode_number', 'external_ids']
+	readonly_fields = ['episode_id']
 	class Meta:
 		model = Episode
 
@@ -83,6 +86,7 @@ class ShortFormVideoAdmin(admin.ModelAdmin):
 	search_fields = ['short_form_video_id', 'title', 'short_description', \
 		'long_description', 'genres', 'credits', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'genres', 'tags']
+	readonly_fields = ['short_form_video_id']
 	class Meta:
 		model = ShortFormVideo
 
@@ -91,13 +95,14 @@ class TVSpecialAdmin(admin.ModelAdmin):
 	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', \
 		'genres', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'genres', 'tags']
+	readonly_fields = ['tv_special_id']
 	class Meta:
 		model = TVSpecial
 
 # Roku Properties
 
 class ContentAdmin(admin.ModelAdmin):
-	list_display = ['id', 'duration', 'language', 'date_added']
+	list_display = ['id', 'title', 'language', 'date_added']
 	search_fields = ['language', 'date_added']
 	list_filter = ['language', 'date_added']
 	readonly_fields = ['date_added']

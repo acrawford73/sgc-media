@@ -57,10 +57,10 @@
                 </td>
               </tr>
               <tr>
-                <td><strong>Trick Play Files</strong></td>
+                <td><strong>Trick-Play Files</strong></td>
                 <td>
-                  {% if content.trickplayfiles.all.count > 0 %}
-                    {% for item in content.trickplayfiles.all %}
+                  {% if content.trick_play_files.all.count > 0 %}
+                    {% for item in content.trick_play_files.all %}
                       <a href="{% url 'trickplayfiles-detail' item.id %}">{{ item }}</a></br>
                     {% endfor %}
                   {% else %}

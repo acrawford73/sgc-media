@@ -215,7 +215,7 @@ class CategoryListAPI(generics.ListAPIView):
 # Playlist
 class PlaylistCreateView(CreateView):
 	model = Playlist
-	fields = ['is_public', 'playlist_name', 'short_description', 'item_ids']
+	fields = ['playlist_name', 'short_description', 'item_ids']
 
 class PlaylistListView(ListView):
 	model = Playlist
@@ -231,10 +231,10 @@ class PlaylistDetailView(DetailView):
 class PlaylistUpdateView(UpdateView):
 	model = Playlist
 	context_object_name = 'playlist'
-	fields = ['is_public', 'playlist_name', 'short_description', 'item_ids']
+	fields = ['playlist_name', 'short_description', 'item_ids']
 
 class PlaylistListAPI(generics.ListAPIView):
-	queryset = Playlist.objects.all().filter(is_public=True)
+	queryset = Playlist.objects.all()
 	serializer_class = PlaylistSerializerList
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['playlist_name']
@@ -242,7 +242,7 @@ class PlaylistListAPI(generics.ListAPIView):
 	ordering = ['-id']
 
 # class PlaylistListAPISearch(generics.ListAPIView):
-# 	queryset = Playlist.objects.all().filter(is_public=True)
+# 	queryset = Playlist.objects.all()
 # 	serializer_class = PlaylistSerializerList
 # 	filter_backends = [filters.SearchFilter]
 # 	search_fields = ['playlist_name']
@@ -250,7 +250,7 @@ class PlaylistListAPI(generics.ListAPIView):
 # 	ordering = ['-id']
 
 # class PlaylistDetailAPI(generics.RetrieveAPIView):
-# 	queryset = Playlist.objects.all().filter(is_public=True)
+# 	queryset = Playlist.objects.all()
 # 	serializer_class = PlaylistSerializerDetail
 
 

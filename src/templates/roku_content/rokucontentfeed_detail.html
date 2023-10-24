@@ -54,35 +54,11 @@
                 <td>{{ rokucontentfeed.rating }}</td>
               </tr>
               <tr>
-                <td><strong>Categories</strong></td>
-                <td>
-                  {% if rokucontentfeed.categories.all.count > 0 %}
-                    {% for category in rokucontentfeed.categories.all %}
-                      <li>{{ category }}</li>
-                    {% endfor %}
-                  {% else %}
-                    No Categories added.
-                  {% endif %}
-                </td>
-              </tr>
-              <tr>
-                <td><strong>Playlists</strong></td>
-                <td>
-                  {% if rokucontentfeed.playlists.all.count > 0 %}
-                    {% for playlist in rokucontentfeed.playlists.all %}
-                      <li>{{ playlist }}</li>
-                    {% endfor %}
-                  {% else %}
-                    No Playlists added.
-                  {% endif %}
-                </td>
-              </tr>
-              <tr>
                 <td><strong>Movies</strong></td>
                 <td>
                   {% if rokucontentfeed.movies.all.count > 0 %}
                     {% for movie in rokucontentfeed.movies.all %}
-                      <li>{{ movie }}</li>
+                      {{ movie }}</br>
                     {% endfor %}
                   {% else %}
                     No Movies added.
@@ -94,7 +70,7 @@
                 <td>
                   {% if rokucontentfeed.livefeeds.all.count > 0 %}
                     {% for livefeed in rokucontentfeed.livefeeds.all %}
-                      <li>{{ livefeed }}</li>
+                      { livefeed }}</br>
                     {% endfor %}
                   {% else %}
                     No Live Feeds added.
@@ -106,7 +82,7 @@
                 <td>
                   {% if rokucontentfeed.series.all.count > 0 %}
                     {% for item in rokucontentfeed.series.all %}
-                      <li>{{ item }}</li>
+                      {{ item }}</br>
                     {% endfor %}
                   {% else %}
                     No Series added.
@@ -118,7 +94,7 @@
                 <td>
                   {% if rokucontentfeed.shortformvideos.all.count > 0 %}
                     {% for sfv in rokucontentfeed.shortformvideos.all %}
-                      <li>{{ sfv }}</li>
+                      {{ sfv }}</br>
                     {% endfor %}
                   {% else %}
                     No Short-Form Videos added.
@@ -130,10 +106,34 @@
                 <td>
                   {% if rokucontentfeed.tvspecials.all.count > 0 %}
                     {% for tvs in rokucontentfeed.tvspecials.all %}
-                      <li>{{ tvs }}</li>
+                      {{ tvs }}</br>
                     {% endfor %}
                   {% else %}
                     No TV Specials added.
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Categories</strong></td>
+                <td>
+                  {% if rokucontentfeed.categories.all.count > 0 %}
+                    {% for category in rokucontentfeed.categories.all %}
+                      {{ category }}</br>
+                    {% endfor %}
+                  {% else %}
+                    No Categories added.
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Playlists</strong></td>
+                <td>
+                  {% if rokucontentfeed.playlists.all.count > 0 %}
+                    {% for playlist in rokucontentfeed.playlists.all %}
+                      {{ playlist }}</br>
+                    {% endfor %}
+                  {% else %}
+                    No Playlists added.
                   {% endif %}
                 </td>
               </tr>

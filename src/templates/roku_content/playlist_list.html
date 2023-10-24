@@ -24,7 +24,6 @@
               <tr align="center" class="table-primary">
                 <th>Playlist Name</th>
                 <th>Last Updated</th>
-                <th>Published</th>
               </tr>
             </thead>
             <tbody>
@@ -32,7 +31,6 @@
               <tr align="center">
                 <td><a href="{% url 'playlist-detail' asset.id %}">{{ asset.playlist_name }}</a></td>
                 <td>{{ asset.updated }}</td>
-                <td>{% if asset.is_public == True %}Yes{% else %}No{% endif %}</td>
               </tr>
               {% endfor %}
 

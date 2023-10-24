@@ -16,12 +16,13 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	providerName = serializers.CharField(source='provider_name')
 	lastUpdated = serializers.DateTimeField(source='last_updated')
 	shortFormVideos = serializers.StringRelatedField(source='short_form_videos')
+	tvSpecials = serializers.StringRelatedField(source='tv_specials')
 	language = serializers.StringRelatedField()
 	rating = serializers.StringRelatedField()
 	class Meta:
 		model = RokuContentFeed
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', \
-			'movies', 'series', 'shortFormVideos', 'playlists', 'categories']
+			'movies', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 		depth = 2
 
 ### Content Categories
