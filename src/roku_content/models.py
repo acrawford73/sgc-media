@@ -768,7 +768,7 @@ class Credit(models.Model):
 
 # Catch all for Tags
 class Tag(models.Model):
-	tag_name = models.CharField(max_length=30, default="", null=False, blank=False, unique=True, \
+	tag_name = models.CharField(max_length=20, default="", null=False, blank=False, unique=True, \
 		help_text="Enter a new tag that hasn't been added yet.")
 	def get_absolute_url(self):
 		return reverse('tag-list')

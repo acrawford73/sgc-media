@@ -14,16 +14,27 @@ from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, R
 # This class provides the data used to populate the Roku channel menus and content
 class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	providerName = serializers.CharField(source='provider_name')
-	lastUpdated = serializers.DateTimeField(source='last_updated')
-	shortFormVideos = serializers.StringRelatedField(source='short_form_videos')
-	tvSpecials = serializers.StringRelatedField(source='tv_specials')
 	language = serializers.StringRelatedField()
+	#rating = serializers.StringRelatedField()
 	rating = serializers.StringRelatedField()
+	lastUpdated = serializers.DateTimeField(source='last_updated')
+	movies = serializers.StringRelatedField(read_only=True)
+	series = serializers.StringRelatedField(read_only=True)
+	shortFormVideos = serializers.StringRelatedField(source='short_form_videos', read_only=True)
+	tvSpecials = serializers.StringRelatedField(source='tv_specials', read_only=True)
+	categories = serializers.StringRelatedField(read_only=True)
+	playlists = serializers.StringRelatedField(read_only=True)
 	class Meta:
 		model = RokuContentFeed
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', \
 			'movies', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
-		depth = 2
+		#depth = 2
+
+class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
+	class Meta:
+		model = RokuContentFeed
+		fields = '__all__'
+		
 
 ### Content Categories
 
@@ -52,7 +63,7 @@ class LanguageSerializerList(serializers.ModelSerializer):
 
 class MovieSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='movie_id')
-	rating = serializers.StringRelatedField()
+	rating = serializers.StringRelatedField(many=True)
 	class Meta:
 		model = Movie
 		fields = ['id', 'title', 'short_description', 'long_description', 'content', \

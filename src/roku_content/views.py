@@ -16,9 +16,8 @@ from rest_framework import filters
 from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
 ### Serializers
-## Roku Content
 # Feeds
-from .serializers import RokuContentFeedSerializerList #, RokuSearchFeedSerializerList
+from .serializers import RokuContentFeedSerializerList, RokuContentFeedSerializerDetail #, RokuSearchFeedSerializerList
 # Categories
 from .serializers import CategorySerializerList, PlaylistSerializerList
 # Types
@@ -31,32 +30,12 @@ from .serializers import TrickPlayFileSerializerList, GenreSerializerList, Exter
 from .serializers import RatingSerializerList, RatingSourceSerializerList, ParentalRatingSerializerList
 from .serializers import CreditSerializerList, LanguageSerializerList, TagSerializerList
 
-
-### Notes
-#
-# Get latest item
-# class BookListView(ListView):
-#     model = Book
-
-#     def head(self, *args, **kwargs):
-#         last_book = self.get_queryset().latest("publication_date")
-#         response = HttpResponse(
-#             # RFC 1123 date format.
-#             headers={
-#                 "Last-Modified": last_book.publication_date.strftime(
-#                     "%a, %d %b %Y %H:%M:%S GMT"
-#                 )
-#             },
-#         )
-#         return response
-
-
 ## Roku Feeds
 
 # Roku Content Feed
 class RokuContentFeedCreateView(CreateView):
 	"""
-	Display Roku Content Feed fields for CreateView :model:`roku_content.RokuContentFeed`.
+	Roku Content Feed fields for CreateView :model:`roku_content.RokuContentFeed`.
 
 	**Context**
 
@@ -73,7 +52,7 @@ class RokuContentFeedCreateView(CreateView):
 
 class RokuContentFeedListView(ListView):
 	"""
-	Display Roku Content Feed fields for ListView :model:`roku_content.RokuContentFeed`.
+	Roku Content Feed fields for ListView :model:`roku_content.RokuContentFeed`.
 
 	**Context**
 
@@ -92,7 +71,7 @@ class RokuContentFeedListView(ListView):
 
 class RokuContentFeedDetailView(DetailView):
 	"""
-	Display Roku Content Feed fields for DetailView :model:`roku_content.RokuContentFeed`.
+	Roku Content Feed fields for DetailView :model:`roku_content.RokuContentFeed`.
 
 	**Context**
 
@@ -108,7 +87,7 @@ class RokuContentFeedDetailView(DetailView):
 
 class RokuContentFeedUpdateView(UpdateView):
 	"""
-	Display Roku Content Feed fields for UpdateView :model:`roku_content.RokuContentFeed`.
+	Roku Content Feed fields for UpdateView :model:`roku_content.RokuContentFeed`.
 
 	**Context**
 
@@ -126,20 +105,27 @@ class RokuContentFeedUpdateView(UpdateView):
 
 class RokuContentFeedListAPI(generics.ListAPIView):
 	"""
-	Display Roku Content Feed fields for ListAPIView :model:`roku_content.RokuContentFeed`.
+	Roku Content Feed fields for ListAPIView :model:`roku_content.RokuContentFeed`.
 	"""
 	queryset = RokuContentFeed.objects.all().filter(is_public=True)
 	serializer_class = RokuContentFeedSerializerList
-	#filter_backends = [DjangoFilterBackend]
-	#filterset_fields = ['is_public']
-	ordering_fields = ['id']
-	ordering = ['-id']
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['language']
+	#ordering_fields = ['id']
+	#ordering = ['-id']
 	pagination_class = None
 
-# class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
-# 	queryset = RokuContentFeed.objects.all()
-# 	serializer_class = RokuContentFeedSerializerDetail
+# class RokuContentFeedListAPISearch(generics.ListAPIView):
+# 	queryset = RokuContentFeed.objects.all().filter(is_public=True)
+# 	serializer_class = RokuContentFeedSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['language']
+# 	pagination_class = None
 
+class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
+	queryset = RokuContentFeed.objects.all().filter(is_public=True)
+	serializer_class = RokuContentFeedSerializerDetail
+	pagination_class = None
 
 ## Roku Content Categories
 

@@ -11,7 +11,9 @@ urlpatterns = [
 	path('roku-content-feed/<int:pk>/', views.RokuContentFeedDetailView.as_view(), name='rokucontentfeed-detail'),
 	path('roku-content-feed/edit/<int:pk>/', views.RokuContentFeedUpdateView.as_view(), name='rokucontentfeed-update'),
 	path('api/roku-content-feed/', views.RokuContentFeedListAPI.as_view(), name='rokucontentfeed-api'),
-
+	# path('api/roku-content-feed/search/', views.RokuContentFeedAPISearch.as_view()),
+	path('api/roku-content-feed/<int:pk>/', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
+	re_path('^api/roku-content-feed/(?P<language>.+)/$', views.RokuContentFeedListAPI.as_view()),
 	# Roku Search Feed
 	# path('roku-search-feed/create/', views.RokuSearchFeedCreateView.as_view(), name='rokusearchfeed-create'),
 	# path('roku-search-feed/', views.RokuSearchFeedListView.as_view(), name='rokusearchfeed-list'),
