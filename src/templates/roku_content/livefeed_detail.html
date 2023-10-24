@@ -29,8 +29,24 @@
                 <td>{{ livefeed.title }}</td>
               </tr>
               <tr>
+                <td><strong>Short Description</strong></td>
+                <td>{{ livefeed.short_description }}</td>
+              </tr>
+              <tr>
+                <td><strong>Long Description</strong></td>
+                <td>{{ livefeed.long_description }}</td>
+              </tr>
+              <tr>
                 <td><strong>Content</strong></td>
-                <td>{{ livefeed.content }}</td>
+                <td>
+                  {% if livefeed.content.all.count > 0 %}
+                    {% for item in livefeed.content.all %}
+                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Content added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Genres</strong></td>
@@ -43,14 +59,6 @@
               <tr>
                 <td><strong>Branded Thumbnail</strong></td>
                 <td>{{ livefeed.branded_thumbnail }}</td>
-              </tr>
-              <tr>
-                <td><strong>Short Description</strong></td>
-                <td>{{ livefeed.short_description }}</td>
-              </tr>
-              <tr>
-                <td><strong>Long Description</strong></td>
-                <td>{{ livefeed.long_description }}</td>
               </tr>
               <tr>
                 <td><strong>Tags</strong></td>

@@ -29,8 +29,24 @@
                 <td>{{ tvspecial.title }}</td>
               </tr>
               <tr>
+                <td><strong>Short Description</strong></td>
+                <td>{{ tvspecial.short_description }}</td>
+              </tr>
+              <tr>
+                <td><strong>Long Description</strong></td>
+                <td>{{ tvspecial.long_description }}</td>
+              </tr>
+              <tr>
                 <td><strong>Content</strong></td>
-                <td>{{ tvspecial.birth_date }}</td>
+                <td>
+                  {% if tvspecial.content.all.count > 0 %}
+                    {% for item in tvspecial.content.all %}
+                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Content added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
@@ -41,22 +57,6 @@
                 <td>{{ tvspecial.genres }}</td>
               </tr>
               <tr>
-                <td><strong>Release Date</strong></td>
-                <td>{{ tvspecial.release_date }}</td>
-              </tr>
-              <tr>
-                <td><strong>Short Description</strong></td>
-                <td>{{ tvspecial.short_description }}</td>
-              </tr>
-              <tr>
-                <td><strong>Long Description</strong></td>
-                <td>{{ tvspecial.long_description }}</td>
-              </tr>
-              <tr>
-                <td><strong>Credits</strong></td>
-                <td>{{ tvspecial.credits }}</td>
-              </tr>
-              <tr>
                 <td><strong>Rating</strong></td>
                 <td>{{ tvspecial.rating }}</td>
               </tr>
@@ -65,8 +65,32 @@
                 <td>{{ tvspecial.tags }}</td>
               </tr>
               <tr>
+                <td><strong>Release Date</strong></td>
+                <td>{{ tvspecial.release_date }}</td>
+              </tr>
+              <tr>
+                <td><strong>Credits</strong></td>
+                <td>
+                  {% if tvspecial.credits.all.count > 0 %}
+                    {% for item in tvspecial.credits.all %}
+                      <a href="{% url 'credit-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Credits added.
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
                 <td><strong>External ID</strong></td>
-                <td>{{ tvspecial.external_ids }}</td>
+                <td>
+                  {% if tvspecial.external_ids.all.count > 0 %}
+                    {% for item in tvspecial.external_ids.all %}
+                      <a href="{% url 'externalid-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No External IDs added.
+                  {% endif %}
+                </td>
               </tr>
             </tbody>
           </table>

@@ -22,27 +22,11 @@
             <tbody>
               <tr>
                 <td><strong>UUID</strong></td>
-                <td>{{ movie.episode_id }}</td>
+                <td>{{ movie.movie_id }}</td>
               </tr>
               <tr>
                 <td><strong>Title</strong></td>
                 <td>{{ movie.title }}</td>
-              </tr>
-              <tr>
-                <td><strong>Content</strong></td>
-                <td>{{ movie.content }}</td>
-              </tr>
-              <tr>
-                <td><strong>Genres</strong></td>
-                <td>{{ movie.genre }}</td>
-              </tr>
-              <tr>
-                <td><strong>Thumbnail</strong></td>
-                <td>{{ movie.thumbnail }}</td>
-              </tr>
-              <tr>
-                <td><strong>Release Date</strong></td>
-                <td>{{ movie.release_date }}</td>
               </tr>
               <tr>
                 <td><strong>Short Description</strong></td>
@@ -53,20 +37,68 @@
                 <td>{{ movie.long_description }}</td>
               </tr>
               <tr>
-                <td><strong>Tags</strong></td>
-                <td>{{ movie.tags }}</td>
+                <td><strong>Content</strong></td>
+                <td>
+                  {% if movie.content.all.count > 0 %}
+                    {% for item in movie.content.all %}
+                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Content added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
-                <td><strong>Credits</strong></td>
-                <td>{{ movie.credits }}</td>
+                <td><strong>Thumbnail</strong></td>
+                <td>{{ movie.thumbnail }}</td>
+              </tr>
+              <tr>
+                <td><strong>Release Date</strong></td>
+                <td>{{ movie.release_date }}</td>
+              </tr>
+              <tr>
+                <td><strong>Genres</strong></td>
+                <td>{{ movie.genres }}</td>
+              </tr>
+              <tr>
+                <td><strong>Tags</strong></td>
+                <td>
+                  {% if movie.tags.all.count > 0 %}
+                    {% for item in movie.tags.all %}
+                      {{ item }}</br>
+                    {% endfor %}
+                  {% else %}
+                    No Tags added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Rating</strong></td>
                 <td>{{ movie.rating }}</td>
               </tr>
               <tr>
+                <td><strong>Credits</strong></td>
+                <td>
+                  {% if movie.credits.all.count > 0 %}
+                    {% for item in movie.credits.all %}
+                      <a href="{% url 'credit-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Credits added.
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
                 <td><strong>External ID</strong></td>
-                <td>{{ movie.external_ids }}</td>
+                <td>
+                  {% if movie.external_ids.all.count > 0 %}
+                    {% for item in movie.external_ids.all %}
+                      <a href="{% url 'externalid-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No External IDs added.
+                  {% endif %}
+                </td>
               </tr>
 
            </tbody>

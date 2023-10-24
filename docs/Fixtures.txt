@@ -1,0 +1,10 @@
+Fixtures
+
+Export:
+
+python manage.py dumpdata appname.Model > model.json
+
+Import:
+
+python manage.py loaddata appname/fixtures/appname/model.json
+

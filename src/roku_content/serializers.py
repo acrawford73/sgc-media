@@ -51,24 +51,28 @@ class LanguageSerializerList(serializers.ModelSerializer):
 
 class MovieSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='movie_id')
+	rating = serializers.StringRelatedField()
 	class Meta:
 		model = Movie
-		fields = ['id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
-			'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
+		fields = ['id', 'title', 'short_description', 'long_description', 'content', \
+			'genres', 'thumbnail', 'release_date', 'tags', 'rating', 'credits', 'external_ids']
 
 class LiveFeedSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='livefeed_id')
+	genres = serializers.StringRelatedField()
+	rating = serializers.StringRelatedField()
 	class Meta:
 		model = LiveFeed
-		fields = ['id', 'title', 'content', 'thumbnail', 'branded_thumbnail', \
-			'short_description', 'long_description', 'tags', 'rating', 'genres']
+		fields = ['id', 'title', 'short_description', 'long_description', 'content', \
+			'thumbnail', 'branded_thumbnail', 'tags', 'genres', 'rating']
 
 class SeriesSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='series_id')
+	genres = serializers.StringRelatedField()
 	class Meta:
 		model = Series
-		fields = ['id', 'title', 'seasons', 'episodes', 'genres', 'thumbnail', \
-			'release_date', 'short_description', 'long_description', 'tags', 'credits', 'external_ids']
+		fields = ['id', 'title', 'short_description', 'long_description', 'seasons', \
+		'episodes', 'thumbnail', 'release_date', 'tags', 'genres', 'credits', 'external_ids']
 
 class SeasonSerializerList(serializers.ModelSerializer):
 	class Meta:
@@ -77,24 +81,32 @@ class SeasonSerializerList(serializers.ModelSerializer):
 
 class EpisodeSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='episode_id')
+	#content = serializers.StringRelatedField()
+	#credits = serializers.StringRelatedField()
+	rating = serializers.StringRelatedField()
+	externalIds = serializers.StringRelatedField(source='external_ids')
 	class Meta:
 		model = Episode
-		fields = ['id', 'title', 'content', 'thumbnail', 'release_date', 'episode_number', \
-		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
+		fields = ['id', 'episode_number', 'title', 'short_description', 'long_description', 'content', \
+			'thumbnail', 'release_date', 'rating', 'credits', 'externalIds']
 
 class ShortFormVideoSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='short_form_video_id')
+	genres = serializers.StringRelatedField()
+	rating = serializers.StringRelatedField()
 	class Meta:
 		model = ShortFormVideo
-		fields = ['id', 'title', 'content', 'thumbnail', 'short_description', \
-		'long_description', 'release_date', 'tags', 'genres', 'credits', 'rating']
+		fields = ['id', 'title', 'short_description', 'long_description','content', \
+			'thumbnail', 'release_date', 'tags', 'genres', 'rating', 'credits']
 
 class TVSpecialSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='tv_special_id')
+	genres = serializers.StringRelatedField()
+	rating = serializers.StringRelatedField()
 	class Meta:
 		model = TVSpecial
-		fields = ['id', 'title', 'content', 'thumbnail', 'genres', 'release_date', \
-		'short_description', 'long_description', 'credits', 'rating', 'tags', 'external_ids']
+		fields = ['id', 'title', 'short_description', 'long_description', 'content', \
+			'thumbnail', 'release_date', 'tags', 'genres', 'rating', 'credits', 'external_ids']
 
 
 ### Content Properties
@@ -140,6 +152,7 @@ class ExternalIDSerializerList(serializers.ModelSerializer):
 		fields = ['id', 'external_id', 'idType']
 
 class RatingSerializerList(serializers.ModelSerializer):
+	rating = serializers.StringRelatedField()
 	ratingSource = serializers.CharField(source='rating_source')
 	class Meta:
 		model = Rating

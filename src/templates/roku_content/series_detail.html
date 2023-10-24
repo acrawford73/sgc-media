@@ -29,16 +29,36 @@
                 <td>{{ series.title }}</td>
               </tr>
               <tr>
+                <td><strong>Short Description</strong></td>
+                <td>{{ series.short_description }}</td>
+              </tr>
+              <tr>
+                <td><strong>Long Description</strong></td>
+                <td>{{ series.long_description }}</td>
+              </tr>
+              <tr>
                 <td><strong>Seasons</strong></td>
-                <td>{{ series.seasons }}</td>
+                <td>
+                  {% if series.seasons.all.count > 0 %}
+                    {% for item in series.seasons.all %}
+                      <a href="{% url 'season-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Seasons added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Episodes</strong></td>
-                <td>{{ series.episodes }}</td>
-              </tr>
-              <tr>
-                <td><strong>Genres</strong></td>
-                <td>{{ series.genre }}</td>
+                <td>
+                  {% if series.episodes.all.count > 0 %}
+                    {% for item in series.episodes.all %}
+                      <a href="{% url 'episode-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Episodes added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
@@ -49,12 +69,8 @@
                 <td>{{ series.release_date }}</td>
               </tr>
               <tr>
-                <td><strong>Short Description</strong></td>
-                <td>{{ series.short_description }}</td>
-              </tr>
-              <tr>
-                <td><strong>Long Description</strong></td>
-                <td>{{ series.long_description }}</td>
+                <td><strong>Genres</strong></td>
+                <td>{{ series.genres }}</td>
               </tr>
               <tr>
                 <td><strong>Tags</strong></td>
@@ -62,11 +78,27 @@
               </tr>
               <tr>
                 <td><strong>Credits</strong></td>
-                <td>{{ series.credits }}</td>
+                <td>
+                  {% if series.credits.all.count > 0 %}
+                    {% for item in series.credits.all %}
+                      <a href="{% url 'credit-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Credits added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>External ID</strong></td>
-                <td>{{ series.external_ids }}</td>
+                <td>
+                  {% if series.external_ids.all.count > 0 %}
+                    {% for item in series.external_ids.all %}
+                      <a href="{% url 'externalid-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No External IDs added.
+                  {% endif %}
+                </td>
               </tr>
 
            </tbody>

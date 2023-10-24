@@ -256,7 +256,7 @@ class LiveFeed(models.Model):
 	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
 	content = models.ManyToManyField('Content', through='LiveFeedContent', blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False)
@@ -334,7 +334,8 @@ class Season(models.Model):
 	"""
 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	# One or more episodes of this particular season.
-	episodes = models.ManyToManyField('Episode', through='SeasonEpisode')
+	episodes = models.ManyToManyField('Episode', through='SeasonEpisode', \
+		help_text='Multiple episodes can be selected for each season.')
 	def get_absolute_url(self):
 		return reverse('season-list')
 	class Meta:
@@ -355,7 +356,7 @@ class Episode(models.Model):
 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=False)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
 	content = models.ManyToManyField('Content', through='EpisodeContent', blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
@@ -401,7 +402,7 @@ class ShortFormVideo(models.Model):
 	short_description = models.CharField(max_length=200, null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
-	long_description = models.CharField(max_length=500, null=False, blank=False)
+	long_description = models.CharField(max_length=500, null=False, blank=True)
 	# The video content, such as the URL of the video file, subtitles, and so on.
 	content = models.ManyToManyField('Content', through='ShortFormVideoContent', blank=True)
 	# The URL of the thumbnail for the video. This is used within your channel and in search results.
@@ -456,6 +457,8 @@ class TVSpecial(models.Model):
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	credits = models.ManyToManyField('Credit', through='TVSpecialCredit', blank=True) # Optional
 	external_ids = models.ManyToManyField('ExternalID', through='TVSpecialExternalID', blank=True) # Optional
+	def get_absolute_url(self):
+		return reverse('tvspecial-list')
 	class Meta:
 		ordering = ['tv_special_id']
 		def __unicode__(self):

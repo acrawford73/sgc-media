@@ -33,7 +33,7 @@
                 <td>
                   {% if shortformvideo.content.all.count > 0 %}
                     {% for item in shortformvideo.content.all %}
-                      <li>{{ item }}</li>
+                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
                     {% endfor %}
                   {% else %}
                     No Content added.
@@ -65,20 +65,20 @@
                 <td>{{ shortformvideo.genres }}</td>
               </tr>
               <tr>
+                <td><strong>Rating</strong></td>
+                <td>{{ shortformvideo.rating }}</td>
+              </tr>
+              <tr>
                 <td><strong>Credits</strong></td>
                   <td>
                   {% if shortformvideo.credits.all.count > 0 %}
                     {% for item in shortformvideo.credits.all %}
-                      <li>{{ item }}</li>
+                      <a href="{% url 'credit-detail' item.id %}">{{ item }}</a></br>
                     {% endfor %}
                   {% else %}
                     No Credits added.
                   {% endif %}
                 </td>
-              </tr>
-              <tr>
-                <td><strong>Rating</strong></td>
-                <td>{{ shortformvideo.rating }}</td>
               </tr>
 
            </tbody>

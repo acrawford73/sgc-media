@@ -54,10 +54,10 @@ urlpatterns = [
 	
 	# LiveFeed
 	path('livefeed/create/', views.LiveFeedCreateView.as_view(), name='livefeed-create'),
-	path('livefeed/', views.LiveFeedListView.as_view(), name='livefeed-list'),
+	path('livefeeds/', views.LiveFeedListView.as_view(), name='livefeed-list'),
 	path('livefeed/<int:pk>/', views.LiveFeedDetailView.as_view(), name='livefeed-detail'),
 	path('livefeed/edit/<int:pk>/', views.LiveFeedUpdateView.as_view(), name='livefeed-update'),
-	path('api/livefeed/', views.LiveFeedListAPI.as_view(), name='livefeed-api'),
+	path('api/livefeeds/', views.LiveFeedListAPI.as_view(), name='livefeed-api'),
 	# path('api/livefeed/<int:pk>', views.LiveFeedDetailAPI.as_view(), name='livefeed-detail-api'),
 	
 	# Series
@@ -70,18 +70,18 @@ urlpatterns = [
 	
 	# Season
 	path('season/create/', views.SeasonCreateView.as_view(), name='season-create'),
-	path('season/', views.SeasonListView.as_view(), name='season-list'),
+	path('seasons/', views.SeasonListView.as_view(), name='season-list'),
 	path('season/<int:pk>/', views.SeasonDetailView.as_view(), name='season-detail'),
 	path('season/edit/<int:pk>/', views.SeasonUpdateView.as_view(), name='season-update'),
-	path('api/season/', views.SeasonListAPI.as_view(), name='season-api'),
+	path('api/seasons/', views.SeasonListAPI.as_view(), name='season-api'),
 	# path('apepisodei/season/<int:pk>', views.SeasonDetailAPI.as_view(), name='season-detail-api'),
 	
 	# Episode
 	path('episode/create/', views.EpisodeCreateView.as_view(), name='episode-create'),
-	path('episode/', views.EpisodeListView.as_view(), name='episode-list'),
+	path('episodes/', views.EpisodeListView.as_view(), name='episode-list'),
 	path('episode/<int:pk>/', views.EpisodeDetailView.as_view(), name='episode-detail'),
 	path('episode/edit/<int:pk>/', views.EpisodeUpdateView.as_view(), name='episode-update'),
-	path('api/episode/', views.EpisodeListAPI.as_view(), name='episode-api'),
+	path('api/episodes/', views.EpisodeListAPI.as_view(), name='episode-api'),
 	# path('api/episode/<int:pk>', views.EpisodeDetailAPI.as_view(), name='episode-detail-api'),
 	
 	# ShortFormVideo
@@ -94,10 +94,10 @@ urlpatterns = [
 	
 	# TVSpecial
 	path('tvspecial/create/', views.TVSpecialCreateView.as_view(), name='tvspecial-create'),
-	path('tvspecial/', views.TVSpecialListView.as_view(), name='tvspecial-list'),
+	path('tvspecials/', views.TVSpecialListView.as_view(), name='tvspecial-list'),
 	path('tvspecial/<int:pk>/', views.TVSpecialDetailView.as_view(), name='tvspecial-detail'),
 	path('tvspecial/edit/<int:pk>/', views.TVSpecialUpdateView.as_view(), name='tvspecial-update'),
-	path('api/tvspecial/', views.TVSpecialListAPI.as_view(), name='tvspecial-api'),
+	path('api/tvspecials/', views.TVSpecialListAPI.as_view(), name='tvspecial-api'),
 	# path('api/tvspecial/<int:pk>', views.TVSpecialDetailAPI.as_view(), name='tvspecial-detail-api'),
 	
 	# Content

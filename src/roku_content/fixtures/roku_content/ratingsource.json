@@ -5,7 +5,7 @@
   "fields": {
     "source_name": "BBFC",
     "source_long_name": "British Board of Film Classification",
-    "source_url": "https://www.bbfc.co.uk/"
+    "source_url": "https://www.bbfc.co.uk/about-classification/classification-guidelines/"
   }
 },
 {
@@ -32,7 +32,7 @@
   "fields": {
     "source_name": "CPR",
     "source_long_name": "Canadian Parental Rating",
-    "source_url": ""
+    "source_url": "https://parentpreviews.com/movie-ratings/canada"
   }
 },
 {
@@ -50,7 +50,7 @@
   "fields": {
     "source_name": "FSK",
     "source_long_name": "Freiwillige Selbstkontrolle der Filmwirtschaft (Germany)",
-    "source_url": ""
+    "source_url": "https://en.wikipedia.org/wiki/Freiwillige_Selbstkontrolle_der_Filmwirtschaft"
   }
 },
 {
@@ -59,7 +59,7 @@
   "fields": {
     "source_name": "MPAA",
     "source_long_name": "Motion Picture Association of America",
-    "source_url": ""
+    "source_url": "https://parentpreviews.com/movie-ratings/usa/"
   }
 },
 {

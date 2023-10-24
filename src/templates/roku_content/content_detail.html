@@ -25,28 +25,48 @@
                 <td>{{ content.title }}</td>
               </tr>
               <tr>
-                <td><strong>Date Added</strong></td>
-                <td>{{ content.date_added }}</td>
-              </tr>
-              <tr>
-                <td><strong>Videos</strong></td>
-                <td>{{ content.videos }}</td>
+                <td><strong>Language</strong></td>
+                <td>{{ content.language }}</td>
               </tr>
               <tr>
                 <td><strong>Duration (seconds)</strong></td>
                 <td>{{ content.duration }}</td>
               </tr>
               <tr>
+                <td><strong>Videos</strong></td>
+                <td>
+                  {% if content.videos.all.count > 0 %}
+                    {% for item in content.videos.all %}
+                      <a href="{% url 'video-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Videos added.
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
                 <td><strong>Captions</strong></td>
-                <td>{{ content.captions }}</td>
+                <td>
+                  {% if content.captions.all.count > 0 %}
+                    {% for item in content.captions.all %}
+                      <a href="{% url 'caption-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Captions added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Trick Play Files</strong></td>
-                <td>{{ content.trick_play_files }}</td>
-              </tr>
-              <tr>
-                <td><strong>Language</strong></td>
-                <td>{{ content.language }}</td>
+                <td>
+                  {% if content.trickplayfiles.all.count > 0 %}
+                    {% for item in content.trickplayfiles.all %}
+                      <a href="{% url 'trickplayfiles-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Trick-play files added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Validity Start Period</strong></td>
@@ -55,6 +75,10 @@
               <tr>
                 <td><strong>Validity End Period</strong></td>
                 <td>{{ content.validity_end_period }}</td>
+              </tr>
+              <tr>
+                <td><strong>Date Added</strong></td>
+                <td>{{ content.date_added }}</td>
               </tr>
             </tbody>
           </table>

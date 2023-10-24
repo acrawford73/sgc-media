@@ -26,7 +26,15 @@
               </tr>
               <tr>
                 <td><strong>Episodes</strong></td>
-                <td>{{ season.episodes }}</td>
+                <td>
+                  {% if season.episodes.all.count > 0 %}
+                    {% for item in season.episodes.all %}
+                      <a href="{% url 'episode-detail' item.id %}">{{ item }}</a></br>
+                    {% endfor %}
+                  {% else %}
+                    No Episodes added.
+                  {% endif %}
+                </td>
               </tr>
 
            </tbody>
