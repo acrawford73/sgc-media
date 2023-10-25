@@ -726,6 +726,8 @@ class ParentalRating(models.Model):
 class CreditRole(models.Model):
 	""" Represents a role of the person credited in video content. """
 	credit_role = models.CharField(max_length=50, default="", null=False, blank=False)
+	def get_absolute_url(self):
+		return reverse('creditrole-list')
 	class Meta:
 		ordering = ['credit_role']
 		def __unicode__(self):
