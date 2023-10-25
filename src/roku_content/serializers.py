@@ -100,6 +100,7 @@ class MovieSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='movie_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
+	releaseDate = serializers.DateField(source='release_date')
 	content = ContentSerializerList(many=True)
 	genres = serializers.StringRelatedField()
 	tags = TagSerializerList(many=True)
@@ -109,12 +110,13 @@ class MovieSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Movie
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'content', \
-			'thumbnail', 'release_date', 'genres', 'tags', 'rating', 'credits', 'externalIds']
+			'thumbnail', 'releaseDate', 'genres', 'tags', 'rating', 'credits', 'externalIds']
 
 class LiveFeedSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='livefeed_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
+	brandedThumbnail = serializers.URLField(source='branded_thumbnail')
 	content = ContentSerializerList(many=True)
 	tags = serializers.StringRelatedField()
 	genres = serializers.StringRelatedField()
@@ -122,20 +124,22 @@ class LiveFeedSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = LiveFeed
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'content', \
-			'thumbnail', 'branded_thumbnail', 'tags', 'genres', 'rating']
+			'thumbnail', 'brandedThumbnail', 'tags', 'genres', 'rating']
 
 class EpisodeSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='episode_id')
+	episodeNumber = serializers.IntegerField(source='episode_number')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
+	releaseDate = serializers.DateField(source='release_date')
 	content = ContentSerializerList(many=True)
 	rating = RatingSerializerList()
 	credits = CreditSerializerList(many=True)
 	externalIds = ExternalIDSerializerList(many=True, source='external_ids')
 	class Meta:
 		model = Episode
-		fields = ['id', 'episode_number', 'title', 'shortDescription', 'longDescription', 'content', \
-			'thumbnail', 'release_date', 'rating', 'credits', 'externalIds']
+		fields = ['id', 'episodeNumber', 'title', 'shortDescription', 'longDescription', 'content', \
+			'thumbnail', 'releaseDate', 'rating', 'credits', 'externalIds']
 
 class SeasonSerializerList(serializers.ModelSerializer):
 	episodes = EpisodeSerializerList(many=True)
@@ -147,6 +151,7 @@ class SeriesSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='series_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
+	releaseDate = serializers.DateField(source='release_date')
 	tags = serializers.StringRelatedField()
 	seasons = SeasonSerializerList(many=True)
 	episodes = EpisodeSerializerList(many=True)
@@ -156,12 +161,13 @@ class SeriesSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Series
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'seasons', \
-		'episodes', 'thumbnail', 'release_date', 'tags', 'genres', 'credits', 'externalIds']
+		'episodes', 'thumbnail', 'releaseDate', 'tags', 'genres', 'credits', 'externalIds']
 
 class ShortFormVideoSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='short_form_video_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
+	releaseDate = serializers.DateField(source='release_date')
 	rating = RatingSerializerList()
 	genres = serializers.StringRelatedField()
 	content = ContentSerializerList(many=True)
@@ -169,12 +175,13 @@ class ShortFormVideoSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = ShortFormVideo
 		fields = ['id', 'title', 'shortDescription', 'longDescription','content', \
-			'thumbnail', 'release_date', 'tags', 'genres', 'rating', 'credits']
+			'thumbnail', 'releaseDate', 'tags', 'genres', 'rating', 'credits']
 
 class TVSpecialSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='tv_special_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
+	releaseDate = serializers.DateField(source='release_date')
 	tags = serializers.StringRelatedField()
 	genres = serializers.StringRelatedField()
 	rating = RatingSerializerList()
@@ -184,7 +191,7 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = TVSpecial
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'content', \
-			'thumbnail', 'release_date', 'tags', 'genres', 'rating', 'credits', 'externalIds']
+			'thumbnail', 'releaseDate', 'tags', 'genres', 'rating', 'credits', 'externalIds']
 
 
 ### Content Categories
@@ -215,6 +222,7 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	rating = RatingSerializerList()
 	lastUpdated = serializers.DateTimeField(source='last_updated')
 	movies = MovieSerializerList(many=True)
+	liveFeeds = LiveFeedSerializerList(many=True, source='live_feeds')
 	series = SeriesSerializerList(many=True)
 	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos') # serializers.StringRelatedField(source='short_form_videos', read_only=True)
 	tvSpecials = TVSpecialSerializerList(many=True, source='tv_specials')
@@ -222,8 +230,8 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	playlists = PlaylistSerializerList(many=True)
 	class Meta:
 		model = RokuContentFeed
-		fields = ['providerName', 'language', 'rating', 'lastUpdated', \
-			'movies', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
+		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
+			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 		#depth = 2
 
 class RokuContentFeedSerializerDetail(serializers.ModelSerializer):

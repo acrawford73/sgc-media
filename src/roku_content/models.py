@@ -214,7 +214,7 @@ class Movie(models.Model):
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=True, blank=True)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
 	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True)
@@ -281,7 +281,7 @@ class Series(models.Model):
 	series_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, null=True, blank=True) # Optional
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True) # Optional
 	seasons = models.ManyToManyField('Season', through='SeriesSeason', blank=True, \
 		help_text="One or more seasons of the series. Seasons should be used if episodes are grouped by seasons.")
 	episodes = models.ManyToManyField('Episode', through='SeriesEpisode', blank=True, \
@@ -400,7 +400,7 @@ class ShortFormVideo(models.Model):
 	short_description = models.CharField(max_length=200, null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
-	long_description = models.CharField(max_length=500, null=False, blank=True)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
 	# The video content, such as the URL of the video file, subtitles, and so on.
 	content = models.ManyToManyField('Content', through='ShortFormVideoContent', blank=True)
 	# The URL of the thumbnail for the video. This is used within your channel and in search results.
@@ -446,7 +446,7 @@ class TVSpecial(models.Model):
 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=64, null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=True, blank=True) # Optional
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True) # Optional
 	content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
