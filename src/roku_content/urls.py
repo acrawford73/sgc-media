@@ -14,7 +14,7 @@ urlpatterns = [
 	# path('api/roku-content-feed/search/', views.RokuContentFeedAPISearch.as_view()),
 	path('api/roku-content-feed/<int:pk>/', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
 	re_path('^api/roku-content-feed/(?P<language>.+)/$', views.RokuContentFeedListAPI.as_view()),
-	
+
 	# Roku Search Feed
 	# path('roku-search-feed/create/', views.RokuSearchFeedCreateView.as_view(), name='rokusearchfeed-create'),
 	# path('roku-search-feed/', views.RokuSearchFeedListView.as_view(), name='rokusearchfeed-list'),
@@ -174,6 +174,13 @@ urlpatterns = [
 	path('parentalrating/edit/<int:pk>/', views.ParentalRatingUpdateView.as_view(), name='parentalrating-update'),
 	path('api/parentalratings/', views.ParentalRatingListAPI.as_view(), name='parentalrating-api'),
 	# path('api/parentalrating/<int:pk>', views.ParentalRatingDetailAPI.as_view(), name='parentalrating-detail-api'),
+
+	# CreditRole
+	path('creditrole/create/', views.CreditRoleCreateView.as_view(), name='creditrole-create'),
+	path('creditroles/', views.CreditRoleListView.as_view(), name='creditrole-list'),
+	path('creditrole/<int:pk>/', views.CreditRoleDetailView.as_view(), name='creditrole-detail'),
+	path('creditrole/edit/<int:pk>/', views.CreditRoleUpdateView.as_view(), name='creditrole-update'),
+	path('api/creditroles/', views.CreditRoleListAPI.as_view(), name='creditrole-api'),
 	
 	# Credit
 	path('credit/create/', views.CreditCreateView.as_view(), name='credit-create'),
@@ -181,7 +188,6 @@ urlpatterns = [
 	path('credit/<int:pk>/', views.CreditDetailView.as_view(), name='credit-detail'),
 	path('credit/edit/<int:pk>/', views.CreditUpdateView.as_view(), name='credit-update'),
 	path('api/credits/', views.CreditListAPI.as_view(), name='credit-api'),
-	# path('api/credit/<int:pk>', views.CreditDetailAPI.as_view(), name='credit-detail-api'),
 
 	# Tags
 	path('tag/create/', views.TagCreateView.as_view(), name='tag-create'),

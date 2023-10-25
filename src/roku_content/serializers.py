@@ -7,7 +7,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, Credit, CreditRole, Tag
+					RatingSource, ParentalRating, CreditRole, Credit, Tag
 
 
 class LanguageSerializerList(serializers.ModelSerializer):
@@ -79,6 +79,12 @@ class ParentalRatingSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = ParentalRating
 		fields = ['parental_rating']
+
+class CreditRoleSerializerList(serializers.ModelSerializer):
+	role = serializers.CharField(source='credit_role')
+	class Meta:
+		model = CreditRole
+		fields = ['role']
 
 class CreditSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='credit_name')

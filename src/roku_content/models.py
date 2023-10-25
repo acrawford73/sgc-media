@@ -183,8 +183,9 @@ class Playlist(models.Model):
 	"""
 	#playlist_id = models.PositiveBigIntegerField(primary_key=True)
 	playlist_name = models.CharField(max_length=50, default="", null=False, blank=False)
-	# List of mixed Movies, Series, Short Form Videos, TV Specials
-	item_ids = models.JSONField(default=list, null=True, blank=True)
+	# List of mixed Movies, Series, Short Form Videos, TV Specials.
+	item_ids = models.JSONField(default=list, null=True, blank=True, 
+		help_text='An ordered list of one or more IDs from a Movie, Series, Short-Form Video or TV Show.')
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
@@ -330,6 +331,8 @@ class Season(models.Model):
 	"episodes": [ ... ]
 	}
 	"""
+	#episode_name = models.ForeignKey('Episode', on_delete=models.PROTECT, related_name='episode_title', null=False, blank=False, \
+	#	help_text='Enter the name of the Episode that this Season refers to.')
 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	# One or more episodes of this particular season.
 	episodes = models.ManyToManyField('Episode', through='SeasonEpisode', \
@@ -720,17 +723,6 @@ class ParentalRating(models.Model):
 	def __str__(self):
 		return str(self.parental_rating)
 
-CREDIT_ROLES = (
-	("actor", "Actor"),
-	("anchor", "Anchor"),
-	("director", "Director"),
-	("host", "Host"),
-	("narrator", "Narrator"),	
-	("producer", "Producer"),
-	("screenwriter", "Screenwriter"),
-	("voice", "Voice"),
-)
-
 class CreditRole(models.Model):
 	""" Represents a role of the person credited in video content. """
 	credit_role = models.CharField(max_length=50, default="", null=False, blank=False)
@@ -764,7 +756,6 @@ class Credit(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.credit_name)
-
 
 # Catch all for Tags
 class Tag(models.Model):

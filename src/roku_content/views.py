@@ -8,7 +8,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, Credit
+					RatingSource, ParentalRating, CreditRole, Credit
 from .models import Tag
 ### Rest Framework
 from rest_framework import generics
@@ -28,7 +28,7 @@ from .serializers import TVSpecialSerializerList
 from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
 from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
 from .serializers import RatingSerializerList, RatingSourceSerializerList, ParentalRatingSerializerList
-from .serializers import CreditSerializerList, LanguageSerializerList, TagSerializerList
+from .serializers import CreditRoleSerializerList, CreditSerializerList, LanguageSerializerList, TagSerializerList
 
 ## Roku Feeds
 
@@ -921,6 +921,47 @@ class ParentalRatingListAPI(generics.ListAPIView):
 # class ParentalRatingDetailAPI(generics.RetrieveAPIView):
 # 	queryset = ParentalRating.objects.all()
 # 	serializer_class = ParentalRatingSerializerDetail
+
+# Credit Role
+class CreditRoleCreateView(CreateView):
+	model = CreditRole
+	fields = ['credit_role']
+
+class CreditRoleListView(ListView):
+	model = CreditRole
+	template_name = 'roku_content/creditrole_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'creditrole'
+	ordering = ['credit_role']
+	paginate_by = 15
+
+class CreditRoleDetailView(DetailView):
+	model = CreditRole
+	context_object_name = 'creditrole'
+
+class CreditRoleUpdateView(UpdateView):
+	model = CreditRole
+	context_object_name = 'creditrole'
+	fields = ['credit_role']
+
+class CreditRoleListAPI(generics.ListAPIView):
+	queryset = CreditRole.objects.all()
+	serializer_class = CreditRoleSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['credit_role']
+	ordering_fields = ['id', 'credit_role']
+	ordering = ['credit_role']
+
+# class CreditListAPISearch(generics.ListAPIView):
+# 	queryset = Credit.objects.all()
+# 	serializer_class = CreditRoleSerializerList
+# 	filter_backends = [filters.SearchFilter]
+# 	search_fields = ['credit_name']
+# 	ordering_fields = ['id', 'credit_role']
+# 	ordering = ['credit_role']
+
+# class CreditRoleDetailAPI(generics.RetrieveAPIView):
+# 	queryset = CreditRole.objects.all()
+# 	serializer_class = CreditRoleSerializerDetail
 
 # Credit
 class CreditCreateView(CreateView):
