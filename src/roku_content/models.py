@@ -494,8 +494,8 @@ class Content(models.Model):
 	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
 	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
-	validity_start_period = models.DateTimeField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
-	validity_end_period = models.DateTimeField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
+	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
+	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
 	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
 	def get_absolute_url(self):
 		return reverse('content-list')
@@ -557,7 +557,7 @@ class VideoType(models.Model):
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.video_type_short) + " (" + str(self.video_type_long) + ")"
+		return str(self.video_type_short) #+ " (" + str(self.video_type_long) + ")"
 
 CAPTION_TYPE = (
 	("CLOSED_CAPTION", "CLOSED_CAPTION"),

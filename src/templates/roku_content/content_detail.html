@@ -61,7 +61,7 @@
                 <td>
                   {% if content.trick_play_files.all.count > 0 %}
                     {% for item in content.trick_play_files.all %}
-                      <a href="{% url 'trickplayfiles-detail' item.id %}">{{ item }}</a></br>
+                      <a href="{% url 'trickplayfile-detail' item.id %}">{{ item }}</a></br>
                     {% endfor %}
                   {% else %}
                     No Trick-play files added.
