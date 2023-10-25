@@ -3,8 +3,10 @@ from datetime import date,time
 from django.db import models
 from django.urls import reverse
 
-## For the Roku Direct Publisher Feed info check this website:
-# https://developer.roku.com/en-ca/docs/specs/direct-publisher-feed-specs/json-dp-spec.md
+### Models for the Roku Content Feed based on the Roku Direct Publisher specification.
+## Roku channels do not have to conform to the RDP spec but it is recommended.
+## Roku Direct Publisher Feed specification:
+## https://developer.roku.com/en-ca/docs/specs/direct-publisher-feed-specs/json-dp-spec.md
 
 ## References:
 # JSON Schema Draft 4:   http://json-schema.org/draft/2020-12/json-schema-core.html
@@ -15,7 +17,7 @@ from django.urls import reverse
 
 
 class Language(models.Model):
-	""" Model for all models containing a language field. """
+	""" Model for any models containing a language field. """
 	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False, unique=True)  # "eng"
 	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)  # "en"
 	language_name_eng = models.CharField(max_length=64, null=False, blank=False)  # English"
