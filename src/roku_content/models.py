@@ -766,9 +766,8 @@ class Credit(models.Model):
 	"birthDate": "1952-03-11"
 	}
 	"""
-	credit_name = models.CharField(max_length=64, default="", null=False, blank=False)
+	credit_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	role = models.ForeignKey("CreditRole", on_delete=models.PROTECT, null=False, blank=False)
-	#role = models.CharField(max_length=64, default="", choices=CREDIT_ROLES, null=False, blank=True)
 	birth_date = models.CharField(max_length=10, default="0000-00-00", null=False, blank=False, \
 		help_text = "Please use the following birth date format: YYYY-MM-DD.")
 	def get_absolute_url(self):
@@ -783,7 +782,7 @@ class Credit(models.Model):
 # Catch all for Tags
 class Tag(models.Model):
 	tag_name = models.CharField(max_length=20, default="", null=False, blank=False, unique=True, \
-		help_text="Enter a new tag that hasn't been added yet.")
+		help_text="Max length 20 characters. Enter a new tag that hasn't been added yet.")
 	def get_absolute_url(self):
 		return reverse('tag-list')
 	class Meta:
