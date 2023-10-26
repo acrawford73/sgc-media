@@ -187,7 +187,7 @@ class Playlist(models.Model):
 	playlist_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	# List of mixed Movies, Series, Short Form Videos, TV Specials.
 	item_ids = models.JSONField(default=list, null=True, blank=True, 
-		help_text='An ordered list of one or more IDs from a Movie, Series, Short-Form Video or TV Show.')
+		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
@@ -210,14 +210,16 @@ class Movie(models.Model):
 	Movie objects are added to a Roku Content Feed.
 	"""
 	movie_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=64, default="", null=False, blank=False)
-	# OneToOne, links to one content object that contains one or more video files.
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
+		help_text="200 characters maximum.")
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
+		help_text="500 characters maximum.")
 	content = models.ManyToManyField('Content', through='MovieContent', blank=True)
-	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
+	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
 	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True)
@@ -255,12 +257,16 @@ class MovieExternalID(models.Model):
 class LiveFeed(models.Model):
 	""" Represents a live linear stream. """
 	livefeed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=64, default="", null=False, blank=False)
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
+		help_text="200 characters maximum.")
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
+		help_text="500 characters maximum.")
 	content = models.ManyToManyField('Content', through='LiveFeedContent', blank=True)
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
-	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
+	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the branded thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True) # Optional
@@ -282,15 +288,18 @@ class LiveFeedContent(models.Model):
 class Series(models.Model):
 	""" Represents a series, such as a season of a TV Show or a mini-series. """
 	series_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=64, default="", null=False, blank=False)
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=True) # Optional
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
+		help_text="200 characters maximum.")
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
+		help_text="500 characters maximum.")
 	seasons = models.ManyToManyField('Season', through='SeriesSeason', blank=True, \
 		help_text="One or more seasons of the series. Seasons should be used if episodes are grouped by seasons.")
 	episodes = models.ManyToManyField('Episode', through='SeriesEpisode', blank=True, \
 		help_text="One or more episodes of the series. Episodes should be used if they are not grouped by seasons.")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=False, null=False)
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	credits = models.ManyToManyField('Credit', through='SeriesCredit', blank=True) # Optional
@@ -357,11 +366,14 @@ class SeasonEpisode(models.Model):
 class Episode(models.Model):
 	""" This Model represents a single episode in a series or a season. """
 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=64, null=False, blank=False)
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
+	title = models.CharField(max_length=50, null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
+		help_text="200 characters maximum.")
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
+		help_text="500 characters maximum.")
 	content = models.ManyToManyField('Content', through='EpisodeContent', blank=True)
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	episode_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	credits = models.ManyToManyField('Credit', through='EpisodeCredit', blank=True) # Optional
@@ -399,18 +411,21 @@ class ShortFormVideo(models.Model):
 	short_form_video_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	# The title of the video in plain text. This field is used for matching in Roku Search. 
 	# Do not include extra information such as year, version label, and so on.
-	title = models.CharField(max_length=64, null=False, blank=False)
+	title = models.CharField(max_length=50, null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
-	short_description = models.CharField(max_length=200, null=False, blank=False)
+	short_description = models.CharField(max_length=200, null=False, blank=False, \
+		help_text="200 characters maximum.")
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
-	long_description = models.CharField(max_length=500, default="", null=False, blank=True)
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
+		help_text="500 characters maximum.")
 	# The video content, such as the URL of the video file, subtitles, and so on.
 	content = models.ManyToManyField('Content', through='ShortFormVideoContent', blank=True)
 	# The URL of the thumbnail for the video. This is used within your channel and in search results.
 	# Image dimensions must be at least 800x450 (width x height, 16x9 aspect ratio).
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	# The date the video first became available.
 	# This field is used to sort programs chronologically and group related content in Roku Search. 
 	# Conforms to ISO 8601 format: {YYYY}-{MM}-{DD}. For example, 2020-11-11
@@ -449,11 +464,14 @@ class ShortFormVideoCredit(models.Model):
 class TVSpecial(models.Model):
 	""" TV Specials (TV Shows) are usually 30 or 60 minutes. Special ad rules apply. """
 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=64, null=False, blank=False)
-	short_description = models.CharField(max_length=200, default="", null=False, blank=False)
-	long_description = models.CharField(max_length=500, default="", null=False, blank=True) # Optional
+	title = models.CharField(max_length=50, null=False, blank=False)
+	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
+		help_text="200 characters maximum.")
+	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
+		help_text="500 characters maximum.")
 	content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
-	thumbnail = models.URLField(max_length=2083, null=False, blank=False)
+	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
+		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
@@ -490,18 +508,19 @@ class TVSpecialExternalID(models.Model):
 class Content(models.Model):
 	""" 
 	The Content model represents the details about a single video content 
-	item such as a Movie, Episode, Short-Form Video, or TV Show/Special.
+	item such as a Movie, Episode, Short-Form Video, or TV Show.
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
 	date_added = models.DateField(auto_now_add=True)
 	videos = models.ManyToManyField('Video', through='ContentVideo', blank=True)
-	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The duration of the video must be in seconds.")
+	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The video duration must be in seconds.")
 	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
 	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
 	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
 	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
 	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
 	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
+	updated = models.DateField(auto_now=True)
 	def get_absolute_url(self):
 		return reverse('content-list')
 	class Meta:
@@ -571,9 +590,9 @@ CAPTION_TYPE = (
 
 class Caption(models.Model):
 	"""
-	Represents a single video caption file of a video content. The supported 
-	formats are described in Closed Caption Support. The preferred closed caption formats 
-	are: WebVTT, SRT.
+	Represents a single video caption file of a video content.
+	The supported formats are described in Closed Caption Support.
+	The preferred closed caption formats are: WebVTT, SRT.
 	
 	{
 	"url": "https://example.org/cdn/subtitles/1509428502952/sub-fr.srt",
