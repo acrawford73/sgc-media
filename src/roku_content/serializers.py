@@ -223,6 +223,9 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 
 # This class provides the data used to populate the Roku channel menus and content
 class RokuContentFeedSerializerList(serializers.ModelSerializer):
+	"""
+	Serializer List class for Roku Content Feed. The data is used to display Roku channel menus populate them with content.
+	"""
 	providerName = serializers.CharField(source='provider_name')
 	language = serializers.StringRelatedField()
 	rating = RatingSerializerList()
@@ -230,7 +233,7 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	movies = MovieSerializerList(many=True)
 	liveFeeds = LiveFeedSerializerList(many=True, source='live_feeds')
 	series = SeriesSerializerList(many=True)
-	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos') # serializers.StringRelatedField(source='short_form_videos', read_only=True)
+	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos')
 	tvSpecials = TVSpecialSerializerList(many=True, source='tv_specials')
 	categories = CategorySerializerList(many=True)
 	playlists = PlaylistSerializerList(many=True)
@@ -243,6 +246,9 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 
 
 class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
+	"""
+	Serializer Detail class for Roku Content Feed.
+	"""
 	providerName = serializers.CharField(source='provider_name')
 	language = serializers.StringRelatedField()
 	rating = RatingSerializerList()
@@ -250,7 +256,7 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 	movies = MovieSerializerList(many=True)
 	liveFeeds = LiveFeedSerializerList(many=True, source='live_feeds')
 	series = SeriesSerializerList(many=True)
-	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos') # serializers.StringRelatedField(source='short_form_videos', read_only=True)
+	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos')
 	tvSpecials = TVSpecialSerializerList(many=True, source='tv_specials')
 	categories = CategorySerializerList(many=True)
 	playlists = PlaylistSerializerList(many=True)

@@ -8,7 +8,6 @@ urlpatterns = [
 
 	# Video
 	path('media-video/upload/', views.MediaVideoCreateView.as_view(), name='media-video-create'),
-	path('', views.MediaVideoListView.as_view()),
 	path('media-videos/', views.MediaVideoListView.as_view(), name='media-video-list'),
 	path('media-videos/<int:pk>/', views.MediaVideoDetailView.as_view(), name='media-video-detail'), 
 	path('media-videos/edit/<int:pk>/', views.MediaVideoUpdateView.as_view(), name='media-video-update'),

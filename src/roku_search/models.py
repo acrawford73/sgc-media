@@ -2,6 +2,8 @@ import uuid
 import datetime,time
 from django.db import models
 from django.urls import reverse
+from roku_content.models import Movie, Series, Season, Episode, ShortFormVideo, TVSpecial, Content, Language
+from roku_content.models import ExternalID, Rating, ParentalRating, RatingSource, Genre, Credit
 
 ## For the Roku Direct Publisher Feed info check this website:
 # https://developer.roku.com/en-ca/docs/specs/direct-publisher-feed-specs/json-dp-spec.md
@@ -14,26 +16,25 @@ from django.urls import reverse
 # ISO 639.2 Codes:       https://www.loc.gov/standards/iso639-2/php/code_list.php
 
 
-### Roku search feed
+### Roku Search Feed
 
-class RokuSearchFeed(models.Model):
-	provider_name = models.CharField(max_length=32, null=False, blank=False)
-	last_updated = models.DateTimeField(auto_now_add=True)
-	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
-	categories = models.ForeignKey("Category", on_delete=models.PROTECT, null=True, blank=True)
-	playlists = models.ForeignKey("Playlist", on_delete=models.PROTECT, limit_choices_to={"is_public": True}, null=True, blank=True)
-	movies = models.ForeignKey("Movie", on_delete=models.PROTECT, null=True, blank=True)
-	live_feeds = models.ForeignKey("LiveFeed", on_delete=models.PROTECT, null=True, blank=True)
-	series = models.ForeignKey("Series", on_delete=models.PROTECT, null=True, blank=True)
-	short_form_videos = models.ForeignKey("ShortFormVideo", on_delete=models.PROTECT, null=True, blank=True)
-	tv_specials = models.ForeignKey("TVSpecial", on_delete=models.PROTECT, null=True, blank=True)
+class SearchFeed(models.Model):
+	search_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, \
+		help_text="There must be only ONE Search Feed. Do not create a second Search Feed.")
+	version = models.CharField(default="1", null=False, blank=False, editable=False, \
+		help_text="Search JSON Feed version is always 1.")
+	default_language = models.ForeignKey('roku_content.Language', on_delete=models.PROTECT, null=False, blank=False, \
+		help_text="Set the default language for the Search Feed.")
+	# List, required if avilable countries for each asset are not provided
+	#default_countries = models.CharField(default="en", null=False, blank=False, help_text="") 
+
 	# !Roku
-	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
-	is_public = models.BooleanField(default=False)
+	last_updated = models.DateTimeField(auto_now=True)
+	created = models.DateTimeField(auto_now_add=True)
+	def get_absolute_url(self):
+		return reverse('searchfeed-list')
 	class Meta:
-		ordering = ['id']
 		def __unicode__(self):
-			return self.id
+			return self.search_feed_id
 	def __str__(self):
-		return str(self.id)
+		return str(self.search_feed_id)

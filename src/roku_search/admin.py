@@ -1,17 +1,17 @@
 from django.contrib import admin
 
-from .models import RokuSearchFeed
+from .models import SearchFeed
 
 # Roku Content Feed
 
-class RokuSearchFeedAdmin(admin.ModelAdmin):
-	list_display = ['provider_name']
-	search_fields = ['provider_name']
-	list_filter = ['language']
-	readonly_fields = ['last_updated']
+class SearchFeedAdmin(admin.ModelAdmin):
+	list_display = ['search_feed_id', 'version', 'default_language']
+	search_fields = ['search_feed_id']
+	list_filter = ['default_language']
+	readonly_fields = ['search_feed_id']
 	class Meta:
-		model = RokuSearchFeed
+		model = SearchFeed
 
 
 # Register with Admin
-admin.site.register(RokuSearchFeed, RokuSearchFeedAdmin)
+admin.site.register(SearchFeed, SearchFeedAdmin)

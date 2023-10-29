@@ -22,7 +22,17 @@
             <tbody>
               <tr>
                 <td><strong>Published</strong></td>
-                <td>{% if rokucontentfeed.is_public %}Yes{% else %}No{% endif %}</td>
+                <td>
+                  {% if rokucontentfeed.is_public %}
+                  <button class="btn btn-success rounded-pill px-3">Yes</button>
+                  {% else %}
+                  <button class="btn btn-danger rounded-pill px-3">No</button>
+                  {% endif %}
+                </td>
+              </tr>
+              <tr>
+                <td><strong>UUID</strong></td>
+                <td>{{ rokucontentfeed.roku_content_feed_id }}</td>
               </tr>
               <tr>
                 <td><strong>Short Description</strong></td>

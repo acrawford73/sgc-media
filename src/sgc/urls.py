@@ -19,11 +19,16 @@ from django.urls import include,path
 from django.conf import settings
 
 urlpatterns = [
-    path('', include('media.urls')),
+
+    #Apps
     path('', include('roku_content.urls')),
     #path('', include('roku_search.urls')),
+    path('', include('media.urls')),
+
+    # Admin
     path('admin/docs/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
+
 ]
 
 # Development

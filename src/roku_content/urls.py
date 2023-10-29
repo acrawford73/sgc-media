@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
 
+	path('', views.RokuContentFeedListView.as_view()),
+
 	## Roku Support
 
 	# Roku Content Feed

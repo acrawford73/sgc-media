@@ -4,7 +4,7 @@
   <!-- Fixed navbar -->
   <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'media-video-list' %}"><strong>Roku Media Server</strong></a>
+      <a class="navbar-brand" href="{% url 'rokucontentfeed-list' %}"><strong>Roku Media Server</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -15,7 +15,7 @@
             <a class="nav-link inactive" aria-current="page" href="{% url 'upload' %}">Upload</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link inactive" aria-current="page" href="{% url 'media-video-list' %}">Search</a>
+            <a class="nav-link inactive" aria-current="page" href="{% url 'rokucontentfeed-list' %}">Search</a>
           </li>
 <!--           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="#">RSS</a>
@@ -38,7 +38,7 @@
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Roku</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a></li>
-              <li><a class="dropdown-item" href="#">Search Feeds</a></li>
+              <li><a class="dropdown-item" href="#">Search Feed</a></li>
 
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'playlist-list' %}">Playlists</a></li>

@@ -3,43 +3,36 @@ from django.urls import reverse_lazy
 ### Templates
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 ### Models
-from .models import RokuSearchFeed
+from .models import SearchFeed
 ### Rest Framework
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 # Feeds
-from .serializers import RokuSearchFeedSerializerList
+from .serializers import SearchFeedSerializerDetail
 
 
 # Roku Search Feed
-class RokuSearchFeedCreateView(CreateView):
-	model = RokuSearchFeed
-	template_name = 'roku_search/rokusearchfeed_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+class SearchFeedCreateView(CreateView):
+	model = SearchFeed
+	fields = ['default_language']
 
-class RokuSearchFeedListView(ListView):
-	model = RokuSearchFeed
-	template_name = 'roku_search/rokusearchfeed_list.html'  #<app>/<model>_<viewtype>.html
-	context_object_name = 'rokusearchfeed'
+class SearchFeedListView(ListView):
+	model = SearchFeed
+	#template_name = 'roku_search/searchfeed_list.html'  #<app>/<model>_<viewtype>.html
+	context_object_name = 'searchfeed'
 	ordering = ['-id']
-	#paginate_by = 15
 
-class RokuSearchFeedDetailView(DetailView):
-	model = RokuSearchFeed
-	context_object_name = 'rokusearchfeed'
+class SearchFeedDetailView(DetailView):
+	model = SearchFeed
+	context_object_name = 'searchfeed'
 
-class RokuSearchFeedUpdateView(UpdateView):
-	model = RokuSearchFeed
-	context_object_name = 'rokusearchfeed'
-	fields = fields = ['provider_name', 'language', 'rating', 'categories', 'playlists', 'movies', \
-		'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+class SearchFeedUpdateView(UpdateView):
+	model = SearchFeed
+	context_object_name = 'searchfeed'
+	fields = ['default_language']
 
-class RokuSearchFeedListAPI(generics.ListAPIView):
-	queryset = RokuSearchFeed.objects.all().filter('is_public'=True)
-	serializer_class = RokuSearchFeedSerializerList
-	#filter_backends = [DjangoFilterBackend]
-	#filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
-	#ordering_fields = ['id', 'category_name', 'playlist_name']
-	ordering = ['-id']
+class SearchFeedDetailAPI(generics.RetrieveAPIView):
+	queryset = SearchFeed.objects.all()
+	serializer_class = SearchFeedSerializerDetail
+	lookup_field = ['search_feed_id']
