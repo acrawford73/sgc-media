@@ -176,6 +176,7 @@ MEDIA_URL = '/media/'
 #  where <fixturename> is the name of the fixture file.
 FIXTURE_DIRS = [
     os.path.join(BASE_DIR, '/roku_content/fixtures/roku_content/'),
+    #os.path.join(BASE_DIR, '/roku_content/fixtures/roku_search/'),
     os.path.join(BASE_DIR, '/media/fixtures/media/'),
     os.path.join(BASE_DIR, '/system_config/fixtures/system_config/')
 ]

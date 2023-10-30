@@ -31,7 +31,7 @@
             <tbody>
               {% for asset in movie %}
               <tr align="center">
-                <td>asset.movie_id</td>
+                <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'movie-detail' asset.id %}">{{ asset.title }}</a></td>
                 <td>
                   {% if asset.content.all.count > 0 %}

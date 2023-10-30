@@ -13,7 +13,8 @@ urlpatterns = [
 	path('roku-content-feed/<int:pk>/', views.RokuContentFeedDetailView.as_view(), name='rokucontentfeed-detail'),
 	path('roku-content-feed/edit/<int:pk>/', views.RokuContentFeedUpdateView.as_view(), name='rokucontentfeed-update'),
 	path('api/roku-content-feed/', views.RokuContentFeedListAPI.as_view(), name='rokucontentfeed-api'),
-	# path('api/roku-content-feed/search/', views.RokuContentFeedAPISearch.as_view()),
+	path('api/roku-content-feed/search/', views.RokuContentFeedListSearchAPI.as_view()),
+	re_path('api/roku-content-feed/search/(?P<language>.+)/$', views.RokuContentFeedListSearchAPI.as_view()),
 	path('api/roku-content-feed/<int:pk>/', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
 	re_path('^api/roku-content-feed/(?P<language>.+)/$', views.RokuContentFeedListAPI.as_view()),
 
