@@ -263,5 +263,5 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 	class Meta:
 		model = RokuContentFeed
 		#fields = '__all__'
-		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
-			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
+		fields = ('providerName', 'language', 'rating', 'lastUpdated', 'movies', \
+			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists')
