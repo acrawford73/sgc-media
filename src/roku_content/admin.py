@@ -13,7 +13,7 @@ class RokuContentFeedAdmin(admin.ModelAdmin):
 	list_display = ['provider_name', 'language', 'last_updated', 'created']
 	search_fields = ['provider_name', 'roku_content_feed_id']
 	list_filter = ['language']
-	readonly_fields = ['last_updated', 'created', 'roku_content_feed_id']
+	readonly_fields = ['roku_content_feed_id', 'last_updated', 'created']
 	class Meta:
 		model = RokuContentFeed
 
