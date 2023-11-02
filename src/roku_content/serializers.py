@@ -242,7 +242,7 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 		#read_only_fields = ['is_public']
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
-		#depth = 2
+
 
 
 class RokuContentFeedSerializerDetail(serializers.ModelSerializer):

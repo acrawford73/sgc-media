@@ -105,27 +105,30 @@ class RokuContentFeedUpdateView(UpdateView):
 	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
 		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
-#class RokuContentFeedListAPI(generics.RetrieveAPIView):
-class RokuContentFeedListAPI(generics.ListAPIView):
-#class RokuContentFeedListAPI(APIView):
+class RokuContentFeedListAPI(APIView):
 	"""
 	Roku Content Feed fields for ListAPIView :model:`roku_content.RokuContentFeed`.
 	"""
-	queryset = RokuContentFeed.objects.all().filter(is_public=True)
-	serializer_class = RokuContentFeedSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['language']
-	#ordering_fields = ['id']
-	#ordering = ['-id']
-	pagination_class = None
+#	queryset = RokuContentFeed.objects.all().filter(is_public=True)
+	#serializer_class = RokuContentFeedSerializerList
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['language']
+#	pagination_class = None
 	# lookup_field = ['id']
 	# http_method_names = ['get']
 
-	# def get(self, request, format=None):
- #         feed = RokuContentFeed.objects.all().filter(is_public=True)
- #         providerName = feed.provider_name
- #         serializer = RokuContentFeedSerializerList(feed, many=False)
- #         return Response(serializer.data)
+	# def get(self, request, format=None, queryset):
+	# 	#feed = RokuContentFeed.objects.all().filter(is_public=True)
+	# 	#providerName = feed.provider_name
+	# 	#serializer = RokuContentFeedSerializerList(feed, many=False)
+	# 	providerName = [feed.providerName for feed in feed.objects.all()]
+	# 	return Response(providerName)
+	renderer_classes = [JSONRenderer]
+	def get(self, request, format=None): 
+		feeds = RokuContentFeed.objects.first() #.filter(is_public=True)
+		serializer = RokuContentFeedSerializerList(feeds) #, many=True)
+		print(serializer.data)
+		return Response(serializer.data) 
 
 	# def get(self, request, *args, **kwargs):
 	# 	serializer = RokuContentFeedSerializerDetail(RokuContentFeed.objects.all().filter(is_public=True), many=False)
@@ -136,6 +139,18 @@ class RokuContentFeedListAPI(generics.ListAPIView):
 	# 	return __str__(self.queryset)
 	# def get_serializer_class(self):
 	# 	return RokuContentFeedSerializerList
+
+
+# class RokuContentFeedListAPI(generics.ListAPIView):
+# 	"""
+# 	Roku Content Feed fields for ListAPIView :model:`roku_content.RokuContentFeed`.
+# 	"""
+# 	queryset = RokuContentFeed.objects.all().filter(is_public=True)
+# 	serializer_class = RokuContentFeedSerializerList
+# 	filter_backends = [DjangoFilterBackend]
+# 	filterset_fields = ['language']
+# 	pagination_class = None
+
 
 class RokuContentFeedListSearchAPI(generics.ListAPIView):
 	queryset = RokuContentFeed.objects.all().filter(is_public=True)
