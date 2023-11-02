@@ -39,10 +39,8 @@
               <tr>
                 <td><strong>Content</strong></td>
                 <td>
-                  {% if movie.content.all.count > 0 %}
-                    {% for item in movie.content.all %}
-                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
-                    {% endfor %}
+                  {% if movie.content is not None %}
+                    <a href="{% url 'content-detail' movie.content.id %}">{{ movie.content.title }}</a></br>
                   {% else %}
                     No Content added.
                   {% endif %}

@@ -38,9 +38,9 @@ class TrickPlayFileSerializerList(serializers.ModelSerializer):
 
 class ContentSerializerList(serializers.ModelSerializer):
 	dateAdded = serializers.DateField(source='date_added')
-	trickPlayFiles = TrickPlayFileSerializerList(many=True, source='trick_play_files')
 	videos = VideoSerializerList(many=True)
 	captions = CaptionSerializerList(many=True)
+	trickPlayFiles = TrickPlayFileSerializerList(many=True, source='trick_play_files')
 	language = serializers.StringRelatedField()
 	#validityPeriodStart = serializers.DateField(source='validity_start_period')
 	#validityPeriodEnd = serializers.DateField(source='validity_end_period')
@@ -107,7 +107,7 @@ class MovieSerializerList(serializers.ModelSerializer):
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
 	releaseDate = serializers.DateField(source='release_date')
-	content = ContentSerializerList(many=True)
+	content = ContentSerializerList()
 	genres = serializers.StringRelatedField()
 	tags = TagSerializerList(many=True)
 	rating = RatingSerializerList()
@@ -123,7 +123,7 @@ class LiveFeedSerializerList(serializers.ModelSerializer):
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
 	brandedThumbnail = serializers.URLField(source='branded_thumbnail')
-	content = ContentSerializerList(many=True)
+	content = ContentSerializerList()
 	tags = serializers.StringRelatedField()
 	genres = serializers.StringRelatedField()
 	rating = RatingSerializerList()
@@ -138,7 +138,7 @@ class EpisodeSerializerList(serializers.ModelSerializer):
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
 	releaseDate = serializers.DateField(source='release_date')
-	content = ContentSerializerList(many=True)
+	content = ContentSerializerList()
 	rating = RatingSerializerList()
 	credits = CreditSerializerList(many=True)
 	externalIds = ExternalIDSerializerList(many=True, source='external_ids')
@@ -176,7 +176,7 @@ class ShortFormVideoSerializerList(serializers.ModelSerializer):
 	releaseDate = serializers.DateField(source='release_date')
 	rating = RatingSerializerList()
 	genres = serializers.StringRelatedField()
-	content = ContentSerializerList(many=True)
+	content = ContentSerializerList()
 	credits = CreditSerializerList(many=True)
 	class Meta:
 		model = ShortFormVideo
@@ -191,7 +191,7 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 	tags = serializers.StringRelatedField()
 	genres = serializers.StringRelatedField()
 	rating = RatingSerializerList()
-	content = ContentSerializerList(many=True)
+	content = ContentSerializerList()
 	credits = CreditSerializerList(many=True)
 	externalIds = ExternalIDSerializerList(many=True, source='external_ids')
 	class Meta:

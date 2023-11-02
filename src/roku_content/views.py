@@ -126,8 +126,7 @@ class RokuContentFeedListAPI(APIView):
 	renderer_classes = [JSONRenderer]
 	def get(self, request, format=None): 
 		feeds = RokuContentFeed.objects.first() #.filter(is_public=True)
-		serializer = RokuContentFeedSerializerList(feeds) #, many=True)
-		print(serializer.data)
+		serializer = RokuContentFeedSerializerList(feeds)
 		return Response(serializer.data) 
 
 	# def get(self, request, *args, **kwargs):
@@ -615,12 +614,12 @@ class ContentUpdateView(UpdateView):
 		 'validity_start_period', 'validity_end_period']
 
 class ContentListAPI(generics.ListAPIView):
-	queryset = Content.objects.all()
+	queryset = Content.objects.first()
 	serializer_class = ContentSerializerList
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['language', 'validity_start_period', 'validity_end_period']
 	ordering_fields = ['id', 'date_added', 'language', 'validity_start_period', 'validity_end_period']
-	ordering = ['-id']
+	ordering = ['id']
 
 # class ContentListAPISearch(generics.ListAPIView):
 # 	queryset = Content.objects.all()
@@ -988,7 +987,7 @@ class CreditRoleListAPI(generics.ListAPIView):
 	serializer_class = CreditRoleSerializerList
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['credit_role']
-	ordering_fields = ['id', 'credit_role']
+	ordering_fields = ['credit_role']
 	ordering = ['credit_role']
 
 # class CreditListAPISearch(generics.ListAPIView):
@@ -1055,7 +1054,7 @@ class TagListView(ListView):
 	template_name = 'roku_content/tag_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'tag'
 	ordering = ['tag_name']
-	paginate_by = 15
+	#paginate_by = 15
 
 class TagDetailView(DetailView):
 	model = Tag

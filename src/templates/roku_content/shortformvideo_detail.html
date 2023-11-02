@@ -31,10 +31,8 @@
               <tr>
                 <td><strong>Content</strong></td>
                 <td>
-                  {% if shortformvideo.content.all.count > 0 %}
-                    {% for item in shortformvideo.content.all %}
-                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
-                    {% endfor %}
+                  {% if shortformvideo.content is not None %}
+                      <a href="{% url 'content-detail' shortformvideo.content.id %}">{{ shortformvideo.content.title }}</a></br>
                   {% else %}
                     No Content added.
                   {% endif %}

@@ -39,10 +39,8 @@
               <tr>
                 <td><strong>Content</strong></td>
                 <td>
-                  {% if livefeed.content.all.count > 0 %}
-                    {% for item in livefeed.content.all %}
-                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
-                    {% endfor %}
+                  {% if livefeed.content is not None %}
+                    <a href="{% url 'content-detail' livefeed.content.id %}">{{ livefeed.content.title }}</a></br>
                   {% else %}
                     No Content added.
                   {% endif %}

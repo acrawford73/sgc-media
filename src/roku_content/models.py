@@ -215,7 +215,7 @@ class Movie(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ManyToManyField('Content', through='MovieContent', blank=True)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
@@ -232,11 +232,6 @@ class Movie(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
-
-class MovieContent(models.Model):
-	""" ManyToMany table for Movie model and Content model. """
-	movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
 
 class MovieTag(models.Model):
 	""" ManyToMany table for Movie model and Tag model. """
@@ -262,11 +257,11 @@ class LiveFeed(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ManyToManyField('Content', through='LiveFeedContent', blank=True)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
-		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
+		help_text="URL to the main thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
-		help_text="URL to the branded thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
+		help_text="URL to the branded thumbnail image. It is a secondary thumbnail. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True) # Optional
@@ -278,11 +273,6 @@ class LiveFeed(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
-
-class LiveFeedContent(models.Model):
-	""" ManyToMany table for LiveFeed model and Content model. """
-	livefeed = models.ForeignKey('LiveFeed', on_delete=models.CASCADE)
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
 
 
 class Series(models.Model):
@@ -371,7 +361,7 @@ class Episode(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ManyToManyField('Content', through='EpisodeContent', blank=True)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
@@ -387,11 +377,6 @@ class Episode(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
-
-class EpisodeContent(models.Model):
-	""" ManyToMany table for Episode model and Content model. """
-	episode = models.ForeignKey('Episode', on_delete=models.CASCADE)
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
 
 class EpisodeCredit(models.Model):
 	""" ManyToMany table for Episode model and Credit model. """
@@ -421,7 +406,7 @@ class ShortFormVideo(models.Model):
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
 	# The video content, such as the URL of the video file, subtitles, and so on.
-	content = models.ManyToManyField('Content', through='ShortFormVideoContent', blank=True)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
 	# The URL of the thumbnail for the video. This is used within your channel and in search results.
 	# Image dimensions must be at least 800x450 (width x height, 16x9 aspect ratio).
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
@@ -450,11 +435,6 @@ class ShortFormVideo(models.Model):
 	def __str__(self):
 		return str(self.title)
 
-class ShortFormVideoContent(models.Model):
-	""" ManyToMany table for ShortFormVideo model and Content model. """
-	shortformvideo = models.ForeignKey('ShortFormVideo', on_delete=models.CASCADE)
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
-
 class ShortFormVideoCredit(models.Model):
 	""" ManyToMany table for ShortFormVideo model and Credit model. """
 	shortformvideo = models.ForeignKey('ShortFormVideo', on_delete=models.CASCADE)
@@ -469,7 +449,8 @@ class TVSpecial(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
+	#content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
@@ -487,10 +468,10 @@ class TVSpecial(models.Model):
 	def __str__(self):
 		return str(self.title)
 
-class TVSpecialContent(models.Model):
-	""" ManyToMany table for TVSpecial model and Content model. """
-	tvspecial = models.ForeignKey('TVSpecial', on_delete=models.CASCADE)
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+# class TVSpecialContent(models.Model):
+# 	""" ManyToMany table for TVSpecial model and Content model. """
+# 	tvspecial = models.ForeignKey('TVSpecial', on_delete=models.CASCADE)
+# 	content = models.ForeignKey('Content', on_delete=models.CASCADE)
 
 class TVSpecialCredit(models.Model):
 	""" ManyToMany table for TVSpecial model and Credit model. """

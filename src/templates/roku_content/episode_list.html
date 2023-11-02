@@ -35,10 +35,8 @@
                 <td align="left"><a href="{% url 'episode-detail' asset.id %}">{{ asset.title }}</a></td>
                 <td>{{ asset.episode_number }}</td>
                 <td>
-                  {% if asset.content.all.count > 0 %}
-                    {% for item in asset.content.all %}
-                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
-                    {% endfor %}
+                  {% if asset.content is not None %}
+                    <a href="{% url 'content-detail' asset.content.id %}">{{ asset.content.title }}</a></br>
                   {% else %}
                     No Content added.
                   {% endif %}

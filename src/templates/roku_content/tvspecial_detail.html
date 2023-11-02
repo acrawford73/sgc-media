@@ -39,10 +39,8 @@
               <tr>
                 <td><strong>Content</strong></td>
                 <td>
-                  {% if tvspecial.content.all.count > 0 %}
-                    {% for item in tvspecial.content.all %}
-                      <a href="{% url 'content-detail' item.id %}">{{ item }}</a></br>
-                    {% endfor %}
+                  {% if tvspecial.content is not None %}
+                    <a href="{% url 'content-detail' tvspecial.content.id %}">{{ tvspecial.content.title }}</a></br>
                   {% else %}
                     No Content added.
                   {% endif %}
