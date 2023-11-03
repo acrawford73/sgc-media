@@ -110,7 +110,7 @@ class ContentAdmin(admin.ModelAdmin):
 		model = Content
 
 class VideoAdmin(admin.ModelAdmin):
-	list_display = ['url', 'quality', 'video_type']
+	list_display = ['url', 'quality', 'video_type', 'content_item']
 	search_fields = ['quality', 'video_type']
 	list_filter = ['quality', 'video_type']
 	class Meta:

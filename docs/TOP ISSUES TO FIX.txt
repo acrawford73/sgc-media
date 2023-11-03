@@ -1,0 +1,30 @@
+*******************
+ TOP ISSUES TO FIX
+*******************
+
+- all date formatting in DB, or serializer
+
+- any API field that is a comma-delimited list: tags, genres, playlist items
+
+- request content feed by UUID (also resolves the [] list response issue.)
+
+- thumbnail uploads?
+
+- API throttling
+
+- user login and permissions
+- create admin vs user groups
+	USER: view-edit, no static access
+	ADMIN-L1: view-edit-delete, all access
+	ADMIN-L2: view-edit-delete, no static tables
+
+- parental ratings / rating sources changes
+
+
+Beta Roku Channel
+- Privacy Policy page
+- Terms of Use page
+
+
+- Psinergy domain with SSL
+- Digital Ocean production setup

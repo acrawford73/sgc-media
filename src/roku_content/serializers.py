@@ -40,15 +40,15 @@ class ContentSerializerList(serializers.ModelSerializer):
 	dateAdded = serializers.DateField(source='date_added')
 	videos = VideoSerializerList(many=True)
 	captions = CaptionSerializerList(many=True)
-	trickPlayFiles = TrickPlayFileSerializerList(many=True, source='trick_play_files')
+	#trickPlayFiles = TrickPlayFileSerializerList(many=True, source='trick_play_files')
 	language = serializers.StringRelatedField()
 	#validityPeriodStart = serializers.DateField(source='validity_start_period')
 	#validityPeriodEnd = serializers.DateField(source='validity_end_period')
 	#adBreaks = serializers.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
-		fields = ['dateAdded', 'videos', 'duration', 'captions', 'trickPlayFiles', \
-			'language'] #, 'validityPeriodStart', 'validityPeriodEnd']
+		fields = ['dateAdded', 'videos', 'duration', 'captions', 'language']
+			# 'trickPlayFiles', validityPeriodStart', 'validityPeriodEnd']
 
 class GenreSerializerList(serializers.ModelSerializer):
 	class Meta:

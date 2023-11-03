@@ -643,7 +643,7 @@ class ContentListAPI(generics.ListAPIView):
 # Video
 class VideoCreateView(CreateView):
 	model = Video
-	fields = ['url', 'quality', 'video_type']
+	fields = ['url', 'quality', 'video_type', 'content_item']
 
 class VideoListView(ListView):
 	model = Video
@@ -659,7 +659,7 @@ class VideoDetailView(DetailView):
 class VideoUpdateView(UpdateView):
 	model = Video
 	context_object_name = 'video'
-	fields = ['url', 'quality', 'video_type']
+	fields = ['url', 'quality', 'video_type', 'content_item']
 
 class VideoListAPI(generics.ListAPIView):
 	queryset = Video.objects.all()

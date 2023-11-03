@@ -12,7 +12,7 @@
     <p>&nbsp;</p>
     <h2 class="mt-5"><strong>Video ID:</strong> {{ video.id }}</h2>
 
-    <p><a href="{% url 'video-update' video.id %}"><button class="btn btn-primary rounded-pill px-3" type="button">Edit this Video</button></a></p>
+    <p><a href="{% url 'video-list' %}"><button class="btn btn-info rounded-pill px-3" type="button">< Back to list</button></a>&nbsp;&nbsp;<a href="{% url 'video-update' video.id %}"><button class="btn btn-primary rounded-pill px-3" type="button">Edit this Video</button></a></p>
 
     <div class="row">
       <div class="col-lg-12">
@@ -22,7 +22,7 @@
             <tbody>
               <tr>
                 <td><strong>URL</strong></td>
-                <td>{{ video.url }}</td>
+                <td><a href="{{ video.url }}" target="_blank">{{ video.url }}</a></td>
               </tr>
               <tr>
                 <td><strong>Quality</strong></td>
@@ -31,6 +31,10 @@
               <tr>
                 <td><strong>Video Type</strong></td>
                 <td>{{ video.video_type }}</td>
+              </tr>
+              <tr>
+                <td><strong>Content Item</strong></td>
+                <td>{{ video.content_item }}</td>
               </tr>
             </tbody>
           </table>

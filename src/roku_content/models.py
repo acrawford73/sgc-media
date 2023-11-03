@@ -545,6 +545,8 @@ class Video(models.Model):
 	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	quality = models.CharField(max_length=16, choices=VIDEO_QUALITY, default='HD', null=False, blank=False)
 	video_type = models.ForeignKey("VideoType", on_delete=models.PROTECT, null=False, blank=False)
+	content_item = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True, \
+		help_text="Select the Content item where this video will be used.")
 	def get_absolute_url(self):
 		return reverse('video-list')
 	class Meta:

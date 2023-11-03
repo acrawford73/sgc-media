@@ -25,6 +25,7 @@
                 <th>URL</th>
                 <th>Quality</th>
                 <th>Video Type</th>
+                <th>Content</th>
               </tr>
             </thead>
             <tbody>
@@ -34,6 +35,7 @@
                 <td align="left"><a href="{% url 'video-detail' asset.id %}">{{ asset.url }}</a></td>
                 <td>{{ asset.quality }}</td>
                 <td>{{ asset.video_type }}</td>
+                <td>{{ asset.content_item }}</td>
               </tr>
               {% endfor %}
 

@@ -31,20 +31,20 @@ if config('PRODUCTION', default=False, cast=bool) == True:
     SECRET_KEY_FALLBACK = config('PROD_SECRET_KEY_FALLBACK')
     ALLOWED_HOSTS = config('PROD_ALLOWED_HOSTS', cast=Csv())
     # Security
-    SECURE_SSL_HOST = 'domain.com'
-    SECURE_SSL_REDIRECT = True
-    SECURE_REFERRER_POLICY = 'same-origin'
-    SECURE_HSTS_SECONDS = 3600
-    SECURE_HSTS_PRELOAD = True
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    X_FRAME_OPTIONS = 'DENY'
+    SECURE_SSL_HOST = config('SECURE_SSL_HOST')
+    SECURE_SSL_REDIRECT = config('SECURE_SSL_REDIRECT', default=True, cast=bool)
+    SECURE_REFERRER_POLICY = config('SECURE_REFERRER_POLICY')
+    SECURE_HSTS_SECONDS = config('SECURE_HSTS_SECONDS')
+    SECURE_HSTS_PRELOAD = config('SECURE_HSTS_PRELOAD', default=True, cast=bool)
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = config('SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True, cast=bool)
+    X_FRAME_OPTIONS = config('X_FRAME_OPTIONS')
     # Cookies
-    CSRF_COOKIE_SECURE = True
-    SESSION_COOKIE_SECURE = True
-    SESSION_COOKIE_AGE = 3600
-    SESSION_COOKIE_NAME = 'sessionid'
-    SESSION_COOKIE_DOMAIN = 'domain.com'
-    SESSION_COOKIE_SAMESITE = 'Strict'
+    CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', default=True, cast=bool)
+    SESSION_COOKIE_SECURE = config('SESSION_COOKIE_SECURE', default=True, cast=bool)
+    SESSION_COOKIE_AGE = config('SESSION_COOKIE_AGE')
+    SESSION_COOKIE_NAME = config('SESSION_COOKIE_NAME')
+    SESSION_COOKIE_DOMAIN = config('SESSION_COOKIE_DOMAIN')
+    SESSION_COOKIE_SAMESITE = config('SESSION_COOKIE_SAMESITE')
     # Proxy Use Only
     # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     # USE_X_FORWARDED_HOST = False
@@ -53,7 +53,7 @@ else:
     SECRET_KEY = config('DEBUG_SECRET_KEY')
     ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
 
-SITE_ID = 1
+SITE_ID = config('SITE_ID')
 
 # Application definition
 
@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'roku_content',
     #'roku_search',
     'media',
+    #'help,',
 ]
 
 MIDDLEWARE = [
