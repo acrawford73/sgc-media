@@ -50,7 +50,8 @@ class RokuContentFeedCreateView(CreateView):
 	"""
 	model = RokuContentFeed
 	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
-		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+		'categories', 'playlists', 'movies', 'series', 'short_form_videos', 'tv_specials']
+		#'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListView(ListView):
 	"""
@@ -103,7 +104,8 @@ class RokuContentFeedUpdateView(UpdateView):
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
 	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
-		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+		'categories', 'playlists', 'movies', 'series', 'short_form_videos', 'tv_specials']
+		#'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListAPI(APIView):
 	"""
@@ -123,11 +125,16 @@ class RokuContentFeedListAPI(APIView):
 	# 	#serializer = RokuContentFeedSerializerList(feed, many=False)
 	# 	providerName = [feed.providerName for feed in feed.objects.all()]
 	# 	return Response(providerName)
+
+	#####
 	renderer_classes = [JSONRenderer]
+	pagination_class = None
 	def get(self, request, format=None): 
 		feeds = RokuContentFeed.objects.first() #.filter(is_public=True)
 		serializer = RokuContentFeedSerializerList(feeds)
 		return Response(serializer.data) 
+#####
+
 
 	# def get(self, request, *args, **kwargs):
 	# 	serializer = RokuContentFeedSerializerDetail(RokuContentFeed.objects.all().filter(is_public=True), many=False)

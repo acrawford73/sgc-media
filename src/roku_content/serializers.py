@@ -231,7 +231,7 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	rating = RatingSerializerList()
 	lastUpdated = serializers.DateTimeField(source='last_updated')
 	movies = MovieSerializerList(many=True)
-	liveFeeds = LiveFeedSerializerList(many=True, source='live_feeds')
+	#liveFeeds = LiveFeedSerializerList(many=True, source='live_feeds')
 	series = SeriesSerializerList(many=True)
 	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos')
 	tvSpecials = TVSpecialSerializerList(many=True, source='tv_specials')
@@ -241,7 +241,8 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 		model = RokuContentFeed
 		#read_only_fields = ['is_public']
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
-			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
+			'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
+			#'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 
 
 
