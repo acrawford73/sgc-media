@@ -10,21 +10,21 @@ class SystemConfig(models.Model):
 	
 	Defaults will be loaded as a fixture.
 	"""
-	version = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
-	
-	# Media Sources
-	url_cdn = models.URLField(max_length=2038, default="", null=True, blank=True)
-	path_media = models.CharField(max_length=256, default="", null=True, blank=True)
-	
-	# External Services
-	roku_support = models.BooleanField(default=True)
-	
-	# System Features
-	live_feed_enable = models.BooleanField(default=True)
-	tv_special_enable = models.BooleanField(default=True)
-	language_enable = models.BooleanField(default=True)
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
 
-	created = models.DateTime(auto_now_add=True)
+	# Media Sources
+	server_url = models.URLField(max_length=2083, default="", null=True, blank=True)
+	cdn_url = models.URLField(max_length=2083, default="", null=True, blank=True)
+	path_media = models.CharField(max_length=256, default="", null=True, blank=True)
+
+	# Content Types, disabling removes from navbar
+	movie_enable = models.BooleanField(default=True, null=False, blank=True)
+	live_feed_enable = models.BooleanField(default=True, null=False, blank=True)
+	series_enable = models.BooleanField(default=True, null=False, blank=True)
+	short_form_video_enable = models.BooleanField(default=True, null=False, blank=True)
+	tv_special_enable = models.BooleanField(default=True, null=False, blank=True)
+	language_enable = models.BooleanField(default=True, null=False, blank=True)
+
 	updated = models.DateTime(auto_now=True)
 	class Meta:
 		ordering = ['-id']

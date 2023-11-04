@@ -1,0 +1,19 @@
+]
+{
+  "model": "system_settings.systemconfig",
+  "pk": 1,
+  "fields": {
+    "title": "System Configuration",
+    "server_url": "",
+    "cdn_url": "",
+    "path_media": "",
+    "movies_enable": "True",
+    "live_feeds_enable": "True",
+    "series_enable": "True",
+    "seasons_enable": "True",
+    "episodes_enable": "True",
+    "short_form_videos_enable": "True",
+    "tv_specials_enable": "True"
+  }
+}
+]
