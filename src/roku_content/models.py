@@ -15,6 +15,42 @@ from django.urls import reverse
 # JSON Schema Lint:      https://jsonschemalint.com/#!/version/draft-07/markup/json
 # ISO 639.2 Codes:       https://www.loc.gov/standards/iso639-2/php/code_list.php
 
+class Content(models.Model):
+	""" 
+	The Content model represents the details about a single video content 
+	item such as a Movie, Episode, Short-Form Video, or TV Show.
+	"""
+	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
+	date_added = models.DateField(auto_now_add=True)
+	videos = models.ManyToManyField('Video', through='ContentVideo', blank=True)
+	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The video duration must be in seconds.")
+	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
+	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
+	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
+	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
+	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
+	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
+	updated = models.DateField(auto_now=True)
+	def get_absolute_url(self):
+		return reverse('content-list')
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.title)
+
+class ContentVideo(models.Model):
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+	video = models.ForeignKey('Video', on_delete=models.CASCADE)
+
+class ContentCaption(models.Model):
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+	caption = models.ForeignKey('Caption', on_delete=models.CASCADE)
+
+class ContentTrickPlayFile(models.Model):
+	content = models.ForeignKey('Content', on_delete=models.CASCADE)
+	trick_play_files = models.ForeignKey('TrickPlayFile', on_delete=models.CASCADE)
 
 class Language(models.Model):
 	""" Model for any models containing a language field. """
@@ -215,7 +251,7 @@ class Movie(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
@@ -257,7 +293,7 @@ class LiveFeed(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the main thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
@@ -361,7 +397,7 @@ class Episode(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
@@ -406,7 +442,7 @@ class ShortFormVideo(models.Model):
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
 	# The video content, such as the URL of the video file, subtitles, and so on.
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	# The URL of the thumbnail for the video. This is used within your channel and in search results.
 	# Image dimensions must be at least 800x450 (width x height, 16x9 aspect ratio).
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
@@ -450,7 +486,7 @@ class TVSpecial(models.Model):
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
 	#content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=False, blank=False)
+	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
@@ -486,42 +522,7 @@ class TVSpecialExternalID(models.Model):
 
 ### Content Properties
 
-class Content(models.Model):
-	""" 
-	The Content model represents the details about a single video content 
-	item such as a Movie, Episode, Short-Form Video, or TV Show.
-	"""
-	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
-	date_added = models.DateField(auto_now_add=True)
-	videos = models.ManyToManyField('Video', through='ContentVideo', blank=True)
-	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The video duration must be in seconds.")
-	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
-	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
-	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
-	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
-	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
-	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
-	updated = models.DateField(auto_now=True)
-	def get_absolute_url(self):
-		return reverse('content-list')
-	class Meta:
-		ordering = ['id']
-		def __unicode__(self):
-			return self.id
-	def __str__(self):
-		return str(self.title)
 
-class ContentVideo(models.Model):
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
-	video = models.ForeignKey('Video', on_delete=models.CASCADE)
-
-class ContentCaption(models.Model):
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
-	caption = models.ForeignKey('Caption', on_delete=models.CASCADE)
-
-class ContentTrickPlayFile(models.Model):
-	content = models.ForeignKey('Content', on_delete=models.CASCADE)
-	trick_play_files = models.ForeignKey('TrickPlayFile', on_delete=models.CASCADE)
 
 
 VIDEO_QUALITY = (

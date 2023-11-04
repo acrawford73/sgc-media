@@ -35,16 +35,24 @@
             </ul>
           </li> -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Setup</a>
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Feeds</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a></li>
               <li><a class="dropdown-item" href="#">Search Feed</a></li>
+            </ul>
+          </li>
 
-              <li><hr class="dropdown-divider"></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'playlist-list' %}">Playlists</a></li>
               <li><a class="dropdown-item" href="{% url 'category-list' %}">Categories</a></li>
+            </ul>
+          </li>
 
-              <li><hr class="dropdown-divider"></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Content Types</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'movie-list' %}">Movies</a></li>
               <li><a class="dropdown-item" href="{% url 'livefeed-list' %}">Live Feeds</a></li>
               <li><a class="dropdown-item" href="{% url 'series-list' %}">Series</a></li>
@@ -52,8 +60,12 @@
               <li><a class="dropdown-item" href="{% url 'episode-list' %}">Episodes</a></li>
               <li><a class="dropdown-item" href="{% url 'shortformvideo-list' %}">Short-Form Videos</a></li>
               <li><a class="dropdown-item" href="{% url 'tvspecial-list' %}">TV Specials</a></li>
+            </ul>
+          </li>
 
-              <li><hr class="dropdown-divider"></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Content Properties</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'content-list' %}">Content</a></li>
               <li><a class="dropdown-item" href="{% url 'video-list' %}">Videos</a></li>
               <li><a class="dropdown-item" href="{% url 'caption-list' %}">Captions</a></li>
@@ -67,7 +79,7 @@
               <li><a class="dropdown-item" href="{% url 'externalid-list' %}">External IDs</a></li>
               <li><a class="dropdown-item" href="{% url 'language-list' %}">Languages</a></li>
             </ul>
-          </li>          
+          </li>        
 <!--           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="#">Settings</a>
           </li> -->
