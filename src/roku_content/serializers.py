@@ -213,7 +213,7 @@ class CategorySerializerList(serializers.ModelSerializer):
 
 class PlaylistSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='playlist_name')
-	itemIds = serializers.StringRelatedField(source='item_ids')
+	itemIds = serializers.CharField(source='item_ids')
 	class Meta:
 		model = Playlist
 		fields = ['name', 'itemIds']
