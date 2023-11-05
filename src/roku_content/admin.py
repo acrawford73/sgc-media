@@ -66,8 +66,8 @@ class SeriesAdmin(admin.ModelAdmin):
 		model = Series
 
 class SeasonAdmin(admin.ModelAdmin):
-	list_display = ['id', 'season_number']
-	search_fields = ['season_number']
+	list_display = ['id', 'title_season', 'season_number']
+	search_fields = ['title_season', 'season_number']
 	list_filter = ['season_number']
 	class Meta:
 		model = Season

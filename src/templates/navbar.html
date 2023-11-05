@@ -17,10 +17,10 @@
           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="{% url 'rokucontentfeed-list' %}">Search</a>
           </li>
-           <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="#">RSS</a>
           </li> -->
-<!--           <li class="nav-item dropdown">
+<!--          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Media</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'media-video-list' %}">Videos</a></li>
@@ -32,24 +32,39 @@
               <li><a class="dropdown-item" href="{% url 'media-photo-list-api' %}">Photos API</a></li>
               <li><a class="dropdown-item" href="{% url 'media-audio-list-api' %}">Audio API</a></li>
               <li><a class="dropdown-item" href="{% url 'media-doc-list-api' %}">Docs API</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Video RSS</a></li>
             </ul>
           </li> -->
-          <li class="nav-item dropdown">
+
+<!--           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Feeds</a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a></li>
+              <li><a class="dropdown-item" href="{% url 'rokucontentfeed-list' %}">Content Feed</a></li>
               <li><a class="dropdown-item" href="#">Search Feed</a></li>
             </ul>
+          </li> -->
+          
+          <li class="nav-item">
+            <a class="nav-link inactive" aria-current="page" href="{% url 'rokucontentfeed-list' %}">Content Feed</a>
           </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+          <li class="nav-item">
+            <a class="nav-link inactive" aria-current="page" href="{% url 'playlist-list' %}">Playlists</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link inactive" aria-current="page" href="{% url 'category-list' %}">Categories</a>
+          </li>
+          
+<!--           <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Content Categories</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'playlist-list' %}">Playlists</a></li>
               <li><a class="dropdown-item" href="{% url 'category-list' %}">Categories</a></li>
             </ul>
           </li>
-
+ -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Content Types</a>
             <ul class="dropdown-menu">
@@ -80,9 +95,6 @@
               <li><a class="dropdown-item" href="{% url 'language-list' %}">Languages</a></li>
             </ul>
           </li>        
-<!--           <li class="nav-item">
-            <a class="nav-link inactive" aria-current="page" href="#">Settings</a>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="http://192.168.0.13:8000/admin/">Admin</a>
           </li>

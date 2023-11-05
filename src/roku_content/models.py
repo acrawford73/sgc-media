@@ -368,8 +368,7 @@ class Season(models.Model):
 	"episodes": [ ... ]
 	}
 	"""
-	#episode_name = models.ForeignKey('Episode', on_delete=models.PROTECT, related_name='episode_title', null=False, blank=False, \
-	#	help_text='Enter the name of the Episode that this Season refers to.')
+	title_season = models.CharField(max_length=50, default="", null=False, blank=False)
 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	# One or more episodes of this particular season.
 	episodes = models.ManyToManyField('Episode', through='SeasonEpisode', \
@@ -392,7 +391,7 @@ class SeasonEpisode(models.Model):
 class Episode(models.Model):
 	""" This Model represents a single episode in a series or a season. """
 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, null=False, blank=False)
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
@@ -432,7 +431,7 @@ class ShortFormVideo(models.Model):
 	short_form_video_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	# The title of the video in plain text. This field is used for matching in Roku Search. 
 	# Do not include extra information such as year, version label, and so on.
-	title = models.CharField(max_length=50, null=False, blank=False)
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
 	short_description = models.CharField(max_length=200, null=False, blank=False, \
@@ -480,7 +479,7 @@ class ShortFormVideoCredit(models.Model):
 class TVSpecial(models.Model):
 	""" TV Specials (TV Shows) are usually 30 or 60 minutes. Special ad rules apply. """
 	tv_special_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, null=False, blank=False)
+	title = models.CharField(max_length=50, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \

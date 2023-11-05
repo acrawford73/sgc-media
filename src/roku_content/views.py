@@ -129,10 +129,10 @@ class RokuContentFeedListAPI(APIView):
 	#####
 	renderer_classes = [JSONRenderer]
 	pagination_class = None
-	def get(self, request, format=None): 
+	def get(self, request, format=None):
 		feeds = RokuContentFeed.objects.first() #.filter(is_public=True)
 		serializer = RokuContentFeedSerializerList(feeds)
-		return Response(serializer.data) 
+		return Response(serializer.data)
 #####
 
 
@@ -424,7 +424,7 @@ class SeriesListAPI(generics.ListAPIView):
 # Season
 class SeasonCreateView(CreateView):
 	model = Season
-	fields = ['season_number', 'episodes']
+	fields = ['title_season', 'season_number', 'episodes']
 
 class SeasonListView(ListView):
 	model = Season
@@ -440,7 +440,7 @@ class SeasonDetailView(DetailView):
 class SeasonUpdateView(UpdateView):
 	model = Season
 	context_object_name = 'season'
-	fields = ['season_number', 'episodes']
+	fields = ['title_season', 'season_number', 'episodes']
 
 class SeasonListAPI(generics.ListAPIView):
 	queryset = Season.objects.all()
@@ -621,7 +621,7 @@ class ContentUpdateView(UpdateView):
 		 'validity_start_period', 'validity_end_period']
 
 class ContentListAPI(generics.ListAPIView):
-	queryset = Content.objects.first()
+	queryset = Content.objects.all()
 	serializer_class = ContentSerializerList
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['language', 'validity_start_period', 'validity_end_period']

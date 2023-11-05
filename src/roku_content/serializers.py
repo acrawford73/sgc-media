@@ -148,10 +148,12 @@ class EpisodeSerializerList(serializers.ModelSerializer):
 			'thumbnail', 'releaseDate', 'rating', 'credits', 'externalIds']
 
 class SeasonSerializerList(serializers.ModelSerializer):
+	titleSeason = serializers.CharField(source='title_season')
+	seasonNumber = serializers.IntegerField(source="season_number")
 	episodes = EpisodeSerializerList(many=True)
 	class Meta:
 		model = Season
-		fields = ['season_number', 'episodes']
+		fields = ['titleSeason', 'seasonNumber', 'episodes']
 
 class SeriesSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='series_id')
