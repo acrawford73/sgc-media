@@ -17,13 +17,7 @@ class RokuContentFeedAdmin(admin.ModelAdmin):
 	class Meta:
 		model = RokuContentFeed
 
-# Roku Categories
-
-class LanguageAdmin(admin.ModelAdmin):
-	list_display = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
-	search_fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
-	class Meta:
-		model = Language
+# Roku Content Categories
 
 class CategoryAdmin(admin.ModelAdmin):
 	list_display = ['category_name', 'playlist_name', 'order']
@@ -39,7 +33,7 @@ class PlaylistAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Playlist
 
-# Roku Types
+# Roku Content Types
 
 class MovieAdmin(admin.ModelAdmin):
 	list_display = ['title', 'release_date']
@@ -99,7 +93,7 @@ class TVSpecialAdmin(admin.ModelAdmin):
 	class Meta:
 		model = TVSpecial
 
-# Roku Properties
+# Roku Content Properties
 
 class ContentAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'language', 'date_added']
@@ -194,11 +188,16 @@ class TagAdmin(admin.ModelAdmin):
 	class Meta:
 		model = Tag
 
+class LanguageAdmin(admin.ModelAdmin):
+	list_display = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
+	search_fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
+	class Meta:
+		model = Language
+
 
 # Register with Admin
 admin.site.register(RokuContentFeed, RokuContentFeedAdmin)
 
-admin.site.register(Language, LanguageAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Playlist, PlaylistAdmin)
 
@@ -224,3 +223,4 @@ admin.site.register(ParentalRating, ParentalRatingAdmin)
 admin.site.register(CreditRole, CreditRoleAdmin)
 admin.site.register(Credit, CreditAdmin)
 admin.site.register(Tag, TagAdmin)
+admin.site.register(Language, LanguageAdmin)
