@@ -50,8 +50,7 @@ class RokuContentFeedCreateView(CreateView):
 	"""
 	model = RokuContentFeed
 	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
-		'categories', 'playlists', 'movies', 'series', 'short_form_videos', 'tv_specials']
-		#'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListView(ListView):
 	"""
@@ -104,8 +103,7 @@ class RokuContentFeedUpdateView(UpdateView):
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
 	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
-		'categories', 'playlists', 'movies', 'series', 'short_form_videos', 'tv_specials']
-		#'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
+		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
 class RokuContentFeedListAPI(APIView):
 	"""
@@ -156,7 +154,7 @@ class RokuContentFeedListAPI(APIView):
 # 	filter_backends = [DjangoFilterBackend]
 # 	filterset_fields = ['language']
 # 	pagination_class = None
-
+# 	renderer_classes = [JSONRenderer]
 
 class RokuContentFeedListSearchAPI(generics.ListAPIView):
 	queryset = RokuContentFeed.objects.all().filter(is_public=True)
