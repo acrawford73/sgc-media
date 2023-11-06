@@ -31,7 +31,7 @@
               {% for asset in category %}
               <tr align="center">
                 <td><a href="{% url 'category-detail' asset.id %}">{{ asset.category_name }}</a></td>
-                <td>{{ asset.playlist_name }}</td>
+                <td><a href="{% url 'playlist-detail' asset.playlist_name.pk %}">{{ asset.playlist_name }}</a></td>
                 <td>{{ asset.query_string }}</td>
                 <td>{{ asset.order }}</td>
               </tr>
