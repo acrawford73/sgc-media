@@ -203,7 +203,7 @@ class Movie(models.Model):
 	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
+	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
 	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
@@ -275,7 +275,7 @@ class Series(models.Model):
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=False, null=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
+	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	credits = models.ManyToManyField('Credit', through='SeriesCredit', blank=True) # Optional
 	external_ids = models.ManyToManyField('ExternalID', through='SeriesExternalID', blank=True) # Optional
@@ -348,7 +348,7 @@ class Episode(models.Model):
 	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
+	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	episode_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	credits = models.ManyToManyField('Credit', through='EpisodeCredit', blank=True) # Optional
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=False, null=False)
@@ -398,7 +398,7 @@ class ShortFormVideo(models.Model):
 	# The date the video first became available.
 	# This field is used to sort programs chronologically and group related content in Roku Search. 
 	# Conforms to ISO 8601 format: {YYYY}-{MM}-{DD}. For example, 2020-11-11
-	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
+	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	# One or more tags (e.g., “dramas”, “korean”, etc). 
 	# Each tag is a string and is limited to 20 characters. 
 	# Tags are used to define what content will be shown within a category.
@@ -438,7 +438,7 @@ class TVSpecial(models.Model):
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
-	release_date = models.DateField(default="0000-00-00", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
+	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	credits = models.ManyToManyField('Credit', through='TVSpecialCredit', blank=True) # Optional
