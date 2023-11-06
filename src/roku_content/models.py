@@ -433,7 +433,6 @@ class TVSpecial(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	#content = models.ManyToManyField('Content', through='TVSpecialContent', blank=True)
 	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
@@ -451,11 +450,6 @@ class TVSpecial(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.title)
-
-# class TVSpecialContent(models.Model):
-# 	""" ManyToMany table for TVSpecial model and Content model. """
-# 	tvspecial = models.ForeignKey('TVSpecial', on_delete=models.CASCADE)
-# 	content = models.ForeignKey('Content', on_delete=models.CASCADE)
 
 class TVSpecialCredit(models.Model):
 	""" ManyToMany table for TVSpecial model and Credit model. """
