@@ -288,13 +288,13 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 	series = SeriesSerializerList(many=True)
 	shortFormVideos = ShortFormVideoSerializerList(many=True, source='short_form_videos')
 	tvSpecials = TVSpecialSerializerList(many=True, source='tv_specials')
-	categories = CategorySerializerList(many=True)
 	playlists = PlaylistSerializerList(many=True)
+	categories = CategorySerializerList(many=True)
 	class Meta:
 		model = RokuContentFeed
 		#fields = '__all__'
 		fields = ('providerName', 'language', 'rating', 'lastUpdated', 'movies', \
-			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists')
+			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'playlists', 'categories')
 
 
 # # None field will be removed

@@ -16,3 +16,4 @@ export_pretty.json
 importer.py
 .env
 .lock
+.DS_Store
