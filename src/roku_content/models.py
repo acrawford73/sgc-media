@@ -749,7 +749,7 @@ class Credit(models.Model):
 	"""
 	credit_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	role = models.ForeignKey("CreditRole", on_delete=models.PROTECT, null=False, blank=False)
-	birth_date = models.CharField(max_length=10, default="0000-00-00", null=False, blank=False, \
+	birth_date = models.CharField(max_length=10, default="2023-01-01", null=False, blank=False, \
 		help_text = "Please use the following birth date format: YYYY-MM-DD.")
 	def get_absolute_url(self):
 		return reverse('credit-list')
