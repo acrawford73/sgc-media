@@ -9,7 +9,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, CreditRole, Credit, Tag
+					RatingSource, ParentalRating, CreditRole, Credit, Tag, PlaylistShortFormVideo
 
 
 class LanguageSerializerList(serializers.ModelSerializer):
@@ -186,7 +186,7 @@ class SeriesSerializerList(serializers.ModelSerializer):
 		'episodes', 'thumbnail', 'releaseDate', 'tags', 'genres', 'credits', 'externalIds']
 
 class ShortFormVideoSerializerList(serializers.ModelSerializer):
-	id = serializers.UUIDField(source='short_form_video_id')
+	#id = serializers.UUIDField(source='short_form_video_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
 	releaseDate = serializers.DateField(source='release_date')
@@ -222,7 +222,7 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 			'thumbnail', 'releaseDate', 'tags', 'genres', 'rating', 'credits', 'externalIds']
 
 
-### Content Categories
+### Content Categoriess
 
 class CategorySerializerList(serializers.ModelSerializer):
 	name = serializers.StringRelatedField(source='category_name')
@@ -236,9 +236,10 @@ class CategorySerializerList(serializers.ModelSerializer):
 		fields = ['name', 'playlistName', 'query', 'order']
 		#fields = '__all__'  ## provide all fields
 
+
 class PlaylistSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='playlist_name')
-	itemIds = serializers.CharField(source='item_ids')
+	itemIds = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='item_ids')
 	def to_representation(self, instance):
 		result = super(PlaylistSerializerList, self).to_representation(instance)
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])

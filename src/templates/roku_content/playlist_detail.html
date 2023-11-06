@@ -29,8 +29,16 @@
                 <td>{{ playlist.short_description }}</td>
               </tr>
               <tr>
-                <td><strong>Item UUIDs</strong></td>
-                <td>{{ playlist.item_ids }}</td>
+                <td><strong>Video IDs</strong></td>
+                <td>
+                  {% if playlist.item_ids.all.count > 0 %}
+                    {% for item in playlist.item_ids.all %}
+                      <li><a href="{% url 'shortformvideo-detail' item.id %}">{{ item }}</a></li>
+                    {% endfor %}
+                  {% else %}
+                    No Video Items added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Last Updated</strong></td>

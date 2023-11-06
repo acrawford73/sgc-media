@@ -10,6 +10,8 @@ from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, Ex
 # Roku Content Feed
 
 class RokuContentFeedAdmin(admin.ModelAdmin):
+	fields = ['is_public', 'roku_content_feed_id', 'provider_name', 'language', \
+		'rating', 'short_description', 'last_updated', 'created']
 	list_display = ['provider_name', 'language', 'last_updated', 'created']
 	search_fields = ['provider_name', 'roku_content_feed_id']
 	list_filter = ['language']

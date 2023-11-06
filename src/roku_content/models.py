@@ -171,7 +171,9 @@ class Playlist(models.Model):
 	#playlist_id = models.PositiveBigIntegerField(primary_key=True)
 	playlist_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	# List of mixed Movies, Series, Short Form Videos, TV Specials.
-	item_ids = models.JSONField(default=list, null=True, blank=True, 
+#	item_ids = models.JSONField(default=list, null=True, blank=True, 
+#		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
+	item_ids = models.ManyToManyField('ShortFormVideo', through='PlaylistShortFormVideo', blank=True, \
 		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
@@ -185,6 +187,10 @@ class Playlist(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.playlist_name)
+
+class PlaylistShortFormVideo(models.Model):
+	playlist = models.ForeignKey('Playlist', on_delete=models.CASCADE)
+	short_form_video = models.ForeignKey('ShortFormVideo', on_delete=models.CASCADE)
 
 
 ### Content Types
@@ -261,7 +267,7 @@ class LiveFeed(models.Model):
 
 
 class Series(models.Model):
-	""" Represents a series, such as a season of a TV Show or a mini-series. """
+	""" Represents a Series, such as a Season of a TV Show or a Mini-Series. """
 	series_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=50, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
@@ -311,7 +317,7 @@ class SeriesExternalID(models.Model):
 
 class Season(models.Model):
 	"""
-	Represents a single season of a series.
+	Represents a single Season of a Series.
 	{
 	"seasonNumber": "1",
 	"episodes": [ ... ]
@@ -338,7 +344,7 @@ class SeasonEpisode(models.Model):
 
 
 class Episode(models.Model):
-	""" This Model represents a single episode in a series or a season. """
+	""" This Model represents a single Episode in a Series or a Season. """
 	episode_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	title = models.CharField(max_length=50, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
@@ -374,7 +380,7 @@ class EpisodeExternalID(models.Model):
 
 
 class ShortFormVideo(models.Model):
-	""" Short-form videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
+	""" Short-Form Videos are generally less than 15 minutes long, and are not TV Shows or Movies. """
 	# An immutable string reference ID for the video that does not exceed 50 characters. 
 	# This should serve as a unique identifier for the episode across different locales.
 	short_form_video_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -466,7 +472,7 @@ class TVSpecialExternalID(models.Model):
 
 class Content(models.Model):
 	""" 
-	The Content model represents the details about a single video content 
+	The Content model represents the details about a single video content
 	item such as a Movie, Episode, Short-Form Video, or TV Show.
 	"""
 	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")

@@ -160,6 +160,12 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static_files')
 ]
 
+# print(os.path.dirname(BASE_DIR))
+# print(LOCAL_STATIC_CDN)
+# print(STATIC_ROOT)
+# print(os.path.join(BASE_DIR, 'static_files'))
+
+
 ### File Uploads
 FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
@@ -176,10 +182,6 @@ FILE_UPLOAD_PERMISSIONS = 0o640  # Default: 0o644
 # The numeric mode to apply to directories created in the process of uploading files.
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o640  # Default: None
 
-# print(os.path.dirname(BASE_DIR))
-# print(LOCAL_STATIC_CDN)
-# print(STATIC_ROOT)
-# print(os.path.join(BASE_DIR, 'static_files'))
 
 # Media files
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets')
