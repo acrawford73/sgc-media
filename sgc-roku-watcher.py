@@ -175,8 +175,8 @@ def pgql_find(sql, data, db_meta):
 		if conn is not None:
 			conn.close()
 
-# Add Video asset to database
-def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+# Add video asset to MediaVideo table
+def asset_video_create_media(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
@@ -201,7 +201,30 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id)
 	psql_result = pgql(sql, data, db_meta)
+	if psql_result == False:
+		log.error("Failed to create video asset in Media table.")
 	return psql_result
+
+# Add video asset to Video table
+def asset_video_create_video(url, quality, video_type, db_meta):
+	sql = "INSERT INTO roku_content_video(url, quality, video_type) \
+	VALUES (%s, %s, %s)"
+	data = (url, quality, video_type)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == False:
+		log.error("Failed to create video asset in Video table.")
+	return psql_result
+
+# Add video asset to Content table
+def asset_video_create_content():
+	sql = "INSERT INTO roku_content_content(title, language, duration, videos, captions, trick_play_files, date_added) \
+	VALUES (%s, %s, %s, %s, %s, %s, %s)"
+	data = (title, language, duration, videos, captions, trick_play_files, date_added)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == False:
+		log.error("Failed to create video asset in Content table.")
+	return psql_result
+
 
 # Delete
 
@@ -529,7 +552,7 @@ def Watcher(watch_path, ext_video):
 				
 				# The video asset must be added to the Video and Content tables, for auto-insertion of the video duration
 				
-				ingested = asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+				ingested1 = asset_video_create_media(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
@@ -538,10 +561,20 @@ def Watcher(watch_path, ext_video):
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta)
 				
-				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+ \
-						" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+ \
-						" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
+				ingested2 = asset_video_create_video(url, quality, video_type, db_meta)
+				
+				ingested3 = asset_video_create_content(title, language, duration, videos, captions, trick_play_files, date_added)
+
+				if (ingested1 == True) and (ingested2 == True) and (ingested3 == True):
+					log.info("Asset ingested: path=" + asset_full_path + " size=" + str(asset_size) + \
+						" sha256=" + asset_sha256 + " uuid="+asset_uuid + " format=" + media_video_format + \
+						" duration=" + str(media_video_duration))
+				elif ingested1 == False:
+					log.error("Failed to ingest into Media database table.")
+				elif ingested2 == False:
+					log.error("Failed to ingest into Video database table.")
+				elif ingested3 == False:
+					log.error("Failed to ingest into Content database table.")
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
 
@@ -588,7 +621,6 @@ def Watcher(watch_path, ext_video):
 						log.info("Asset updated: " + asset_sha256 + " moved in file system, database path updated: {}".format(asset_full_path))
 			else:
 				log.error("Invalid file extension ." + ext)
-
 
 
 ### THE REAL GAME BEGINS HERE ###
@@ -646,7 +678,7 @@ if __name__ == "__main__":
 
 	ext_video = get_video_formats(db_meta)
 	if ext_video == False:
-		log.error("There are no video formats listed in the database.")
+		log.error("There are no video formats listed in the database. Load the 'media' fixtures to add them.")
 		quit(1)
 	else:
 		log.debug(ext_video)

@@ -9,7 +9,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, CreditRole, Credit, Tag, PlaylistShortFormVideo
+					RatingSource, ParentalRating, CreditRole, Credit, Tag
 
 
 class LanguageSerializerList(serializers.ModelSerializer):
@@ -253,7 +253,8 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 # This class provides the data used to populate the Roku channel menus and content
 class RokuContentFeedSerializerList(serializers.ModelSerializer):
 	"""
-	Serializer List class for Roku Content Feed. The data is used to display Roku channel menus populate them with content.
+	Serializer List class for Roku Content Feed. 
+	The data is used to display Roku channel menus and populate them with content.
 	"""
 	providerName = serializers.CharField(source='provider_name')
 	language = serializers.StringRelatedField()

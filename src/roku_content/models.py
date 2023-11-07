@@ -41,8 +41,8 @@ class RokuContentFeed(models.Model):
 	# For example, 2020-11-11T22:21:37+00:00
 	#              YYYY-MM-DDTHH:MM:SS+? :?
 	last_updated = models.DateTimeField(auto_now=True)
-	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=False, blank=False)
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
+	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=False, blank=False)
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=False)
 	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', related_name='category', blank=True)
 	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', blank=True)
 	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', blank=True)
@@ -206,12 +206,12 @@ class Movie(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
+	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
-	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
+	genres = models.ForeignKey('Genre', on_delete=models.PROTECT, blank=True, null=True)
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True)
 	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
 	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True)
 	external_ids = models.ManyToManyField('ExternalID', through='MovieExternalID', blank=True)
@@ -248,14 +248,14 @@ class LiveFeed(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
+	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the main thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	branded_thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the branded thumbnail image. It is a secondary thumbnail. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	tags = models.CharField(max_length=200, default="", null=True, blank=True) # Optional
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)
-	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True) # Optional
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True)
+	genres = models.ForeignKey('Genre', on_delete=models.PROTECT, blank=True, null=True) # Optional
 	def get_absolute_url(self):
 		return reverse('livefeed-list')
 	class Meta:
@@ -278,7 +278,7 @@ class Series(models.Model):
 		help_text="One or more seasons of the series. Seasons should be used if episodes are grouped by seasons.")
 	episodes = models.ManyToManyField('Episode', through='SeriesEpisode', blank=True, \
 		help_text="One or more episodes of the series. Episodes should be used if they are not grouped by seasons.")
-	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=False, null=False)
+	genres = models.ForeignKey('Genre', on_delete=models.PROTECT, blank=False, null=False)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
@@ -351,13 +351,13 @@ class Episode(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
+	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	episode_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	credits = models.ManyToManyField('Credit', through='EpisodeCredit', blank=True) # Optional
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=False, null=False)
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=False, null=False)
 	external_ids = models.ManyToManyField('ExternalID', through='EpisodeExternalID', blank=True) # Optional
 	def get_absolute_url(self):
 		return reverse('episode-list')
@@ -396,7 +396,7 @@ class ShortFormVideo(models.Model):
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
 	# The video content, such as the URL of the video file, subtitles, and so on.
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
+	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
 	# The URL of the thumbnail for the video. This is used within your channel and in search results.
 	# Image dimensions must be at least 800x450 (width x height, 16x9 aspect ratio).
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
@@ -411,11 +411,11 @@ class ShortFormVideo(models.Model):
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	# A list of strings describing the genre(s) of the video.
 	# Must be one of the values listed in genres.
-	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)  # Optional
+	genres = models.ForeignKey('Genre', on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	# One or more credits. The cast and crew of the video.
 	credits = models.ManyToManyField('Credit', through='ShortFormVideoCredit', blank=True)
 	# A parental rating for the content.
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, blank=True, null=True)  # Optional
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	def get_absolute_url(self):
 		return reverse('shortformvideo-list')
 	class Meta:
@@ -439,12 +439,12 @@ class TVSpecial(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True)
+	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
 	thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	genres = models.ForeignKey("Genre", on_delete=models.PROTECT, blank=True, null=True)
+	genres = models.ForeignKey('Genre', on_delete=models.PROTECT, blank=True, null=True)
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
-	rating = models.ForeignKey("Rating", on_delete=models.PROTECT, null=False, blank=False)
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=False)
 	tags = models.CharField(max_length=200, null=True, blank=True) # Optional
 	credits = models.ManyToManyField('Credit', through='TVSpecialCredit', blank=True) # Optional
 	external_ids = models.ManyToManyField('ExternalID', through='TVSpecialExternalID', blank=True) # Optional
@@ -481,7 +481,7 @@ class Content(models.Model):
 	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The video duration must be in seconds.")
 	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
 	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
-	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
+	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True)
 	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
 	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
 	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
@@ -542,8 +542,8 @@ class Video(models.Model):
 	"""
 	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	quality = models.CharField(max_length=16, choices=VIDEO_QUALITY, default='HD', null=False, blank=False)
-	video_type = models.ForeignKey("VideoType", on_delete=models.PROTECT, null=False, blank=False)
-	content_item = models.ForeignKey("Content", on_delete=models.PROTECT, null=True, blank=True, \
+	video_type = models.ForeignKey('VideoType', on_delete=models.PROTECT, null=False, blank=False)
+	content_item = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True, \
 		help_text="Select the Content item where this video will be used.")
 	def get_absolute_url(self):
 		return reverse('video-list')
@@ -582,7 +582,7 @@ class Caption(models.Model):
 	}
 	"""
 	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
-	language = models.ForeignKey("Language", on_delete=models.PROTECT, null=True, blank=True)
+	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True)
 	caption_type = models.CharField(max_length=16, choices=CAPTION_TYPE, default='SUBTITLE', null=False, blank=False)
 	def get_absolute_url(self):
 		return reverse('caption-list')
@@ -653,7 +653,7 @@ class ExternalID(models.Model):
 	}
 	"""
 	external_id = models.CharField(max_length=16, default="", null=False, blank=False)
-	id_type = models.ForeignKey("ExternalIDType", on_delete=models.PROTECT, blank=True, null=True)
+	id_type = models.ForeignKey('ExternalIDType', on_delete=models.PROTECT, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('externalid-list')
 	class Meta:
@@ -688,8 +688,8 @@ class Rating(models.Model):
 	"ratingSource": "MPAA"
 	}
 	"""
-	rating = models.ForeignKey("ParentalRating", on_delete=models.PROTECT, null=False, blank=False)
-	rating_source = models.ForeignKey("RatingSource", on_delete=models.PROTECT, null=False, blank=False)
+	rating = models.ForeignKey('ParentalRating', on_delete=models.PROTECT, null=False, blank=False)
+	rating_source = models.ForeignKey('RatingSource', on_delete=models.PROTECT, null=False, blank=False)
 	def get_absolute_url(self):
 		return reverse('rating-list')
 	class Meta:
@@ -748,7 +748,7 @@ class Credit(models.Model):
 	}
 	"""
 	credit_name = models.CharField(max_length=50, default="", null=False, blank=False)
-	role = models.ForeignKey("CreditRole", on_delete=models.PROTECT, null=False, blank=False)
+	role = models.ForeignKey('CreditRole', on_delete=models.PROTECT, null=False, blank=False)
 	birth_date = models.CharField(max_length=10, default="2023-01-01", null=False, blank=False, \
 		help_text = "Please use the following birth date format: YYYY-MM-DD.")
 	def get_absolute_url(self):
