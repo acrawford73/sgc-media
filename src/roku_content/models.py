@@ -168,7 +168,6 @@ class Playlist(models.Model):
 	manually specified; therefore, playlists are ideal for creating a "Featured" category in 
 	a channel.
 	"""
-	#playlist_id = models.PositiveBigIntegerField(primary_key=True)
 	playlist_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	# List of mixed Movies, Series, Short Form Videos, TV Specials.
 #	item_ids = models.JSONField(default=list, null=True, blank=True, 
