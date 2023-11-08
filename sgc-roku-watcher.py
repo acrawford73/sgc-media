@@ -563,7 +563,7 @@ def Watcher(watch_path, ext_video):
 				
 				ingested2 = asset_video_create_video(url, quality, video_type, db_meta)
 				
-				ingested3 = asset_video_create_content(title, language, duration, videos, captions, trick_play_files, date_added)
+				ingested3 = asset_video_create_content(title, language, duration, videos, captions, trick_play_files, date_added, db_meta)
 
 				if (ingested1 == True) and (ingested2 == True) and (ingested3 == True):
 					log.info("Asset ingested: path=" + asset_full_path + " size=" + str(asset_size) + \
