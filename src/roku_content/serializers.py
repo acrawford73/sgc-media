@@ -9,7 +9,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, CreditRole, Credit, Tag
+					RatingSource, ParentalRating, CreditRole, Credit, Tag, PlaylistShortFormVideo
 
 
 class LanguageSerializerList(serializers.ModelSerializer):
@@ -29,11 +29,17 @@ class VideoSerializerList(serializers.ModelSerializer):
 class CaptionSerializerList(serializers.ModelSerializer):
 	captionType = serializers.CharField(source='caption_type')
 	language = serializers.StringRelatedField()
+	def to_representation(self, instance):
+		result = super(CaptionSerializerList, self).to_representation(instance)
+		return OrderedDict([(key, result[key]) for key in result if result[key] ])	
 	class Meta:
 		model = Caption
 		fields = ['url', 'language', 'captionType']
 
 class TrickPlayFileSerializerList(serializers.ModelSerializer):
+	def to_representation(self, instance):
+		result = super(TrickPlayFileSerializerList, self).to_representation(instance)
+		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = TrickPlayFile
 		fields = ['url', 'quality']
@@ -60,6 +66,9 @@ class GenreSerializerList(serializers.ModelSerializer):
 class ExternalIDSerializerList(serializers.ModelSerializer):
 	id = serializers.CharField(source='external_id')
 	idType = serializers.CharField(source='id_type')
+	def to_representation(self, instance):
+		result = super(ExternalIDSerializerList, self).to_representation(instance)
+		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = ExternalID
 		fields = ['id', 'idType']
@@ -92,6 +101,9 @@ class CreditSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='credit_name')
 	birthDate = serializers.CharField(source='birth_date')
 	role = serializers.StringRelatedField()
+	def to_representation(self, instance):
+		result = super(CreditSerializerList, self).to_representation(instance)
+		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Credit
 		fields = ['name', 'role', 'birthDate']
@@ -186,7 +198,7 @@ class SeriesSerializerList(serializers.ModelSerializer):
 		'episodes', 'thumbnail', 'releaseDate', 'tags', 'genres', 'credits', 'externalIds']
 
 class ShortFormVideoSerializerList(serializers.ModelSerializer):
-	#id = serializers.UUIDField(source='short_form_video_id')
+	id = serializers.UUIDField(source='short_form_video_id')
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
 	releaseDate = serializers.DateField(source='release_date')
@@ -234,12 +246,10 @@ class CategorySerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Category
 		fields = ['name', 'playlistName', 'query', 'order']
-		#fields = '__all__'  ## provide all fields
-
 
 class PlaylistSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='playlist_name')
-	itemIds = serializers.PrimaryKeyRelatedField(many=True, read_only=True, source='item_ids')
+	itemIds = serializers.StringRelatedField(many=True, source='item_ids') #PrimaryKeyRelatedField(many=True, read_only=True, source='item_ids')
 	def to_representation(self, instance):
 		result = super(PlaylistSerializerList, self).to_representation(instance)
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
@@ -274,7 +284,6 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 		model = RokuContentFeed
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
-
 
 
 class RokuContentFeedSerializerDetail(serializers.ModelSerializer):

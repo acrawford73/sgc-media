@@ -583,7 +583,7 @@ class Caption(models.Model):
 	"""
 	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True)
-	caption_type = models.CharField(max_length=16, choices=CAPTION_TYPE, default='SUBTITLE', null=False, blank=False)
+	caption_type = models.CharField(max_length=16, choices=CAPTION_TYPE, default='CLOSED_CAPTION', null=False, blank=False)
 	def get_absolute_url(self):
 		return reverse('caption-list')
 	class Meta:

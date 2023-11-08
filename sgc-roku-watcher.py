@@ -176,34 +176,34 @@ def pgql_find(sql, data, db_meta):
 			conn.close()
 
 # Add video asset to MediaVideo table
-def asset_video_create_media(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
-					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
-					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
-					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
-					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
-					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, \
-	media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, \
-	media_video_frame_rate_calc, media_video_bitrate, media_video_codec, media_video_codec_long_name, \
-	media_video_codec_tag_string, media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-	media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
-	media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, media_audio_sample_rate, \
-	created, is_public, tags, doc_format_id) \
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
-					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
-					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
-					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
-					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
-					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
-					media_audio_sample_rate, created, is_public, tags, doc_format_id)
-	psql_result = pgql(sql, data, db_meta)
-	if psql_result == False:
-		log.error("Failed to create video asset in Media table.")
-	return psql_result
+# def asset_video_create_media(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+# 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
+# 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
+# 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
+# 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
+# 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+# 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
+# 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta):
+# 	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, \
+# 	media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, \
+# 	media_video_frame_rate_calc, media_video_bitrate, media_video_codec, media_video_codec_long_name, \
+# 	media_video_codec_tag_string, media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
+# 	media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+# 	media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, media_audio_sample_rate, \
+# 	created, is_public, tags, doc_format_id) \
+# 	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+# 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
+# 					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
+# 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
+# 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
+# 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
+# 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
+# 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
+# 					media_audio_sample_rate, created, is_public, tags, doc_format_id)
+# 	psql_result = pgql(sql, data, db_meta)
+# 	if psql_result == False:
+# 		log.error("Failed to create video asset in Media table.")
+# 	return psql_result
 
 # Add video asset to Video table
 def asset_video_create_video(url, quality, video_type, db_meta):
@@ -570,11 +570,11 @@ def Watcher(watch_path, ext_video):
 						" sha256=" + asset_sha256 + " uuid="+asset_uuid + " format=" + media_video_format + \
 						" duration=" + str(media_video_duration))
 				elif ingested1 == False:
-					log.error("Failed to ingest into Media database table.")
+					log.error("Failed to ingest to Media database table.")
 				elif ingested2 == False:
-					log.error("Failed to ingest into Video database table.")
+					log.error("Failed to ingest to Video database table.")
 				elif ingested3 == False:
-					log.error("Failed to ingest into Content database table.")
+					log.error("Failed to ingest to Content database table.")
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
 
@@ -678,7 +678,7 @@ if __name__ == "__main__":
 
 	ext_video = get_video_formats(db_meta)
 	if ext_video == False:
-		log.error("There are no video formats listed in the database. Load the 'media' fixtures to add them.")
+		log.error("There are no video formats in the database. Load the 'media' fixtures to add them.")
 		quit(1)
 	else:
 		log.debug(ext_video)

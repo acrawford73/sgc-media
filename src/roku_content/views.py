@@ -532,7 +532,7 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 	serializer_class = ShortFormVideoSerializerList
 	filter_backends = [DjangoFilterBackend]
 	filterset_fields = ['release_date', 'tags', 'genres', 'rating']
-	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'rating']
+	ordering_fields = ['id', 'title', 'release_date']
 	ordering = ['-id']
 
 # class ShortFormVideoListAPISearch(generics.ListAPIView):
