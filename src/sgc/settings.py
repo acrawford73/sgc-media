@@ -55,7 +55,7 @@ else:
 
 SITE_ID = config('SITE_ID')
 
-# Application definition
+### APPLICATION DEFINITION
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -106,7 +106,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sgc.wsgi.application'
 
 
-# Database
+### DATABASE
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
@@ -117,11 +117,12 @@ DATABASES = {
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT'),
+        'CONN_MAX_AGE': 600,
     }
 }
 
 
-# Password validation
+### PASSWORD VALIDATION
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -132,19 +133,19 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
+### INTERNATIONALIZATION
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = ','
 
-# Time Zone
+### TIME ZONE
 # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
+### STATIC FILES (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # if PRODUCTION == True:
@@ -160,13 +161,19 @@ STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'static_files')
 ]
 
+# AWS_STORAGE_BUCKET_NAME = 'your-s3-bucket-name'
+# AWS_S3_CUSTOM_DOMAIN = 'cdn.mydomain.com'
+# STATIC_URL = 'https://%s/static/' % AWS_S3_CUSTOM_DOMAIN
+# MEDIA_URL = 'https://%s/media/' % AWS_S3_CUSTOM_DOMAIN
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
 # print(os.path.dirname(BASE_DIR))
 # print(LOCAL_STATIC_CDN)
 # print(STATIC_ROOT)
 # print(os.path.join(BASE_DIR, 'static_files'))
 
 
-### File Uploads
+### FILE UPLOADS
 FILE_UPLOAD_HANDLERS = [
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
@@ -183,15 +190,16 @@ FILE_UPLOAD_PERMISSIONS = 0o640  # Default: 0o644
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o640  # Default: None
 
 
-# Media files
+### MEDIA FILES
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets')
 # if config('PRODUCTION', default=False, cast=bool) == True:
 #     MEDIA_URL = '/media/'
 # else:
 MEDIA_URL = '/media/'
 
+### FIXTURES
 # Data files for database defaults
-# Load data by calling manage.py loaddata <fixturename>, 
+# Load data by calling manage.py loaddata app/fixtures/app/<fixturename> or * 
 #  where <fixturename> is the name of the fixture file.
 FIXTURE_DIRS = [
     os.path.join(BASE_DIR, '/roku_content/fixtures/roku_content/'),
@@ -202,18 +210,17 @@ FIXTURE_DIRS = [
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Forms
+### FORMS
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-# Django Rest Framework
+### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer', 
         'rest_framework.renderers.BrowsableAPIRenderer',
-        ],
+    ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
@@ -221,3 +228,46 @@ REST_FRAMEWORK = {
     'UNICODE_JSON': True,
     'COMPACT_JSON': True
 }
+
+### LOGGING
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'INFO',
+#             'class': 'logging.FileHandler',
+#             'filename': '/home/django/django.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'INFO',
+#             'propagate': True,
+#         },
+#     },
+# }
+
+### CACHING
+# Sample...
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+#         'LOCATION': '/var/tmp/django_cache',
+#     }
+# }
+
+### MONITORING
+# DJANGO_MONITORING_ALERTS = {
+#     'ERROR_THRESHOLD': 10,
+#     'NOTIFICATION_CHANNELS': ['email'],
+# }
+
+### EMAIL
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'email-host.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'email@example.com'
+# EMAIL_HOST_PASSWORD = 'email-password'
