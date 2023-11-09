@@ -36,10 +36,10 @@ class RokuContentFeed(models.Model):
 	}
 
 	"""
-	provider_name = models.CharField(max_length=32, null=False, blank=False)
+	provider_name = models.CharField(max_length=50, null=False, blank=False)
 	# The date that the feed was last modified in ISO 8601 format: {YYYY}-{MM}-{DD}T{hh}:{mm}:{ss}+{TZ}.
 	# For example, 2020-11-11T22:21:37+00:00
-	#              YYYY-MM-DDTHH:MM:SS+? :?
+	#              YYYY-MM-DDTHH:MM:SS+?:?
 	last_updated = models.DateTimeField(auto_now=True)
 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=False)
