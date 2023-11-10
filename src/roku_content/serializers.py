@@ -199,6 +199,7 @@ class SeriesSerializerList(serializers.ModelSerializer):
 
 class ShortFormVideoSerializerList(serializers.ModelSerializer):
 	#id = serializers.UUIDField(source='short_form_video_id')
+	id = serializers.CharField()
 	shortDescription = serializers.CharField(source='short_description')
 	longDescription = serializers.CharField(source='long_description')
 	releaseDate = serializers.DateField(source='release_date')
