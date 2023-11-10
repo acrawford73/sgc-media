@@ -249,6 +249,7 @@ class CategorySerializerList(serializers.ModelSerializer):
 
 class PlaylistSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='playlist_name')
+	# prefer 'content type' id and playist item_ids to be uuids
 	itemIds = serializers.StringRelatedField(many=True, source='item_ids') #PrimaryKeyRelatedField(many=True, read_only=True, source='item_ids')
 	def to_representation(self, instance):
 		result = super(PlaylistSerializerList, self).to_representation(instance)
