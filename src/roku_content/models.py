@@ -417,12 +417,15 @@ class ShortFormVideo(models.Model):
 	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True)  # Optional
 	def get_absolute_url(self):
 		return reverse('shortformvideo-list')
+	# def get_uuid(self):
+	# 	return str(self.short_form_video_id)
 	class Meta:
 		ordering = ['short_form_video_id']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.title)
+		#return str(self.title) + ":" + str(self.short_form_video_id)
+		return str(self.id)
 
 class ShortFormVideoCredit(models.Model):
 	""" ManyToMany table for ShortFormVideo model and Credit model. """

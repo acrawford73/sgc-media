@@ -24,7 +24,6 @@
                 <th>#</th>
                 <th>Provider Name</th>
                 <th>Language</th>
-                <th>Rating</th>
                 <th>Last Updated</th>
                 <th>Published</th>
               </tr>
@@ -36,7 +35,6 @@
                 <td><a href="{% url 'rokucontentfeed-detail' asset.id %}">{{ asset.provider_name }}</a></td>
                 <!-- <td>{{ asset.size|floatformat:"-3g" }}</td> -->
                 <td>{{ asset.language }}</td>
-                <td>{{ asset.rating }}</td>
                 <td>{{ asset.last_updated|date:"F d Y, g:i:s A" }}</td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
