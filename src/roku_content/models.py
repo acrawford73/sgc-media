@@ -173,7 +173,7 @@ class Playlist(models.Model):
 #	item_ids = models.JSONField(default=list, null=True, blank=True, 
 #		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
 	item_ids = models.ManyToManyField('ShortFormVideo', through='PlaylistShortFormVideo', blank=True, \
-		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
+		help_text='Currently only Short-Form Videos can be added.')
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
