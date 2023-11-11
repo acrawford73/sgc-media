@@ -316,7 +316,6 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 # 		result = super(NonNullModelSerializer, self).to_representation(instance)
 # 		return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
 
-
 # # None & Blank field will be removed
 # class ValueBasedModelSerializer(serializers.ModelSerializer):
 # 	def to_representation(self, instance):

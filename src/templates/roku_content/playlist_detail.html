@@ -33,7 +33,7 @@
                 <td>
                   {% if playlist.item_ids.all.count > 0 %}
                     {% for item in playlist.item_ids.all %}
-                      <li><a href="{% url 'shortformvideo-detail' item.id %}">{{ item }}: {{item.title}}</a></li>
+                      <a href="{% url 'shortformvideo-detail' item.id %}">{{ item }}: {{item.title}}</a>
                     {% endfor %}
                   {% else %}
                     No Video Items added.
