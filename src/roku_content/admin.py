@@ -54,9 +54,9 @@ class LiveFeedAdmin(admin.ModelAdmin):
 		model = LiveFeed
 
 class SeriesAdmin(admin.ModelAdmin):
-	list_display = ['id', 'title', 'genres', 'release_date']
+	list_display = ['id', 'title', 'release_date']
 	search_fields = ['series_id', 'title', 'release_date']
-	list_filter = ['seasons', 'episodes', 'genres']
+	#list_filter = ['seasons', 'episodes', 'genres']
 	readonly_fields = ['series_id']
 	class Meta:
 		model = Series
@@ -78,16 +78,16 @@ class EpisodeAdmin(admin.ModelAdmin):
 		model = Episode
 
 class ShortFormVideoAdmin(admin.ModelAdmin):
-	list_display = ['id', 'title', 'genres', 'release_date']
+	list_display = ['id', 'title', 'release_date']
 	search_fields = ['short_form_video_id', 'title', 'short_description', \
-		'long_description', 'genres', 'credits', 'rating', 'tags', 'release_date']
-	list_filter = ['title', 'genres', 'tags']
+		'long_description', 'credits', 'rating', 'tags', 'release_date']
+	list_filter = ['title', 'tags']
 	readonly_fields = ['short_form_video_id']
 	class Meta:
 		model = ShortFormVideo
 
 class TVSpecialAdmin(admin.ModelAdmin):
-	list_display = ['id', 'title', 'genres', 'release_date']
+	list_display = ['id', 'title', 'release_date']
 	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', \
 		'genres', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'genres', 'tags']

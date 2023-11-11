@@ -70,7 +70,15 @@
               </tr>
               <tr>
                 <td><strong>Genres</strong></td>
-                <td>{{ series.genres }}</td>
+                <td>
+                  {% if series.genres.all.count > 0 %}
+                    {% for item in series.genres.all %}
+                      <li><a href="{% url 'genre-detail' item.id %}">{{ item }}</a></li>
+                    {% endfor %}
+                  {% else %}
+                    No Genres added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Tags</strong></td>

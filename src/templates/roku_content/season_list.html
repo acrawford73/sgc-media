@@ -22,7 +22,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>ID</th>
-                <td>Title Season</td>
+                <th>Title Season</th>
                 <th>Season</th>
                 <th>Episode</th>
               </tr>
@@ -31,7 +31,7 @@
               {% for asset in season %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td>{{ asset.title_season }}</td>
+                <td><a href="{% url 'season-detail' asset.id %}">{{ asset.title_season }}</a></td>
                 <td><a href="{% url 'season-detail' asset.id %}">{{ asset.season_number }}</a></td>
                 <td>
                   {% if asset.episodes.all.count > 0 %}

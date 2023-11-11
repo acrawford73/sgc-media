@@ -48,7 +48,15 @@
               </tr>
               <tr>
                 <td><strong>Genres</strong></td>
-                <td>{{ livefeed.genre }}</td>
+                <td>
+                  {% if livefeed.genres.all.count > 0 %}
+                    {% for item in livefeeds.genres.all %}
+                      <li><a href="{% url 'genre-detail' item.id %}">{{ item }}</a></li>
+                    {% endfor %}
+                  {% else %}
+                    No Genres added.
+                  {% endif %}
+                </td>
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
