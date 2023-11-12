@@ -34,11 +34,12 @@
                 <td><strong>Feed UUID</strong></td>
                 <td>{{ rokucontentfeed.roku_content_feed_id }}</td>
               </tr>
-              <tr>
+<!--               <tr>
                 <td><strong>Content Feed URL</strong></td>
                 <td>
-                  <a href="http://192.168.0.13:8000/api/roku-content-feed/{{ rokucontentfeed.roku_content_feed_id }}/">http://192.168.0.13:8000/api/roku-content-feed/{{ rokucontentfeed.roku_content_feed_id }}</a>&nbsp;&nbsp;<button class="btn btn-info rounded-pill px-3">Copy</button></td>
-              </tr>
+                  <a href="http://192.168.0.13:8000/api/roku-content-feed/{{ rokucontentfeed.roku_content_feed_id }}/">http://192.168.0.13:8000/api/roku-content-feed/{{ rokucontentfeed.roku_content_feed_id }}</a>&nbsp;&nbsp;<button class="btn btn-info rounded-pill px-3">Copy</button>
+                </td>
+              </tr> -->
               <tr>
                 <td><strong>Short Description</strong></td>
                 <td>{{ rokucontentfeed.short_description }}</td>
@@ -109,7 +110,7 @@
                 <td>
                   {% if rokucontentfeed.short_form_videos.all.count > 0 %}
                     {% for item in rokucontentfeed.short_form_videos.all %}
-                      <li><a href="{% url 'shortformvideo-detail' item.id %}">{{ item }}</a></li>
+                      <li><a href="{% url 'shortformvideo-detail' item.id %}">{{ item.title }}</a></li>
                     {% endfor %}
                   {% else %}
                     No Short-Form Videos added.
