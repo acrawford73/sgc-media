@@ -12,7 +12,7 @@ from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, R
 
 # Single string - serializers.StringRelatedField()
 # List of strings - serializers.StringRelatedField(many=true)
-# List of objects - create a separate *SerializerList(many=true)
+# List of objects - create a *SerializerList class, (many=true)
 
 class LanguageSerializerList(serializers.ModelSerializer):
 	class Meta:

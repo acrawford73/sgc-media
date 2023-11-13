@@ -731,6 +731,7 @@ class RatingSource(models.Model):
 	source_name = models.CharField(max_length=16, default="", null=False, blank=False, unique=True)
 	source_long_name = models.CharField(max_length=128, null=True, blank=True)
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
+	source_country = models.ForeignKey('Country', on_delete=models.PROTECT, null=False, blank=True)
 	def get_absolute_url(self):
 		return reverse('ratingsource-list')
 	class Meta:
@@ -739,6 +740,17 @@ class RatingSource(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.source_name)
+
+class Country(models.Model):
+	""" List of all global countries with country code."""
+	country_name = models.CharField(max_length=64, default="", null=False, blank=False, unique=True)
+	country_code = models.CharField(max_length=2, default="", null=False, blank=False, unique=True)	
+	class Meta:
+		ordering = ['country_name']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.country_code)
 
 class ParentalRating(models.Model):
 	""" Model provides a list of parental ratings as determined by standards associations. """

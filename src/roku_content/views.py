@@ -887,7 +887,7 @@ class RatingListAPI(generics.ListAPIView):
 # RatingSource
 class RatingSourceCreateView(CreateView):
 	model = RatingSource
-	fields = ['source_name', 'source_long_name', 'source_url']
+	fields = ['source_name', 'source_long_name', 'source_country', 'source_url']
 
 class RatingSourceListView(ListView):
 	model = RatingSource
@@ -903,7 +903,7 @@ class RatingSourceDetailView(DetailView):
 class RatingSourceUpdateView(UpdateView):
 	model = RatingSource
 	context_object_name = 'ratingsource'
-	fields = ['source_name', 'source_long_name', 'source_url']
+	fields = ['source_name', 'source_long_name', 'source_country', 'source_url']
 
 class RatingSourceListAPI(generics.ListAPIView):
 	queryset = RatingSource.objects.all()

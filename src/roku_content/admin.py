@@ -5,7 +5,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID, \
-					ExternalIDType,	Rating, RatingSource, ParentalRating, CreditRole, Credit, Tag
+					ExternalIDType,	Rating, RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
 
 # Roku Content Feed
 
@@ -159,11 +159,17 @@ class RatingAdmin(admin.ModelAdmin):
 		model = Rating
 
 class RatingSourceAdmin(admin.ModelAdmin):
-	list_display = ['source_name', 'source_long_name', 'source_url']
+	list_display = ['source_name', 'source_long_name', 'source_country', 'source_url']
 	search_fields = ['source_name', 'source_long_name']
 	list_filter = ['source_name']
 	class Meta:
 		model = RatingSource
+
+class CountryAdmin(admin.ModelAdmin):
+	list_display = ['country_name', 'country_code']
+	search_fields = ['country_name', 'country_code']
+	class Meta:
+		model = Country
 
 class ParentalRatingAdmin(admin.ModelAdmin):
 	list_display = ['parental_rating']
@@ -221,6 +227,7 @@ admin.site.register(ExternalID, ExternalIDAdmin)
 admin.site.register(ExternalIDType, ExternalIDTypeAdmin)
 admin.site.register(Rating, RatingAdmin)
 admin.site.register(RatingSource, RatingSourceAdmin)
+admin.site.register(Country, CountryAdmin)
 admin.site.register(ParentalRating, ParentalRatingAdmin)
 admin.site.register(CreditRole, CreditRoleAdmin)
 admin.site.register(Credit, CreditAdmin)
