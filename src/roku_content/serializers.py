@@ -10,6 +10,9 @@ from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TV
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
 					RatingSource, ParentalRating, CreditRole, Credit, Tag, PlaylistShortFormVideo
 
+# Single string - serializers.StringRelatedField()
+# List of strings - serializers.StringRelatedField(many=true)
+# List of objects - create a separate *SerializerList(many=true)
 
 class LanguageSerializerList(serializers.ModelSerializer):
 	class Meta:
@@ -28,9 +31,6 @@ class VideoSerializerList(serializers.ModelSerializer):
 class CaptionSerializerList(serializers.ModelSerializer):
 	captionType = serializers.CharField(source='caption_type')
 	language = serializers.StringRelatedField()
-	def to_representation(self, instance):
-		result = super(CaptionSerializerList, self).to_representation(instance)
-		return OrderedDict([(key, result[key]) for key in result if result[key] ])	
 	class Meta:
 		model = Caption
 		fields = ['url', 'language', 'captionType']

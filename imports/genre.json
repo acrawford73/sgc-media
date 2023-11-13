@@ -1,0 +1,226 @@
+[
+{
+  "model": "roku_content.genre",
+  "pk": 1,
+  "fields": {
+    "genre": "Action"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 2,
+  "fields": {
+    "genre": "Adventure"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 3,
+  "fields": {
+    "genre": "Animals"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 4,
+  "fields": {
+    "genre": "Animated"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 5,
+  "fields": {
+    "genre": "Anime"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 6,
+  "fields": {
+    "genre": "Children"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 7,
+  "fields": {
+    "genre": "Comedy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 8,
+  "fields": {
+    "genre": "Crime"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 9,
+  "fields": {
+    "genre": "Documentary"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 10,
+  "fields": {
+    "genre": "Drama"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 11,
+  "fields": {
+    "genre": "Educational"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 12,
+  "fields": {
+    "genre": "Fantasy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 13,
+  "fields": {
+    "genre": "Faith"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 14,
+  "fields": {
+    "genre": "Food"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 15,
+  "fields": {
+    "genre": "Fashion"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 16,
+  "fields": {
+    "genre": "Gaming"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 17,
+  "fields": {
+    "genre": "Health"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 18,
+  "fields": {
+    "genre": "History"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 19,
+  "fields": {
+    "genre": "Horror"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 20,
+  "fields": {
+    "genre": "Miniseries"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 21,
+  "fields": {
+    "genre": "Mystery"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 22,
+  "fields": {
+    "genre": "Nature"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 23,
+  "fields": {
+    "genre": "News"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 24,
+  "fields": {
+    "genre": "Reality"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 25,
+  "fields": {
+    "genre": "Romance"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 26,
+  "fields": {
+    "genre": "Science"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 27,
+  "fields": {
+    "genre": "Science Fiction"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 28,
+  "fields": {
+    "genre": "Sitcom"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 29,
+  "fields": {
+    "genre": "Special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 30,
+  "fields": {
+    "genre": "Sports"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 31,
+  "fields": {
+    "genre": "Thriller"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 32,
+  "fields": {
+    "genre": "Technology"
+  }
+}
+]

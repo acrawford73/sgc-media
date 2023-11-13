@@ -3,224 +3,1589 @@
   "model": "roku_content.genre",
   "pk": 1,
   "fields": {
-    "genre": "Action"
+    "genre": "action"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 2,
   "fields": {
-    "genre": "Adventure"
+    "genre": "action sports"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 3,
   "fields": {
-    "genre": "Animals"
+    "genre": "adventure"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 4,
   "fields": {
-    "genre": "Animated"
+    "genre": "aerobics"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 5,
   "fields": {
-    "genre": "Anime"
+    "genre": "agriculture"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 6,
   "fields": {
-    "genre": "Children"
+    "genre": "animals"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 7,
   "fields": {
-    "genre": "Comedy"
+    "genre": "animated"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 8,
   "fields": {
-    "genre": "Crime"
+    "genre": "anime"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 9,
   "fields": {
-    "genre": "Documentary"
+    "genre": "anthology"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 10,
   "fields": {
-    "genre": "Drama"
+    "genre": "archery"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 11,
   "fields": {
-    "genre": "Educational"
+    "genre": "arm wrestling"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 12,
   "fields": {
-    "genre": "Fantasy"
+    "genre": "art"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 13,
   "fields": {
-    "genre": "Faith"
+    "genre": "arts/crafts"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 14,
   "fields": {
-    "genre": "Food"
+    "genre": "artistic gymnastics"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 15,
   "fields": {
-    "genre": "Fashion"
+    "genre": "artistic swimming"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 16,
   "fields": {
-    "genre": "Gaming"
+    "genre": "athletics"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 17,
   "fields": {
-    "genre": "Health"
+    "genre": "auction"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 18,
   "fields": {
-    "genre": "History"
+    "genre": "auto"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 19,
   "fields": {
-    "genre": "Horror"
+    "genre": "auto racing"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 20,
   "fields": {
-    "genre": "Miniseries"
+    "genre": "aviation"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 21,
   "fields": {
-    "genre": "Mystery"
+    "genre": "awards"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 22,
   "fields": {
-    "genre": "Nature"
+    "genre": "badminton"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 23,
   "fields": {
-    "genre": "News"
+    "genre": "ballet"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 24,
   "fields": {
-    "genre": "Reality"
+    "genre": "baseball"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 25,
   "fields": {
-    "genre": "Romance"
+    "genre": "basketball"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 26,
   "fields": {
-    "genre": "Science"
+    "genre": "3x3 basketball"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 27,
   "fields": {
-    "genre": "Science Fiction"
+    "genre": "beach soccer"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 28,
   "fields": {
-    "genre": "Sitcom"
+    "genre": "beach volleyball"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 29,
   "fields": {
-    "genre": "Special"
+    "genre": "biathlon"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 30,
   "fields": {
-    "genre": "Sports"
+    "genre": "bicycle"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 31,
   "fields": {
-    "genre": "Thriller"
+    "genre": "bicycle racing"
   }
 },
 {
   "model": "roku_content.genre",
   "pk": 32,
   "fields": {
-    "genre": "Technology"
+    "genre": "billiards"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 33,
+  "fields": {
+    "genre": "biography"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 34,
+  "fields": {
+    "genre": "blackjack"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 35,
+  "fields": {
+    "genre": "bmx racing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 36,
+  "fields": {
+    "genre": "boat"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 37,
+  "fields": {
+    "genre": "boat racing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 38,
+  "fields": {
+    "genre": "bobsled"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 39,
+  "fields": {
+    "genre": "bodybuilding"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 40,
+  "fields": {
+    "genre": "bowling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 41,
+  "fields": {
+    "genre": "boxing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 42,
+  "fields": {
+    "genre": "bullfighting"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 43,
+  "fields": {
+    "genre": "bus./financial"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 44,
+  "fields": {
+    "genre": "canoe"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 45,
+  "fields": {
+    "genre": "card games"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 46,
+  "fields": {
+    "genre": "ceremony"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 47,
+  "fields": {
+    "genre": "cheerleading"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 48,
+  "fields": {
+    "genre": "children"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 49,
+  "fields": {
+    "genre": "children-music"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 50,
+  "fields": {
+    "genre": "children-special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 51,
+  "fields": {
+    "genre": "children-talk"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 52,
+  "fields": {
+    "genre": "collectibles"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 53,
+  "fields": {
+    "genre": "comedy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 54,
+  "fields": {
+    "genre": "comedy drama"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 55,
+  "fields": {
+    "genre": "community"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 56,
+  "fields": {
+    "genre": "computers"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 57,
+  "fields": {
+    "genre": "canoe/kayak"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 58,
+  "fields": {
+    "genre": "consumer"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 59,
+  "fields": {
+    "genre": "cooking"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 60,
+  "fields": {
+    "genre": "cricket"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 61,
+  "fields": {
+    "genre": "crime"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 62,
+  "fields": {
+    "genre": "crime drama"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 63,
+  "fields": {
+    "genre": "curling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 64,
+  "fields": {
+    "genre": "cycling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 65,
+  "fields": {
+    "genre": "dance"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 66,
+  "fields": {
+    "genre": "dark comedy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 67,
+  "fields": {
+    "genre": "darts"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 68,
+  "fields": {
+    "genre": "debate"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 69,
+  "fields": {
+    "genre": "diving"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 70,
+  "fields": {
+    "genre": "docudrama"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 71,
+  "fields": {
+    "genre": "documentary"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 72,
+  "fields": {
+    "genre": "dog racing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 73,
+  "fields": {
+    "genre": "dog show"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 74,
+  "fields": {
+    "genre": "dog sled"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 75,
+  "fields": {
+    "genre": "drag racing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 76,
+  "fields": {
+    "genre": "drama"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 77,
+  "fields": {
+    "genre": "educational"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 78,
+  "fields": {
+    "genre": "entertainment"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 79,
+  "fields": {
+    "genre": "environment"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 80,
+  "fields": {
+    "genre": "equestrian"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 81,
+  "fields": {
+    "genre": "erotic"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 82,
+  "fields": {
+    "genre": "event"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 83,
+  "fields": {
+    "genre": "exercise"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 84,
+  "fields": {
+    "genre": "fantasy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 85,
+  "fields": {
+    "genre": "faith"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 86,
+  "fields": {
+    "genre": "fashion"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 87,
+  "fields": {
+    "genre": "fencing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 88,
+  "fields": {
+    "genre": "field hockey"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 89,
+  "fields": {
+    "genre": "figure skating"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 90,
+  "fields": {
+    "genre": "fishing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 91,
+  "fields": {
+    "genre": "football"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 92,
+  "fields": {
+    "genre": "food"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 93,
+  "fields": {
+    "genre": "fundraiser"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 94,
+  "fields": {
+    "genre": "gaelic football"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 95,
+  "fields": {
+    "genre": "game show"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 96,
+  "fields": {
+    "genre": "gaming"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 97,
+  "fields": {
+    "genre": "gay/lesbian"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 98,
+  "fields": {
+    "genre": "golf"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 99,
+  "fields": {
+    "genre": "gymnastics"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 100,
+  "fields": {
+    "genre": "handball"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 101,
+  "fields": {
+    "genre": "health"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 102,
+  "fields": {
+    "genre": "historical drama"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 103,
+  "fields": {
+    "genre": "history"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 104,
+  "fields": {
+    "genre": "hockey"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 105,
+  "fields": {
+    "genre": "holiday"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 106,
+  "fields": {
+    "genre": "holiday music"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 107,
+  "fields": {
+    "genre": "holiday music special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 108,
+  "fields": {
+    "genre": "holiday special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 109,
+  "fields": {
+    "genre": "holiday-children"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 110,
+  "fields": {
+    "genre": "holiday-children special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 111,
+  "fields": {
+    "genre": "home improvement"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 112,
+  "fields": {
+    "genre": "horror"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 113,
+  "fields": {
+    "genre": "horse"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 114,
+  "fields": {
+    "genre": "house/garden"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 115,
+  "fields": {
+    "genre": "how-to"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 116,
+  "fields": {
+    "genre": "hunting"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 117,
+  "fields": {
+    "genre": "hurling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 118,
+  "fields": {
+    "genre": "hydroplane racing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 119,
+  "fields": {
+    "genre": "indoor soccer"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 120,
+  "fields": {
+    "genre": "interview"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 121,
+  "fields": {
+    "genre": "intl soccer"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 122,
+  "fields": {
+    "genre": "judo"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 123,
+  "fields": {
+    "genre": "karate"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 124,
+  "fields": {
+    "genre": "kayaking"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 125,
+  "fields": {
+    "genre": "lacrosse"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 126,
+  "fields": {
+    "genre": "law"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 127,
+  "fields": {
+    "genre": "live"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 128,
+  "fields": {
+    "genre": "luge"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 129,
+  "fields": {
+    "genre": "martial arts"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 130,
+  "fields": {
+    "genre": "medical"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 131,
+  "fields": {
+    "genre": "military"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 132,
+  "fields": {
+    "genre": "miniseries"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 133,
+  "fields": {
+    "genre": "mixed martial arts"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 134,
+  "fields": {
+    "genre": "modern pentathlon"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 135,
+  "fields": {
+    "genre": "motorcycle"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 136,
+  "fields": {
+    "genre": "motorcycle racing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 137,
+  "fields": {
+    "genre": "motorsports"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 138,
+  "fields": {
+    "genre": "mountain biking"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 139,
+  "fields": {
+    "genre": "music"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 140,
+  "fields": {
+    "genre": "music special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 141,
+  "fields": {
+    "genre": "music talk"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 142,
+  "fields": {
+    "genre": "musical"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 143,
+  "fields": {
+    "genre": "musical comedy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 144,
+  "fields": {
+    "genre": "mystery"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 145,
+  "fields": {
+    "genre": "nature"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 146,
+  "fields": {
+    "genre": "news"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 147,
+  "fields": {
+    "genre": "newsmagazine"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 148,
+  "fields": {
+    "genre": "olympics"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 149,
+  "fields": {
+    "genre": "opera"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 150,
+  "fields": {
+    "genre": "outdoors"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 151,
+  "fields": {
+    "genre": "parade"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 152,
+  "fields": {
+    "genre": "paranormal"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 153,
+  "fields": {
+    "genre": "parenting"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 154,
+  "fields": {
+    "genre": "performing arts"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 155,
+  "fields": {
+    "genre": "playoff sports"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 156,
+  "fields": {
+    "genre": "poker"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 157,
+  "fields": {
+    "genre": "politics"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 158,
+  "fields": {
+    "genre": "polo"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 159,
+  "fields": {
+    "genre": "pool"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 160,
+  "fields": {
+    "genre": "pro wrestling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 161,
+  "fields": {
+    "genre": "public affairs"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 162,
+  "fields": {
+    "genre": "racquet"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 163,
+  "fields": {
+    "genre": "reality"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 164,
+  "fields": {
+    "genre": "religious"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 165,
+  "fields": {
+    "genre": "ringuette"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 166,
+  "fields": {
+    "genre": "road cycling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 167,
+  "fields": {
+    "genre": "rodeo"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 168,
+  "fields": {
+    "genre": "roller derby"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 169,
+  "fields": {
+    "genre": "romance"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 170,
+  "fields": {
+    "genre": "romantic comedy"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 171,
+  "fields": {
+    "genre": "rowing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 172,
+  "fields": {
+    "genre": "rugby"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 173,
+  "fields": {
+    "genre": "running"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 174,
+  "fields": {
+    "genre": "rhythmic gymnastics"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 175,
+  "fields": {
+    "genre": "sailing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 176,
+  "fields": {
+    "genre": "science"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 177,
+  "fields": {
+    "genre": "science fiction"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 178,
+  "fields": {
+    "genre": "self improvement"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 179,
+  "fields": {
+    "genre": "shooting"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 180,
+  "fields": {
+    "genre": "shopping"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 181,
+  "fields": {
+    "genre": "sitcom"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 182,
+  "fields": {
+    "genre": "skateboarding"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 183,
+  "fields": {
+    "genre": "skating"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 184,
+  "fields": {
+    "genre": "skeleton"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 185,
+  "fields": {
+    "genre": "skiing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 186,
+  "fields": {
+    "genre": "snooker"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 187,
+  "fields": {
+    "genre": "snowboarding"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 188,
+  "fields": {
+    "genre": "snowmobile"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 189,
+  "fields": {
+    "genre": "soap"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 190,
+  "fields": {
+    "genre": "soap special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 191,
+  "fields": {
+    "genre": "soap talk"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 192,
+  "fields": {
+    "genre": "soccer"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 193,
+  "fields": {
+    "genre": "softball"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 194,
+  "fields": {
+    "genre": "special"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 195,
+  "fields": {
+    "genre": "speed skating"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 196,
+  "fields": {
+    "genre": "sport climbing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 197,
+  "fields": {
+    "genre": "sports"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 198,
+  "fields": {
+    "genre": "sports talk"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 199,
+  "fields": {
+    "genre": "squash"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 200,
+  "fields": {
+    "genre": "standup"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 201,
+  "fields": {
+    "genre": "sumo wrestling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 202,
+  "fields": {
+    "genre": "surfing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 203,
+  "fields": {
+    "genre": "suspense"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 204,
+  "fields": {
+    "genre": "swimming"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 205,
+  "fields": {
+    "genre": "table tennis"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 206,
+  "fields": {
+    "genre": "taekwondo"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 207,
+  "fields": {
+    "genre": "talk"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 208,
+  "fields": {
+    "genre": "technology"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 209,
+  "fields": {
+    "genre": "tennis"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 210,
+  "fields": {
+    "genre": "theater"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 211,
+  "fields": {
+    "genre": "thriller"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 212,
+  "fields": {
+    "genre": "track/field"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 213,
+  "fields": {
+    "genre": "track cycling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 214,
+  "fields": {
+    "genre": "travel"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 215,
+  "fields": {
+    "genre": "trampoline"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 216,
+  "fields": {
+    "genre": "triathlon"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 217,
+  "fields": {
+    "genre": "variety"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 218,
+  "fields": {
+    "genre": "volleyball"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 219,
+  "fields": {
+    "genre": "war"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 220,
+  "fields": {
+    "genre": "water polo"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 221,
+  "fields": {
+    "genre": "water skiing"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 222,
+  "fields": {
+    "genre": "watersports"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 223,
+  "fields": {
+    "genre": "weather"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 224,
+  "fields": {
+    "genre": "weightlifting"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 225,
+  "fields": {
+    "genre": "western"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 226,
+  "fields": {
+    "genre": "wrestling"
+  }
+},
+{
+  "model": "roku_content.genre",
+  "pk": 227,
+  "fields": {
+    "genre": "yacht racing"
   }
 }
 ]
