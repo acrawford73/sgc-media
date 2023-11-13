@@ -8,7 +8,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, CreditRole, Credit, Tag, PlaylistShortFormVideo
+					RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
 
 # Single string - serializers.StringRelatedField()
 # List of strings - serializers.StringRelatedField(many=true)
@@ -18,7 +18,6 @@ class LanguageSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Language
 		fields = ['code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
-
 
 ### Content Properties
 
@@ -81,14 +80,24 @@ class RatingSerializerList(serializers.ModelSerializer):
 
 class RatingSourceSerializerList(serializers.ModelSerializer):
 	ratingSource = serializers.CharField(source='source_name')
+	sourceLongName = serializers.CharField(source='source_long_name')
+	sourceCountry = serializers.CharField(source='source_country')
 	class Meta:
 		model = RatingSource
-		fields = ['ratingSource', 'source_long_name']
+		fields = ['ratingSource', 'sourceLongName', 'sourceCountry']
+
+class CountrySerializerList(serializers.ModelSerializer):
+	countryName = serializers.CharField(source='country_name')
+	countryCode = serializers.CharField(source='country_code')
+	class Meta:
+		model = Country
+		fields = ['countryName', 'countryCode']
 
 class ParentalRatingSerializerList(serializers.ModelSerializer):
+	parentalRating = serializers.CharField(source='parental_rating')
 	class Meta:
 		model = ParentalRating
-		fields = ['parental_rating']
+		fields = ['parentalRating']
 
 class CreditRoleSerializerList(serializers.ModelSerializer):
 	role = serializers.CharField(source='credit_role')
@@ -108,9 +117,10 @@ class CreditSerializerList(serializers.ModelSerializer):
 		fields = ['name', 'role', 'birthDate']
 
 class TagSerializerList(serializers.ModelSerializer):
+	tag = serializers.CharField(source='tag_name')
 	class Meta:
 		model = Tag
-		fields = ['tag_name']
+		fields = ['tag']
 
 
 ### Content Types

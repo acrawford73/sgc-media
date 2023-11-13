@@ -8,8 +8,7 @@ from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, ParentalRating, CreditRole, Credit
-from .models import Tag
+					RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
 ### Rest Framework
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -924,6 +923,15 @@ class RatingSourceListAPI(generics.ListAPIView):
 # class RatingSourceDetailAPI(generics.RetrieveAPIView):
 # 	queryset = RatingSource.objects.all()
 # 	serializer_class = RatingSourceSerializerDetail
+
+# Countries
+class CountryListAPI(generics.ListAPIView):
+	queryset = Country.objects.all()
+	serializer_class = CountrySerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['country_code']
+	ordering_fields = ['country_name', 'country_code']
+	ordering = ['country_code']
 
 # ParentalRating
 class ParentalRatingCreateView(CreateView):
