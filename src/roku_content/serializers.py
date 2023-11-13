@@ -122,7 +122,6 @@ class TagSerializerList(serializers.ModelSerializer):
 		model = Tag
 		fields = ['tag']
 
-
 ### Content Types
 
 class MovieSerializerList(serializers.ModelSerializer):
@@ -243,8 +242,7 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'content', \
 			'thumbnail', 'releaseDate', 'tags', 'genres', 'rating', 'credits', 'externalIds']
 
-
-### Content Categoriess
+### Content Categories
 
 class CategorySerializerList(serializers.ModelSerializer):
 	name = serializers.StringRelatedField(source='category_name')
@@ -267,7 +265,6 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Playlist
 		fields = ['name', 'itemIds']
-
 
 ### Roku Feeds
 
@@ -295,7 +292,6 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 		model = RokuContentFeed
 		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
-
 
 class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 	"""
