@@ -28,7 +28,7 @@ from .serializers import TVSpecialSerializerList
 # Properties
 from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
 from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
-from .serializers import RatingSerializerList, RatingSourceSerializerList, ParentalRatingSerializerList
+from .serializers import RatingSerializerList, RatingSourceSerializerList, CountrySerializerList, ParentalRatingSerializerList
 from .serializers import CreditRoleSerializerList, CreditSerializerList, LanguageSerializerList, TagSerializerList
 
 ## Roku Feeds
