@@ -54,7 +54,7 @@ class ContentSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Content
 		fields = ['dateAdded', 'videos', 'duration', 'captions', 'language']
-			# 'trickPlayFiles', validityPeriodStart', 'validityPeriodEnd']
+			# 'trickPlayFiles', validityPeriodStart', 'validityPeriodEnd', 'adBreaks']
 
 class GenreSerializerList(serializers.ModelSerializer):
 	class Meta:

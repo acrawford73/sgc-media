@@ -170,6 +170,9 @@ urlpatterns = [
 	path('api/ratingsources/', views.RatingSourceListAPI.as_view(), name='ratingsource-api'),
 	# path('api/ratingsource/<int:pk>', views.RatingSourceDetailAPI.as_view(), name='ratingsource-detail-api'),
 	
+	# Country
+	path('api/countries/', views.CountryListAPI.as_view(), name='countries-api'),
+
 	# ParentalRating
 	path('parentalrating/create/', views.ParentalRatingCreateView.as_view(), name='parentalrating-create'),
 	path('parentalratings/', views.ParentalRatingListView.as_view(), name='parentalrating-list'),
