@@ -1,8 +1,6 @@
 #!bin/python3
 
-# [Copyright (c) 2023]
-# For this Copy-Claim is with this software by the postmaster Anthony-Robert: Crawford.
-# Now-Space Copy-Claim: ~2023.
+# Copyright (c) 2023
 
 #       _/_/_/    _/_/_/    _/_/_/
 #    _/        _/        _/
