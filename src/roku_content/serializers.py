@@ -308,9 +308,11 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 	tvSpecials = TVSpecialSerializerList(many=True, source='tv_specials')
 	categories = CategorySerializerList(many=True)
 	playlists = PlaylistSerializerList(many=True)
+	def to_representation(self, instance):
+		result = super(RokuContentFeedSerializerDetail, self).to_representation(instance)
+		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = RokuContentFeed
-		#fields = '__all__'
 		fields = ('providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists')
 
