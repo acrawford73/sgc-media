@@ -155,15 +155,15 @@ class RokuContentFeedListAPI(APIView):
 # 	pagination_class = None
 # 	renderer_classes = [JSONRenderer]
 
-class RokuContentFeedListSearchAPI(generics.ListAPIView):
-	queryset = RokuContentFeed.objects.all().filter(is_public=True)
-	serializer_class = RokuContentFeedSerializerDetail
-	#filter_backends = [DjangoFilterBackend]
-	filter_backends = [filters.SearchFilter]
-	filterset_fields = ['roku_content_feed_id']
-	search_fields = ['roku_content_feed_id']
-	lookup_field = ['roku_content_feed_id']
-	pagination_class = None
+# class RokuContentFeedListSearchAPI(generics.ListAPIView):
+# 	queryset = RokuContentFeed.objects.all().filter(is_public=True)
+# 	serializer_class = RokuContentFeedSerializerDetail
+# 	#filter_backends = [DjangoFilterBackend]
+# 	filter_backends = [filters.SearchFilter]
+# 	filterset_fields = ['roku_content_feed_id']
+# 	search_fields = ['roku_content_feed_id']
+# 	lookup_field = ['roku_content_feed_id']
+# 	pagination_class = None
 
 class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
 	# queryset = RokuContentFeed.objects.all().filter(is_public=True)
