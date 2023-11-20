@@ -166,9 +166,15 @@ class RokuContentFeedListSearchAPI(generics.ListAPIView):
 	pagination_class = None
 
 class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
-	queryset = RokuContentFeed.objects.all().filter(is_public=True)
-	serializer_class = RokuContentFeedSerializerDetail
+	# queryset = RokuContentFeed.objects.all().filter(is_public=True)
+	# serializer_class = RokuContentFeedSerializerDetail
+	renderer_classes = [JSONRenderer]
 	pagination_class = None
+	def get(self, request, pk, format=None):
+		feed = RokuContentFeed.objects.get(pk=pk)
+		serializer = RokuContentFeedSerializerDetail(feed)
+		return Response(serializer.data)
+
 
 ## Roku Content Categories
 
