@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('roku_content.urls')),
     #path('', include('roku_search.urls')),
     path('', include('media.urls')),
+    path('', include('core.urls')),
 
     # Admin
     path('admin/docs/', include('django.contrib.admindocs.urls')),

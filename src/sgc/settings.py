@@ -71,6 +71,7 @@ INSTALLED_APPS = [
     'roku_content',
     #'roku_search',
     'media',
+    'core',
     #'help,',
 ]
 
