@@ -22,7 +22,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>#</th>
-                <th>Provider Name</th>
+                <th>Short Description</th>
                 <th>Language</th>
                 <th>Last Updated</th>
                 <th>Published</th>
@@ -32,7 +32,7 @@
               {% for asset in rokucontentfeed %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td><a href="{% url 'rokucontentfeed-detail' asset.id %}">{{ asset.provider_name }}</a></td>
+                <td><a href="{% url 'rokucontentfeed-detail' asset.id %}">{{ asset.short_description }}</a></td>
                 <!-- <td>{{ asset.size|floatformat:"-3g" }}</td> -->
                 <td>{{ asset.language }}</td>
                 <td>{{ asset.last_updated|date:"F d Y, g:i:s A" }}</td>
