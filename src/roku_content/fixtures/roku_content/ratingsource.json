@@ -5,7 +5,8 @@
   "fields": {
     "source_name": "BBFC",
     "source_long_name": "British Board of Film Classification",
-    "source_url": "https://www.bbfc.co.uk/about-classification/classification-guidelines/"
+    "source_url": "https://www.bbfc.co.uk/about-classification/classification-guidelines/",
+    "source_country": 230
   }
 },
 {
@@ -14,7 +15,8 @@
   "fields": {
     "source_name": "CHVRS",
     "source_long_name": "Canadian Home Video Rating System",
-    "source_url": "https://www.mpa-canada.org/canada-home-video-rating-system/"
+    "source_url": "https://www.mpa-canada.org/canada-home-video-rating-system/",
+    "source_country": 39
   }
 },
 {
@@ -23,7 +25,8 @@
   "fields": {
     "source_name": "CLASSIND",
     "source_long_name": "Brazilian advisory rating system",
-    "source_url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/classificacao-1/"
+    "source_url": "https://www.gov.br/mj/pt-br/assuntos/seus-direitos/classificacao-1/",
+    "source_country": 31
   }
 },
 {
@@ -32,7 +35,8 @@
   "fields": {
     "source_name": "CPR",
     "source_long_name": "Canadian Parental Rating",
-    "source_url": "https://parentpreviews.com/movie-ratings/canada"
+    "source_url": "https://parentpreviews.com/movie-ratings/canada",
+    "source_country": 39
   }
 },
 {
@@ -41,7 +45,8 @@
   "fields": {
     "source_name": "FSF",
     "source_long_name": "Freiwillige Selbstkontrolle Fernsehen (Germany)",
-    "source_url": "https://en.fsf.de/media-classification/fsf-age-ratings/"
+    "source_url": "https://en.fsf.de/media-classification/fsf-age-ratings/",
+    "source_country": 81
   }
 },
 {
@@ -50,7 +55,8 @@
   "fields": {
     "source_name": "FSK",
     "source_long_name": "Freiwillige Selbstkontrolle der Filmwirtschaft (Germany)",
-    "source_url": "https://en.wikipedia.org/wiki/Freiwillige_Selbstkontrolle_der_Filmwirtschaft"
+    "source_url": "https://en.wikipedia.org/wiki/Freiwillige_Selbstkontrolle_der_Filmwirtschaft",
+    "source_country": 81
   }
 },
 {
@@ -59,7 +65,8 @@
   "fields": {
     "source_name": "MPAA",
     "source_long_name": "Motion Picture Association of America",
-    "source_url": "https://parentpreviews.com/movie-ratings/usa/"
+    "source_url": "https://parentpreviews.com/movie-ratings/usa/",
+    "source_country": 231
   }
 },
 {
@@ -68,7 +75,8 @@
   "fields": {
     "source_name": "USA_PR",
     "source_long_name": "USA Parental Rating+",
-    "source_url": "https://www.tvguidelines.org/"
+    "source_url": "https://www.tvguidelines.org/",
+    "source_country": 231
   }
 },
 {
@@ -77,7 +85,8 @@
   "fields": {
     "source_name": "CBSC_EN",
     "source_long_name": "Canadian Broadcast Standards Council (English)",
-    "source_url": "https://www.cbsc.ca/tools/for-english-ca-and-third-language-broadcasters/"
+    "source_url": "https://www.cbsc.ca/tools/for-english-ca-and-third-language-broadcasters/",
+    "source_country": 39
   }
 },
 {
@@ -86,7 +95,8 @@
   "fields": {
     "source_name": "CBSC_FR",
     "source_long_name": "Canadian Broadcast Standards Council (French)",
-    "source_url": "https://www.cbsc.ca/tools/for-canadian-french-language-broadcasters/"
+    "source_url": "https://www.cbsc.ca/tools/for-canadian-french-language-broadcasters/",
+    "source_country": 39
   }
 }
 ]
