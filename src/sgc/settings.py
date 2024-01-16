@@ -146,6 +146,9 @@ THOUSAND_SEPARATOR = ','
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
 ### STATIC FILES (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 

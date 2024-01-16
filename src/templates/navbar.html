@@ -101,7 +101,15 @@
             </ul>
           </li>        
           <li class="nav-item">
-            <a class="nav-link inactive" aria-current="page" href="http://192.168.0.13:8000/admin/">Admin</a>
+            <a class="nav-link inactive" aria-current="page" href="{% url 'admin' %}">Admin</a>
+          </li>
+          <li class="nav-item">
+            {% if user.is_authenticated %}
+              Hi, {{ user.username }}
+              <a class="nav-link inactive" aria-current="page" href="{% url 'logout' %}">Logout</a>
+            {% else %}
+              <a class="nav-link inactive" aria-current="page" href="{% url 'login' %}">Login</a>
+            {% endif %}
           </li>
 
         </ul>
