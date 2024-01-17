@@ -24,6 +24,13 @@ Based on Django 4.2.x
 
 Linux administrator non-root user setup.
 
+Update the system.
+
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+```
+
 Install and configure PostgreSQL database.
 
 ```bash
@@ -51,11 +58,9 @@ ALTER ROLE database_user SET timezone TO 'UTC';
 exit
 ```
 
-Install Django Project
+Install Django Project.
 
 ```bash
-sudo apt-get update
-sudo apt-get upgrade
 sudo apt-get install python3 python3-dev python3-pip virtualenv ffmpeg
 virtualenv -p /usr/bin/python3 sgc-media
 cd sgc-media
@@ -80,7 +85,7 @@ DB_PASSWORD=database_password
 DB_HOST=localhost
 ```
 
-Install packages and migrate database
+Install packages and migrate database.
 
 ```bash
 source bin/activate
