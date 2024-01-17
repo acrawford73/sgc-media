@@ -32,7 +32,10 @@ sudo apt-get install python3 python3-dev python3-pip virtualenv ffmpeg
 virtualenv -p /usr/bin/python3 sgc-media
 
 # Copy and configure .env-config file to \~/sgc-media/.env
-# Create secret keys: https://django-secret-key-generator.netlify.app/
+# Create secret keys:
+#  https://django-secret-key-generator.netlify.app/
+#  https://miniwebtool.com/django-secret-key-generator/
+#  https://djecrety.ir/
 
 cd sgc-media
 source bin/activate
