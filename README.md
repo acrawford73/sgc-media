@@ -51,7 +51,7 @@ ALTER ROLE database_user SET timezone TO 'UTC';
 exit
 ```
 
-Install Django app (Development)
+Install Django Project
 
 ```bash
 sudo apt-get update
@@ -63,7 +63,7 @@ cd sgc-media
 
 Copy and configure .env-config file to \~/sgc-media/.env
 
-Set the following parameters in .env:
+Set the following (Development) parameters in .env file:
 
 Create secret keys:
 
@@ -115,9 +115,7 @@ python manage.py createsuperuser
 python manage.py runserver {ip}:8000
 ```
 
-Install Django app (Production)
-
-In the .env file, set the following production parameters:
+When ready, set the following (Production) parameters in .env file:
 
 ```bash
 PRODUCTION=True
