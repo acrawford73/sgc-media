@@ -22,14 +22,39 @@ Based on Django 4.2.x
 
 ## Install ##
 
+Linux administrator non-root user setup.
+
 Install and configure PostgreSQL database.
 
-Install Django app (Development):
+```bash
+sudo apt-get install postgresql
+```
+
+Set password for 'postgres' user, then create database and credentials.
+
+```bash
+passwd postgres
+su - postgres
+createdb database_name
+createuser -P database_user
+```
+
+Configure database user permissions.
+
+```bash
+psql
+GRANT ALL PRIVILEGES ON DATABASE database_name TO database_user;
+ALTER ROLE database_user SET client_encoding TO 'UTF8';
+ALTER ROLE database_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE database_user SET timezone TO 'UTC';
+\q
+```
+
+Install Django app (Development)
 
 ```bash
 sudo apt-get update
 sudo apt-get upgrade
-sudo apt-get install postgresql
 sudo apt-get install python3 python3-dev python3-pip virtualenv ffmpeg
 virtualenv -p /usr/bin/python3 sgc-media
 cd sgc-media
@@ -89,7 +114,7 @@ python manage.py createsuperuser
 python manage.py runserver {ip}:8000
 ```
 
-Install Django app (Production):
+Install Django app (Production)
 
 In the .env file, set the following production parameters:
 
