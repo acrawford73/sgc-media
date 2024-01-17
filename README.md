@@ -70,7 +70,7 @@ Copy and configure .env-config file to \~/sgc-media/.env
 
 Set the following (Development) parameters in .env file:
 
-Create secret keys:
+Create secret keys using any of these websites:
 
 - https://django-secret-key-generator.netlify.app/
 - https://miniwebtool.com/django-secret-key-generator/
