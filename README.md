@@ -48,6 +48,7 @@ ALTER ROLE database_user SET client_encoding TO 'UTF8';
 ALTER ROLE database_user SET default_transaction_isolation TO 'read committed';
 ALTER ROLE database_user SET timezone TO 'UTC';
 \q
+exit
 ```
 
 Install Django app (Development)
