@@ -74,12 +74,10 @@ Create secret keys:
 ```bash
 DEBUG_SECRET_KEY={random_string}
 DEBUG_ALLOWED_HOSTS='localhost, 127.0.0.1, {ip_address}'
-DB_ENGINE=django.db.backends.postgresql
-DB_NAME=sgcmedia
-DB_USER=sgc
-DB_PASSWORD=sgcmedia
-DB_HOST=192.168.0.13
-DB_PORT=5432
+DB_NAME=database_name
+DB_USER=database_user
+DB_PASSWORD=database_password
+DB_HOST=localhost
 ```
 
 Install packages and migrate database
