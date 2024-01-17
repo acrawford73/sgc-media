@@ -27,17 +27,38 @@ Install and configure PostgreSQL database.
 Install Django app (Development):
 
 ```bash
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install postgresql
 sudo apt-get install python3 python3-dev python3-pip virtualenv ffmpeg
-
 virtualenv -p /usr/bin/python3 sgc-media
-
-# Copy and configure .env-config file to \~/sgc-media/.env
-# Create secret keys:
-#  https://django-secret-key-generator.netlify.app/
-#  https://miniwebtool.com/django-secret-key-generator/
-#  https://djecrety.ir/
-
 cd sgc-media
+```
+
+Copy and configure .env-config file to \~/sgc-media/.env
+
+Set the following parameters in .env:
+
+Create secret keys:
+
+- https://django-secret-key-generator.netlify.app/
+- https://miniwebtool.com/django-secret-key-generator/
+- https://djecrety.ir/
+
+```bash
+DEBUG_SECRET_KEY={random_string}
+DEBUG_ALLOWED_HOSTS='localhost, 127.0.0.1, {ip_address}'
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=sgcmedia
+DB_USER=sgc
+DB_PASSWORD=sgcmedia
+DB_HOST=192.168.0.13
+DB_PORT=5432
+```
+
+Install packages and migrate database
+
+```bash
 source bin/activate
 pip install -r requirements.txt
 cd src
@@ -70,4 +91,13 @@ python manage.py runserver {ip}:8000
 
 Install Django app (Production):
 
-TBD
+In the .env file, set the following production parameters:
+
+```bash
+PRODUCTION=True
+PROD_SECRET_KEY={random_string}
+PROD_SECRET_KEY_FALLBACK={random_string}
+PROD_ALLOWED_HOSTS='domain.com'
+SECURE_SSL_HOST='domain.com'
+SESSION_COOKIE_DOMAIN='domain.com'
+```
