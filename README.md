@@ -78,11 +78,11 @@ Create secret keys using any of these websites:
 
 ```bash
 DEBUG_SECRET_KEY={random_string}
-DEBUG_ALLOWED_HOSTS='localhost, 127.0.0.1, {ip_address}'
+DEBUG_ALLOWED_HOSTS='localhost, 127.0.0.1, {host_ip_address}'
 DB_NAME=database_name
 DB_USER=database_user
 DB_PASSWORD=database_password
-DB_HOST=localhost
+DB_HOST=localhost or {host_ip_address}
 ```
 
 Install packages and migrate database.
