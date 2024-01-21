@@ -21,6 +21,8 @@ GRANT ALL PRIVILEGES ON DATABASE sgc TO sgc;
 ALTER ROLE sgc SET client_encoding TO 'UTF8';
 ALTER ROLE sgc SET default_transaction_isolation TO 'read committed';
 ALTER ROLE sgc SET timezone TO 'UTC';
+\q
+exit
 
 # Env
 virtualenv -p /usr/bin/python3 sgc-media
