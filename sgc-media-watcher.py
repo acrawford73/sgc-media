@@ -1,6 +1,6 @@
 #!bin/python3
 
-# Copyright (c) 2023
+# Copyright (c) 2023...2024
 
 #       _/_/_/    _/_/_/    _/_/_/
 #    _/        _/        _/
