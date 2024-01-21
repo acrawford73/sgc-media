@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.admindocs',
     'rest_framework',
     'crispy_forms',
+    'crispy_bootstrap5',
     'django_filters',
     'roku_content',
     #'roku_search',
@@ -217,7 +218,8 @@ FIXTURE_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ### FORMS
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 ### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
