@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    #'taggit',
     'rest_framework',
     'crispy_forms',
     'crispy_bootstrap5',
@@ -220,6 +221,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ### FORMS
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+### TAGGING
+#TAGGIT_CASE_INSENSITIVE = True
 
 ### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
