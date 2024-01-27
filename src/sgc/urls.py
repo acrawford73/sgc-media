@@ -25,8 +25,10 @@ urlpatterns = [
     #path('', include('roku_search.urls')),
     path('', include('media.urls')),
     path('', include('core.urls')),
+    #path('', include('core.system_config')),
+
     path('account/', include('django.contrib.auth.urls')),
-    # The URLs provided by auth are:
+    ## The URLs supported by auth are:
     # accounts/login/ [name='login']
     # accounts/logout/ [name='logout']
     # accounts/password_change/ [name='password_change']

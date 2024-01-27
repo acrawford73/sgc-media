@@ -1,7 +1,10 @@
+import os
 import uuid
-from datetime import date,time
+import datetime
+#from datetime import date,time
 from django.db import models
 from django.urls import reverse
+from time import strftime
 
 ### Models for the Roku Content Feed based on the Roku Direct Publisher specification.
 ## Roku channels do not have to conform to the RDP spec but it is recommended.
@@ -194,12 +197,14 @@ class PlaylistShortFormVideo(models.Model):
 
 ### Content Types
 
-# def image_path(filename):
-# 	# file will be uploaded to MEDIA_ROOT / user_<id>/<filename>
-# 	return 'user_{0}/{1}'.format(instance.user.id, filename)
-
-# class MyModel(models.Model):
-# 	upload = models.ImageField(upload_to = image_path)
+def thumb_path(instance, filename):
+	file_uuid = str(instance.movie_id)
+	file_ext = os.path.splitext(filename)[1]
+	file_path = file_uuid + file_ext
+	return 'thumbs/{0}/{1}/{2}/{3}'.format(datetime.datetime.now().strftime('%Y'), \
+		datetime.datetime.now().strftime('%m'), \
+		datetime.datetime.now().strftime('%d'), \
+		'movie_' + file_path)
 
 class Movie(models.Model):
 	""" 
@@ -213,20 +218,14 @@ class Movie(models.Model):
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
 	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
-	# thumbnail = models.URLField(max_length=2083, null=False, blank=False, \
-	# 	help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	
-	# test
-	thumbnail_path = models.ImageField(upload_to='uploads/% Y/% m/% d/% uuid.uuid4/', \
+	thumbnail_path = models.ImageField(upload_to=thumb_path, \
 		height_field='thumbnail_height', width_field='thumbnail_width', \
-		max_length=256, null=True, blank=True, \
+		max_length=4096, null=True, blank=True, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	#thumbnail_url = models.URLField(max_length=2083, null=False, blank=False, \
 	#	help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	thumbnail_width = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
-	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
-	#
-
+	thumbnail_width = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
+	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
 	genres = models.ManyToManyField('Genre', through='MovieGenre', blank=True)
 	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True)

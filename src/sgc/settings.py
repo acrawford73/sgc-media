@@ -196,11 +196,11 @@ STATICFILES_DIRS = [
 
 
 ### MEDIA FILES
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets')
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets/')
 if config('PRODUCTION', default=False, cast=bool) == True:
     MEDIA_URL = '/media/'
 else:
-    MEDIA_URL = '/media_storage/'
+    MEDIA_URL = '/media/'
 
 ### FIXTURES
 # Data files for database defaults
