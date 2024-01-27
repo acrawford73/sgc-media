@@ -1,0 +1,66 @@
+[
+{
+  "model": "media.mediavideoformat",
+  "pk": 1,
+  "fields": {
+    "doc_format": "NA",
+    "doc_format_name": "Not Available"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 2,
+  "fields": {
+    "doc_format": "MP4",
+    "doc_format_name": "MPEG-4"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 3,
+  "fields": {
+    "doc_format": "M4V",
+    "doc_format_name": "MPEG-4 Video"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 4,
+  "fields": {
+    "doc_format": "MPG",
+    "doc_format_name": "MPEG-2 Video"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 5,
+  "fields": {
+    "doc_format": "MKV",
+    "doc_format_name": "Matroska"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 6,
+  "fields": {
+    "doc_format": "MOV",
+    "doc_format_name": "Quicktime"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 7,
+  "fields": {
+    "doc_format": "TS",
+    "doc_format_name": "Transport Stream"
+  }
+},
+{
+  "model": "media.mediavideoformat",
+  "pk": 8,
+  "fields": {
+    "doc_format": "WMV",
+    "doc_format_name": "Windows Media Video"
+  }
+}
+]

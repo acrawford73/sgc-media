@@ -1,0 +1,58 @@
+[
+{
+  "model": "media.mediaaudioformat",
+  "pk": 1,
+  "fields": {
+    "doc_format": "NA",
+    "doc_format_name": "Not Available"
+  }
+},
+{
+  "model": "media.mediaaudioformat",
+  "pk": 2,
+  "fields": {
+    "doc_format": "MP3",
+    "doc_format_name": "MPEG-2 Audio Layer 3"
+  }
+},
+{
+  "model": "media.mediaaudioformat",
+  "pk": 3,
+  "fields": {
+    "doc_format": "M4A",
+    "doc_format_name": "MPEG-4 Audio"
+  }
+},
+{
+  "model": "media.mediaaudioformat",
+  "pk": 4,
+  "fields": {
+    "doc_format": "OGG",
+    "doc_format_name": "Ogg Vorbis"
+  }
+},
+{
+  "model": "media.mediaaudioformat",
+  "pk": 5,
+  "fields": {
+    "doc_format": "WAV",
+    "doc_format_name": "Waveform Audio"
+  }
+},
+{
+  "model": "media.mediaaudioformat",
+  "pk": 6,
+  "fields": {
+    "doc_format": "WMA",
+    "doc_format_name": "Windows Media Audio"
+  }
+},
+{
+  "model": "media.mediaaudioformat",
+  "pk": 7,
+  "fields": {
+    "doc_format": "FLAC",
+    "doc_format_name": "Free Lossless Audio Codec"
+  }
+}
+]

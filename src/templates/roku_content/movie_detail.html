@@ -48,7 +48,15 @@
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
-                <td>{{ movie.thumbnail }}</td>
+                <td>{{ movie.thumbnail_path }}</td>
+              </tr>
+              <tr>
+                <td><strong>Thumbnail Size</strong></td>
+                {% if movie.thumnail_width == 0 or movie.thumbnail_height == 0 %}
+                <td>None</td>
+                {% else %}
+                <td>{{ movie.thumbnail_width }} x {{ movie.thumbnail_height }}</td>
+                {% endif%}
               </tr>
               <tr>
                 <td><strong>Release Date</strong></td>

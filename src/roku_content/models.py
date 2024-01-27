@@ -219,12 +219,12 @@ class Movie(models.Model):
 	# test
 	thumbnail_path = models.ImageField(upload_to='uploads/% Y/% m/% d/% uuid.uuid4/', \
 		height_field='thumbnail_height', width_field='thumbnail_width', \
-		max_length=256, null=False, blank=False, unique=True, \
+		max_length=256, null=True, blank=True, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	#thumbnail_url = models.URLField(max_length=2083, null=False, blank=False, \
 	#	help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
-	thumbnail_width = models.PositiveSmallIntegerField(default=0, null=False, blank=False, editable=False)
-	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=False, blank=False, editable=False)
+	thumbnail_width = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
+	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
 	#
 
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
