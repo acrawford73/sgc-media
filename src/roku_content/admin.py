@@ -41,7 +41,7 @@ class MovieAdmin(admin.ModelAdmin):
 	list_display = ['title', 'release_date']
 	search_fields = ['movie_id', 'title', 'release_date']
 	list_filter = ['genres']
-	readonly_fields = ['movie_id']
+	readonly_fields = ['movie_id', 'thumbnail_width', 'thumbnail_height']
 	class Meta:
 		model = Movie
 

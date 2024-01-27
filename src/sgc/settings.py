@@ -22,8 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# SECURITY WARNING: don't run with debug turned on in production!
+# SECURITY WARNING: Keep the secret key used in production secret!
+# SECURITY WARNING: Don't run with debug turned on in production!
 
 if config('PRODUCTION', default=False, cast=bool) == True:
     DEBUG = False
@@ -152,14 +152,13 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 ### STATIC FILES (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-# if PRODUCTION == True:
-#LOCAL_STATIC_CDN = 
-#STATIC_URL = '/static/'
-# else:
-LOCAL_STATIC_CDN = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
-STATIC_URL = '/static/'
+# https://docs.djangoproject.com/en/4.2/howto/static-files/`
+if config('PRODUCTION', default=False, cast=bool) == True:
+    LOCAL_STATIC_CDN = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
+    STATIC_URL = '/static_cdn/'
+else:
+    LOCAL_STATIC_CDN = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
+    STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN, 'static')
 
@@ -198,10 +197,10 @@ FILE_UPLOAD_DIRECTORY_PERMISSIONS = 0o640  # Default: None
 
 ### MEDIA FILES
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets')
-# if config('PRODUCTION', default=False, cast=bool) == True:
-#     MEDIA_URL = '/media/'
-# else:
-MEDIA_URL = '/media/'
+if config('PRODUCTION', default=False, cast=bool) == True:
+    MEDIA_URL = '/media_storage/'
+else:
+    MEDIA_URL = '/media/'
 
 ### FIXTURES
 # Data files for database defaults
