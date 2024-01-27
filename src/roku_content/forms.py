@@ -1,5 +1,7 @@
 from django import forms
 
+# This file may not be needed due to class-based views
+
 class RokuContentFeedForm(forms.Form):
 	is_public = models.BooleanField(label='Is Public?', default=False)
 	provider_name = models.CharField(label='Provider Name', max_length=50, default="", blank=False)
