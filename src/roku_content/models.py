@@ -215,7 +215,7 @@ def branded_thumb_path(instance, filename):
 
 
 class Movie(models.Model):
-	""" 
+	"""
 	Represents a Movie object. Movies have content attached with one or more videos. 
 	Movie objects are added to a Roku Content Feed.
 	"""
@@ -226,7 +226,7 @@ class Movie(models.Model):
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
 	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
-	thumbnail_path = models.ImageField(max_length=4096, upload_to=thumb_path, \
+	thumbnail = models.ImageField(max_length=4096, upload_to=thumb_path, \
 		height_field='thumbnail_height', width_field='thumbnail_width', null=True, blank=True, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
 	#thumbnail_url = models.URLField(max_length=2083, null=False, blank=False, \

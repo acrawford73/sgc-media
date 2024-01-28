@@ -196,10 +196,13 @@ STATICFILES_DIRS = [
 
 
 ### MEDIA FILES
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets/')
+# MEDIA_ROOT is the path to the root directory where the files are getting stored.
+# MEDIA_URL is the URL that will serve the media files.
 if config('PRODUCTION', default=False, cast=bool) == True:
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets/')
     MEDIA_URL = '/media/'
 else:
+    MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets/')
     MEDIA_URL = '/media/'
 
 ### FIXTURES

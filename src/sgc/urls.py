@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import include,path
 from django.conf import settings
 
+
 urlpatterns = [
 
     #Apps
@@ -53,3 +54,13 @@ if settings.DEBUG:
 # else:
 #     # Production
 #     urlpatterns += staticfiles_urlpatterns()
+
+
+# Serve the favicon
+# urlpatterns += [
+#     path('favicon.ico', serve, {
+#             'path': 'favicon.ico',
+#             'document_root': os.path.join(BASE_DIR, 'home/static/img'),
+#         }
+#     ),
+# ]

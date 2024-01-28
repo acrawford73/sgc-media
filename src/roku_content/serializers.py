@@ -141,7 +141,7 @@ class MovieSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Movie
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'content', \
-			'thumbnail_path', 'releaseDate', 'genres', 'tags', 'rating', 'credits', 'externalIds']
+			'thumbnail', 'releaseDate', 'genres', 'tags', 'rating', 'credits', 'externalIds']
 
 class LiveFeedSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='uuid_id')
