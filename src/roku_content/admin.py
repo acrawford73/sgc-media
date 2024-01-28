@@ -39,25 +39,25 @@ class PlaylistAdmin(admin.ModelAdmin):
 
 class MovieAdmin(admin.ModelAdmin):
 	list_display = ['title', 'release_date']
-	search_fields = ['movie_id', 'title', 'release_date']
+	search_fields = ['uuid_id', 'title', 'release_date']
 	list_filter = ['genres']
-	readonly_fields = ['movie_id', 'thumbnail_width', 'thumbnail_height']
+	readonly_fields = ['uuid_id', 'thumbnail_width', 'thumbnail_height']
 	class Meta:
 		model = Movie
 
 class LiveFeedAdmin(admin.ModelAdmin):
-	list_display = ['livefeed_id', 'title']
-	search_fields = ['livefeed_id', 'title']
+	list_display = ['uuid_id', 'title']
+	search_fields = ['uuid_id', 'title']
 	list_filter = ['genres']
-	readonly_fields = ['livefeed_id']
+	readonly_fields = ['uuid_id']
 	class Meta:
 		model = LiveFeed
 
 class SeriesAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'release_date']
-	search_fields = ['series_id', 'title', 'release_date']
+	search_fields = ['uuid_id', 'title', 'release_date']
 	#list_filter = ['seasons', 'episodes', 'genres']
-	readonly_fields = ['series_id']
+	readonly_fields = ['uuid_id']
 	class Meta:
 		model = Series
 
@@ -70,28 +70,28 @@ class SeasonAdmin(admin.ModelAdmin):
 
 class EpisodeAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'episode_number', 'release_date']
-	search_fields = ['episode_id', 'title', 'episode_number', 'short_description', \
+	search_fields = ['uuid_id', 'title', 'episode_number', 'short_description', \
 		'long_description', 'credits', 'rating', 'external_ids', 'release_date']
 	list_filter = ['episode_number', 'external_ids']
-	readonly_fields = ['episode_id']
+	readonly_fields = ['uuid_id']
 	class Meta:
 		model = Episode
 
 class ShortFormVideoAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'release_date']
-	search_fields = ['short_form_video_id', 'title', 'short_description', \
+	search_fields = ['uuid_id', 'title', 'short_description', \
 		'long_description', 'credits', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'tags']
-	readonly_fields = ['short_form_video_id']
+	readonly_fields = ['uuid_id']
 	class Meta:
 		model = ShortFormVideo
 
 class TVSpecialAdmin(admin.ModelAdmin):
 	list_display = ['id', 'title', 'release_date']
-	search_fields = ['tv_special_id', 'title', 'short_description', 'long_description', \
+	search_fields = ['uuid_id', 'title', 'short_description', 'long_description', \
 		'genres', 'rating', 'tags', 'release_date']
 	list_filter = ['title', 'genres', 'tags']
-	readonly_fields = ['tv_special_id']
+	readonly_fields = ['uuid_id']
 	class Meta:
 		model = TVSpecial
 

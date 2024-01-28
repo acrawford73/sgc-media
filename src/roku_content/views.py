@@ -327,9 +327,9 @@ class MovieListAPI(generics.ListAPIView):
 # 	queryset = Movie.objects.all()
 # 	serializer_class = MovieSerializerList
 # 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['movie_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
+# 	search_fields = ['uuid_id', 'title', 'content', 'genres', 'thumbnail', 'release_date', \
 # 		'short_description', 'long_description', 'tags', 'credits', 'rating', 'external_ids']
-# 	ordering_fields = ['movie_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
+# 	ordering_fields = ['uuid_id', 'title', 'release_date', 'short_description', 'tags', 'rating']
 # 	ordering = ['-id']
 
 # class MovieDetailAPI(generics.RetrieveAPIView):
@@ -371,7 +371,7 @@ class LiveFeedListAPI(generics.ListAPIView):
 # 	queryset = LiveFeed.objects.all()
 # 	serializer_class =LiveFeedSerializerList
 # 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['livefeed_id', 'title', 'content', 'short_description', \
+# 	search_fields = ['uuid_id', 'title', 'content', 'short_description', \
 # 		'long_description', 'tags', 'rating', 'genres']
 # 	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
 # 	ordering = ['-id']
@@ -415,7 +415,7 @@ class SeriesListAPI(generics.ListAPIView):
 # 	queryset = Series.objects.all()
 # 	serializer_class = SeriesSerializerList
 # 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['series_id', 'title', 'seasons', 'episodes', 'genres', 'release_date', \
+# 	search_fields = ['uuid_id', 'title', 'seasons', 'episodes', 'genres', 'release_date', \
 # 		'short_description', 'long_description', 'tags', 'credits', 'external_ids']
 # 	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
 # 	ordering = ['-id']
@@ -500,7 +500,7 @@ class EpisodeListAPI(generics.ListAPIView):
 # 	queryset = Episode.objects.all()
 # 	serializer_class = EpisodeSerializerList
 # 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['episode_id', 'title', 'content', 'release_date', 'episode_number', \
+# 	search_fields = ['uuid_id', 'title', 'content', 'release_date', 'episode_number', \
 # 		'short_description', 'long_description', 'credits', 'rating', 'external_ids']
 # 	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
 # 	ordering = ['-id']
@@ -544,7 +544,7 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 # 	queryset = ShortFormVideo.objects.all()
 # 	serializer_class = ShortFormVideoSerializerList
 # 	filter_backends = [filters.SearchFilter]
-# 	search_fields = ['short_form_video_id', 'title', 'short_description', 'long_description', \
+# 	search_fields = ['uuid_id', 'title', 'short_description', 'long_description', \
 # 		'release_date', 'tags', 'genres', 'credits', 'rating']
 # 	ordering_fields = ['id', 'title', 'release_date', 'tags', 'genres', 'credits', 'rating']
 # 	ordering = ['-id']
