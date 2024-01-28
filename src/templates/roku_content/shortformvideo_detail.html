@@ -40,7 +40,15 @@
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
-                <td>{{ shortformvideo.thumbnail }}</td>
+                <td><a href="/media/{{ shortformvideo.thumbnail }}">{{ shortformvideo.thumbnail }}</a></td>
+              </tr>
+              <tr>
+                <td><strong>Thumbnail Size</strong></td>
+                {% if shortformvideo.thumbnail_width == 0 or shortformvideo.thumbnail_height == 0 %}
+                <td>None</td>
+                {% else %}
+                <td>{{ shortformvideo.thumbnail_width }} x {{ shortformvideo.thumbnail_height }}</td>
+                {% endif%}
               </tr>
               <tr>
                 <td><strong>Short Description</strong></td>

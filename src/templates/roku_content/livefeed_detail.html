@@ -60,11 +60,27 @@
               </tr>
               <tr>
                 <td><strong>Thumbnail</strong></td>
-                <td>{{ livefeed.thumbnail }}</td>
+                <td><a href="/media/{{ livefeed.thumbnail }}">{{ livefeed.thumbnail }}</a></td>
+              </tr>
+              <tr>
+                <td><strong>Thumbnail Size</strong></td>
+                {% if livefeed.thumbnail_width == 0 or livefeed.thumbnail_height == 0 %}
+                <td>None</td>
+                {% else %}
+                <td>{{ livefeed.thumbnail_width }} x {{ livefeed.thumbnail_height }}</td>
+                {% endif%}
               </tr>
               <tr>
                 <td><strong>Branded Thumbnail</strong></td>
-                <td>{{ livefeed.branded_thumbnail }}</td>
+                <td><a href="/media/{{ livefeed.branded_thumbnail }}">{{ livefeed.branded_thumbnail }}</a></td>
+              </tr>
+              <tr>
+                <td><strong>Branded Thumbnail Size</strong></td>
+                {% if livefeed.branded_thumbnail_width == 0 or livefeed.branded_thumbnail_height == 0 %}
+                <td>None</td>
+                {% else %}
+                <td>{{ livefeed.branded_thumbnail_width }} x {{ livefeed.branded_thumbnail_height }}</td>
+                {% endif%}
               </tr>
               <tr>
                 <td><strong>Tags</strong></td>
