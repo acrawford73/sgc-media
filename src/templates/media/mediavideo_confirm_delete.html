@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+  <div class="container">
+    <p>&nbsp;</p>
+    <h2 class="mt-5"><strong>Video Asset:</strong> {{ asset.id }}</h2>
+    <p>&nbsp;</p>
+    <div class="row">
+      <form method="post">{% csrf_token %}
+        <h4>Are you sure you want to delete the following video asset ?</h4>
+        <p>&nbsp;</p>
+        <h4><strong>ID:</strong> {{ asset.id }}</h4>
+        <h4><strong>Title:</strong> {{ asset.title }}</h4>
+        {{ form }}
+        <p>&nbsp;</p>
+        <input type="submit" value="Confirm">
+    </form>
+
+    <!-- row end -->
+    </div>
+
+  <!-- container end -->
+  </div>
+
+</main>
+
+{% endblock %}

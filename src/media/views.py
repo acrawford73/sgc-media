@@ -151,18 +151,18 @@ class MediaVideoServiceCreateView(CreateView):
 
 class MediaVideoServiceListView(ListView):
 	model = MediaVideoService
-	template_name = 'media/videoservice_list.html'
-	context_object_name = 'service'
+	template_name = 'media/mediavideoservice_list.html'
+	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaVideoServiceDetailView(DetailView):
 	model = MediaVideoService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 
 class MediaVideoServiceUpdateView(UpdateView):
 	model = MediaVideoService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 	fields = ['service_name']
 
 class MediaVideoServiceListAPI(generics.ListAPIView):
@@ -255,18 +255,18 @@ class MediaAudioServiceCreateView(CreateView):
 
 class MediaAudioServiceListView(ListView):
 	model = MediaAudioService
-	template_name = 'media/audioservice_list.html'
-	context_object_name = 'service'
+	template_name = 'media/mediaaudioservice_list.html'
+	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaAudioServiceDetailView(DetailView):
 	model = MediaAudioService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 
 class MediaAudioServiceUpdateView(UpdateView):
 	model = MediaAudioService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 	fields = ['service_name']
 
 class MediaAudioServiceListAPI(generics.ListAPIView):
@@ -341,18 +341,18 @@ class MediaPhotoServiceCreateView(CreateView):
 
 class MediaPhotoServiceListView(ListView):
 	model = MediaPhotoService
-	template_name = 'media/photoservice_list.html'
-	context_object_name = 'service'
+	template_name = 'media/mediaphotoservice_list.html'
+	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaPhotoServiceDetailView(DetailView):
 	model = MediaPhotoService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 
 class MediaPhotoServiceUpdateView(UpdateView):
 	model = MediaPhotoService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 	fields = ['service_name']
 
 class MediaPhotoServiceListAPI(generics.ListAPIView):
@@ -420,18 +420,18 @@ class MediaDocServiceCreateView(CreateView):
 
 class MediaDocServiceListView(ListView):
 	model = MediaDocService
-	template_name = 'media/doc_list.html'
-	context_object_name = 'service'
+	template_name = 'media/mediadocservice_list.html'
+	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaDocServiceDetailView(DetailView):
 	model = MediaDocService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 
 class MediaDocServiceUpdateView(UpdateView):
 	model = MediaDocService
-	context_object_name = 'service'
+	context_object_name = 'asset'
 	fields = ['service_name']
 
 class MediaDocServiceListAPI(generics.ListAPIView):
