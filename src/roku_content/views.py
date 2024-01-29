@@ -11,6 +11,7 @@ from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, R
 					RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
 ### Rest Framework
 from rest_framework.response import Response
+from rest_framework.reverse import reverse, reverse_lazy
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework import filters

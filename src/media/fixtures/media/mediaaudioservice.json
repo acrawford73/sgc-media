@@ -1,0 +1,58 @@
+[
+{
+  "model": "media.mediaaudioservice",
+  "pk": 1,
+  "fields": {
+    "service_name": "NA"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 2,
+  "fields": {
+    "service_name": "Personal"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 3,
+  "fields": {
+    "service_name": "Soundcloud"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 4,
+  "fields": {
+    "service_name": "Mixcloud"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 5,
+  "fields": {
+    "service_name": "Instagram"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 6,
+  "fields": {
+    "service_name": "Google"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 7,
+  "fields": {
+    "service_name": "Dropbox"
+  }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 8,
+  "fields": {
+    "service_name": "Amazon"
+  }
+}
+]

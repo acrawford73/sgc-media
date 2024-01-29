@@ -5,6 +5,15 @@ from django.urls import reverse
 
 #
 
+def video_thumb_path(instance, filename):
+	file_uuid = instance.file_uuid
+	file_ext = os.path.splitext(filename)[1]
+	file_path = str(file_uuid) + file_ext
+	return 'thumbs/video/{0}/{1}/{2}/{3}'.format(datetime.datetime.now().strftime('%Y'), \
+		datetime.datetime.now().strftime('%m'), \
+		datetime.datetime.now().strftime('%d'), file_path)
+
+
 class MediaCountry(models.Model):
 	country_name = models.CharField(max_length=64, null=False, blank=False, unique=True)
 	country_code = models.CharField(max_length=2, null=False, blank=False, unique=True)
@@ -49,7 +58,7 @@ VIDEO_SERVICES = (
 )
 
 class MediaVideoService(models.Model):
-	service_name = models.CharField(max_length=32, null=False, blank=False, unique=True)
+	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
 	class Meta:
 		ordering = ['service_name']
 	def __str__(self):
@@ -126,18 +135,27 @@ class MediaVideo(models.Model):
 	genre = models.ForeignKey("MediaVideoGenre", on_delete=models.SET_NULL, blank=True, null=True)
 	doc_format = models.ForeignKey("MediaVideoFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	transcribe = models.TextField(default="", null=True, blank=True)
+	thumbnail = models.ImageField(max_length=4096, upload_to=video_thumb_path, \
+		height_field='thumbnail_height', width_field='thumbnail_width', null=True, blank=True)
+	thumbnail_width = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
+	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
+	transcription = models.TextField(default="", blank=True, null=True)
+	#transcriptions = models.ManyToManyField('Transcription', through='MediaVideoTranscription', blank=True)
 
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
-
 	class Meta:
 		ordering = ['-created']
 	def __unicode__(self):
 		return self.file_name
 
+# class MediaVideoTranscription(models.Model):
+# 	""" ManyToMany table for MediaVideo model and Language model. """
+# 	mediavideo = models.ForeignKey('MediaVideo', on_delete=models.CASCADE)
+# 	transcription = models.ForeignKey('Transcription', on_delete=models.CASCADE)
 
 
-MEDIA_SERVICES = (
+MEDIA_TYPES = (
 	("NA", "NA"),
 	("Audio", "Audio"),
 	("Document", "Document"),
@@ -145,15 +163,22 @@ MEDIA_SERVICES = (
 	("Video", "Video"),
 )
 
-class MediaService(models.Model):
+class MediaType(models.Model):
 	service = models.CharField(max_length=50, default="", null=True, blank=True)
-	media_type = models.CharField(max_length=50, default="NA", choices=MEDIA_SERVICES, null=False, blank=False)
+	media_type = models.CharField(max_length=50, default="NA", choices=MEDIA_TYPES, null=False, blank=False)
 	class Meta:
 		ordering = ['service']
 	def __str__(self):
 		return self.service
 
 ### AUDIO
+
+class MediaAudioService(models.Model):
+	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['service_name']
+	def __str__(self):
+		return self.service_name
 
 class MediaAudioFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
@@ -210,15 +235,47 @@ class MediaAudio(models.Model):
 	extra = models.TextField(max_length=2048, default="", null=True, blank=True)
 	doc_format = models.ForeignKey("MediaAudioFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	rating = models.PositiveSmallIntegerField(default=0, null=False, blank=False)
-	transcribe = models.TextField(default="", null=True, blank=True)
-	
+	#transcriptions = models.ManyToManyField('Transcription', through='MediaAudioTranscription', blank=True)
+	#transcriptions = models.ForeignKey("Transcription", on_delete=models.CASCADE, blank=True, null=True)
+	transcription = models.TextField(default="", blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
-
 	class Meta:
 		ordering = ['-created']
 	def __unicode__(self):
 		return self.pk
+
+# class MediaAudioTranscription(models.Model):
+# 	""" ManyToMany table for MediaAudio model and Language model. """
+# 	mediavideo = models.ForeignKey('MediaVideo', on_delete=models.CASCADE)
+# 	transcription = models.ForeignKey('Transcription', on_delete=models.CASCADE)
+
+
+# class Transcription(models.Model):
+# 	""" Transcription model for Video and Audio content. """
+# 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True)
+# 	transcription = models.TextField(default="", null=True, blank=True)
+# 	def get_absolute_url(self):
+# 		return reverse('transcription-detail', kwargs={'pk': self.pk})
+# 	class Meta:
+# 		ordering = ['-id']
+# 	def __unicode__(self):
+# 		return self.pk
+
+
+class Language(models.Model):
+	""" For any models containing a language field. """
+	code_iso_639_2 = models.CharField(max_length=8, null=False, blank=False, unique=True)  # "eng"
+	code_iso_639_1 = models.CharField(max_length=8, null=False, blank=False)  # "en"
+	language_name_eng = models.CharField(max_length=64, null=False, blank=False)  # English"
+	def get_absolute_url(self):
+		return reverse('language-list')
+	class Meta:
+		ordering = ['id']
+		def __unicode__(self):
+			return self.id
+	def __str__(self):
+		return str(self.code_iso_639_1)
 
 ### PHOTOS
 
@@ -231,6 +288,14 @@ PHOTO_SERVICES = (
 	("Dropbox", "Dropbox"),
 	("Amazon", "Amazon"),
 )
+
+
+class MediaPhotoService(models.Model):
+	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['service_name']
+	def __str__(self):
+		return self.service_name
 
 class MediaPhotoFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
@@ -279,6 +344,13 @@ class MediaPhoto(models.Model):
 
 ### DOCUMENTS
 
+class MediaDocService(models.Model):
+	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['service_name']
+	def __str__(self):
+		return self.service_name
+
 class MediaDocFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
 	doc_format_name = models.CharField(max_length=64, null=False, blank=False)
@@ -309,17 +381,15 @@ class MediaDoc(models.Model):
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
 	### this is actually doc_format_id in the database
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
-	###
 	category = models.ForeignKey("MediaDocCategories", on_delete=models.SET_NULL, blank=True, null=True)
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	#updated = models.DateTimeField(auto_now=True)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
-
+	service = models.ForeignKey("MediaDocService", on_delete=models.SET_NULL, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-doc-detail', kwargs={'pk': self.pk})
-
 	class Meta:
 		ordering = ['-created']
 		def __unicode__(self):

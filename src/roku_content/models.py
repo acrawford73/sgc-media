@@ -251,7 +251,7 @@ class Movie(models.Model):
 class MovieGenre(models.Model):
 	""" ManyToMany table for Movie model and Genre model. """
 	movie = models.ForeignKey('Movie', on_delete=models.CASCADE)
-	genre = models.ForeignKey('Genre', on_delete=models.CASCADE)	
+	genre = models.ForeignKey('Genre', on_delete=models.CASCADE)
 
 class MovieTag(models.Model):
 	""" ManyToMany table for Movie model and Tag model. """

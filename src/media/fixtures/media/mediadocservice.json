@@ -1,0 +1,58 @@
+[
+{
+  "model": "media.mediadocservice",
+  "pk": 1,
+  "fields": {
+    "service_name": "NA"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 2,
+  "fields": {
+    "service_name": "Personal"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 3,
+  "fields": {
+    "service_name": "Research Gate"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 4,
+  "fields": {
+    "service_name": "Science Direct"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 5,
+  "fields": {
+    "service_name": "IEEE"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 6,
+  "fields": {
+    "service_name": "ITU"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 7,
+  "fields": {
+    "service_name": "SCTE"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 8,
+  "fields": {
+    "service_name": "National Institute of Health (NIH)"
+  }
+}
+]

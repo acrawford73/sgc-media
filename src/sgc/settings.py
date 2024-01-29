@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     #'taggit',
     'rest_framework',
     'crispy_forms',
+    'crispy_bootstrap3', # DRF
     'crispy_bootstrap5',
     'django_filters',
     'roku_content',

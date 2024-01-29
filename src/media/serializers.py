@@ -1,6 +1,7 @@
 from datetime import datetime
 from rest_framework import serializers
 from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenre
+from .models import MediaVideoService, MediaAudioService, MediaPhotoService, MediaDocService
 
 
 # Video
@@ -25,6 +26,15 @@ class MediaVideoSerializerDetail(serializers.ModelSerializer):
 		model = MediaVideo
 		fields = '__all__'
 
+class MediaVideoServiceSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaVideoService
+		fields = '__all__'
+
+class MediaVideoServiceSerializerDetail(serializers.ModelSerializer):
+	class Meta:
+		model = MediaVideoService
+		fields = '__all__'
 
 # Audio
 class MediaAudioSerializerListArtists(serializers.ModelSerializer):
@@ -50,6 +60,15 @@ class MediaAudioSerializerDetail(serializers.ModelSerializer):
 		model = MediaAudio
 		fields = '__all__'
 
+class MediaAudioServiceSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaAudioService
+		fields = '__all__'
+
+class MediaAudioServiceSerializerDetail(serializers.ModelSerializer):
+	class Meta:
+		model = MediaAudioService
+		fields = '__all__'
 
 # Photo
 class MediaPhotoSerializerList(serializers.ModelSerializer):
@@ -65,6 +84,15 @@ class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 		model = MediaPhoto
 		fields = '__all__'
 
+class MediaPhotoServiceSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaPhotoService
+		fields = '__all__'
+
+class MediaPhotoServiceSerializerDetail(serializers.ModelSerializer):
+	class Meta:
+		model = MediaPhotoService
+		fields = '__all__'
 
 # Documents
 class MediaDocSerializerList(serializers.ModelSerializer):
@@ -77,4 +105,14 @@ class MediaDocSerializerList(serializers.ModelSerializer):
 class MediaDocSerializerDetail(serializers.ModelSerializer):
 	class Meta:
 		model = MediaDoc
+		fields = '__all__'
+
+class MediaDocServiceSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaDocService
+		fields = '__all__'
+
+class MediaDocServiceSerializerDetail(serializers.ModelSerializer):
+	class Meta:
+		model = MediaDocService
 		fields = '__all__'

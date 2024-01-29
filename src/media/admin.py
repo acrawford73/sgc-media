@@ -1,10 +1,10 @@
 from django.contrib import admin
 from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, MediaVideoThumbnail, \
-					MediaAudio, MediaAudioGenre, MediaAudioFormat, \
-					MediaPhoto, MediaPhotoFormat, \
-					MediaDoc, MediaDocFormat, MediaService, MediaDocCategories, \
+					MediaAudio, MediaAudioGenre, MediaAudioFormat, MediaAudioService, \
+					MediaPhoto, MediaPhotoFormat, MediaPhotoService, \
+					MediaDoc, MediaDocFormat, MediaDocCategories, MediaDocService, \
 					MediaCountry
-
+					
 
 # Video
 class MediaVideoAdmin(admin.ModelAdmin):
@@ -102,10 +102,21 @@ class MediaCountryAdmin(admin.ModelAdmin):
 
 # Services
 # not implemented yet
-class MediaServiceAdmin(admin.ModelAdmin):
-	list_display = ['service', 'media_type']
+class MediaVideoServiceAdmin(admin.ModelAdmin):
 	class Meta:
-		model = MediaService
+		model = MediaVideoService
+
+class MediaAudioServiceAdmin(admin.ModelAdmin):
+	class Meta:
+		model = MediaAudioService
+
+class MediaPhotoServiceAdmin(admin.ModelAdmin):
+	class Meta:
+		model = MediaPhotoService
+
+class MediaDocServiceAdmin(admin.ModelAdmin):
+	class Meta:
+		model = MediaDocService
 
 
 # Register models
@@ -114,17 +125,18 @@ admin.site.register(MediaVideoFormat, MediaVideoFormatAdmin)
 admin.site.register(MediaVideoService, MediaVideoServiceAdmin)
 admin.site.register(MediaVideoGenre, MediaVideoGenreAdmin)
 
-admin.site.register(MediaAudioFormat, MediaAudioFormatAdmin)
 admin.site.register(MediaAudio, MediaAudioAdmin)
 admin.site.register(MediaAudioGenre, MediaAudioGenreAdmin)
+admin.site.register(MediaAudioFormat, MediaAudioFormatAdmin)
+admin.site.register(MediaAudioService, MediaAudioServiceAdmin)
 
 admin.site.register(MediaPhoto, MediaPhotoAdmin)
 admin.site.register(MediaPhotoFormat, MediaPhotoFormatAdmin)
+admin.site.register(MediaPhotoService, MediaPhotoServiceAdmin)
 
 admin.site.register(MediaDoc, MediaDocAdmin)
 admin.site.register(MediaDocFormat, MediaDocFormatAdmin)
+admin.site.register(MediaDocService, MediaDocServiceAdmin)
 admin.site.register(MediaDocCategories, MediaDocCategoriesAdmin)
 
 admin.site.register(MediaCountry, MediaCountryAdmin)
-
-admin.site.register(MediaService, MediaServiceAdmin)
