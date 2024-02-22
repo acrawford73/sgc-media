@@ -55,6 +55,12 @@ else:
 
 SITE_ID = config('SITE_ID')
 
+# AUTH_USER_MODEL = "user_auth.User"
+# ACCOUNT_ACTIVATION_DAYS = 7
+# REGISTRATION_OPEN = True
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
 ### APPLICATION DEFINITION
 
 INSTALLED_APPS = [
@@ -65,8 +71,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
+    # django-allauth
+    # 'django.contrib.sites',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
     #'taggit',
     'rest_framework',
+    #'rest_framework.authtoken',
     'crispy_forms',
     'crispy_bootstrap3', # DRF
     'crispy_bootstrap5',
@@ -76,6 +89,9 @@ INSTALLED_APPS = [
     'media',
     'core',
     #'help,',
+    #'debug_toolbar',
+    #'drf_yasg',
+    #'versatileimagefield',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +151,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
-
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher', # recommended (pip3 install django[argon2])
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+]
 
 ### INTERNATIONALIZATION
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -149,8 +170,6 @@ THOUSAND_SEPARATOR = ','
 TIME_ZONE = 'UTC'
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
 
 ### STATIC FILES (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/`
@@ -228,18 +247,85 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 ### TAGGING
 #TAGGIT_CASE_INSENSITIVE = True
 
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "stream": "ext://sys.stdout",
+            "formatter": "verbose",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "filters": ["require_debug_false"],
+        },
+    },
+    "loggers": {
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "DEBUG",
+    },
+}
+
 ### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        # SimpleJWT
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # APIs only accessible with authentication
+        #'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ],
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer', 
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_THROTTLE_CLASSES': [
+        'roku_content.api.throttling.AnonSustainedThrottle',
+        'roku_content.api.throttling.AnonBurstThrottle',
+        'roku_content.api.throttling.UserSustainedThrottle',
+        'roku_content.api.throttling.UserBurstThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon_sustained': '500/day',
+        'anon_burst': '10/minute',
+        'user_sustained': '5000/day',
+        'user_burst': '100/minute',
+    },
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+    ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 100,
     'DEFAULT_LIMIT': 100,
     'UNICODE_JSON': True,
-    'COMPACT_JSON': True
+    'COMPACT_JSON': True,
 }
 
 ### LOGGING

@@ -19,18 +19,18 @@ from rest_framework.renderers import JSONRenderer
 from django_filters.rest_framework import DjangoFilterBackend
 ### Serializers
 # Feeds
-from .serializers import RokuContentFeedSerializerList, RokuContentFeedSerializerDetail #, RokuSearchFeedSerializerList
+from .api.serializers import RokuContentFeedSerializerList, RokuContentFeedSerializerDetail #, RokuSearchFeedSerializerList
 # Categories
-from .serializers import CategorySerializerList, PlaylistSerializerList
+from .api.serializers import CategorySerializerList, PlaylistSerializerList
 # Types
-from .serializers import MovieSerializerList, LiveFeedSerializerList, SeriesSerializerList
-from .serializers import SeasonSerializerList, EpisodeSerializerList, ShortFormVideoSerializerList
-from .serializers import TVSpecialSerializerList
+from .api.serializers import MovieSerializerList, LiveFeedSerializerList, SeriesSerializerList
+from .api.serializers import SeasonSerializerList, EpisodeSerializerList, ShortFormVideoSerializerList
+from .api.serializers import TVSpecialSerializerList
 # Properties
-from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
-from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
-from .serializers import RatingSerializerList, RatingSourceSerializerList, CountrySerializerList, ParentalRatingSerializerList
-from .serializers import CreditRoleSerializerList, CreditSerializerList, LanguageSerializerList, TagSerializerList
+from .api.serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
+from .api.serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
+from .api.serializers import RatingSerializerList, RatingSourceSerializerList, CountrySerializerList, ParentalRatingSerializerList
+from .api.serializers import CreditRoleSerializerList, CreditSerializerList, LanguageSerializerList, TagSerializerList
 
 ## Roku Feeds
 

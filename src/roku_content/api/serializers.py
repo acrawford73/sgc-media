@@ -4,11 +4,13 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import IsAdminUser
 from collections import OrderedDict
 
-from .models import RokuContentFeed
-from .models import Language, Category, Playlist
-from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
+from roku_content.models import RokuContentFeed
+from roku_content.models import Language, Category, Playlist
+from roku_content.models import Movie, LiveFeed, Series, Season, \
+								Episode, ShortFormVideo, TVSpecial
+from roku_content.models import Content, Video, Caption, TrickPlayFile, \
+								Genre, ExternalID, Rating, RatingSource, \
+								Country, ParentalRating, CreditRole, Credit, Tag
 
 # Single string - serializers.StringRelatedField()
 # List of strings - serializers.StringRelatedField(many=true)

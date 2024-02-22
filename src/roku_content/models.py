@@ -47,12 +47,12 @@ class RokuContentFeed(models.Model):
 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=False)
 	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', related_name='category', blank=True)
-	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', blank=True)
-	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', blank=True)
-	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed', blank=True)
-	series = models.ManyToManyField('Series', through='RokuContentFeedSeries', blank=True)
-	short_form_videos = models.ManyToManyField('ShortFormVideo', through='RokuContentFeedShortFormVideo', blank=True)
-	tv_specials = models.ManyToManyField('TVSpecial', through='RokuContentFeedTVSpecial', blank=True)
+	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', related_name='playlist', blank=True)
+	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', related_name='movie', blank=True)
+	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed', related_name='livefeed', blank=True)
+	series = models.ManyToManyField('Series', through='RokuContentFeedSeries', related_name='series', blank=True)
+	short_form_videos = models.ManyToManyField('ShortFormVideo', through='RokuContentFeedShortFormVideo', related_name='shortformvideo', blank=True)
+	tv_specials = models.ManyToManyField('TVSpecial', through='RokuContentFeedTVSpecial', related_name='tvspecial', blank=True)
 	# !Roku
 	roku_content_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=True)
@@ -176,7 +176,7 @@ class Playlist(models.Model):
 #	item_ids = models.JSONField(default=list, null=True, blank=True, 
 #		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
 	item_ids = models.ManyToManyField('ShortFormVideo', through='PlaylistShortFormVideo', blank=True, \
-		help_text='Currently only Short-Form Videos can be added.')
+		related_name='item_ids', help_text='Currently only Short-Form Videos can be added.')
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
