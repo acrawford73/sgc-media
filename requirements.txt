@@ -10,6 +10,7 @@ Django==4.2.10
 django-allauth==0.54.0
 django-cors-headers==3.14.0
 django-crispy-forms==2.1
+django-debug-toolbar==4.3.0
 django-environ==0.10.0
 django-filter==22.1
 django-taggit==5.0.1
