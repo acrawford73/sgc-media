@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger(__name__)
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 ### Templates
@@ -31,6 +33,7 @@ from .api.serializers import ContentSerializerList, VideoSerializerList, Caption
 from .api.serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
 from .api.serializers import RatingSerializerList, RatingSourceSerializerList, CountrySerializerList, ParentalRatingSerializerList
 from .api.serializers import CreditRoleSerializerList, CreditSerializerList, LanguageSerializerList, TagSerializerList
+
 
 ## Roku Feeds
 
@@ -647,7 +650,7 @@ class ContentListAPI(generics.ListAPIView):
 # Video
 class VideoCreateView(CreateView):
 	model = Video
-	fields = ['url', 'quality', 'video_type', 'content_item']
+	fields = ['url', 'quality', 'video_type']
 
 class VideoListView(ListView):
 	model = Video
@@ -663,7 +666,7 @@ class VideoDetailView(DetailView):
 class VideoUpdateView(UpdateView):
 	model = Video
 	context_object_name = 'video'
-	fields = ['url', 'quality', 'video_type', 'content_item']
+	fields = ['url', 'quality', 'video_type']
 
 class VideoListAPI(generics.ListAPIView):
 	queryset = Video.objects.all()
@@ -1074,7 +1077,6 @@ class TagListView(ListView):
 	template_name = 'roku_content/tag_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'tag'
 	ordering = ['tag_name']
-	#paginate_by = 15
 
 class TagDetailView(DetailView):
 	model = Tag

@@ -46,13 +46,13 @@ class RokuContentFeed(models.Model):
 	last_updated = models.DateTimeField(auto_now=True)
 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=False, blank=False)
 	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=False)
-	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', related_name='category', blank=True)
-	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', related_name='playlist', blank=True)
-	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', related_name='movie', blank=True)
-	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed', related_name='livefeed', blank=True)
-	series = models.ManyToManyField('Series', through='RokuContentFeedSeries', related_name='series', blank=True)
-	short_form_videos = models.ManyToManyField('ShortFormVideo', through='RokuContentFeedShortFormVideo', related_name='shortformvideo', blank=True)
-	tv_specials = models.ManyToManyField('TVSpecial', through='RokuContentFeedTVSpecial', related_name='tvspecial', blank=True)
+	categories = models.ManyToManyField('Category', through='RokuContentFeedCategory', blank=True)
+	playlists = models.ManyToManyField('Playlist', through='RokuContentFeedPlaylist', blank=True)
+	movies = models.ManyToManyField('Movie', through='RokuContentFeedMovie', blank=True)
+	live_feeds = models.ManyToManyField('LiveFeed', through='RokuContentFeedLiveFeed', blank=True)
+	series = models.ManyToManyField('Series', through='RokuContentFeedSeries', blank=True)
+	short_form_videos = models.ManyToManyField('ShortFormVideo', through='RokuContentFeedShortFormVideo', blank=True)
+	tv_specials = models.ManyToManyField('TVSpecial', through='RokuContentFeedTVSpecial', blank=True)
 	# !Roku
 	roku_content_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=True)
@@ -176,7 +176,7 @@ class Playlist(models.Model):
 #	item_ids = models.JSONField(default=list, null=True, blank=True, 
 #		help_text='An ordered list of one or more UUIDs from a Movie, Series, Short-Form Video or TV Show.')
 	item_ids = models.ManyToManyField('ShortFormVideo', through='PlaylistShortFormVideo', blank=True, \
-		related_name='item_ids', help_text='Currently only Short-Form Videos can be added.')
+		help_text='Currently only Short-Form Videos can be added.')
 	# !Roku
 	short_description = models.CharField(max_length=200, default="", null=True, blank=True)
 	updated = models.DateTimeField(auto_now=True)
@@ -225,7 +225,7 @@ class Movie(models.Model):
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
 		help_text="500 characters maximum.")
-	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True)
+	content = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True, related_name="movies")
 	thumbnail = models.ImageField(max_length=4096, upload_to=thumb_path, \
 		height_field='thumbnail_height', width_field='thumbnail_width', null=True, blank=True, \
 		help_text="URL to the thumbnail image. Image dimensions must be at least 800x450 (16x9 aspect ratio).")
@@ -234,11 +234,11 @@ class Movie(models.Model):
 	thumbnail_width = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
 	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
 	release_date = models.DateField(default="2023-01-01", null=True, blank=True, help_text="Date format: YYYY-MM-DD")
-	genres = models.ManyToManyField('Genre', through='MovieGenre', blank=True)
-	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True)
-	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True)
-	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True)
-	external_ids = models.ManyToManyField('ExternalID', through='MovieExternalID', blank=True)
+	genres = models.ManyToManyField('Genre', through='MovieGenre', blank=True, related_name="movies")
+	rating = models.ForeignKey('Rating', on_delete=models.PROTECT, blank=True, null=True, related_name="movies")
+	tags = models.ManyToManyField('Tag', through='MovieTag', blank=True, related_name="movies")
+	credits = models.ManyToManyField('Credit', through='MovieCredit', blank=True, related_name="movies")
+	external_ids = models.ManyToManyField('ExternalID', through='MovieExternalID', blank=True, related_name="movies")
 	def get_absolute_url(self):
 		return reverse('movie-list')
 	class Meta:
@@ -625,8 +625,8 @@ class Video(models.Model):
 	url = models.URLField(max_length=2083, null=False, blank=False, unique=True)
 	quality = models.CharField(max_length=16, choices=VIDEO_QUALITY, default='HD', null=False, blank=False)
 	video_type = models.ForeignKey('VideoType', on_delete=models.PROTECT, null=False, blank=False)
-	content_item = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True, \
-		help_text="Select the Content item where this video will be used.")
+	#content_item = models.ForeignKey('Content', on_delete=models.PROTECT, null=True, blank=True, \
+	#	help_text="Select the Content item where this video will be used.")
 	def get_absolute_url(self):
 		return reverse('video-list')
 	class Meta:

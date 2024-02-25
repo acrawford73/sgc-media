@@ -19,7 +19,7 @@ from roku_content.models import Content, Video, Caption, TrickPlayFile, \
 class LanguageSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Language
-		fields = ['code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
+		fields = ['id', 'code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
 
 ### Content Properties
 
@@ -27,14 +27,14 @@ class VideoSerializerList(serializers.ModelSerializer):
 	videoType = serializers.CharField(source='video_type')
 	class Meta:
 		model = Video
-		fields = ['url', 'quality', 'videoType']
+		fields = ['id', 'url', 'quality', 'videoType']
 
 class CaptionSerializerList(serializers.ModelSerializer):
 	captionType = serializers.CharField(source='caption_type')
 	language = serializers.StringRelatedField()
 	class Meta:
 		model = Caption
-		fields = ['url', 'language', 'captionType']
+		fields = ['id', 'url', 'language', 'captionType']
 
 class TrickPlayFileSerializerList(serializers.ModelSerializer):
 	def to_representation(self, instance):
@@ -42,7 +42,7 @@ class TrickPlayFileSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = TrickPlayFile
-		fields = ['url', 'quality']
+		fields = ['id', 'url', 'quality']
 
 class ContentSerializerList(serializers.ModelSerializer):
 	dateAdded = serializers.DateField(source='date_added')
@@ -55,13 +55,13 @@ class ContentSerializerList(serializers.ModelSerializer):
 	#adBreaks = serializers.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
-		fields = ['dateAdded', 'videos', 'duration', 'captions', 'language']
+		fields = ['id', 'dateAdded', 'videos', 'duration', 'captions', 'language']
 			# 'trickPlayFiles', validityPeriodStart', 'validityPeriodEnd', 'adBreaks']
 
 class GenreSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Genre
-		fields = ['genre']
+		fields = ['id', 'genre']
 
 class ExternalIDSerializerList(serializers.ModelSerializer):
 	id = serializers.CharField(source='external_id')
@@ -78,7 +78,7 @@ class RatingSerializerList(serializers.ModelSerializer):
 	ratingSource = serializers.CharField(source='rating_source')
 	class Meta:
 		model = Rating
-		fields = ['rating', 'ratingSource']
+		fields = ['id', 'rating', 'ratingSource']
 
 class RatingSourceSerializerList(serializers.ModelSerializer):
 	ratingSource = serializers.CharField(source='source_name')
@@ -86,7 +86,7 @@ class RatingSourceSerializerList(serializers.ModelSerializer):
 	sourceCountry = serializers.CharField(source='source_country')
 	class Meta:
 		model = RatingSource
-		fields = ['ratingSource', 'sourceLongName', 'sourceCountry']
+		fields = ['id', 'ratingSource', 'sourceLongName', 'sourceCountry']
 
 class CountrySerializerList(serializers.ModelSerializer):
 	countryName = serializers.CharField(source='country_name')
@@ -99,13 +99,13 @@ class ParentalRatingSerializerList(serializers.ModelSerializer):
 	parentalRating = serializers.CharField(source='parental_rating')
 	class Meta:
 		model = ParentalRating
-		fields = ['parentalRating']
+		fields = ['id', 'parentalRating']
 
 class CreditRoleSerializerList(serializers.ModelSerializer):
 	role = serializers.CharField(source='credit_role')
 	class Meta:
 		model = CreditRole
-		fields = ['role']
+		fields = ['id', 'role']
 
 class CreditSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='credit_name')
@@ -116,13 +116,13 @@ class CreditSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Credit
-		fields = ['name', 'role', 'birthDate']
+		fields = ['id', 'name', 'role', 'birthDate']
 
 class TagSerializerList(serializers.ModelSerializer):
 	tag = serializers.CharField(source='tag_name')
 	class Meta:
 		model = Tag
-		fields = ['tag']
+		fields = ['id', 'tag']
 
 ### Content Types
 
@@ -186,7 +186,7 @@ class SeasonSerializerList(serializers.ModelSerializer):
 	episodes = EpisodeSerializerList(many=True)
 	class Meta:
 		model = Season
-		fields = ['titleSeason', 'seasonNumber', 'episodes']
+		fields = ['id', 'titleSeason', 'seasonNumber', 'episodes']
 
 class SeriesSerializerList(serializers.ModelSerializer):
 	id = serializers.UUIDField(source='uuid_id')
@@ -255,7 +255,7 @@ class CategorySerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Category
-		fields = ['name', 'playlistName', 'query', 'order']
+		fields = ['id', 'name', 'playlistName', 'query', 'order']
 
 class PlaylistSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='playlist_name')
@@ -266,7 +266,7 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Playlist
-		fields = ['name', 'itemIds']
+		fields = ['id', 'name', 'itemIds']
 
 ### Roku Feeds
 
@@ -292,7 +292,7 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = RokuContentFeed
-		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
+		fields = ['id', 'providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 
 class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
@@ -315,8 +315,8 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = RokuContentFeed
-		fields = ('providerName', 'language', 'rating', 'lastUpdated', 'movies', \
-			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists')
+		fields = ['id', 'providerName', 'language', 'rating', 'lastUpdated', 'movies', \
+			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 
 
 # # None field will be removed

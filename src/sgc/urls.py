@@ -1,6 +1,5 @@
 """
-URL configuration for sgc project.
-
+URL configuration for project.
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
 Examples:
@@ -14,13 +13,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import include,path
 from django.conf import settings
 
 
-urlpatterns = [
+print(f"Time zone: {settings.TIME_ZONE}")
 
+
+urlpatterns = [
+    
     #Apps
     path('', include('roku_content.urls')),
     #path('', include('roku_search.urls')),
@@ -43,14 +46,22 @@ urlpatterns = [
     path('admin/docs/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
 
+
 ]
 
 # Development
 if settings.DEBUG:
+
+    import debug_toolbar
+    urlpatterns += [path('__debug__/', include(debug_toolbar.urls))]
     
     from django.conf.urls.static import static
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # urlpatterns += path("__debug__/", include(debug_toolbar.urls)),
+    # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 # else:
 #     # Production
 #     urlpatterns += staticfiles_urlpatterns()
