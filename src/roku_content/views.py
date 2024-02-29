@@ -2,6 +2,7 @@ import logging
 logger = logging.getLogger(__name__)
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 ### Templates
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 ### Models
@@ -38,7 +39,7 @@ from .api.serializers import CreditRoleSerializerList, CreditSerializerList, Lan
 ## Roku Feeds
 
 # Roku Content Feed
-class RokuContentFeedCreateView(CreateView):
+class RokuContentFeedCreateView(LoginRequiredMixin, CreateView):
 	"""
 	Roku Content Feed fields for CreateView :model:`roku_content.RokuContentFeed`.
 
@@ -55,7 +56,7 @@ class RokuContentFeedCreateView(CreateView):
 	fields = ['is_public', 'short_description', 'provider_name', 'language', 'rating', \
 		'categories', 'playlists', 'movies', 'live_feeds', 'series', 'short_form_videos', 'tv_specials']
 
-class RokuContentFeedListView(ListView):
+class RokuContentFeedListView(LoginRequiredMixin, ListView):
 	"""
 	Roku Content Feed fields for ListView :model:`roku_content.RokuContentFeed`.
 
@@ -74,7 +75,7 @@ class RokuContentFeedListView(ListView):
 	ordering = ['-id']
 	#paginate_by = 15
 
-class RokuContentFeedDetailView(DetailView):
+class RokuContentFeedDetailView(LoginRequiredMixin, DetailView):
 	"""
 	Roku Content Feed fields for DetailView :model:`roku_content.RokuContentFeed`.
 
@@ -90,7 +91,7 @@ class RokuContentFeedDetailView(DetailView):
 	model = RokuContentFeed
 	context_object_name = 'rokucontentfeed'
 
-class RokuContentFeedUpdateView(UpdateView):
+class RokuContentFeedUpdateView(LoginRequiredMixin, UpdateView):
 	"""
 	Roku Content Feed fields for UpdateView :model:`roku_content.RokuContentFeed`.
 
@@ -187,22 +188,22 @@ class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
 ## Roku Content Categories
 
 # Language
-class LanguageCreateView(CreateView):
+class LanguageCreateView(LoginRequiredMixin, CreateView):
 	model = Language
 	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
 
-class LanguageListView(ListView):
+class LanguageListView(LoginRequiredMixin, ListView):
 	model = Language
 	template_name = 'roku_content/language_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'language'
 	ordering = ['id']
 	paginate_by = 15
 
-class LanguageDetailView(DetailView):
+class LanguageDetailView(LoginRequiredMixin, DetailView):
 	model = Language
 	context_object_name = 'language'
 
-class LanguageUpdateView(UpdateView):
+class LanguageUpdateView(LoginRequiredMixin, UpdateView):
 	model = Language
 	context_object_name = 'language'
 	fields = ['language_name_eng', 'code_iso_639_2', 'code_iso_639_1']
@@ -214,22 +215,22 @@ class LanguageListAPI(generics.ListAPIView):
 	ordering = ['language_name_eng']
 
 # Category
-class CategoryCreateView(CreateView):
+class CategoryCreateView(LoginRequiredMixin, CreateView):
 	model = Category
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
 	model = Category
 	template_name = 'roku_content/category_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'category'
 	ordering = ['-id']
 	paginate_by = 15
 
-class CategoryDetailView(DetailView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
 	model = Category
 	context_object_name = 'category'
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(LoginRequiredMixin, UpdateView):
 	model = Category
 	context_object_name = 'category'
 	fields = ['category_name', 'playlist_name', 'query_string', 'order']
@@ -256,22 +257,22 @@ class CategoryListAPI(generics.ListAPIView):
 # 	serializer_class = CategorySerializerDetail
 
 # Playlist
-class PlaylistCreateView(CreateView):
+class PlaylistCreateView(LoginRequiredMixin, CreateView):
 	model = Playlist
 	fields = ['playlist_name', 'short_description', 'item_ids']
 
-class PlaylistListView(ListView):
+class PlaylistListView(LoginRequiredMixin, ListView):
 	model = Playlist
 	template_name = 'roku_content/playlist_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'playlist'
 	ordering = ['-id']
 	paginate_by = 15
 
-class PlaylistDetailView(DetailView):
+class PlaylistDetailView(LoginRequiredMixin, DetailView):
 	model = Playlist
 	context_object_name = 'playlist'
 
-class PlaylistUpdateView(UpdateView):
+class PlaylistUpdateView(LoginRequiredMixin, UpdateView):
 	model = Playlist
 	context_object_name = 'playlist'
 	fields = ['playlist_name', 'short_description', 'item_ids']
@@ -301,23 +302,23 @@ class PlaylistListAPI(generics.ListAPIView):
 ## Roku Content Types
 
 # Movie
-class MovieCreateView(CreateView):
+class MovieCreateView(LoginRequiredMixin, CreateView):
 	model = Movie
 	fields = ['title', 'short_description', 'long_description', 'content', \
 		'thumbnail', 'release_date', 'genres', 'rating', 'tags', 'credits', 'external_ids']
 
-class MovieListView(ListView):
+class MovieListView(LoginRequiredMixin, ListView):
 	model = Movie
 	template_name = 'roku_content/movie_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'movie'
 	ordering = ['-id']
 	paginate_by = 15
 
-class MovieDetailView(DetailView):
+class MovieDetailView(LoginRequiredMixin, DetailView):
 	model = Movie
 	context_object_name = 'movie'
 
-class MovieUpdateView(UpdateView):
+class MovieUpdateView(LoginRequiredMixin, UpdateView):
 	model = Movie
 	context_object_name = 'movie'
 	fields = ['title', 'short_description', 'long_description', 'content', \
@@ -345,23 +346,23 @@ class MovieListAPI(generics.ListAPIView):
 # 	serializer_class = MovieSerializerDetail
 
 # LiveFeed
-class LiveFeedCreateView(CreateView):
+class LiveFeedCreateView(LoginRequiredMixin, CreateView):
 	model = LiveFeed
 	fields = ['title', 'short_description', 'long_description', 'content', \
 		'thumbnail', 'branded_thumbnail', 'tags', 'rating', 'genres']
 
-class LiveFeedListView(ListView):
+class LiveFeedListView(LoginRequiredMixin, ListView):
 	model = LiveFeed
 	template_name = 'roku_content/livefeed_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'livefeed'
 	ordering = ['-id']
 	paginate_by = 15
 
-class LiveFeedDetailView(DetailView):
+class LiveFeedDetailView(LoginRequiredMixin, DetailView):
 	model = LiveFeed
 	context_object_name = 'livefeed'
 
-class LiveFeedUpdateView(UpdateView):
+class LiveFeedUpdateView(LoginRequiredMixin, UpdateView):
 	model = LiveFeed
 	context_object_name = 'livefeed'
 	fields = ['title', 'short_description', 'long_description', 'content', \
@@ -389,23 +390,23 @@ class LiveFeedListAPI(generics.ListAPIView):
 # 	serializer_class = LiveFeedSerializerDetail
 
 # Series
-class SeriesCreateView(CreateView):
+class SeriesCreateView(LoginRequiredMixin, CreateView):
 	model = Series
 	fields = ['title', 'short_description', 'long_description', 'seasons', 'episodes', \
 		'thumbnail', 'release_date', 'genres', 'tags', 'credits', 'external_ids']
 
-class SeriesListView(ListView):
+class SeriesListView(LoginRequiredMixin, ListView):
 	model = Series
 	template_name = 'roku_content/series_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'series'
 	ordering = ['-id']
 	paginate_by = 15
 
-class SeriesDetailView(DetailView):
+class SeriesDetailView(LoginRequiredMixin, DetailView):
 	model = Series
 	context_object_name = 'series'
 
-class SeriesUpdateView(UpdateView):
+class SeriesUpdateView(LoginRequiredMixin, UpdateView):
 	model = Series
 	context_object_name = 'series'
 	fields = ['title', 'short_description', 'long_description', 'seasons', 'episodes', \
@@ -433,22 +434,22 @@ class SeriesListAPI(generics.ListAPIView):
 # 	serializer_class = SeriesSerializerDetail
 
 # Season
-class SeasonCreateView(CreateView):
+class SeasonCreateView(LoginRequiredMixin, CreateView):
 	model = Season
 	fields = ['title_season', 'season_number', 'episodes']
 
-class SeasonListView(ListView):
+class SeasonListView(LoginRequiredMixin, ListView):
 	model = Season
 	template_name = 'roku_content/season_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'season'
 	ordering = ['-id']
 	paginate_by = 15
 
-class SeasonDetailView(DetailView):
+class SeasonDetailView(LoginRequiredMixin, DetailView):
 	model = Season
 	context_object_name = 'season'
 
-class SeasonUpdateView(UpdateView):
+class SeasonUpdateView(LoginRequiredMixin, UpdateView):
 	model = Season
 	context_object_name = 'season'
 	fields = ['title_season', 'season_number', 'episodes']
@@ -474,23 +475,23 @@ class SeasonListAPI(generics.ListAPIView):
 # 	serializer_class = SeasonSerializerDetail
 
 # Episode
-class EpisodeCreateView(CreateView):
+class EpisodeCreateView(LoginRequiredMixin, CreateView):
 	model = Episode
 	fields = ['episode_number', 'title', 'short_description', 'long_description', \
 		'content', 'thumbnail', 'release_date', 'rating', 'credits', 'external_ids']
 
-class EpisodeListView(ListView):
+class EpisodeListView(LoginRequiredMixin, ListView):
 	model = Episode
 	template_name = 'roku_content/episode_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'episode'
 	ordering = ['title']
 	paginate_by = 15
 
-class EpisodeDetailView(DetailView):
+class EpisodeDetailView(LoginRequiredMixin, DetailView):
 	model = Episode
 	context_object_name = 'episode'
 
-class EpisodeUpdateView(UpdateView):
+class EpisodeUpdateView(LoginRequiredMixin, UpdateView):
 	model = Episode
 	context_object_name = 'episode'
 	fields = ['episode_number', 'title', 'short_description', 'long_description', \
@@ -518,23 +519,23 @@ class EpisodeListAPI(generics.ListAPIView):
 # 	serializer_class = EpisodeSerializerDetail
 
 # ShortFormVideo
-class ShortFormVideoCreateView(CreateView):
+class ShortFormVideoCreateView(LoginRequiredMixin, CreateView):
 	model = ShortFormVideo
 	fields = ['title', 'short_description', 'long_description', 'content', 'thumbnail', \
 		'release_date', 'tags', 'genres', 'rating', 'credits']
 
-class ShortFormVideoListView(ListView):
+class ShortFormVideoListView(LoginRequiredMixin, ListView):
 	model = ShortFormVideo
 	template_name = 'roku_content/shortformvideo_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'shortformvideo'
 	ordering = ['-id']
 	paginate_by = 15
 
-class ShortFormVideoDetailView(DetailView):
+class ShortFormVideoDetailView(LoginRequiredMixin, DetailView):
 	model = ShortFormVideo
 	context_object_name = 'shortformvideo'
 
-class ShortFormVideoUpdateView(UpdateView):
+class ShortFormVideoUpdateView(LoginRequiredMixin, UpdateView):
 	model = ShortFormVideo
 	context_object_name = 'shortformvideo'
 	fields = ['title', 'short_description', 'long_description', 'content', 'thumbnail', \
@@ -562,23 +563,23 @@ class ShortFormVideoListAPI(generics.ListAPIView):
 # 	serializer_class = ShortFormVideoSerializerDetail
 
 # TVSpecial
-class TVSpecialCreateView(CreateView):
+class TVSpecialCreateView(LoginRequiredMixin, CreateView):
 	model = TVSpecial
 	fields = ['title', 'short_description', 'long_description', 'content', \
 		'thumbnail', 'genres', 'rating', 'tags', 'release_date', 'credits', 'external_ids']
 
-class TVSpecialListView(ListView):
+class TVSpecialListView(LoginRequiredMixin, ListView):
 	model = TVSpecial
 	template_name = 'roku_content/tvspecial_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'tvspecial'
 	ordering = ['-id']
 	paginate_by = 15
 
-class TVSpecialDetailView(DetailView):
+class TVSpecialDetailView(LoginRequiredMixin, DetailView):
 	model = TVSpecial
 	context_object_name = 'tvspecial'
 
-class TVSpecialUpdateView(UpdateView):
+class TVSpecialUpdateView(LoginRequiredMixin, UpdateView):
 	model = TVSpecial
 	context_object_name = 'tvspecial'
 	fields = ['title', 'short_description', 'long_description', 'content', \
@@ -609,23 +610,23 @@ class TVSpecialListAPI(generics.ListAPIView):
 ## Roku ContentPoperties
 
 # Content
-class ContentCreateView(CreateView):
+class ContentCreateView(LoginRequiredMixin, CreateView):
 	model = Content
 	fields = ['title', 'language', 'duration', 'videos', 'captions', 'trick_play_files', \
 		 'validity_start_period', 'validity_end_period']
 
-class ContentListView(ListView):
+class ContentListView(LoginRequiredMixin, ListView):
 	model = Content
 	template_name = 'roku_content/content_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'content'
 	ordering = ['-id']
 	paginate_by = 15
 
-class ContentDetailView(DetailView):
+class ContentDetailView(LoginRequiredMixin, DetailView):
 	model = Content
 	context_object_name = 'content'
 
-class ContentUpdateView(UpdateView):
+class ContentUpdateView(LoginRequiredMixin, UpdateView):
 	model = Content
 	context_object_name = 'content'
 	fields = ['title', 'language', 'duration', 'videos', 'captions', 'trick_play_files', \
@@ -652,22 +653,22 @@ class ContentListAPI(generics.ListAPIView):
 # 	serializer_class = ContentSerializerDetail
 
 # Video
-class VideoCreateView(CreateView):
+class VideoCreateView(LoginRequiredMixin, CreateView):
 	model = Video
 	fields = ['url', 'quality', 'video_type']
 
-class VideoListView(ListView):
+class VideoListView(LoginRequiredMixin, ListView):
 	model = Video
 	template_name = 'roku_content/video_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'video'
 	ordering = ['-id']
 	paginate_by = 15
 
-class VideoDetailView(DetailView):
+class VideoDetailView(LoginRequiredMixin, DetailView):
 	model = Video
 	context_object_name = 'video'
 
-class VideoUpdateView(UpdateView):
+class VideoUpdateView(LoginRequiredMixin, UpdateView):
 	model = Video
 	context_object_name = 'video'
 	fields = ['url', 'quality', 'video_type']
@@ -693,22 +694,22 @@ class VideoListAPI(generics.ListAPIView):
 # 	serializer_class = VideoSerializerDetail
 
 # Caption
-class CaptionCreateView(CreateView):
+class CaptionCreateView(LoginRequiredMixin, CreateView):
 	model = Caption
 	fields = ['url', 'language', 'caption_type']
 
-class CaptionListView(ListView):
+class CaptionListView(LoginRequiredMixin, ListView):
 	model = Caption
 	template_name = 'roku_content/caption_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'caption'
 	ordering = ['-id']
 	paginate_by = 15
 
-class CaptionDetailView(DetailView):
+class CaptionDetailView(LoginRequiredMixin, DetailView):
 	model = Caption
 	context_object_name = 'caption'
 
-class CaptionUpdateView(UpdateView):
+class CaptionUpdateView(LoginRequiredMixin, UpdateView):
 	model = Caption
 	context_object_name = 'caption'
 	fields = ['url', 'language', 'caption_type']
@@ -734,22 +735,22 @@ class CaptionListAPI(generics.ListAPIView):
 # 	serializer_class = CaptionSerializerDetail
 
 # TrickPlayFile
-class TrickPlayFileCreateView(CreateView):
+class TrickPlayFileCreateView(LoginRequiredMixin, CreateView):
 	model = TrickPlayFile
 	fields = ['url', 'quality']
 
-class TrickPlayFileListView(ListView):
+class TrickPlayFileListView(LoginRequiredMixin, ListView):
 	model = TrickPlayFile
 	template_name = 'roku_content/trickplayfile_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'trickplayfile'
 	ordering = ['-id']
 	paginate_by = 15
 
-class TrickPlayFileDetailView(DetailView):
+class TrickPlayFileDetailView(LoginRequiredMixin, DetailView):
 	model = TrickPlayFile
 	context_object_name = 'trickplayfile'
 
-class TrickPlayFileUpdateView(UpdateView):
+class TrickPlayFileUpdateView(LoginRequiredMixin, UpdateView):
 	model = TrickPlayFile
 	context_object_name = 'trickplayfile'
 	fields = ['url', 'quality']
@@ -773,22 +774,22 @@ class TrickPlayFileListAPI(generics.ListAPIView):
 # 	serializer_class = TrickPlayFileSerializerDetail
 
 # Genre
-class GenreCreateView(CreateView):
+class GenreCreateView(LoginRequiredMixin, CreateView):
 	model = Genre
 	fields = ['genre']
 
-class GenreListView(ListView):
+class GenreListView(LoginRequiredMixin, ListView):
 	model = Genre
 	template_name = 'roku_content/genre_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'genre'
 	ordering = ['genre']
 	paginate_by = 15
 
-class GenreDetailView(DetailView):
+class GenreDetailView(LoginRequiredMixin, DetailView):
 	model = Genre
 	context_object_name = 'genre'
 
-class GenreUpdateView(UpdateView):
+class GenreUpdateView(LoginRequiredMixin, UpdateView):
 	model = Genre
 	context_object_name = 'genre'
 	fields = ['genre']
@@ -815,22 +816,22 @@ class GenreListAPI(generics.ListAPIView):
 # 	serializer_class = GenreSerializerDetail
 
 # ExternalID
-class ExternalIDCreateView(CreateView):
+class ExternalIDCreateView(LoginRequiredMixin, CreateView):
 	model = ExternalID
 	fields = ['external_id', 'id_type']
 
-class ExternalIDListView(ListView):
+class ExternalIDListView(LoginRequiredMixin, ListView):
 	model = ExternalID
 	template_name = 'roku_content/externalid_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'externalid'
 	ordering = ['external_id']
 	paginate_by = 15
 
-class ExternalIDDetailView(DetailView):
+class ExternalIDDetailView(LoginRequiredMixin, DetailView):
 	model = ExternalID
 	context_object_name = 'externalid'
 
-class ExternalIDUpdateView(UpdateView):
+class ExternalIDUpdateView(LoginRequiredMixin, UpdateView):
 	model = ExternalID
 	context_object_name = 'externalid'
 	fields = ['external_id', 'id_type']
@@ -856,22 +857,22 @@ class ExternalIDListAPI(generics.ListAPIView):
 # 	serializer_class = ExternalIDSerializerDetail
 
 # Rating
-class RatingCreateView(CreateView):
+class RatingCreateView(LoginRequiredMixin, CreateView):
 	model = Rating
 	fields = ['rating', 'rating_source']
 
-class RatingListView(ListView):
+class RatingListView(LoginRequiredMixin, ListView):
 	model = Rating
 	template_name = 'roku_content/rating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rating'
 	ordering = ['rating']
 	paginate_by = 15
 
-class RatingDetailView(DetailView):
+class RatingDetailView(LoginRequiredMixin, DetailView):
 	model = Rating
 	context_object_name = 'rating'
 
-class RatingUpdateView(UpdateView):
+class RatingUpdateView(LoginRequiredMixin, UpdateView):
 	model = Rating
 	context_object_name = 'rating'
 	fields = ['rating', 'rating_source']
@@ -898,22 +899,22 @@ class RatingListAPI(generics.ListAPIView):
 # 	serializer_class = ParentalRatingSerializerDetail
 
 # RatingSource
-class RatingSourceCreateView(CreateView):
+class RatingSourceCreateView(LoginRequiredMixin, CreateView):
 	model = RatingSource
 	fields = ['source_name', 'source_long_name', 'source_country', 'source_url']
 
-class RatingSourceListView(ListView):
+class RatingSourceListView(LoginRequiredMixin, ListView):
 	model = RatingSource
 	template_name = 'roku_content/ratingsource_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'ratingsource'
 	ordering = ['source_name']
 	paginate_by = 15
 
-class RatingSourceDetailView(DetailView):
+class RatingSourceDetailView(LoginRequiredMixin, DetailView):
 	model = RatingSource
 	context_object_name = 'ratingsource'
 
-class RatingSourceUpdateView(UpdateView):
+class RatingSourceUpdateView(LoginRequiredMixin, UpdateView):
 	model = RatingSource
 	context_object_name = 'ratingsource'
 	fields = ['source_name', 'source_long_name', 'source_country', 'source_url']
@@ -949,22 +950,22 @@ class CountryListAPI(generics.ListAPIView):
 	pagination_class = None
 
 # ParentalRating
-class ParentalRatingCreateView(CreateView):
+class ParentalRatingCreateView(LoginRequiredMixin, CreateView):
 	model = ParentalRating
 	fields = ['parental_rating']
 
-class ParentalRatingListView(ListView):
+class ParentalRatingListView(LoginRequiredMixin, ListView):
 	model = ParentalRating
 	template_name = 'roku_content/parentalrating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'parentalrating'
 	ordering = ['parental_rating']
 	paginate_by = 15
 
-class ParentalRatingDetailView(DetailView):
+class ParentalRatingDetailView(LoginRequiredMixin, DetailView):
 	model = ParentalRating
 	context_object_name = 'parentalrating'
 
-class ParentalRatingUpdateView(UpdateView):
+class ParentalRatingUpdateView(LoginRequiredMixin, UpdateView):
 	model = ParentalRating
 	context_object_name = 'parentalrating'
 	fields = ['parental_rating']
@@ -991,22 +992,22 @@ class ParentalRatingListAPI(generics.ListAPIView):
 # 	serializer_class = ParentalRatingSerializerDetail
 
 # Credit Role
-class CreditRoleCreateView(CreateView):
+class CreditRoleCreateView(LoginRequiredMixin, CreateView):
 	model = CreditRole
 	fields = ['credit_role']
 
-class CreditRoleListView(ListView):
+class CreditRoleListView(LoginRequiredMixin, ListView):
 	model = CreditRole
 	template_name = 'roku_content/creditrole_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'creditrole'
 	ordering = ['credit_role']
 	paginate_by = 15
 
-class CreditRoleDetailView(DetailView):
+class CreditRoleDetailView(LoginRequiredMixin, DetailView):
 	model = CreditRole
 	context_object_name = 'creditrole'
 
-class CreditRoleUpdateView(UpdateView):
+class CreditRoleUpdateView(LoginRequiredMixin, UpdateView):
 	model = CreditRole
 	context_object_name = 'creditrole'
 	fields = ['credit_role']
@@ -1033,22 +1034,22 @@ class CreditRoleListAPI(generics.ListAPIView):
 # 	serializer_class = CreditRoleSerializerDetail
 
 # Credit
-class CreditCreateView(CreateView):
+class CreditCreateView(LoginRequiredMixin, CreateView):
 	model = Credit
 	fields = ['credit_name', 'role', 'birth_date']
 
-class CreditListView(ListView):
+class CreditListView(LoginRequiredMixin, ListView):
 	model = Credit
 	template_name = 'roku_content/credit_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'credit'
 	ordering = ['credit_name']
 	paginate_by = 15
 
-class CreditDetailView(DetailView):
+class CreditDetailView(LoginRequiredMixin, DetailView):
 	model = Credit
 	context_object_name = 'credit'
 
-class CreditUpdateView(UpdateView):
+class CreditUpdateView(LoginRequiredMixin, UpdateView):
 	model = Credit
 	context_object_name = 'credit'
 	fields = ['credit_name', 'role', 'birth_date']
@@ -1076,21 +1077,21 @@ class CreditListAPI(generics.ListAPIView):
 
 # Tags
 
-class TagCreateView(CreateView):
+class TagCreateView(LoginRequiredMixin, CreateView):
 	model = Tag
 	fields = ['tag_name']
 
-class TagListView(ListView):
+class TagListView(LoginRequiredMixin, ListView):
 	model = Tag
 	template_name = 'roku_content/tag_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'tag'
 	ordering = ['tag_name']
 
-class TagDetailView(DetailView):
+class TagDetailView(LoginRequiredMixin, DetailView):
 	model = Tag
 	context_object_name = 'tag'
 
-class TagUpdateView(UpdateView):
+class TagUpdateView(LoginRequiredMixin, UpdateView):
 	model = Tag
 	context_object_name = 'tag'
 	fields = ['tag_name']
