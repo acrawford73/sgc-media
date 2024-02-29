@@ -34,9 +34,15 @@
                 <td>{{ asset.id }}</td>
                 <td><a href="{% url 'rokucontentfeed-detail' asset.id %}">{{ asset.short_description }}</a></td>
                 <!-- <td>{{ asset.size|floatformat:"-3g" }}</td> -->
-                <td>{{ asset.language }}</td>
+                <td>{{ asset.language|upper }}</td>
                 <td>{{ asset.last_updated|date:"F d Y, g:i:s A" }}</td>
-                <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
+                <td>
+                  {% if asset.is_public %}
+                  <button class="btn btn-success rounded-pill px-3">Yes</button>
+                  {% else %}
+                  <button class="btn btn-danger rounded-pill px-3">No</button>
+                  {% endif %}
+                </td>
               </tr>
               {% endfor %}
 
