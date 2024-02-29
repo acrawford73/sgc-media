@@ -62,7 +62,7 @@ else:
 
 ### USER AUTHENTICATION
 
-SITE_ID = config('SITE_ID')
+SITE_ID = int(config('SITE_ID'))
 AUTH_USER_MODEL = 'sgc_auth.User'
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
@@ -81,7 +81,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
     ## django-allauth
-    # 'django.contrib.sites',
+    'django.contrib.sites',
     # 'allauth',
     # 'allauth.account',
     # 'allauth.socialaccount',

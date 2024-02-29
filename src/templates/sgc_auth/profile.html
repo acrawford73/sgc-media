@@ -12,9 +12,16 @@
 
 {% row %}
 {% col %}
-<p>Hello, <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>.</p>
-<p>You are logged in as <strong>{{ request.user }}</strong>.</p>
-<p><a href="{% url 'logout' %}">Logout</a></p>
+<h3>Hello, {{ request.user.first_name }} {{ request.user.last_name }}.</h3>
+<p>&nbsp;</p>
+<h5>You're logged in as <strong>{{ request.user.email }}</strong>.</h5>
+<p>&nbsp;</p>
+<p><strong>Admin:</strong> {% if request.user.is_superuser == True %}Yes{% else %}No{% endif %}</p>
+<p><strong>Staff:</strong> {% if request.user.is_staff == True %}Yes{% else %}No{% endif %}</p>
+<p><strong>Active:</strong> {% if request.user.is_active == True %}Yes{% else %}No{% endif %}</p>
+<p><strong>Last Login:</strong> {{ request.user.last_login }}</p>
+<p><strong>Date Joined:</strong> {{ request.user.date_joined }}</p>
+<p>&nbsp;</p>
 {% endcol %}
 {% endrow %}
 
