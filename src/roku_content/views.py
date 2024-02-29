@@ -133,6 +133,8 @@ class RokuContentFeedListAPI(APIView):
 	def get(self, request, format=None):
 		feeds = RokuContentFeed.objects.first() #.filter(is_public=True)
 		serializer = RokuContentFeedSerializerList(feeds)
+		if feed is not None:
+			logger.debug("RokuContentFeed object " + str(feed.pk) + " returned.")
 		return Response(serializer.data)
 #####
 
@@ -177,6 +179,8 @@ class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
 	def get(self, request, pk, format=None):
 		feed = RokuContentFeed.objects.get(pk=pk)
 		serializer = RokuContentFeedSerializerDetail(feed)
+		if feed is not None:
+			logger.debug("RokuContentFeed object " + str(feed.pk) + " returned.")
 		return Response(serializer.data)
 
 
@@ -206,9 +210,8 @@ class LanguageUpdateView(UpdateView):
 class LanguageListAPI(generics.ListAPIView):
 	queryset = Language.objects.all()
 	serializer_class = LanguageSerializerList
-	filter_backends = [DjangoFilterBackend]
-	ordering_fields = ['id']
-	ordering = ['id']
+	ordering_fields = ['id', 'code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
+	ordering = ['language_name_eng']
 
 # Category
 class CategoryCreateView(CreateView):
@@ -234,10 +237,11 @@ class CategoryUpdateView(UpdateView):
 class CategoryListAPI(generics.ListAPIView):
 	queryset = Category.objects.all()
 	serializer_class = CategorySerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['category_name', 'playlist_name', 'query_string', 'order']
-	ordering_fields = ['id', 'category_name', 'playlist_name']
-	ordering = ['-id']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['category_name', 'playlist_name', 'order']
+	ordering_fields = ['id', 'category_name', 'playlist_name', 'order']
+	ordering = ['category_name']
+	pagination_class = None
 
 # class CategoryListAPISearch(generics.ListAPIView):
 # 	queryset = Category.objects.all()
@@ -275,10 +279,11 @@ class PlaylistUpdateView(UpdateView):
 class PlaylistListAPI(generics.ListAPIView):
 	queryset = Playlist.objects.all()
 	serializer_class = PlaylistSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['playlist_name']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['playlist_name']
 	ordering_fields = ['id', 'playlist_name']
-	ordering = ['-id']
+	ordering = ['playlist_name']
+	pagination_class = None
 
 # class PlaylistListAPISearch(generics.ListAPIView):
 # 	queryset = Playlist.objects.all()
@@ -321,9 +326,8 @@ class MovieUpdateView(UpdateView):
 class MovieListAPI(generics.ListAPIView):
 	queryset = Movie.objects.all()
 	serializer_class = MovieSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['title', 'genres', 'release_date', \
-		'tags', 'credits', 'rating', 'external_ids']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['title', 'genres', 'release_date', 'tags', 'credits', 'rating', 'external_ids']
 	ordering_fields = ['title', 'release_date', 'tags', 'rating']
 	ordering = ['-id']
 
@@ -366,8 +370,8 @@ class LiveFeedUpdateView(UpdateView):
 class LiveFeedListAPI(generics.ListAPIView):
 	queryset = LiveFeed.objects.all()
 	serializer_class = LiveFeedSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['title', 'content', 'tags', 'rating', 'genres']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['title', 'content', 'tags', 'rating', 'genres']
 	ordering_fields = ['id', 'title', 'tags', 'rating', 'genres']
 	ordering = ['-id']
 
@@ -410,8 +414,8 @@ class SeriesUpdateView(UpdateView):
 class SeriesListAPI(generics.ListAPIView):
 	queryset = Series.objects.all()
 	serializer_class = SeriesSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['title', 'seasons', 'episodes', 'genres', 'tags', 'credits', 'external_ids']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['title', 'seasons', 'episodes', 'genres', 'tags', 'credits', 'external_ids']
 	ordering_fields = ['id', 'seasons', 'episodes', 'genres', 'release_date', 'tags', 'credits', 'external_ids']
 	ordering = ['-id']
 
@@ -452,8 +456,8 @@ class SeasonUpdateView(UpdateView):
 class SeasonListAPI(generics.ListAPIView):
 	queryset = Season.objects.all()
 	serializer_class = SeasonSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['season_number', 'episodes']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['season_number', 'episodes']
 	ordering_fields = ['id', 'season_number', 'episodes']
 	ordering = ['-id']
 
@@ -495,8 +499,8 @@ class EpisodeUpdateView(UpdateView):
 class EpisodeListAPI(generics.ListAPIView):
 	queryset = Episode.objects.all()
 	serializer_class = EpisodeSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['release_date', 'episode_number', 'rating']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['release_date', 'episode_number', 'rating']
 	ordering_fields = ['id', 'title', 'release_date', 'episode_number', 'credits', 'rating', 'external_ids']
 	ordering = ['-id']
 
@@ -539,8 +543,8 @@ class ShortFormVideoUpdateView(UpdateView):
 class ShortFormVideoListAPI(generics.ListAPIView):
 	queryset = ShortFormVideo.objects.all()
 	serializer_class = ShortFormVideoSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['release_date', 'tags', 'genres', 'rating']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['release_date', 'tags', 'genres', 'rating']
 	ordering_fields = ['id', 'title', 'release_date']
 	ordering = ['-id']
 
@@ -583,8 +587,8 @@ class TVSpecialUpdateView(UpdateView):
 class TVSpecialListAPI(generics.ListAPIView):
 	queryset = TVSpecial.objects.all()
 	serializer_class = TVSpecialSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['genres', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['genres', 'release_date', 'credits', 'rating', 'tags', 'external_ids']
 	ordering_fields = ['id', 'title', 'release_date', 'rating', 'tags', 'credits', 'external_ids']
 	ordering = ['-id']
 
@@ -630,8 +634,8 @@ class ContentUpdateView(UpdateView):
 class ContentListAPI(generics.ListAPIView):
 	queryset = Content.objects.all()
 	serializer_class = ContentSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['language', 'validity_start_period', 'validity_end_period']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['language', 'validity_start_period', 'validity_end_period']
 	ordering_fields = ['id', 'date_added', 'language', 'validity_start_period', 'validity_end_period']
 	ordering = ['id']
 
@@ -671,8 +675,8 @@ class VideoUpdateView(UpdateView):
 class VideoListAPI(generics.ListAPIView):
 	queryset = Video.objects.all()
 	serializer_class = VideoSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['quality', 'video_type']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['quality', 'video_type']
 	ordering_fields = ['id', 'quality', 'video_type']
 	ordering = ['-id']
 
@@ -712,8 +716,8 @@ class CaptionUpdateView(UpdateView):
 class CaptionListAPI(generics.ListAPIView):
 	queryset = Caption.objects.all()
 	serializer_class = CaptionSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['language', 'caption_type']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['language', 'caption_type']
 	ordering_fields = ['id', 'language', 'caption_type']
 	ordering = ['-id']
 
@@ -753,8 +757,6 @@ class TrickPlayFileUpdateView(UpdateView):
 class TrickPlayFileListAPI(generics.ListAPIView):
 	queryset = TrickPlayFile.objects.all()
 	serializer_class = TrickPlayFileSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['quality']
 	ordering_fields = ['id', 'quality']
 	ordering = ['-id']
 
@@ -794,10 +796,11 @@ class GenreUpdateView(UpdateView):
 class GenreListAPI(generics.ListAPIView):
 	queryset = Genre.objects.all()
 	serializer_class = GenreSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['genre']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['genre']
 	ordering_fields = ['id', 'genre']
 	ordering = ['genre']
+	pagination_class = None
 
 # class GenreListAPISearch(generics.ListAPIView):
 # 	queryset = Genre.objects.all()
@@ -835,8 +838,8 @@ class ExternalIDUpdateView(UpdateView):
 class ExternalIDListAPI(generics.ListAPIView):
 	queryset = ExternalID.objects.all()
 	serializer_class = ExternalIDSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['external_id']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['external_id']
 	ordering_fields = ['id', 'external_id', 'id_type']
 	ordering = ['-id']
 
@@ -876,10 +879,11 @@ class RatingUpdateView(UpdateView):
 class RatingListAPI(generics.ListAPIView):
 	queryset = Rating.objects.all()
 	serializer_class = RatingSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['rating']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['rating']
 	ordering_fields = ['rating', 'rating_source']
 	ordering = ['-id']
+	pagination_class = None
 
 # class RatingListAPISearch(generics.ListAPIView):
 # 	queryset = Rating.objects.all()
@@ -917,11 +921,11 @@ class RatingSourceUpdateView(UpdateView):
 class RatingSourceListAPI(generics.ListAPIView):
 	queryset = RatingSource.objects.all()
 	serializer_class = RatingSourceSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['source_name']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['source_name']
 	ordering_fields = ['id', 'source_name']
-	ordering = ['-id']
-
+	ordering = ['source_name']
+	pagination_class = None
 # class RatingSourceListAPISearch(generics.ListAPIView):
 # 	queryset = RatingSource.objects.all()
 # 	serializer_class = RatingSourceSerializerList
@@ -938,10 +942,11 @@ class RatingSourceListAPI(generics.ListAPIView):
 class CountryListAPI(generics.ListAPIView):
 	queryset = Country.objects.all()
 	serializer_class = CountrySerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['country_code']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['country_code']
 	ordering_fields = ['country_name', 'country_code']
 	ordering = ['country_code']
+	pagination_class = None
 
 # ParentalRating
 class ParentalRatingCreateView(CreateView):
@@ -967,10 +972,11 @@ class ParentalRatingUpdateView(UpdateView):
 class ParentalRatingListAPI(generics.ListAPIView):
 	queryset = ParentalRating.objects.all()
 	serializer_class = ParentalRatingSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['parental_rating']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['parental_rating']
 	ordering_fields = ['id', 'parental_rating']
-	ordering = ['-id']
+	ordering = ['parental_rating']
+	pagination_class = None
 
 # class ParentalRatingListAPISearch(generics.ListAPIView):
 # 	queryset = ParentalRating.objects.all()
@@ -1008,10 +1014,11 @@ class CreditRoleUpdateView(UpdateView):
 class CreditRoleListAPI(generics.ListAPIView):
 	queryset = CreditRole.objects.all()
 	serializer_class = CreditRoleSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['credit_role']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['credit_role']
 	ordering_fields = ['credit_role']
 	ordering = ['credit_role']
+	pagination_class = None
 
 # class CreditListAPISearch(generics.ListAPIView):
 # 	queryset = Credit.objects.all()
@@ -1049,10 +1056,11 @@ class CreditUpdateView(UpdateView):
 class CreditListAPI(generics.ListAPIView):
 	queryset = Credit.objects.all()
 	serializer_class = CreditSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['credit_name']
+	#filter_backends = [DjangoFilterBackend]
+	#filterset_fields = ['credit_name']
 	ordering_fields = ['id', 'credit_name', 'role', 'birth_date']
 	ordering = ['credit_name']
+	pagination_class = None
 
 # class CreditListAPISearch(generics.ListAPIView):
 # 	queryset = Credit.objects.all()
@@ -1092,3 +1100,4 @@ class TagListAPI(generics.ListAPIView):
 	serializer_class = TagSerializerList
 	ordering_fields = ['id', 'tag_name']
 	ordering = ['tag_name']
+	pagination_class = None

@@ -564,9 +564,9 @@ class Content(models.Model):
 	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
 	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True)
-	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
-	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD") # Optional
-	ad_breaks = models.JSONField(default=list, null=True, blank=True) # Required only if monetizing
+	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD", db_index=True) # Optional
+	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD", db_index=True) # Optional
+	ad_breaks = models.JSONField(default=list, null=True, blank=True) # NOT SUPPORTED. Required only if monetizing.
 	updated = models.DateField(auto_now=True)
 	def get_absolute_url(self):
 		return reverse('content-list')

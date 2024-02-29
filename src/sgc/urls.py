@@ -19,7 +19,7 @@ from django.urls import include,path
 from django.conf import settings
 
 
-print(f"Time zone: {settings.TIME_ZONE}")
+#print(f"Time zone: {settings.TIME_ZONE}")
 
 
 urlpatterns = [

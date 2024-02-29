@@ -52,15 +52,16 @@ else:
 
 SITE_ID = config('SITE_ID')
 
-#AUTH_USER_MODEL = "user_auth.User"
-#ACCOUNT_ACTIVATION_DAYS = 7
-#REGISTRATION_OPEN = True
+AUTH_USER_MODEL = 'sgc_auth.User'
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_OPEN = True
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 ### APPLICATION DEFINITION
 
 INSTALLED_APPS = [
+    'sgc_auth',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -152,7 +153,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher', # recommended (pip3 install django[argon2])
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
@@ -247,45 +248,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 ### TAGGING
 #TAGGIT_CASE_INSENSITIVE = True
 
-# Logging
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-    },
-    "formatters": {
-        "verbose": {
-            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
-            "style": "{",
-        },
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-            "formatter": "verbose",
-        },
-        "mail_admins": {
-            "level": "ERROR",
-            "class": "django.utils.log.AdminEmailHandler",
-            "filters": ["require_debug_false"],
-        },
-    },
-    "loggers": {
-        "django.request": {
-            "handlers": ["mail_admins"],
-            "level": "ERROR",
-            "propagate": True,
-        },
-    },
-    "root": {
-        "handlers": ["console"],
-        "level": "DEBUG",
-    },
-}
 
 ### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
@@ -328,7 +290,7 @@ REST_FRAMEWORK = {
     'COMPACT_JSON': True,
 }
 
-## LOGGING
+## Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -363,7 +325,8 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
+            #'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
         },
@@ -376,13 +339,14 @@ LOGGING = {
 
 
 ### CACHING
-# Sample...
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-#         'LOCATION': '/var/tmp/django_cache',
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'django-local-cache',
+        #'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        #'LOCATION': '/var/tmp/django_cache',
+    }
+}
 
 ### MONITORING
 # DJANGO_MONITORING_ALERTS = {
