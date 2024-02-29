@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include,path
 from django.conf import settings
-
+import sgc_auth.views
+#from django_registration.backends.activation.views import RegistrationView
+#from blango_auth.forms import BlangoRegistrationForm
 
 #print(f"Time zone: {settings.TIME_ZONE}")
 
@@ -31,7 +33,8 @@ urlpatterns = [
     path('', include('core.urls')),
     #path('', include('core.system_config')),
 
-    path('account/', include('django.contrib.auth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/profile/', sgc_auth.views.profile, name='profile'),
     ## The URLs supported by auth are:
     # accounts/login/ [name='login']
     # accounts/logout/ [name='logout']
@@ -41,6 +44,10 @@ urlpatterns = [
     # accounts/password_reset/done/ [name='password_reset_done']
     # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
     # accounts/reset/done/ [name='password_reset_complete']
+
+    # Django-registration
+    #path("accounts/register/", RegistrationView.as_view(form_class=BlangoRegistrationForm), name="django_registration_register"),
+    #path("accounts/", include("django_registration.backends.activation.urls")),
 
     # Admin
     path('admin/docs/', include('django.contrib.admindocs.urls')),

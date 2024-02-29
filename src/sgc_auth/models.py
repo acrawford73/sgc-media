@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils.translation import gettext_lazy as _
 from sgc import settings
 
-# User Manager
+
 class SGCUserManager(UserManager):
 	def _create_user(self, email, password, **extra_fields):
 		if not email:
@@ -40,10 +40,8 @@ class User(AbstractUser):
 		return self.email
 
 
-# User Profiles
 class UserProfile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
 	bio = models.TextField()
 	def __str__(self):
 		return f"{self.__class__.__name__} object for {self.user}"
-

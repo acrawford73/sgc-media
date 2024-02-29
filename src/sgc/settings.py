@@ -50,8 +50,8 @@ else:
     SECRET_KEY = config('DEBUG_SECRET_KEY')
     ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
 
-SITE_ID = config('SITE_ID')
 
+SITE_ID = config('SITE_ID')
 AUTH_USER_MODEL = 'sgc_auth.User'
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
@@ -69,7 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admindocs',
-    # django-allauth
+    ## django-allauth
     # 'django.contrib.sites',
     # 'allauth',
     # 'allauth.account',
@@ -86,7 +86,6 @@ INSTALLED_APPS = [
     #'roku_search',
     'media',
     'core',
-    #'help,',
     'debug_toolbar',
     #'drf_yasg',
     #'versatileimagefield',
@@ -247,7 +246,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 ### TAGGING
 #TAGGIT_CASE_INSENSITIVE = True
-
 
 ### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {

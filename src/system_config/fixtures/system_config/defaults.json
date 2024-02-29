@@ -1,6 +1,6 @@
 ]
 {
-  "model": "system_settings.systemconfig",
+  "model": "system_config.systemconfig",
   "pk": 1,
   "fields": {
     "title": "System Configuration",
