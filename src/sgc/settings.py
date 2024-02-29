@@ -45,11 +45,22 @@ if config('PRODUCTION', default=False, cast=bool) == True:
     # Proxy Use Only
     # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     # USE_X_FORWARDED_HOST = False
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    # EMAIL_HOST = 'email-host.com'
+    # EMAIL_PORT = 587
+    # EMAIL_USE_TLS = True
+    # EMAIL_HOST_USER = 'email@example.com'
+    # EMAIL_HOST_PASSWORD = 'email-password'
+
 else:
     DEBUG = True
     SECRET_KEY = config('DEBUG_SECRET_KEY')
     ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+
+### USER AUTHENTICATION
 
 SITE_ID = config('SITE_ID')
 AUTH_USER_MODEL = 'sgc_auth.User'
@@ -351,11 +362,3 @@ CACHES = {
 #     'ERROR_THRESHOLD': 10,
 #     'NOTIFICATION_CHANNELS': ['email'],
 # }
-
-### EMAIL
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'email-host.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'email@example.com'
-# EMAIL_HOST_PASSWORD = 'email-password'

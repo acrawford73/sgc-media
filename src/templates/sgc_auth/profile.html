@@ -2,15 +2,16 @@
 
 {% load sgc_extras %}
 
-{% block title %}Account Profile {% endblock %}
+{% block title %}Account Profile{% endblock %}
 
 {% block content %}
 
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
 {% row %}
 {% col %}
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
 <p>You are logged in as <strong>{{ request.user }}</strong>.</p>
 <p><a href="{% url 'logout' %}">Logout</a></p>
 {% endcol %}

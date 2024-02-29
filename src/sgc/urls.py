@@ -18,8 +18,8 @@ from django.contrib import admin
 from django.urls import include,path
 from django.conf import settings
 import sgc_auth.views
-#from django_registration.backends.activation.views import RegistrationView
-#from blango_auth.forms import BlangoRegistrationForm
+from django_registration.backends.activation.views import RegistrationView
+from sgc_auth.forms import SGCRegistrationForm
 
 #print(f"Time zone: {settings.TIME_ZONE}")
 
@@ -45,16 +45,16 @@ urlpatterns = [
     # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
     # accounts/reset/done/ [name='password_reset_complete']
 
-    # Django-registration
-    #path("accounts/register/", RegistrationView.as_view(form_class=BlangoRegistrationForm), name="django_registration_register"),
-    #path("accounts/", include("django_registration.backends.activation.urls")),
+    # Django-Registration
+    path('accounts/register/', RegistrationView.as_view(form_class=SGCRegistrationForm), name='django_registration_register'),
+    path('accounts/', include('django_registration.backends.activation.urls')),
 
     # Admin
     path('admin/docs/', include('django.contrib.admindocs.urls')),
     path('admin/', admin.site.urls),
 
-
 ]
+
 
 # Development
 if settings.DEBUG:

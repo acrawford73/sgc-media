@@ -119,7 +119,12 @@
                 <a class="nav-link inactive" aria-current="page" href="{% url 'logout' %}">Logout</a>
               </li>
             {% else %}
-              <a class="nav-link inactive" aria-current="page" href="{% url 'login' %}">Login</a>
+              <li class="nav-item">
+                <a class="nav-link inactive" aria-current="page" href="{% url 'django_registration_register' %}">Register</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link inactive" aria-current="page" href="{% url 'login' %}">Login</a>
+              </li>
             {% endif %}
           </li>
 
