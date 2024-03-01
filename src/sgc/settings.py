@@ -58,7 +58,18 @@ else:
     SECRET_KEY = config('DEBUG_SECRET_KEY')
     ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    INTERNAL_IPS = ['192.168.0.14']
 
+    SWAGGER_SETTINGS = {
+        'SECURITY_DEFINITIONS': {
+            'Token': {
+                'type': 'apiKey', 
+                'name': 'Authorization',
+                'in': 'header'
+            },
+            'Basic': {'type': 'basic'},
+        }
+    }
 
 ### USER AUTHENTICATION
 
@@ -97,9 +108,12 @@ INSTALLED_APPS = [
     #'roku_search',
     'media',
     'core',
-    'debug_toolbar',
-    #'drf_yasg',
     #'versatileimagefield',
+    
+    ## DEBUG ONLY
+    'debug_toolbar',
+    'drf_yasg',
+    
 ]
 
 MIDDLEWARE = [
@@ -112,8 +126,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-INTERNAL_IPS = ['192.168.0.14']
 
 ROOT_URLCONF = 'sgc.urls'
 
@@ -168,6 +180,7 @@ PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
+
 
 ### INTERNATIONALIZATION
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -276,18 +289,18 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer', 
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
-    # 'DEFAULT_THROTTLE_CLASSES': [
-    #     'roku_content.api.throttling.AnonSustainedThrottle',
-    #     'roku_content.api.throttling.AnonBurstThrottle',
-    #     'roku_content.api.throttling.UserSustainedThrottle',
-    #     'roku_content.api.throttling.UserBurstThrottle',
-    # ],
-    # 'DEFAULT_THROTTLE_RATES': {
-    #     'anon_sustained': '500/day',
-    #     'anon_burst': '10/minute',
-    #     'user_sustained': '5000/day',
-    #     'user_burst': '100/minute',
-    # },
+    'DEFAULT_THROTTLE_CLASSES': [
+        'roku_content.api.throttling.AnonSustainedThrottle',
+        'roku_content.api.throttling.AnonBurstThrottle',
+        'roku_content.api.throttling.UserSustainedThrottle',
+        'roku_content.api.throttling.UserBurstThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon_sustained': '500/day',
+        'anon_burst': '10/minute',
+        'user_sustained': '2000/day',
+        'user_burst': '100/minute',
+    },
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
         'rest_framework.filters.OrderingFilter',

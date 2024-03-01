@@ -28,6 +28,7 @@ urlpatterns = [
     
     #Apps
     path('', include('roku_content.urls')),
+    path('', include('roku_content.api.urls')),
     #path('', include('roku_search.urls')),
     path('', include('media.urls')),
     path('', include('core.urls')),
@@ -68,6 +69,7 @@ if settings.DEBUG:
     # urlpatterns += path("__debug__/", include(debug_toolbar.urls)),
     # urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     # urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 
 # else:
 #     # Production
