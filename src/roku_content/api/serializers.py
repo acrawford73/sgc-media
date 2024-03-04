@@ -21,7 +21,7 @@ from roku_content.models import Country, ParentalRating, CreditRole, Credit, Tag
 class LanguageSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Language
-		fields = ['id', 'code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
+		fields = ['code_iso_639_2', 'code_iso_639_1', 'language_name_eng']
 
 
 ### Content Properties
@@ -30,7 +30,7 @@ class VideoSerializerList(serializers.ModelSerializer):
 	videoType = serializers.CharField(source='video_type')
 	class Meta:
 		model = Video
-		fields = ['id', 'url', 'quality', 'videoType']
+		fields = ['url', 'quality', 'videoType']
 
 
 class CaptionSerializerList(serializers.ModelSerializer):
@@ -38,7 +38,7 @@ class CaptionSerializerList(serializers.ModelSerializer):
 	language = serializers.StringRelatedField()
 	class Meta:
 		model = Caption
-		fields = ['id', 'url', 'language', 'captionType']
+		fields = ['url', 'language', 'captionType']
 
 
 class TrickPlayFileSerializerList(serializers.ModelSerializer):
@@ -56,19 +56,20 @@ class ContentSerializerList(serializers.ModelSerializer):
 	captions = CaptionSerializerList(many=True)
 	#trickPlayFiles = TrickPlayFileSerializerList(many=True, source='trick_play_files')
 	language = serializers.StringRelatedField()
-	#validityPeriodStart = serializers.DateField(source='validity_start_period')
-	#validityPeriodEnd = serializers.DateField(source='validity_end_period')
+	validityPeriodStart = serializers.DateField(source='validity_start_period')
+	validityPeriodEnd = serializers.DateField(source='validity_end_period')
 	#adBreaks = serializers.CharField(source='ad_breaks')  # Advertising not supported
 	class Meta:
 		model = Content
-		fields = ['id', 'dateAdded', 'videos', 'duration', 'captions', 'language']
+		fields = ['id', 'dateAdded', 'videos', 'duration', 'captions', \
+			'language',	'validityPeriodStart', 'validityPeriodEnd']
 			# 'trickPlayFiles', validityPeriodStart', 'validityPeriodEnd', 'adBreaks']
 
 
 class GenreSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = Genre
-		fields = ['id', 'genre']
+		fields = ['genre']
 
 
 class ExternalIDSerializerList(serializers.ModelSerializer):
@@ -87,7 +88,7 @@ class RatingSerializerList(serializers.ModelSerializer):
 	ratingSource = serializers.CharField(source='rating_source')
 	class Meta:
 		model = Rating
-		fields = ['id', 'rating', 'ratingSource']
+		fields = ['rating', 'ratingSource']
 
 
 class RatingSourceSerializerList(serializers.ModelSerializer):
@@ -96,7 +97,7 @@ class RatingSourceSerializerList(serializers.ModelSerializer):
 	sourceCountry = serializers.CharField(source='source_country')
 	class Meta:
 		model = RatingSource
-		fields = ['id', 'ratingSource', 'sourceLongName', 'sourceCountry']
+		fields = ['ratingSource', 'sourceLongName', 'sourceCountry']
 
 
 class CountrySerializerList(serializers.ModelSerializer):
@@ -111,14 +112,14 @@ class ParentalRatingSerializerList(serializers.ModelSerializer):
 	parentalRating = serializers.CharField(source='parental_rating')
 	class Meta:
 		model = ParentalRating
-		fields = ['id', 'parentalRating']
+		fields = ['parentalRating']
 
 
 class CreditRoleSerializerList(serializers.ModelSerializer):
 	role = serializers.CharField(source='credit_role')
 	class Meta:
 		model = CreditRole
-		fields = ['id', 'role']
+		fields = ['role']
 
 
 class CreditSerializerList(serializers.ModelSerializer):
@@ -130,14 +131,14 @@ class CreditSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Credit
-		fields = ['id', 'name', 'role', 'birthDate']
+		fields = ['name', 'role', 'birthDate']
 
 
 class TagSerializerList(serializers.ModelSerializer):
 	tag = serializers.CharField(source='tag_name')
 	class Meta:
 		model = Tag
-		fields = ['id', 'tag']
+		fields = ['tag']
 
 
 ### Content Types
@@ -266,6 +267,7 @@ class TVSpecialSerializerList(serializers.ModelSerializer):
 		fields = ['id', 'title', 'shortDescription', 'longDescription', 'content', \
 			'thumbnail', 'releaseDate', 'tags', 'genres', 'rating', 'credits', 'externalIds']
 
+
 ### Content Categories
 
 class CategorySerializerList(serializers.ModelSerializer):
@@ -277,7 +279,8 @@ class CategorySerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Category
-		fields = ['id', 'name', 'playlistName', 'query', 'order']
+		fields = ['name', 'playlistName', 'query', 'order']
+
 
 class PlaylistSerializerList(serializers.ModelSerializer):
 	name = serializers.CharField(source='playlist_name')
@@ -288,7 +291,7 @@ class PlaylistSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = Playlist
-		fields = ['id', 'name', 'itemIds']
+		fields = ['name', 'itemIds']
 
 
 ### Roku Feeds
@@ -315,7 +318,7 @@ class RokuContentFeedSerializerList(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = RokuContentFeed
-		fields = ['id', 'providerName', 'language', 'rating', 'lastUpdated', 'movies', \
+		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 
 
@@ -339,7 +342,7 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])
 	class Meta:
 		model = RokuContentFeed
-		fields = ['id', 'providerName', 'language', 'rating', 'lastUpdated', 'movies', \
+		fields = ['providerName', 'language', 'rating', 'lastUpdated', 'movies', \
 			'liveFeeds', 'series', 'shortFormVideos', 'tvSpecials', 'categories', 'playlists']
 
 
@@ -350,7 +353,7 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 # 		result = super(NonNullModelSerializer, self).to_representation(instance)
 # 		return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
 
-# # None & Blank field will be removed
+# # None field AND Blank field will be removed
 # class ValueBasedModelSerializer(serializers.ModelSerializer):
 # 	def to_representation(self, instance):
 # 		result = super(ValueBasedModelSerializer, self).to_representation(instance)

@@ -1,5 +1,5 @@
 from . import views
-from django.urls import path, include #, re_path
+from django.urls import path, include, re_path
 #from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views as authtoken_views
 # from rest_framework.routers import DefaultRouter
@@ -20,7 +20,6 @@ schema_view = get_schema_view(
         default_version="v1",
         description="API for Roku Content",
     ),
-    #url=f"http://{os.environ.get('CODIO_HOSTNAME')}-8000.codio.io/api/",
     url=f"http://{settings.INTERNAL_IPS[0]}:8000/api/",
     public=True,
 )
@@ -31,8 +30,8 @@ urlpatterns = [
     path('token-auth/', authtoken_views.obtain_auth_token),
     #path("jwt/", TokenObtainPairView.as_view(), name="jwt_obtain_pair"),
     #path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"),
-    
-    path('swagger/', schema_view.with_ui('swagger', cache_timeout=10), name='schema-swagger-ui',),
+
+    path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     #path("", include(router.urls)),
     #path("posts/by-time/<str:period_name>/", PostViewSet.as_view({"get": "list"}), name="posts-by-time",),
@@ -44,7 +43,7 @@ urlpatterns = [
     #re_path('api/roku-content-feed/search/(?P<language>.+)/$', views.RokuContentFeedListSearchAPI.as_view()),
     path('api/roku-content-feed/<int:pk>/', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
     #re_path('^api/roku-content-feed/(?P<language>.+)/$', views.RokuContentFeedListAPI.as_view()),
-    
+
     # path('roku-search-feed/create/', views.RokuSearchFeedCreateView.as_view(), name='rokusearchfeed-create'),
     # path('roku-search-feed/', views.RokuSearchFeedListView.as_view(), name='rokusearchfeed-list'),
     # path('roku-search-feed/<int:pk>/', views.RokuSearchFeedDetailView.as_view(), name='rokusearchfeed-detail'),
@@ -121,4 +120,4 @@ urlpatterns = [
 
 # # Avoids using ending '/' on a URL
 # #urlpatterns = format_suffix_patterns(urlpatterns)
-# # ^ causes issues with swagger and routers
+# # ^ causes issues with swagger and routers so don't use it

@@ -52,7 +52,6 @@ if config('PRODUCTION', default=False, cast=bool) == True:
     # EMAIL_USE_TLS = True
     # EMAIL_HOST_USER = 'email@example.com'
     # EMAIL_HOST_PASSWORD = 'email-password'
-
 else:
     DEBUG = True
     SECRET_KEY = config('DEBUG_SECRET_KEY')
@@ -71,6 +70,7 @@ else:
         }
     }
 
+
 ### USER AUTHENTICATION
 
 SITE_ID = int(config('SITE_ID'))
@@ -79,6 +79,7 @@ ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
 
 ### APPLICATION DEFINITION
 
@@ -110,11 +111,11 @@ INSTALLED_APPS = [
     'core',
     #'versatileimagefield',
     
-    ## DEBUG ONLY
-    'debug_toolbar',
-    'drf_yasg',
-    
 ]
+
+if DEBUG == True:
+    INSTALLED_APPS += ['debug_toolbar', 'drf_yasg',]
+
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
@@ -189,6 +190,7 @@ USE_I18N = True
 USE_THOUSAND_SEPARATOR = True
 THOUSAND_SEPARATOR = ','
 
+
 ### TIME ZONE
 # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 TIME_ZONE = 'UTC'
@@ -249,6 +251,7 @@ else:
     MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'media_assets/')
     MEDIA_URL = '/media/'
 
+
 ### FIXTURES
 # Data files for database defaults
 # Load data by calling manage.py loaddata app/fixtures/app/<fixturename> or * 
@@ -260,16 +263,31 @@ FIXTURE_DIRS = [
     os.path.join(BASE_DIR, '/system_config/fixtures/system_config/')
 ]
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 ### FORMS
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+
 ### TAGGING
 #TAGGIT_CASE_INSENSITIVE = True
+
+
+### CACHING
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'django-local-cache',
+        #'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        #'LOCATION': '/var/tmp/django_cache',
+    }
+}
+
 
 ### DJANGO REST FRAMEWORK
 REST_FRAMEWORK = {
@@ -312,6 +330,7 @@ REST_FRAMEWORK = {
     'COMPACT_JSON': True,
 }
 
+
 ## Logging
 LOGGING = {
     'version': 1,
@@ -329,11 +348,11 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': '/home/ubuntu/django.log',
-            'formatter': 'verbose',
-        },
+        # 'file': {
+        #     'class': 'logging.FileHandler',
+        #     'filename': '/home/ubuntu/django.log',
+        #     'formatter': 'verbose',
+        # },
         'console': {
             'class': 'logging.StreamHandler',
             'stream': 'ext://sys.stdout',
@@ -354,21 +373,12 @@ LOGGING = {
         },
     },
     'root': {
-        'handlers': ['file', 'console'],
+        #'handlers': ['file', 'console'],
+        'handlers': ['console'],
         'level': 'DEBUG',
     },
 }
 
-
-### CACHING
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'django-local-cache',
-        #'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        #'LOCATION': '/var/tmp/django_cache',
-    }
-}
 
 ### MONITORING
 # DJANGO_MONITORING_ALERTS = {

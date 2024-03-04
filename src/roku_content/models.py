@@ -770,8 +770,8 @@ class Rating(models.Model):
 	"ratingSource": "MPAA"
 	}
 	"""
-	rating = models.ForeignKey('ParentalRating', on_delete=models.PROTECT, null=False, blank=False)
-	rating_source = models.ForeignKey('RatingSource', on_delete=models.PROTECT, null=False, blank=False)
+	rating = models.ForeignKey('ParentalRating', on_delete=models.PROTECT, null=False, blank=False, related_name="ratings")
+	rating_source = models.ForeignKey('RatingSource', on_delete=models.PROTECT, null=False, blank=False, related_name="ratingsources")
 	def get_absolute_url(self):
 		return reverse('rating-list')
 	class Meta:

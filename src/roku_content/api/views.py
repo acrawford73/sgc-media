@@ -110,7 +110,7 @@ class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
 		feed = RokuContentFeed.objects.get(pk=pk)
 		serializer = RokuContentFeedSerializerDetail(feed)
 		if feed is not None:
-			logger.debug("RokuContentFeed detail object " + str(feed.pk) + " returned.")
+			logger.debug("RokuContentFeed detail object " + str(feed.roku_content_feed_id) + " returned.")
 		return Response(serializer.data)
 
 
