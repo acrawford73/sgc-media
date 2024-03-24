@@ -52,7 +52,6 @@ python manage.py loaddata roku_content/fixtures/roku_content/parentalrating
 python manage.py loaddata roku_content/fixtures/roku_content/rating
 python manage.py loaddata roku_content/fixtures/roku_content/genre
 python manage.py loaddata roku_content/fixtures/roku_content/creditrole
-python manage.py loaddata roku_content/fixtures/roku_content/credits
 python manage.py loaddata roku_content/fixtures/roku_content/videotype
 python manage.py loaddata roku_content/fixtures/roku_content/language
 python manage.py loaddata roku_content/fixtures/roku_content/externalidtype
