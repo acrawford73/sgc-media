@@ -14,7 +14,7 @@ Roku Content feed management system based on Roku Direct Publisher JSON feed spe
 Content data feed provided via JSON API.
 
 
-### SGC Media Ingest
+### Media Ingest
 
 Upload video content to watch folder.
 
