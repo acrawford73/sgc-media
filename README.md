@@ -1,3 +1,12 @@
+## SGC-MEDIA
+
+Content and API Management System.
+
+- Ingested media content is exposed through an API.
+- Manage content metadata.
+- Watcher service ingests new media files.
+- Create custom Roku content feeds.
+
 ### ROKU Content Feed
 
 Roku Content feed management system based on Roku Direct Publisher JSON feed specification.
