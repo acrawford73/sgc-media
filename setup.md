@@ -1,14 +1,12 @@
-#!/bin/bash
-
+```bash
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install -y python3 python3-dev python3-pip virtualenv
 sudo apt-get install -y ffmpeg postgresql git gh
-
-gh auth login   
-gh repo clone acrawford73/sgc-media
+```
 
 # DB - enter manually
+```bash
 sudo vi /etc/postgresql/14/main/pg_hba.conf
 sudo systemctl restart postgresql
 sudo systemctl status postgresql
@@ -23,8 +21,13 @@ ALTER ROLE sgc SET default_transaction_isolation TO 'read committed';
 ALTER ROLE sgc SET timezone TO 'UTC';
 \q
 exit
+```
 
 # Env
+```bash
+gh auth login   
+gh repo clone acrawford73/sgc-media
+
 virtualenv -p /usr/bin/python3 sgc-media
 cd sgc-media/
 source bin/activate
@@ -57,3 +60,4 @@ python manage.py loaddata roku_content/fixtures/roku_content/language
 python manage.py loaddata roku_content/fixtures/roku_content/externalidtype
 python manage.py loaddata roku_content/fixtures/roku_content/country
 python manage.py loaddata media/fixtures/media/*
+```
