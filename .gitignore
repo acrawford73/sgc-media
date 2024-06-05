@@ -1,6 +1,7 @@
 bin/
 lib/
 man/
+docs/
 include/
 share/
 src/*/migrations/
