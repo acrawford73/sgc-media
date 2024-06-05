@@ -26,5 +26,4 @@ Beta Roku Channel
 - Terms of Use page
 
 
-- Psinergy domain with SSL
 - Digital Ocean production setup
