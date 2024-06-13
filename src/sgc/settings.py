@@ -74,7 +74,7 @@ else:
 ### USER AUTHENTICATION
 
 SITE_ID = int(config('SITE_ID'))
-AUTH_USER_MODEL = 'sgc_auth.User'
+AUTH_USER_MODEL = 'custom_auth.User'
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
 LOGIN_REDIRECT_URL = "/"
@@ -84,7 +84,7 @@ LOGOUT_REDIRECT_URL = "/"
 ### APPLICATION DEFINITION
 
 INSTALLED_APPS = [
-    'sgc_auth',
+    'custom_auth',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

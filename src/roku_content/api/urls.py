@@ -31,7 +31,8 @@ urlpatterns = [
     #path("jwt/", TokenObtainPairView.as_view(), name="jwt_obtain_pair"),
     #path("jwt/refresh/", TokenRefreshView.as_view(), name="jwt_refresh"),
 
-    path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # Enable this for Swagger browsable API
+    # path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 
     #path("", include(router.urls)),
     #path("posts/by-time/<str:period_name>/", PostViewSet.as_view({"get": "list"}), name="posts-by-time",),

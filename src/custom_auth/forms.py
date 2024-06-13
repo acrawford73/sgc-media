@@ -1,7 +1,7 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django_registration.forms import RegistrationForm
-from sgc_auth.models import User
+from custom_auth.models import User
 
 
 class SGCRegistrationForm(RegistrationForm):

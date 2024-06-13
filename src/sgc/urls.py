@@ -17,9 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include,path
 from django.conf import settings
-import sgc_auth.views
+import custom_auth.views
 from django_registration.backends.activation.views import RegistrationView
-from sgc_auth.forms import SGCRegistrationForm
+from custom_auth.forms import SGCRegistrationForm
 
 #print(f"Time zone: {settings.TIME_ZONE}")
 
@@ -35,7 +35,7 @@ urlpatterns = [
     #path('', include('core.system_config')),
 
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/profile/', sgc_auth.views.profile, name='profile'),
+    path('accounts/profile/', custom_auth.views.profile, name='profile'),
     ## The URLs supported by auth are:
     # accounts/login/ [name='login']
     # accounts/logout/ [name='logout']
