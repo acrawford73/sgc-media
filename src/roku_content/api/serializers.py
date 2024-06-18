@@ -347,13 +347,13 @@ class RokuContentFeedSerializerDetail(serializers.ModelSerializer):
 
 
 ### NOTES
-# # None field will be removed
+# # None field will be removed from response
 # class NonNullModelSerializer(serializers.ModelSerializer):
 # 	def to_representation(self, instance):
 # 		result = super(NonNullModelSerializer, self).to_representation(instance)
 # 		return OrderedDict([(key, result[key]) for key in result if result[key] is not None])
 
-# # None field AND Blank field will be removed
+# # None field AND Blank field will be removed from response
 # class ValueBasedModelSerializer(serializers.ModelSerializer):
 # 	def to_representation(self, instance):
 # 		result = super(ValueBasedModelSerializer, self).to_representation(instance)

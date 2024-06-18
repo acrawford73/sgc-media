@@ -20,7 +20,7 @@ from roku_content.models import ExternalID, Rating, ParentalRating, RatingSource
 
 class SearchFeed(models.Model):
 	search_feed_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True, \
-		help_text="There must be only ONE Search Feed. Do not create a second Search Feed.")
+		help_text="There must be only ONE Search Feed. DO NOT create a second Search Feed.")
 	version = models.CharField(default="1", null=False, blank=False, editable=False, \
 		help_text="Search JSON Feed version is always 1.")
 	default_language = models.ForeignKey('roku_content.Language', on_delete=models.PROTECT, null=False, blank=False, \
