@@ -574,6 +574,15 @@ def get_video_thumbnail(asset_full_path, asset_thumb_path):
 		log.error(e.stderr.decode())
 		#print(e.stderr.decode(), file=sys.stderr)
 		return False
+
+
+# Determine the media aspect ratio
+def get_AR(w,h):
+	if h == 0:
+		return w
+	else:
+		return get_AR(h, w % h)
+
 ###
 
 
@@ -863,90 +872,128 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				# Metadata
 				metadata = get_video_metadata(asset_full_path)
 				if metadata != False:
+
+					# Sometimes video audio indexes are reversed
 					if metadata[0]['codec_type'] == "video":
-						media_video_bitrate = metadata[0]['bit_rate']
-						media_video_height = int(metadata[0]['height'])
-						media_video_width = int(metadata[0]['width'])
-						if media_video_width > 1920:
-							media_video_format = "UHD"
-						elif media_video_width >= 1920:
-							media_video_format = "FHD"
-						elif media_video_width >= 1280:
-							media_video_format = "HD"
-						else:
-							media_video_format = "SD"
-						if media_video_width > media_video_height:
-							orientation = "Landscape"
-						elif media_video_height > media_video_width:
-							orientation = "Portrait"
-						else:
-							orientation = "Square"
-						media_video_codec = metadata[0]['codec_name']
-						media_video_codec_long_name = metadata[0]['codec_long_name']
-						media_video_codec_tag_string = metadata[0]['codec_tag_string']
-						media_video_frame_rate = metadata[0]['r_frame_rate']
+						video_index = 0
+						audio_index = 1
+					else:
+						video_index = 1
+						audio_index = 0
+
+					if 'height' in metadata[video_index]:
+						media_video_height = int(metadata[video_index]['height'])
+					else:
+						media_video_height = 0
+
+					if 'width' in metadata[video_index]:
+						media_video_width = int(metadata[video_index]['width'])
+					else:
+						media_video_width = 0
+					
+					if 'bit_rate' in metadata[video_index]:
+						media_video_bitrate = metadata[video_index]['bit_rate']
+					else:
+						media_video_bitrate = "NA"
+		
+					#confirm this is correct
+					if media_video_width > 1920:
+						media_video_format = "UHD"
+					elif media_video_width >= 1920:
+						media_video_format = "FHD"
+					elif media_video_width >= 1280:
+						media_video_format = "HD"
+					else:
+						media_video_format = "SD"
+					
+					# Display Orientation, signage
+					if media_video_width > media_video_height:
+						orientation = "Landscape"
+					elif media_video_height > media_video_width:
+						orientation = "Portrait"
+					else:
+						orientation = "Square"
+					
+					if 'codec_name' in metadata[video_index]:
+						media_video_codec = metadata[video_index]['codec_name']
+					else:
+						media_video_codec = "NA"
+					
+					if 'codec_long_name' in metadata[video_index]:
+						media_video_codec_long_name = metadata[video_index]['codec_long_name']
+					else:
+						media_video_codec_long_name = "NA"
+
+					if 'codec_tag_string' in metadata[video_index]:
+						media_video_codec_tag_string = metadata[video_index]['codec_tag_string']
+					else:
+						media_video_codec_tag_string = "NA"
+
+					if 'r_frame_rate' in metadata[video_index]:
+						media_video_frame_rate = metadata[video_index]['r_frame_rate']
 						frame_rate = media_video_frame_rate.split("/")
 						media_video_frame_rate_calc = round(Decimal(frame_rate[0]) / Decimal(frame_rate[1]),2)
-						media_video_duration = round(Decimal(metadata[0]['duration']),3)
-						# Removed because not always available
-						# if metadata[0]['display_aspect_ratio'] is not None:
-						# 	media_video_aspect_ratio = metadata[0]['display_aspect_ratio']
-						# else:
-						media_video_aspect_ratio = ""
-						media_video_pixel_format = metadata[0]['pix_fmt']
-						media_video_color_space = metadata[0]['color_space']
-						if metadata[0]['is_avc'].lower() == "true":
+					else:
+						media_video_frame_rate = "0/0"
+						media_video_frame_rate_calc = 0
+
+					if 'duration' in metadata[video_index]:
+						media_video_duration = round(Decimal(metadata[video_index]['duration']),3)
+					else:
+						media_video_duration = 0
+
+					if 'display_aspect_ratio' in metadata[video_index]:
+						media_video_aspect_ratio = metadata[video_index]['display_aspect_ratio']
+					else:
+						ar = get_AR(int(media_video_width), int(media_video_height))
+						media_video_aspect_ratio = str((int(media_video_width) / ar)) + ":" + str((int(media_video_height) / ar))
+					
+					if 'pix_fmt' in metadata[video_index]:
+						media_video_pixel_format = metadata[video_index]['pix_fmt']
+					else:
+						media_video_pixel_format = "NA"
+					
+					if 'color_space' in metadata[video_index]:
+						media_video_color_space = metadata[video_index]['color_space']
+					else:
+						media_video_color_space = "NA"
+					
+					media_video_is_avc = False
+					if 'is_avc' in metadata[video_index]:
+						if metadata[video_index]['is_avc'].lower() == "true":
 							media_video_is_avc = True
-						else:
-							media_video_is_avc = False
-						media_audio_bitrate = metadata[1]['bit_rate']
-						media_audio_codec = metadata[1]['codec_name']
-						media_audio_codec_long_name = metadata[1]['codec_long_name']
-						media_audio_codec_tag_string = metadata[1]['codec_tag_string']
-						media_audio_channels = int(metadata[1]['channels'])
-						media_audio_sample_rate = metadata[1]['sample_rate']
-					elif metadata[0]['codec_type'] == "audio":
-						media_video_bitrate = metadata[1]['bit_rate']
-						media_video_height = int(metadata[1]['height'])
-						media_video_width = int(metadata[1]['width'])
-						if media_video_width > 1920:
-							media_video_format = "UHD"
-						elif media_video_width >= 1920:
-							media_video_format = "FHD"
-						elif media_video_width >= 1280:
-							media_video_format = "HD"
-						else:
-							media_video_format = "SD"
-						if media_video_width > media_video_height:
-							orientation = "Landscape"
-						elif media_video_height > media_video_width:
-							orientation = "Portrait"
-						else:
-							orientation = "Square"
-						media_video_codec = metadata[1]['codec_name']
-						media_video_codec_long_name = metadata[1]['codec_long_name']
-						media_video_codec_tag_string = metadata[1]['codec_tag_string']
-						media_video_frame_rate = metadata[1]['r_frame_rate']
-						frame_rate = media_video_frame_rate.split("/")
-						media_video_frame_rate_calc = round(Decimal(frame_rate[1]) / Decimal(frame_rate[1]),2)
-						media_video_duration = round(Decimal(metadata[1]['duration']),3)
-						# Removed because not always available
-						# if metadata[1]['display_aspect_ratio'] is not None:
-						# 	media_video_aspect_ratio = metadata[1]['display_aspect_ratio']
-						# else:
-						media_video_aspect_ratio = ""
-						media_video_pixel_format = metadata[1]['pix_fmt']
-						media_video_color_space = metadata[1]['color_space']
-						if metadata[1]['is_avc'].lower() == "true":
-							media_video_is_avc = True
-						else:
-							media_video_is_avc = False
-						media_audio_bitrate = metadata[0]['bit_rate']
-						media_audio_codec = metadata[0]['codec_name']
-						media_audio_codec_long_name = metadata[0]['codec_long_name']
-						media_audio_codec_tag_string = metadata[0]['codec_tag_string']
-						media_audio_channels = int(metadata[0]['channels'])
-						media_audio_sample_rate = metadata[0]['sample_rate']
+					
+					# AUDIO
+					if 'bit_rate' in metadata[audio_index]:
+						media_audio_bitrate = metadata[audio_index]['bit_rate']
+					else:
+						media_audio_bitrate = "NA"
+
+					if 'codec_name' in metadata[audio_index]:
+						media_audio_codec = metadata[audio_index]['codec_name']
+					else:
+						media_audio_codec = "NA"
+
+					if 'codec_long_name' in metadata[audio_index]:
+						media_audio_codec_long_name = metadata[audio_index]['codec_long_name']
+					else:
+						media_audio_codec_long_name = "NA"
+
+					if 'codec_tag_string' in metadata[audio_index]:
+						media_audio_codec_tag_string = metadata[audio_index]['codec_tag_string']
+					else:
+						media_audio_codec_tag_string = "NA"
+					
+					if 'channels' in metadata[audio_index]:
+						media_audio_channels = int(metadata[audio_index]['channels'])
+					else:
+						media_audio_channels = 0
+
+					if 'sample_rate' in metadata[audio_index]:
+						media_audio_sample_rate = metadata[audio_index]['sample_rate']
+					else:
+						media_audio_sample_rate = "NA"
+
 				else:
 					log.error("Failed to get video properties for asset: " + asset_full_path)
 					continue

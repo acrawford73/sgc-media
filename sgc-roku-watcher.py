@@ -424,7 +424,7 @@ def Watcher(watch_path, ext_video):
 				metadata = get_video_metadata(asset_full_path)
 				if metadata != False:
 
-					# Sometimes video audio are reversed
+					# Sometimes video audio indexes are reversed
 					if metadata[0]['codec_type'] == "video":
 						video_index = 0
 						audio_index = 1
@@ -432,10 +432,21 @@ def Watcher(watch_path, ext_video):
 						video_index = 1
 						audio_index = 0
 
-					media_video_bitrate = metadata[video_index]['bit_rate']
-					media_video_height = int(metadata[video_index]['height'])
-					media_video_width = int(metadata[video_index]['width'])
+					if 'height' in metadata[video_index]:
+						media_video_height = int(metadata[video_index]['height'])
+					else:
+						media_video_height = 0
+
+					if 'width' in metadata[video_index]:
+						media_video_width = int(metadata[video_index]['width'])
+					else:
+						media_video_width = 0
 					
+					if 'bit_rate' in metadata[video_index]:
+						media_video_bitrate = metadata[video_index]['bit_rate']
+					else:
+						media_video_bitrate = "NA"
+		
 					#confirm this is correct
 
 					if media_video_width > 1920:
@@ -455,30 +466,85 @@ def Watcher(watch_path, ext_video):
 					else:
 						orientation = "Square"
 					
-					media_video_codec = metadata[video_index]['codec_name']
-					media_video_codec_long_name = metadata[video_index]['codec_long_name']
-					media_video_codec_tag_string = metadata[video_index]['codec_tag_string']
-					media_video_frame_rate = metadata[video_index]['r_frame_rate']
-					frame_rate = media_video_frame_rate.split("/")
-					media_video_frame_rate_calc = round(Decimal(frame_rate[video_index]) / Decimal(frame_rate[video_index]),2)
-					media_video_duration = round(Decimal(metadata[video_index]['duration']),3)
-					if metadata[video_index]['display_aspect_ratio'] is not None:
+					if 'codec_name' in metadata[video_index]:
+						media_video_codec = metadata[video_index]['codec_name']
+					else:
+						media_video_codec = "NA"
+					
+					if 'codec_long_name' in metadata[video_index]:
+						media_video_codec_long_name = metadata[video_index]['codec_long_name']
+					else:
+						media_video_codec_long_name = "NA"
+
+					if 'codec_tag_string' in metadata[video_index]:
+						media_video_codec_tag_string = metadata[video_index]['codec_tag_string']
+					else:
+						media_video_codec_tag_string = "NA"
+
+					if 'r_frame_rate' in metadata[video_index]:
+						media_video_frame_rate = metadata[video_index]['r_frame_rate']
+						frame_rate = media_video_frame_rate.split("/")
+						media_video_frame_rate_calc = round(Decimal(frame_rate[0]) / Decimal(frame_rate[1]),2)
+					else:
+						media_video_frame_rate = "0/0"
+						media_video_frame_rate_calc = 0
+
+					if 'duration' in metadata[video_index]:
+						media_video_duration = round(Decimal(metadata[video_index]['duration']),3)
+					else:
+						media_video_duration = 0
+
+					if 'display_aspect_ratio' in metadata[video_index]:
 						media_video_aspect_ratio = metadata[video_index]['display_aspect_ratio']
 					else:
 						ar = get_AR(int(media_video_width), int(media_video_height))
 						media_video_aspect_ratio = str((int(media_video_width) / ar)) + ":" + str((int(media_video_height) / ar))
-					media_video_pixel_format = metadata[video_index]['pix_fmt']
-					media_video_color_space = metadata[video_index]['color_space']
-					if metadata[video_index]['is_avc'].lower() == "true":
-						media_video_is_avc = True
+					
+					if 'pix_fmt' in metadata[video_index]:
+						media_video_pixel_format = metadata[video_index]['pix_fmt']
 					else:
-						media_video_is_avc = False
-					media_audio_bitrate = metadata[audio_index]['bit_rate']
-					media_audio_codec = metadata[audio_index]['codec_name']
-					media_audio_codec_long_name = metadata[audio_index]['codec_long_name']
-					media_audio_codec_tag_string = metadata[audio_index]['codec_tag_string']
-					media_audio_channels = int(metadata[audio_index]['channels'])
-					media_audio_sample_rate = metadata[audio_index]['sample_rate']
+						media_video_pixel_format = "NA"
+					
+					if 'color_space' in metadata[video_index]:
+						media_video_color_space = metadata[video_index]['color_space']
+					else:
+						media_video_color_space = "NA"
+					
+					media_video_is_avc = False
+					if 'is_avc' in metadata[video_index]:
+						if metadata[video_index]['is_avc'].lower() == "true":
+							media_video_is_avc = True
+					
+					# AUDIO
+					if 'bit_rate' in metadata[audio_index]:
+						media_audio_bitrate = metadata[audio_index]['bit_rate']
+					else:
+						media_audio_bitrate = "NA"
+
+					if 'codec_name' in metadata[audio_index]:
+						media_audio_codec = metadata[audio_index]['codec_name']
+					else:
+						media_audio_codec = "NA"
+
+					if 'codec_long_name' in metadata[audio_index]:
+						media_audio_codec_long_name = metadata[audio_index]['codec_long_name']
+					else:
+						media_audio_codec_long_name = "NA"
+
+					if 'codec_tag_string' in metadata[audio_index]:
+						media_audio_codec_tag_string = metadata[audio_index]['codec_tag_string']
+					else:
+						media_audio_codec_tag_string = "NA"
+					
+					if 'channels' in metadata[audio_index]:
+						media_audio_channels = int(metadata[audio_index]['channels'])
+					else:
+						media_audio_channels = 0
+
+					if 'sample_rate' in metadata[audio_index]:
+						media_audio_sample_rate = metadata[audio_index]['sample_rate']
+					else:
+						media_audio_sample_rate = "NA"
 
 				else:
 					log.error("Failed to get video properties for asset: " + asset_full_path)
