@@ -109,31 +109,6 @@ def hash_file(asset):
 		return False
 
 
-## old method to get video properties
-# def get_v_properties(asset_full_path):
-# 	props = get_video_properties(asset_full_path)
-# 	media_video_codec = props['codec_name']
-# 	media_video_width = props['width']
-# 	media_video_height = props['height']
-# 	media_video_frame_rate = props['r_frame_rate']
-# 	media_video_duration = props['duration']
-# 	try:
-# 		media_audio_codec = "NA"
-# 		media_audio_channels = 0
-# 		media_audio_sample_rate = 0
-# 		props = get_audio_properties(asset_full_path)
-# 		if 'codec_name' in props:
-# 			media_audio_codec = props['codec_name']
-# 		if 'channels' in props:
-# 			media_audio_channels = props['channels']
-# 		if 'sample_rate' in props:
-# 			media_audio_sample_rate = props['sample_rate']
-# 	except RuntimeError as error:
-# 		print(error)
-# 	return [media_video_codec, media_video_width, media_video_height, media_video_frame_rate, \
-# 		media_video_duration, media_audio_codec, media_audio_channels, media_audio_sample_rate]
-
-
 ## NOTE:
 # psycopg.org/docs/usage.html#passing-parameters-to-sql-queries
 
@@ -379,7 +354,7 @@ def Watcher(watch_path, ext_video):
 		
 			# Check for hidden files
 			if file.startswith("."):
-				log.warning("Cannot ingest hidden filenames starting with a period (.), file skipped.")
+				log.warning("Cannot ingest filenames starting with a period (.), hidden file skipped.")
 				continue
 
 			tags = json.dumps([])  # empty

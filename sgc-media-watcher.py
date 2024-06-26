@@ -621,7 +621,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 		
 			# Check for hidden files
 			if file.startswith("."):
-				log.warning("Cannot ingest hidden filenames starting with a period (.), file skipped.")
+				log.warning("Cannot ingest filenames starting with a period (.), hidden file skipped.")
 				continue
 
 			tags = json.dumps([])  # empty
