@@ -964,35 +964,32 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 							media_video_is_avc = True
 					
 					# AUDIO
-					if 'bit_rate' in metadata[audio_index]:
-						media_audio_bitrate = metadata[audio_index]['bit_rate']
-					else:
-						media_audio_bitrate = "NA"
+					# check if both audio and video indexes present
+					media_audio_bitrate = 0
+					media_audio_codec = "NA"
+					media_audio_codec_long_name = "NA"
+					media_audio_codec_tag_string = "NA"
+					media_audio_channels = 0
+					media_audio_sample_rate = "NA"
 
-					if 'codec_name' in metadata[audio_index]:
-						media_audio_codec = metadata[audio_index]['codec_name']
-					else:
-						media_audio_codec = "NA"
+					if len(metadata) == 2:
+						if 'bit_rate' in metadata[audio_index]:
+							media_audio_bitrate = metadata[audio_index]['bit_rate']
 
-					if 'codec_long_name' in metadata[audio_index]:
-						media_audio_codec_long_name = metadata[audio_index]['codec_long_name']
-					else:
-						media_audio_codec_long_name = "NA"
+						if 'codec_name' in metadata[audio_index]:
+							media_audio_codec = metadata[audio_index]['codec_name']
 
-					if 'codec_tag_string' in metadata[audio_index]:
-						media_audio_codec_tag_string = metadata[audio_index]['codec_tag_string']
-					else:
-						media_audio_codec_tag_string = "NA"
-					
-					if 'channels' in metadata[audio_index]:
-						media_audio_channels = int(metadata[audio_index]['channels'])
-					else:
-						media_audio_channels = 0
+						if 'codec_long_name' in metadata[audio_index]:
+							media_audio_codec_long_name = metadata[audio_index]['codec_long_name']
 
-					if 'sample_rate' in metadata[audio_index]:
-						media_audio_sample_rate = metadata[audio_index]['sample_rate']
-					else:
-						media_audio_sample_rate = "NA"
+						if 'codec_tag_string' in metadata[audio_index]:
+							media_audio_codec_tag_string = metadata[audio_index]['codec_tag_string']
+						
+						if 'channels' in metadata[audio_index]:
+							media_audio_channels = int(metadata[audio_index]['channels'])
+
+						if 'sample_rate' in metadata[audio_index]:
+							media_audio_sample_rate = metadata[audio_index]['sample_rate']
 
 				else:
 					log.error("Failed to get video properties for asset: " + asset_full_path)
@@ -1026,7 +1023,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Is AVC:          " + str(media_video_is_avc))
 				log.debug("Pixel Format:    " + media_video_pixel_format)
 				log.debug("> Audio Properties:")
-				log.debug("Bitrate:         " + media_audio_bitrate)
+				log.debug("Bitrate:         " + str(media_audio_bitrate))
 				log.debug("Codec:           " + media_audio_codec)
 				log.debug("Codec Long:      " + media_audio_codec_long_name)
 				log.debug("Codec Tag:       " + media_audio_codec_tag_string)

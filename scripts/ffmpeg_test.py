@@ -16,18 +16,29 @@ def get_video_metadata(media_path):
 		return False
 
 #media_path = "media_assets/drink-one-cup-per-day-as-a.mp4"
-media_path = "media_assets/6G From Connecting Things to Connected Intelligence (World Government Summit 2022).mp4"
+media_path = "birds_20210824.mp4"
 metadata = get_video_metadata(media_path)
 print(metadata)
+
 if metadata != False:
-	if metadata[0]['bit_rate'] is not None:
+
+	if 'bit_rate' in metadata[0]:
 		video_bitrate = metadata[0]['bit_rate']
 	else:
 		video_bitrate = 0
-	if metadata[1]['bit_rate'] is not None:
+
+	try:
 		audio_bitrate = metadata[1]['bit_rate']
-	else:
+	except IndexError:
 		audio_bitrate = 0
+		print("Index doesn't exist!")
+
+	# if 'bit_rate' in metadata[1]:
+	# 	audio_bitrate = metadata[1]['bit_rate']
+	# else:
+	# 	audio_bitrate = 0
+	# else:
+	# 	print("NO AUDIO PRESENT")
 
 	print(video_bitrate)
 	print(audio_bitrate)
