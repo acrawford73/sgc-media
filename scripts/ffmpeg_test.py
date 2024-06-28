@@ -16,32 +16,52 @@ def get_video_metadata(media_path):
 		return False
 
 #media_path = "media_assets/drink-one-cup-per-day-as-a.mp4"
-media_path = "birds_20210824.mp4"
+#media_path = "af3.ts"
+#media_path = "todd.ts"
+media_path = "todd.mp4"
+
 metadata = get_video_metadata(media_path)
 print(metadata)
 
+
+audio_bitrate = 0
+video_bitrate = 0
+
+
 if metadata != False:
+	print()
+	print("Metadata Indexes:")
 
-	if 'bit_rate' in metadata[0]:
-		video_bitrate = metadata[0]['bit_rate']
-	else:
-		video_bitrate = 0
+	index_count = 0
+	while index_count < len(metadata):
 
-	try:
-		audio_bitrate = metadata[1]['bit_rate']
-	except IndexError:
-		audio_bitrate = 0
-		print("Index doesn't exist!")
+		if 'codec_type' in metadata[index_count]:
+			if metadata[index_count]['codec_type'] == "video":
+				print("Video index " + str(index_count))
+				if 'bit_rate' in metadata[index_count]:
+					video_bitrate = metadata[index_count]['bit_rate']
+				else:
+					print("*** Video bit rate missing from metadata")
+		
+		if 'codec_type' in metadata[index_count]:
+			if metadata[index_count]['codec_type'] == "audio":
+				print("Audio index " + str(index_count))
+				if 'bit_rate' in metadata[index_count]:
+					audio_bitrate = metadata[index_count]['bit_rate']
+				else:
+					print("*** Audio bit rate missing from metadata")
+		
+		if 'codec_type' in metadata[index_count]:
+			if metadata[index_count]['codec_type'] == "data":
+				print("Data index " + str(index_count))
+		
+		index_count += 1
 
-	# if 'bit_rate' in metadata[1]:
-	# 	audio_bitrate = metadata[1]['bit_rate']
-	# else:
-	# 	audio_bitrate = 0
-	# else:
-	# 	print("NO AUDIO PRESENT")
 
-	print(video_bitrate)
-	print(audio_bitrate)
+	print()
+	print("Video Bitrate = " + str(video_bitrate))
+	print("Audio Bitrate = " + str(audio_bitrate))
+	print()
 	quit(0)
 else:
 	quit(1)

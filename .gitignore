@@ -18,3 +18,5 @@ importer.py
 .env
 .lock
 .DS_Store
+*.ts
+*.mp4
