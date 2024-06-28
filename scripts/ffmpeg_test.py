@@ -43,17 +43,18 @@ if metadata != False:
 				else:
 					print("*** Video bit rate missing from metadata")
 		
-		if 'codec_type' in metadata[index_count]:
-			if metadata[index_count]['codec_type'] == "audio":
+			elif metadata[index_count]['codec_type'] == "audio":
 				print("Audio index " + str(index_count))
 				if 'bit_rate' in metadata[index_count]:
 					audio_bitrate = metadata[index_count]['bit_rate']
 				else:
 					print("*** Audio bit rate missing from metadata")
 		
-		if 'codec_type' in metadata[index_count]:
-			if metadata[index_count]['codec_type'] == "data":
+			elif metadata[index_count]['codec_type'] == "data":
 				print("Data index " + str(index_count))
+			
+			else:
+				print("*** Unknown codec_type")
 		
 		index_count += 1
 
