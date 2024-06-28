@@ -55,6 +55,8 @@ if metadata != False:
 			
 			else:
 				print("*** Unknown codec_type")
+		else:
+			print("*** codec_type field missing in metadata")
 		
 		index_count += 1
 
