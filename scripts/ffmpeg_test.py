@@ -36,6 +36,7 @@ if metadata != False:
 	while index_count < len(metadata):
 
 		if 'codec_type' in metadata[index_count]:
+
 			if metadata[index_count]['codec_type'] == "video":
 				print("Video index " + str(index_count))
 				if 'bit_rate' in metadata[index_count]:
@@ -56,7 +57,7 @@ if metadata != False:
 			else:
 				print("*** Unknown codec_type")
 		else:
-			print("*** codec_type field missing in metadata")
+			print("*** codec_type field missing in metadata index " + str(index_count))
 		
 		index_count += 1
 
