@@ -115,8 +115,9 @@ def hash_file(asset):
 # For insert and delete
 def pgql(sql, data, db_meta):
 	log.debug("SQL: " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
+	if debug:
+		for df in data:
+			log.debug("DATA: " + str(df))
 	conn = None
 	try:
 		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
@@ -134,8 +135,9 @@ def pgql(sql, data, db_meta):
 # Find if asset exists
 def pgql_find(sql, data, db_meta):
 	log.debug("SQL:  " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
+	if debug:
+		for df in data:
+			log.debug("DATA: " + str(df))
 	conn = None
 	try:
 		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
@@ -233,8 +235,9 @@ def get_video_format_id(doc_format_ext, db_meta):
 	sql = "SELECT id,doc_format FROM media_mediavideoformat WHERE doc_format=%s"
 	data = (doc_format_ext,)
 	log.debug("SQL:  " + sql)
-	for df in data:
-		log.debug("DATA: " + str(df))
+	if debug:
+		for df in data:
+			log.debug("DATA: " + str(df))
 	conn = None
 	try:
 		conn = psycopg.connect(host=db_meta['DB_HOST'], dbname=db_meta['DB_NAME'], user=db_meta['DB_USER'], password=db_meta['DB_PASSWORD'])
