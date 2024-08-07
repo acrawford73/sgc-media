@@ -9,7 +9,7 @@ crispy-bootstrap3==2024.1
 crispy-bootstrap5==2023.10
 cryptography==42.0.4
 defusedxml==0.7.1
-Django==4.2.14
+Django==4.2.15
 django-allauth==0.54.0
 django-cors-headers==3.14.0
 django-crispy-forms==2.1
