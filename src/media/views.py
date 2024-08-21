@@ -53,22 +53,24 @@ class MediaUploadView(TemplateView):
 ### Video
 class MediaVideoCreateView(CreateView):
 	model = MediaVideo
-	template_name = 'media/mediavideo_create.html'  #<app>/<model>_<viewtype>.html
+	template_name = 'media/video/mediavideo_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'short_description', 'long_description', 'orientation', 'service', 'file_path', 'notes']
 
 class MediaVideoListView(ListView):
 	model = MediaVideo
-	template_name = 'media/video_list.html'
+	template_name = 'media/video/video_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
 class MediaVideoDetailView(DetailView):
 	model = MediaVideo
+	template_name = 'media/video/mediavideo_detail.html'
 	context_object_name = 'asset'
 
 class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
+	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_name', 'orientation', 'location_city', 'location_state', 'location_country']
 
@@ -100,7 +102,7 @@ class MediaVideoDetailAPI(generics.RetrieveAPIView):
 
 class MediaVideoGalleryListView(ListView):
 	model = MediaVideo
-	template_name = 'media/mediavideo_gallery.html'
+	template_name = 'media/video/mediavideo_gallery.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 24
@@ -110,7 +112,7 @@ class MediaVideoRSSFeed(Feed):
 	title = "Video Feed"
 	link = "/videos/rss/"
 	description = "Latest videos"
-	feed_copyright = "SGC-MEDIA-~2023"
+	feed_copyright = "SGC-MEDIA-2024"
 	ttl = 600
 	def items(self):
 		return MediaVideo.objects.filter(is_public=True).order_by("-created")[:10]
@@ -146,22 +148,24 @@ class MediaVideoAtomFeed(MediaVideoRSSFeed):
 
 class MediaVideoServiceCreateView(CreateView):
 	model = MediaVideoService
-	template_name = 'media/mediavideoservice_create.html'
+	template_name = 'media/video/mediavideoservice_create.html'
 	fields = ['service_name']
 
 class MediaVideoServiceListView(ListView):
 	model = MediaVideoService
-	template_name = 'media/mediavideoservice_list.html'
+	template_name = 'media/video/mediavideoservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaVideoServiceDetailView(DetailView):
 	model = MediaVideoService
+	template_name = 'media/video/mediavideoservice_detail.html'
 	context_object_name = 'asset'
 
 class MediaVideoServiceUpdateView(UpdateView):
 	model = MediaVideoService
+	template_name = 'media/video/mediavideoservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_name']
 
@@ -189,18 +193,20 @@ class MediaVideoServiceDetailAPI(generics.RetrieveAPIView):
 ### Audio
 class MediaAudioListView(ListView):
 	model = MediaAudio
-	template_name = 'media/audio_list.html'
+	template_name = 'media/audio/audio_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
 class MediaAudioDetailView(DetailView):
 	model = MediaAudio
+	template_name = 'media/audio/mediaaudio_detail.html'
 	context_object_name = 'asset'
 
 class MediaAudioUpdateView(UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
+	template_name = 'media/audio/mediaaudio_form.html'
 	fields = ['is_public', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes']
 
 # class MediaAudioDeleteView(DeleteView):
@@ -243,29 +249,31 @@ class MediaAudioDetailAPI(generics.RetrieveAPIView):
 
 class MediaAudioGalleryListView(ListView):
 	model = MediaAudio
-	template_name = 'media/mediaaudio_gallery.html'
+	template_name = 'media/audio/mediaaudio_gallery.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 24
 
 class MediaAudioServiceCreateView(CreateView):
 	model = MediaAudioService
-	template_name = 'media/mediaaudioservice_create.html'
+	template_name = 'media/audio/mediaaudioservice_create.html'
 	fields = ['service_name']
 
 class MediaAudioServiceListView(ListView):
 	model = MediaAudioService
-	template_name = 'media/mediaaudioservice_list.html'
+	template_name = 'media/audio/mediaaudioservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaAudioServiceDetailView(DetailView):
 	model = MediaAudioService
+	template_name = 'media/audio/mediaaudioservice_detail.html'
 	context_object_name = 'asset'
 
 class MediaAudioServiceUpdateView(UpdateView):
 	model = MediaAudioService
+	template_name = 'media/audio/mediaaudioservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_name']
 
@@ -293,17 +301,19 @@ class MediaAudioServiceDetailAPI(generics.RetrieveAPIView):
 ### Photo
 class MediaPhotoListView(ListView):
 	model = MediaPhoto
-	template_name = 'media/photo_list.html'
+	template_name = 'media/photo/photo_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
 class MediaPhotoDetailView(DetailView):
 	model = MediaPhoto
+	template_name = 'media/photo/mediaphoto_detail.html'
 	context_object_name = 'asset'
 
 class MediaPhotoUpdateView(UpdateView):
 	model = MediaPhoto
+	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'width', 'height', 'orientation', 'photo_format', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
 
@@ -329,29 +339,31 @@ class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 
 class MediaPhotoGalleryListView(ListView):
 	model = MediaPhoto
-	template_name = 'media/mediaphoto_gallery.html'
+	template_name = 'media/photo/mediaphoto_gallery.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 24
 
 class MediaPhotoServiceCreateView(CreateView):
 	model = MediaPhotoService
-	template_name = 'media/mediaphotoservice_create.html'
+	template_name = 'media/photo/mediaphotoservice_create.html'
 	fields = ['service_name']
 
 class MediaPhotoServiceListView(ListView):
 	model = MediaPhotoService
-	template_name = 'media/mediaphotoservice_list.html'
+	template_name = 'media/photo/mediaphotoservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaPhotoServiceDetailView(DetailView):
 	model = MediaPhotoService
+	template_name = 'media/photo/mediaphotoservice_detail.html'
 	context_object_name = 'asset'
 
 class MediaPhotoServiceUpdateView(UpdateView):
 	model = MediaPhotoService
+	template_name = 'media/photo/mediaphotoservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_name']
 
@@ -379,17 +391,19 @@ class MediaPhotoServiceDetailAPI(generics.RetrieveAPIView):
 ### Documents
 class MediaDocListView(ListView):
 	model = MediaDoc
-	template_name = 'media/docservice_list.html'
+	template_name = 'media/doc/doc_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
 class MediaDocDetailView(DetailView):
 	model = MediaDoc
+	template_name = 'media/doc/mediadoc_detail.html'
 	context_object_name = 'asset'
 
 class MediaDocUpdateView(UpdateView):
 	model = MediaDoc
+	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
 
@@ -415,22 +429,24 @@ class MediaDocDetailAPI(generics.RetrieveAPIView):
 
 class MediaDocServiceCreateView(CreateView):
 	model = MediaDocService
-	template_name = 'media/mediadocservice_create.html'
+	template_name = 'media/doc/mediadocservice_create.html'
 	fields = ['service_name']
 
 class MediaDocServiceListView(ListView):
 	model = MediaDocService
-	template_name = 'media/mediadocservice_list.html'
+	template_name = 'media/doc/mediadocservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_name']
 	paginate_by = 15
 
 class MediaDocServiceDetailView(DetailView):
 	model = MediaDocService
+	template_name = 'media/doc/mediadocservice_detail.html'
 	context_object_name = 'asset'
 
 class MediaDocServiceUpdateView(UpdateView):
 	model = MediaDocService
+	template_name = 'media/doc/mediadocservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_name']
 

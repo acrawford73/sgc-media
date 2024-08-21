@@ -309,6 +309,7 @@ class MediaPhoto(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
+	abstract = models.TextField(default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.jpg
 	media_path = models.CharField(max_length=4096, default="")
@@ -346,6 +347,7 @@ class MediaPhoto(models.Model):
 
 class MediaDocService(models.Model):
 	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	service_url = models.URLField(max_length=2083, null=True, blank=True)
 	class Meta:
 		ordering = ['service_name']
 	def __str__(self):

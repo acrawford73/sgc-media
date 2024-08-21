@@ -17,10 +17,9 @@
           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="{% url 'rokucontentfeed-list' %}">Search</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link inactive" aria-current="page" href="#">RSS</a>
-          </li> -->
-<!--          <li class="nav-item dropdown">
+-->
+
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Media</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'media-video-list' %}">Videos</a></li>
@@ -38,9 +37,9 @@
               <li><a class="dropdown-item" href="{% url 'audio-service-list-api' %}">Audio Services</a></li>
               <li><a class="dropdown-item" href="{% url 'doc-service-list-api' %}">Document Services</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Video RSS</a></li>
+              <li><a class="dropdown-item" href="{% url 'video-rss' %}">Video RSS</a></li>
             </ul>
-          </li> -->
+          </li> 
 
 <!--           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Feeds</a>
@@ -49,6 +48,7 @@
               <li><a class="dropdown-item" href="#">Search Feed</a></li>
             </ul>
           </li> -->
+
           {% if user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a>
