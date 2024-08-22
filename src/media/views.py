@@ -405,7 +405,7 @@ class MediaDocUpdateView(UpdateView):
 	model = MediaDoc
 	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'abstract', 'notes', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
 
 class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)

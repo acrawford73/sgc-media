@@ -309,7 +309,6 @@ class MediaPhoto(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
-	abstract = models.TextField(default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.jpg
 	media_path = models.CharField(max_length=4096, default="")
@@ -372,6 +371,7 @@ class MediaDoc(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
+	abstract = models.TextField(default="", null=True, blank=True)
 	notes = models.TextField(max_length=2048, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")

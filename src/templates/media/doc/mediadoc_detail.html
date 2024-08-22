@@ -11,7 +11,9 @@
   <div class="container">
     <p>&nbsp;</p>
     <h2 class="mt-5"><strong>Document Asset:</strong> {{ asset.id }}</h2>
-    <h4><a href="{% url 'media-doc-update' asset.id %}">Edit this asset</a></h4>
+    
+    <p><a href="{% url 'media-doc-list' %}"><button class="btn btn-info rounded-pill px-3" type="button">< Back to list</button></a>&nbsp;&nbsp;<a href="{% url 'media-doc-update' asset.id %}"><button class="btn btn-primary rounded-pill px-3" type="button">Edit Document Metadata</button></a></p>
+
     <div class="row">
       <div class="col-lg-12">
         <div class="table-responsive">

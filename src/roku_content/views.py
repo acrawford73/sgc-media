@@ -47,7 +47,7 @@ class RokuContentFeedListView(LoginRequiredMixin, ListView):
 	model = RokuContentFeed
 	template_name = 'roku_content/rokucontentfeed_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rokucontentfeed'
-	ordering = ['-id']
+	ordering = ['id']
 	#paginate_by = 15
 
 class RokuContentFeedDetailView(LoginRequiredMixin, DetailView):
