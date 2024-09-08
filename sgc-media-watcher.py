@@ -9,17 +9,18 @@
 # _/_/_/      _/_/_/    _/_/_/
 
 ### SGC-MEDIA:
+
 # An ingest host for media files, uploaded via SSH or SFTP.
 # Bulk upload media files, then edit metadata later.
 # CMS like interface for reviewing ingested media.
 # API for querying media content.
 
-# The database schema is already through Django project 'sgcmedia' setup.
+# The database schema is created through Django project 'sgcmedia' setup.
 # Features:
 # - Watches for new media in watch folder.
-# - Copies new media from private to public storage.
-# - Adds new media to Postgres database.
-# - Removes media from Postgres database upon deletion, if enabled.
+# - Copies media from private to public web server storage.
+# - Adds media metadata to Postgres database.
+# - Removes media from PostgreSQL database upon deletion, if enabled.
 
 import os
 import sys

@@ -96,7 +96,8 @@ class MediaVideo(models.Model):
 	file_path = models.CharField(max_length=4096, default="")
 	media_path = models.CharField(max_length=4096, default="")
 	size = models.PositiveIntegerField(default=0)
-	sha256 = models.CharField(max_length=64, default="")
+	path_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
+	file_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	#file_uuid = models.UUIDField(default=uuid.uuid4, editable=False, null=False, blank=False)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION)
@@ -213,7 +214,8 @@ class MediaAudio(models.Model):
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.mp3
 	media_path = models.CharField(max_length=4096, default="")
 	size = models.PositiveIntegerField(default=0)
-	sha256 = models.CharField(max_length=64, default="")
+	path_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
+	file_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	audio_format = models.CharField(max_length=32, default="", null=True, blank=True)
 	audio_bitrate = models.CharField(max_length=32, default="", null=True, blank=True)
@@ -313,7 +315,8 @@ class MediaPhoto(models.Model):
 	file_path = models.CharField(max_length=4096, default="")  # folder-path/file.jpg
 	media_path = models.CharField(max_length=4096, default="")
 	size = models.PositiveIntegerField(default=0)
-	sha256 = models.CharField(max_length=64, default="")
+	path_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
+	file_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	width = models.PositiveSmallIntegerField(default=0)
 	height = models.PositiveSmallIntegerField(default=0)
@@ -377,13 +380,15 @@ class MediaDoc(models.Model):
 	file_path = models.CharField(max_length=4096, default="")
 	media_path = models.CharField(max_length=4096, default="")
 	size = models.PositiveIntegerField(default=0)
-	sha256 = models.CharField(max_length=64, default="")
+	path_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
+	file_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
 	file_uuid = models.CharField(max_length=36, null=False, blank=False)
 	doi_url = models.URLField(max_length=2083, null=True, blank=True)
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
 	### this is actually doc_format_id in the database
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
 	category = models.ForeignKey("MediaDocCategories", on_delete=models.SET_NULL, blank=True, null=True)
+	topics = models.CharField(default="", null=True, blank=True)
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
 	#updated = models.DateTimeField(auto_now=True)
@@ -396,3 +401,4 @@ class MediaDoc(models.Model):
 		ordering = ['-created']
 		def __unicode__(self):
 			return self.file_name
+
