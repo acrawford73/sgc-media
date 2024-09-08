@@ -130,8 +130,10 @@ class MediaVideo(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
-	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES)
-	service_name = models.ForeignKey("MediaVideoService", on_delete=models.SET_NULL, blank=True, null=True)
+	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES, \
+		help_text="The service where the media came from originally, provided from imported json.")
+	service_name = models.ForeignKey("MediaVideoService", on_delete=models.SET_NULL, blank=True, null=True, \
+		help_text="Select the service where the media came from originally.")
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	genre = models.ForeignKey("MediaVideoGenre", on_delete=models.SET_NULL, blank=True, null=True)
 	doc_format = models.ForeignKey("MediaVideoFormat", on_delete=models.SET_NULL, blank=True, null=True)
@@ -240,6 +242,7 @@ class MediaAudio(models.Model):
 	#transcriptions = models.ManyToManyField('Transcription', through='MediaAudioTranscription', blank=True)
 	#transcriptions = models.ForeignKey("Transcription", on_delete=models.CASCADE, blank=True, null=True)
 	transcription = models.TextField(default="", blank=True, null=True)
+	topics = models.CharField(default="", null=True, blank=True)
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
 	class Meta:
