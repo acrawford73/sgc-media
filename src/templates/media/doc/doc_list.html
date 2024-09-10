@@ -19,9 +19,8 @@
               <tr align="center" class="table-primary">
                 <th align="center">#</th>
                 <th>File</th>
-                <th>Format</th>
                 <th>Added UTC</th>
-		<th>Public</th>
+		            <th>Public</th>
               </tr>
             </thead>
             <tbody>
@@ -29,9 +28,8 @@
               <tr align="center">
                 <td>{{ asset.id }}</td>
                 <td align="left"><a href="{% url 'media-doc-detail' asset.id %}">{{ asset.file_name }}</a></td>
-                <td>{{ asset.doc_format }}</td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
-		<td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
+		            <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
               {% endfor %}
 

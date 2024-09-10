@@ -11,7 +11,7 @@ class MediaVideoAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'media_video_format', 'service', 'created']
 	search_fields = ['file_name', 'media_video_format']
 	list_filter = ['media_video_format', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'media_video_duration', \
+	readonly_fields = ['size', 'path_sha256', 'file_sha256', 'file_uuid', 'created', 'media_video_duration', \
 	'media_video_width', 'media_video_height', 'media_video_format', 'media_video_frame_rate', \
 	'media_video_codec', 'media_audio_codec', 'media_audio_channels', 'media_audio_sample_rate', \
 	'doc_format', 'media_video_bitrate', 'media_audio_bitrate']
@@ -41,7 +41,7 @@ class MediaAudioAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'artist', 'album', 'created']
 	search_fields = ['file_name', 'artist', 'album', 'genre', 'year']
 	list_filter = ['genre', 'year', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format', 'image']
+	readonly_fields = ['size', 'path_sha256', 'file_sha256', 'file_uuid', 'created', 'doc_format', 'image']
 	class Meta:
 		model = MediaAudio
 
@@ -62,7 +62,7 @@ class MediaPhotoAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'size', 'orientation', 'service', 'created']
 	search_fields = ['file_name']
 	list_filter = ['orientation', 'service', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format', 'height', 'width', 'photo_format', 'orientation']
+	readonly_fields = ['size', 'path_sha256', 'file_sha256', 'file_uuid', 'created', 'doc_format', 'height', 'width', 'photo_format', 'orientation']
 	class Meta:
 		model = MediaPhoto
 
@@ -78,7 +78,7 @@ class MediaDocAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'title', 'doc_format', 'size', 'created']
 	search_fields = ['file_name', 'title']
 	list_filter = ['doc_format_id', 'is_public']
-	readonly_fields = ['size', 'sha256', 'file_uuid', 'created', 'doc_format']
+	readonly_fields = ['size', 'path_sha256', 'file_sha256', 'file_uuid', 'created', 'doc_format']
 	class Meta:
 		model = MediaDoc
 
