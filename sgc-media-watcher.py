@@ -191,7 +191,7 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, sha256, file_uuid, \
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, file_sha256, file_uuid, \
 	media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, \
 	media_video_frame_rate_calc, media_video_bitrate, media_video_codec, media_video_codec_long_name, \
 	media_video_codec_tag_string, media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
@@ -217,7 +217,7 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
 	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
 	media_audio_extra, doc_format_id, rating, db_meta):
-	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, sha256, \
+	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, file_sha256, \
 	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, \
 	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, \
 	is_public, tags, image, extra, doc_format_id, rating) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
@@ -234,7 +234,7 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 		asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, \
 		tags, doc_format_id, db_meta):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, sha256, \
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, file_sha256, \
 		file_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id) \
 	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
@@ -245,14 +245,14 @@ def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, as
 # Add Document asset to database
 def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta):
-	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, sha256, \
+	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, file_sha256, \
 	file_uuid, doc_format_id, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
 	asset_uuid, doc_format_id, created, is_public, tags)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
 
-# Delete
+# Delete assets
 def asset_delete_photo(asset_full_path, db_meta):
 	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
 	data = (asset_full_path,)
@@ -285,34 +285,34 @@ def asset_delete_doc(asset_full_path, db_meta):
 		log.debug("Asset deleted from database: {}".format(asset_full_path))
 	return psql_result
 
-# Query
+# Find assets in DB by sha256
 def asset_find_photo(asset_sha256, db_meta):
-	sql = "SELECT sha256 FROM media_mediaphoto WHERE sha256=%s"
+	sql = "SELECT file_sha256 FROM media_mediaphoto WHERE file_sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data, db_meta)
 	return res_count
 
 def asset_find_video(asset_sha256, db_meta):
-	sql = "SELECT sha256 FROM media_mediavideo WHERE sha256=%s"
+	sql = "SELECT file_sha256 FROM media_mediavideo WHERE file_sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data, db_meta)
 	return res_count
 
 def asset_find_audio(asset_sha256, db_meta):
-	sql = "SELECT sha256 FROM media_mediaaudio WHERE sha256=%s"
+	sql = "SELECT file_sha256 FROM media_mediaaudio WHERE file_sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data, db_meta)
 	return res_count
 
 def asset_find_doc(asset_sha256, db_meta):
-	sql = "SELECT sha256 FROM media_mediadoc WHERE sha256=%s"
+	sql = "SELECT file_sha256 FROM media_mediadoc WHERE file_sha256=%s"
 	data = (asset_sha256,)
 	res_count = pgql_find(sql, data, db_meta)
 	return res_count
 
-# Update
+# Update assets
 def asset_update_photo(asset_full_path, asset_media_path, asset_sha256, db_meta):
-	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s WHERE sha256=%s"
+	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s WHERE file_sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
@@ -320,7 +320,7 @@ def asset_update_photo(asset_full_path, asset_media_path, asset_sha256, db_meta)
 	return psql_result
 
 def asset_update_video(asset_full_path, asset_media_path, asset_sha256, db_meta):
-	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE sha256=%s"
+	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE file_sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
@@ -328,7 +328,7 @@ def asset_update_video(asset_full_path, asset_media_path, asset_sha256, db_meta)
 	return psql_result
 	
 def asset_update_audio(asset_full_path, asset_media_path, asset_sha256, db_meta):
-	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE sha256=%s"
+	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE file_sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
@@ -336,13 +336,14 @@ def asset_update_audio(asset_full_path, asset_media_path, asset_sha256, db_meta)
 	return psql_result
 	
 def asset_update_doc(asset_full_path, asset_media_path, asset_sha256, db_meta):
-	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s WHERE sha256=%s"
+	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s WHERE file_sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
 	return psql_result
 
+# Check for file format
 def get_video_format_id(doc_format_ext, db_meta):
 	sql = "SELECT id,doc_format FROM media_mediavideoformat WHERE doc_format=%s"
 	data = (doc_format_ext,)
@@ -625,10 +626,10 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 
 			file, ext = os.path.splitext(asset) # "path/file"  ".txt"
-		
+			
 			# Check for hidden files
-			if file.startswith("."):
-				log.warning("Cannot ingest filenames starting with a period (.), hidden file skipped.")
+			if file.startswith(".") or file.startswith("_"):
+				log.warning("Cannot ingest filenames starting with a period (.) or underscore (_), file skipped.")
 				continue
 
 			tags = json.dumps([])  # empty
@@ -697,7 +698,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					is_public, tags, doc_format_id, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
 
@@ -846,7 +847,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					media_audio_extra, doc_format_id, rating, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
 
@@ -1048,7 +1049,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
 
@@ -1085,7 +1086,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 					asset_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
+					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
 				else:
 					log.error("Failed to ingest asset: " + asset_full_path)
 
