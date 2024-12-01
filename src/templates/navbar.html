@@ -19,6 +19,8 @@
           </li>
 -->
 
+        {% if user.is_authenticated %}
+        
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Media</a>
             <ul class="dropdown-menu">
@@ -49,7 +51,7 @@
             </ul>
           </li> -->
 
-          {% if user.is_authenticated %}
+          
           <li class="nav-item">
             <a class="nav-link inactive" aria-current="page" href="{% url 'rokucontentfeed-list' %}">Content Feeds</a>
           </li>

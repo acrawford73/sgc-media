@@ -92,6 +92,13 @@ def file_check_exists(inputfile):
 			print('Assets file ' + inputfile + ' not found!')
 		return False
 
+# Create SHA256 value of asset_full_path string
+def hash_path(asset):
+	""""This function returns the SHA-256 hash of the asset_full_path passed into it"""
+	h = hashlib.sha256()
+	h.update(asset.encode())
+	return str(h.hexdigest())
+
 # Create SHA256 value of file
 def hash_file(asset):
 	""""This function returns the SHA-256 hash of the file passed into it"""
@@ -184,23 +191,23 @@ def pgql_find(sql, data, db_meta):
 
 # Add Video asset to database
 def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
+					asset_sha256, path_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta):
-	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, file_sha256, file_uuid, \
+	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, file_sha256, path_sha256, file_uuid, \
 	media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, \
 	media_video_frame_rate_calc, media_video_bitrate, media_video_codec, media_video_codec_long_name, \
 	media_video_codec_tag_string, media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
 	media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 	media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, media_audio_sample_rate, \
 	created, is_public, tags, doc_format_id) \
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
+					asset_sha256, path_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
@@ -212,17 +219,17 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 
 # Add Audio asset to database
 def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
+	asset_sha256, path_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
 	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
 	media_audio_extra, doc_format_id, rating, db_meta):
-	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, file_sha256, \
+	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, file_sha256, path_sha256, \
 	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, \
 	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, \
-	is_public, tags, image, extra, doc_format_id, rating) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	is_public, tags, image, extra, doc_format_id, rating) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
+	asset_sha256, path_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
 	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
@@ -232,22 +239,22 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 
 # Add Photo asset to database
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-		asset_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, \
+		asset_sha256, path_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, \
 		tags, doc_format_id, db_meta):
-	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, file_sha256, \
+	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, file_sha256, path_sha256, \
 		file_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id) \
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, path_sha256, \
 		asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
 
 # Add Document asset to database
 def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta):
-	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, file_sha256, \
-	file_uuid, doc_format_id, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, \
+	asset_sha256, path_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta):
+	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, file_sha256, path_sha256, \
+	file_uuid, doc_format_id, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, path_sha256, \
 	asset_uuid, doc_format_id, created, is_public, tags)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
@@ -619,11 +626,12 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
 
+			# Determine file data
 			created_utc = datetime.datetime.utcnow()
 			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
 			
-			asset_full_path = os.path.join(path, asset)
-			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
+			asset_full_path = os.path.join(path, asset)	# media_assets/media_file.mp4
+			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)  # media_file.mp4
 
 			file, ext = os.path.splitext(asset) # "path/file"  ".txt"
 			
@@ -632,19 +640,22 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.warning("Cannot ingest filenames starting with a period (.) or underscore (_), file skipped.")
 				continue
 
+			log.debug("ASSET=" + asset)
+			log.debug("ASSET_FULL_PATH=" + asset_full_path)
+			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
+			log.debug("FILE=" + file + ext)
+			log.debug("EXT=" + ext)
+
+			ext = ext.split(".")[1].upper()  # remove the period .
+
 			tags = json.dumps([])  # empty
 			is_public = True
 
-			log.debug("ASSET_FULL_PATH=" + asset_full_path)
-			log.debug("ASSET_MEDIA_PATH=" + asset_media_path)
-			log.debug("FILE=" + file)
-			log.debug("EXT=" + ext)
-			
-			ext = ext.split(".")[1].upper()  # remove the period .
 
-			# Ingest photo asset
+			# Ingest photo asset if valid extension
 			if ext in ext_photo:
 				
+				path_sha256 = hash_path(asset_full_path)
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_photo(asset_sha256, db_meta)
 				if asset_exists is not None:
@@ -686,7 +697,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
-				log.debug("Hash:         " + asset_sha256)
+				log.debug("File Hash:    " + asset_sha256)
+				log.debug("Path Hash:    " + path_sha256)
 				log.debug("UUID:         " + asset_uuid)
 				log.debug("Width:        " + str(width))
 				log.debug("Height:       " + str(height))
@@ -694,7 +706,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format ID:    " + str(doc_format_id))
 
 				ingested = asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, width, height, photo_format, orientation, created, \
+					asset_sha256, path_sha256, asset_uuid, width, height, photo_format, orientation, created, \
 					is_public, tags, doc_format_id, db_meta)
 				
 				if ingested == True:
@@ -705,6 +717,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			# Ingest audio/music asset
 			elif ext in ext_audio:
 				
+				path_sha256 = hash_path(asset_full_path)
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_audio(asset_sha256, db_meta)
 				if asset_exists is not None:
@@ -816,7 +829,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size) + " bytes")
-				log.debug("Hash:        " + asset_sha256)
+				log.debug("File Hash:   " + asset_sha256)
+				log.debug("Path Hash:   " + path_sha256)
 				log.debug("UUID:        " + asset_uuid)
 				# Metadata
 				log.debug("Title:        " + asset_title)
@@ -839,7 +853,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Rating:       " + str(rating))
 				
 				ingested = asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
-					asset_size, asset_sha256, asset_uuid, media_audio_artist, media_audio_album, \
+					asset_size, asset_sha256, path_sha256, asset_uuid, media_audio_artist, media_audio_album, \
 					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
 					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
 					media_audio_comments, media_audio_duration, media_audio_bitrate, \
@@ -855,6 +869,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			elif ext in ext_video:
 
 				# If asset already exists in database, ignore it
+				path_sha256 = hash_path(asset_full_path)
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_video(asset_sha256, db_meta)
 				if asset_exists is not None:
@@ -1013,7 +1028,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 
 				log.debug("File:            " + asset)
 				log.debug("Size:            " + str(asset_size))
-				log.debug("Hash:            " + asset_sha256)
+				log.debug("File Hash:       " + asset_sha256)
+				log.debug("Path Hash:       " + path_sha256)
 				log.debug("UUID:            " + asset_uuid)
 				log.debug("> Video Properties:")
 				log.debug("Width:           " + str(media_video_width))
@@ -1040,7 +1056,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format ID:       " + str(doc_format_id))
 				
 				ingested = asset_video_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
+					asset_sha256, path_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
 					media_video_codec, media_video_codec_long_name, media_video_codec_tag_string, \
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
@@ -1056,6 +1072,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 			# Documents
 			elif ext in ext_doc:
 				
+				path_sha256 = hash_path(asset_full_path)
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_doc(asset_sha256, db_meta)
 				if asset_exists is not None:
@@ -1077,7 +1094,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size))
-				log.debug("Hash:        " + asset_sha256)
+				log.debug("File Hash:   " + asset_sha256)
+				log.debug("Path Hash:   " + path_sha256)
 				log.debug("UUID:        " + asset_uuid)
 				log.debug("Format:      " + doc_format_ext)
 				log.debug("Format ID:   " + str(doc_format_id))
