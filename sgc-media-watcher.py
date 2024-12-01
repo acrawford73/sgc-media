@@ -710,9 +710,9 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					is_public, tags, doc_format_id, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(width)+" height="+str(height)+" orientation="+orientation+" format="+photo_format)
+					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' width='"+str(width)+"' height='"+str(height)+"' orientation='"+orientation+"' format='"+photo_format+"'")
 				else:
-					log.error("Failed to ingest asset: " + asset_full_path)
+					log.error("Failed to ingest asset " + asset_full_path)
 
 			# Ingest audio/music asset
 			elif ext in ext_audio:
@@ -861,9 +861,9 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					media_audio_extra, doc_format_id, rating, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" artist="+media_audio_artist+" album="+media_audio_album+" title="+asset_title)
+					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' artist='"+media_audio_artist+"' album='"+media_audio_album+"' title='"+asset_title+"'")
 				else:
-					log.error("Failed to ingest asset: " + asset_full_path)
+					log.error("Failed to ingest asset " + asset_full_path)
 
 			# Ingest video asset
 			elif ext in ext_video:
@@ -1065,9 +1065,9 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" width="+str(media_video_width)+" height="+str(media_video_height)+" orientation="+orientation+" format="+media_video_format+" duration="+str(media_video_duration))
+					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' width='"+str(media_video_width)+"' height='"+str(media_video_height)+"' orientation='"+orientation+"' format='"+media_video_format+"' duration='"+str(media_video_duration)+"'")
 				else:
-					log.error("Failed to ingest asset: " + asset_full_path)
+					log.error("Failed to ingest asset " + asset_full_path)
 
 			# Documents
 			elif ext in ext_doc:
@@ -1104,9 +1104,9 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					asset_sha256, path_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
 				
 				if ingested == True:
-					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
+					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' doc_format='"+doc_format_ext+"'")
 				else:
-					log.error("Failed to ingest asset: " + asset_full_path)
+					log.error("Failed to ingest asset " + asset_full_path)
 
 			else:
 				log.error("Invalid file extension " + ext + ", asset not ingested.")
