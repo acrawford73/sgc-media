@@ -606,7 +606,7 @@ def get_AR(w,h):
 # WATCHER
 # ------------------------------
 # Check watch folder for new content
-def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
+def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
@@ -1101,7 +1101,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc):
 				log.debug("Format ID:   " + str(doc_format_id))
 
 				ingested = asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
+					asset_sha256, path_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
 				
 				if ingested == True:
 					log.info("Asset ingested: path="+asset_full_path+" size="+str(asset_size)+" file_sha256="+asset_sha256+" uuid="+asset_uuid+" doc_format="+doc_format_ext)
@@ -1258,6 +1258,6 @@ if __name__ == "__main__":
 
 
 	# Start watcher loop
-	Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc)
+	Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta)
 
 	log.info("SGC-Media Watcher Stopped.");print()
