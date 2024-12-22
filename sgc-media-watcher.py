@@ -260,33 +260,33 @@ def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asse
 	return psql_result
 
 # Delete assets
-def asset_delete_photo(asset_full_path, db_meta):
-	sql = "DELETE FROM media_mediaphoto WHERE file_path=%s"
-	data = (asset_full_path,)
+def asset_delete_photo(asset_full_path, path_sha256, db_meta):
+	sql = "DELETE FROM media_mediaphoto WHERE path_sha256=%s"
+	data = (path_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset deleted from database: {}".format(asset_full_path))
 	return psql_result
 
-def asset_delete_video(asset_full_path, db_meta):
-	sql = "DELETE FROM media_mediavideo WHERE file_path=%s"
-	data = (asset_full_path,) # comma required!
+def asset_delete_video(asset_full_path, path_sha256, db_meta):
+	sql = "DELETE FROM media_mediavideo WHERE path_sha256=%s"
+	data = (path_sha256,) # comma required!
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset deleted from database: {}".format(asset_full_path))
 	return psql_result
 
-def asset_delete_audio(asset_full_path, db_meta):
-	sql = "DELETE FROM media_mediaaudio WHERE file_path=%s"
-	data = (asset_full_path,)
+def asset_delete_audio(asset_full_path, path_sha256, db_meta):
+	sql = "DELETE FROM media_mediaaudio WHERE path_sha256=%s"
+	data = (path_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset deleted from database: {}".format(asset_full_path))
 	return psql_result
 
-def asset_delete_doc(asset_full_path, db_meta):
-	sql = "DELETE FROM media_mediadoc WHERE file_path=%s"
-	data = (asset_full_path,)
+def asset_delete_doc(asset_full_path, path_sha256, db_meta):
+	sql = "DELETE FROM media_mediadoc WHERE path_sha256=%s"
+	data = (path_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset deleted from database: {}".format(asset_full_path))
@@ -1233,6 +1233,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':
+
+			path_sha256 = hash_path(asset_full_path)
 			asset_full_path = os.path.join(path, asset)
 			file, ext = os.path.splitext(asset)
 
@@ -1243,13 +1245,13 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					ext = ext.split(".")[1].upper()
 					if delete_db_on_fs_delete == True:
 						if ext in ext_photo:
-							asset_delete_photo(asset_full_path, db_meta)
+							asset_delete_photo(asset_full_path, path_sha256, db_meta)
 						elif ext in ext_audio:
-							asset_delete_audio(asset_full_path, db_meta)
+							asset_delete_audio(asset_full_path, path_sha256, db_meta)
 						elif ext in ext_video:
-							asset_delete_video(asset_full_path, db_meta)
+							asset_delete_video(asset_full_path, path_sha256, db_meta)
 						elif ext in ext_doc:
-							asset_delete_doc(asset_full_path, db_meta)
+							asset_delete_doc(asset_full_path, path_sha256, db_meta)
 						else:
 							pass
 						#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
