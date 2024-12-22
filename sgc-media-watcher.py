@@ -350,6 +350,38 @@ def asset_update_doc(asset_full_path, asset_media_path, asset_sha256, db_meta):
 		log.debug("Asset updated in database: {}".format(asset_full_path))
 	return psql_result
 
+def asset_update_path_photo(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
+	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
+
+def asset_update_path_video(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
+	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
+
+def asset_update_path_audio(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
+	sql = "UPDATE media_mediaaudio SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
+
+def asset_update_path_doc(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
+	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
+	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	psql_result = pgql(sql, data, db_meta)
+	if psql_result == True:
+		log.debug("Asset updated in database: {}".format(asset_full_path))
+	return psql_result
+
 # Check for file format
 def get_video_format_id(doc_format_ext, db_meta):
 	sql = "SELECT id,doc_format FROM media_mediavideoformat WHERE doc_format=%s"
@@ -619,8 +651,8 @@ def clean_filename(text):
 # Check watch folder for new content
 def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	
-	SKIP_EVENTS = ['IN_OPEN', 'IN_ACCESS', 'IN_CLOSE_NOWRITE']
-	
+	SKIP_EVENTS = ['IN_OPEN', 'IN_ACCESS', 'IN_CLOSE_NOWRITE', 'IN_MODIFY']
+
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
 	#inw.block_duration_s = 2
@@ -637,7 +669,61 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 		if not type_names[0] in SKIP_EVENTS:
 			log.debug("DEBUG Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
 
-		## FILE CREATED EVENT ## (Completed file system write)
+		## File has been moved check if already in database if so, update path and path hash
+		if type_names[0] == 'IN_CREATE':
+
+			asset_full_path = os.path.join(path, asset)	# media_assets/media_file.mp4
+			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)  # media_file.mp4
+			file, ext = os.path.splitext(asset) # "path/file"  ".txt"
+			ext = ext.split(".")[1].upper()  # remove the period .
+
+			# If already in database, file has been moved
+			if ext in ext_photo:
+				asset_exists = asset_find_photo(asset_sha256, db_meta)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
+						# update paths and hash path
+						path_sha256 = hash_path(asset_full_path)
+						asset_sha256 = hash_file(asset_full_path)
+						asset_update_path_photo(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
+						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
+						continue
+			elif ext in ext_audio:
+				asset_exists = asset_find_audio(asset_sha256, db_meta)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
+						path_sha256 = hash_path(asset_full_path)
+						asset_sha256 = hash_file(asset_full_path)
+						asset_update_path_audio(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
+						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
+						continue			
+			elif ext in ext_video:
+				asset_exists = asset_find_video(asset_sha256, db_meta)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
+						path_sha256 = hash_path(asset_full_path)
+						asset_sha256 = hash_file(asset_full_path)
+						asset_update_path_video(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
+						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
+						continue
+			elif ext in ext_doc:
+				asset_exists = asset_find_doc(asset_sha256, db_meta)
+				if asset_exists is not None:
+					if asset_exists > 0:
+						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
+						path_sha256 = hash_path(asset_full_path)
+						asset_sha256 = hash_file(asset_full_path)
+						asset_update_path_doc(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
+						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
+						continue
+			# Not in database, file is uploading
+			continue
+
+
+		## FILE CREATED EVENT ## (Completed file system write from upload)
 		if type_names[0] == 'IN_CLOSE_WRITE':
 
 			# Determine file data
