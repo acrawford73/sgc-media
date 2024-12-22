@@ -679,43 +679,42 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 			# If already in database, file has been moved
 			if ext in ext_photo:
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_photo(asset_sha256, db_meta)
 				if asset_exists is not None:
 					if asset_exists > 0:
 						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
-						# update paths and hash path
 						path_sha256 = hash_path(asset_full_path)
-						asset_sha256 = hash_file(asset_full_path)
 						asset_update_path_photo(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
 			elif ext in ext_audio:
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_audio(asset_sha256, db_meta)
 				if asset_exists is not None:
 					if asset_exists > 0:
 						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
 						path_sha256 = hash_path(asset_full_path)
-						asset_sha256 = hash_file(asset_full_path)
 						asset_update_path_audio(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue			
 			elif ext in ext_video:
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_video(asset_sha256, db_meta)
 				if asset_exists is not None:
 					if asset_exists > 0:
 						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
 						path_sha256 = hash_path(asset_full_path)
-						asset_sha256 = hash_file(asset_full_path)
 						asset_update_path_video(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
 			elif ext in ext_doc:
+				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_doc(asset_sha256, db_meta)
 				if asset_exists is not None:
 					if asset_exists > 0:
 						log.warning("Asset " + asset_sha256 + " already exists in database: " + asset_full_path)
 						path_sha256 = hash_path(asset_full_path)
-						asset_sha256 = hash_file(asset_full_path)
 						asset_update_path_doc(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
