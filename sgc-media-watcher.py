@@ -1238,28 +1238,28 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			path_sha256 = hash_path(asset_full_path)
 			file, ext = os.path.splitext(asset)
 
-			if not os.path.exists(asset_full_path):
-				log.warning("Asset " + asset_full_path + " does not exist. File moved or deleted.")
-			else:
-				if ext != "":
-					ext = ext.split(".")[1].upper()
-					if delete_db_on_fs_delete == True:
-						if ext in ext_photo:
-							asset_delete_photo(asset_full_path, path_sha256, db_meta)
-						elif ext in ext_audio:
-							asset_delete_audio(asset_full_path, path_sha256, db_meta)
-						elif ext in ext_video:
-							asset_delete_video(asset_full_path, path_sha256, db_meta)
-						elif ext in ext_doc:
-							asset_delete_doc(asset_full_path, path_sha256, db_meta)
-						else:
-							pass
-						#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
-						log.info("Asset deleted from file system and database: {}".format(asset_full_path))
-
+			# if not os.path.exists(asset_full_path):
+			# 	log.warning("Asset " + asset_full_path + " does not exist. File moved or deleted.")
+			# else:
+			if ext != "":
+				ext = ext.split(".")[1].upper()
+				if delete_db_on_fs_delete == True:
+					if ext in ext_photo:
+						asset_delete_photo(asset_full_path, path_sha256, db_meta)
+					elif ext in ext_audio:
+						asset_delete_audio(asset_full_path, path_sha256, db_meta)
+					elif ext in ext_video:
+						asset_delete_video(asset_full_path, path_sha256, db_meta)
+					elif ext in ext_doc:
+						asset_delete_doc(asset_full_path, path_sha256, db_meta)
 					else:
-						#log.info("Asset " + asset_sha256 + " deleted from file system: {}".format(asset_full_path))
-						log.info("Asset deleted from file system: {}".format(asset_full_path))
+						pass
+					#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
+					log.info("Asset deleted from file system and database: {}".format(asset_full_path))
+
+				else:
+					#log.info("Asset " + asset_sha256 + " deleted from file system: {}".format(asset_full_path))
+					log.info("Asset deleted from file system: {}".format(asset_full_path))
 
 
 		## FILE UPDATE EVENT ##
