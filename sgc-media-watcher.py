@@ -333,7 +333,7 @@ def asset_update_video(asset_full_path, asset_media_path, asset_sha256, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
 	return psql_result
-	
+
 def asset_update_audio(asset_full_path, asset_media_path, asset_sha256, db_meta):
 	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s WHERE file_sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
@@ -341,7 +341,7 @@ def asset_update_audio(asset_full_path, asset_media_path, asset_sha256, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
 	return psql_result
-	
+
 def asset_update_doc(asset_full_path, asset_media_path, asset_sha256, db_meta):
 	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s WHERE file_sha256=%s"
 	data = (asset_full_path,asset_media_path,asset_sha256,)
@@ -352,7 +352,7 @@ def asset_update_doc(asset_full_path, asset_media_path, asset_sha256, db_meta):
 
 def asset_update_path_photo(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
 	sql = "UPDATE media_mediaphoto SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
-	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	data = (asset_full_path,asset_media_path,path_sha256,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
@@ -360,7 +360,7 @@ def asset_update_path_photo(asset_full_path, asset_media_path, asset_sha256, pat
 
 def asset_update_path_video(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
 	sql = "UPDATE media_mediavideo SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
-	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	data = (asset_full_path,asset_media_path,path_sha256,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
@@ -368,7 +368,7 @@ def asset_update_path_video(asset_full_path, asset_media_path, asset_sha256, pat
 
 def asset_update_path_audio(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
 	sql = "UPDATE media_mediaaudio SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
-	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	data = (asset_full_path,asset_media_path,path_sha256,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
@@ -376,7 +376,7 @@ def asset_update_path_audio(asset_full_path, asset_media_path, asset_sha256, pat
 
 def asset_update_path_doc(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta):
 	sql = "UPDATE media_mediadoc SET file_path=%s,media_path=%s,path_sha256=%s WHERE file_sha256=%s"
-	data = (asset_full_path,asset_media_path,asset_sha256,path_sha256,)
+	data = (asset_full_path,asset_media_path,path_sha256,asset_sha256,)
 	psql_result = pgql(sql, data, db_meta)
 	if psql_result == True:
 		log.debug("Asset updated in database: {}".format(asset_full_path))
@@ -742,12 +742,12 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			# Determine file data
 			created_utc = datetime.datetime.utcnow()
 			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-			
+
 			asset_full_path = os.path.join(path, asset)	# media_assets/media_file.mp4
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)  # media_file.mp4
 
 			file, ext = os.path.splitext(asset) # "path/file"  ".txt"
-			
+
 			# Check for hidden files
 			if file.startswith(".") or file.startswith("_"):
 				log.warning("Cannot ingest filenames starting with a period (.) or underscore (_), file skipped.")
@@ -767,7 +767,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 			# Ingest photo asset if valid extension
 			if ext in ext_photo:
-				
+
 				path_sha256 = hash_path(asset_full_path)
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_photo(asset_sha256, db_meta)
@@ -807,7 +807,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					doc_format_id = result
 
 				asset_title = splitext(asset)[0]
-				
+
 				log.debug("> File Properties:")
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
@@ -823,7 +823,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 				ingested = asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, path_sha256, asset_uuid, width, height, photo_format, orientation, created, \
 					is_public, tags, doc_format_id, db_meta)
-				
+
 				if ingested == True:
 					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' width='"+str(width)+"' height='"+str(height)+"' orientation='"+orientation+"' format='"+photo_format+"'")
 				else:
@@ -846,7 +846,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 				asset_title = splitext(asset)[0]
 				asset_uuid = str(uuid.uuid4())
-				
+
 				audio_metadata = TinyTag.get(asset_full_path, image=True)
 
 				if (audio_metadata.title is not None) and (audio_metadata.title != ""):
@@ -976,7 +976,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					media_audio_comments, media_audio_duration, media_audio_bitrate, \
 					media_audio_samplerate, created, is_public, tags, media_audio_image, \
 					media_audio_extra, doc_format_id, rating, db_meta)
-				
+
 				if ingested == True:
 					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' artist='"+media_audio_artist+"' album='"+media_audio_album+"' title='"+asset_title+"'")
 				else:
@@ -1030,12 +1030,12 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						media_video_width = int(metadata[video_index]['width'])
 					else:
 						media_video_width = 0
-					
+
 					if 'bit_rate' in metadata[video_index]:
 						media_video_bitrate = metadata[video_index]['bit_rate']
 					else:
 						media_video_bitrate = "NA"
-		
+
 					#confirm this is correct
 					if media_video_width > 1920:
 						media_video_format = "UHD"
@@ -1045,7 +1045,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						media_video_format = "HD"
 					else:
 						media_video_format = "SD"
-					
+
 					# Display Orientation, signage
 					if media_video_width > media_video_height:
 						orientation = "Landscape"
@@ -1053,7 +1053,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						orientation = "Portrait"
 					else:
 						orientation = "Square"
-					
+
 					if 'codec_name' in metadata[video_index]:
 						media_video_codec = metadata[video_index]['codec_name']
 					else:
@@ -1358,7 +1358,7 @@ if __name__ == "__main__":
 		quit(1)
 	else:
 		log.debug(ext_video)
-	
+
 	ext_audio = get_audio_formats(db_meta)
 	if ext_audio == False:
 		log.error("There are no audio formats listed in the database.")
