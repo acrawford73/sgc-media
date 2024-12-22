@@ -688,6 +688,10 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						asset_update_path_photo(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
+					else:
+						continue
+				else:
+					continue
 			elif ext in ext_audio:
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_audio(asset_sha256, db_meta)
@@ -698,6 +702,10 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						asset_update_path_audio(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue			
+					else:
+						continue
+				else:
+					continue
 			elif ext in ext_video:
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_video(asset_sha256, db_meta)
@@ -708,6 +716,10 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						asset_update_path_video(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
+					else:
+						continue
+				else:
+					continue
 			elif ext in ext_doc:
 				asset_sha256 = hash_file(asset_full_path)
 				asset_exists = asset_find_doc(asset_sha256, db_meta)
@@ -718,12 +730,14 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						asset_update_path_doc(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
-			# Not in database, file is uploading
-			continue
+					else:
+						continue
+				else:
+					continue
 
 
 		## FILE CREATED EVENT ## (Completed file system write from upload)
-		if type_names[0] == 'IN_CLOSE_WRITE':
+		elif type_names[0] == 'IN_CLOSE_WRITE':
 
 			# Determine file data
 			created_utc = datetime.datetime.utcnow()
