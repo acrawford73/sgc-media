@@ -643,7 +643,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			asset_full_path = os.path.join(path, asset)	# media_assets/media_file.mp4
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)  # media_file.mp4
 			file, ext = os.path.splitext(asset) # "path/file"  ".txt"
-			ext = ext.split(".")[1].upper()  # remove the period .
+			ext = ext.replace(".", "").upper()  # remove the period .
 
 			# If already in database, file has been moved
 			if ext in ext_photo:
@@ -727,7 +727,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			log.debug("FILE=" + file + ext)
 			log.debug("EXT=" + ext)
 
-			ext = ext.split(".")[1].upper()  # remove the period .
+			ext = ext.replace(".","").upper()  # remove the period .
 
 			tags = json.dumps([])  # empty
 			is_public = True
@@ -1209,7 +1209,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			file, ext = os.path.splitext(asset)
 
 			if ext != "":
-				ext = ext.split(".")[1].upper()
+				ext = ext.replace(".","").upper()
 				if delete_db_on_fs_delete == True:
 					if ext in ext_photo:
 						asset_delete_photo(asset_full_path, path_sha256, db_meta)
@@ -1234,7 +1234,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			asset_full_path = os.path.join(path, asset)
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)
 			file, ext = os.path.splitext(asset)
-			ext = ext.split(".")[1].upper()
+			ext = ext.replace(".","").upper()
 
 			path_sha256 = hash_path(asset_full_path)
 			asset_sha256 = hash_file(asset_full_path)
