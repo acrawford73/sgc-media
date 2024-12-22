@@ -689,6 +689,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
 					else:
+						log.debug("Asset " + asset_sha256 + " is not present in the database.")
 						continue
 				else:
 					continue
@@ -703,6 +704,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue			
 					else:
+						log.debug("Asset " + asset_sha256 + " is not present in the database.")
 						continue
 				else:
 					continue
@@ -717,6 +719,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
 						continue
 					else:
+						log.debug("Asset " + asset_sha256 + " is not present in the database.")
 						continue
 				else:
 					continue
@@ -729,11 +732,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 						path_sha256 = hash_path(asset_full_path)
 						asset_update_path_doc(asset_full_path, asset_media_path, asset_sha256, path_sha256, db_meta)
 						log.info("Asset " + asset_sha256 + " path moved to " + asset_full_path)
-						continue
 					else:
-						continue
-				else:
-					continue
+						log.debug("Asset " + asset_sha256 + " is not present in the database.")
 
 
 		## FILE CREATED EVENT ## (Completed file system write from upload)
@@ -1236,25 +1236,28 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			asset_full_path = os.path.join(path, asset)
 			file, ext = os.path.splitext(asset)
 
-			if ext != "":
-				ext = ext.split(".")[1].upper()
-				if delete_db_on_fs_delete == True:
-					if ext in ext_photo:
-						asset_delete_photo(asset_full_path, db_meta)
-					elif ext in ext_audio:
-						asset_delete_audio(asset_full_path, db_meta)
-					elif ext in ext_video:
-						asset_delete_video(asset_full_path, db_meta)
-					elif ext in ext_doc:
-						asset_delete_doc(asset_full_path, db_meta)
-					else:
-						pass
-					#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
-					log.info("Asset deleted from file system and database: {}".format(asset_full_path))
+			if not os.path.exists(asset_full_path):
+				log.warning("Asset " + asset_full_path + " does not exist. File moved or deleted.")
+			else:
+				if ext != "":
+					ext = ext.split(".")[1].upper()
+					if delete_db_on_fs_delete == True:
+						if ext in ext_photo:
+							asset_delete_photo(asset_full_path, db_meta)
+						elif ext in ext_audio:
+							asset_delete_audio(asset_full_path, db_meta)
+						elif ext in ext_video:
+							asset_delete_video(asset_full_path, db_meta)
+						elif ext in ext_doc:
+							asset_delete_doc(asset_full_path, db_meta)
+						else:
+							pass
+						#log.info("Asset " + asset_sha256 + " deleted from file system and database: {}".format(asset_full_path))
+						log.info("Asset deleted from file system and database: {}".format(asset_full_path))
 
-				else:
-					#log.info("Asset " + asset_sha256 + " deleted from file system: {}".format(asset_full_path))
-					log.info("Asset deleted from file system: {}".format(asset_full_path))
+					else:
+						#log.info("Asset " + asset_sha256 + " deleted from file system: {}".format(asset_full_path))
+						log.info("Asset deleted from file system: {}".format(asset_full_path))
 
 
 		## FILE UPDATE EVENT ##
