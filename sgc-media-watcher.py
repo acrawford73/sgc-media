@@ -1234,8 +1234,8 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 		## FILE DELETED EVENT ##
 		elif type_names[0] == 'IN_DELETE':
 
-			path_sha256 = hash_path(asset_full_path)
 			asset_full_path = os.path.join(path, asset)
+			path_sha256 = hash_path(asset_full_path)
 			file, ext = os.path.splitext(asset)
 
 			if not os.path.exists(asset_full_path):
