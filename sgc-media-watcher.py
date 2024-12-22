@@ -619,6 +619,8 @@ def clean_filename(text):
 # Check watch folder for new content
 def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	
+	SKIP_EVENTS = ['IN_OPEN', 'IN_ACCESS', 'IN_CLOSE_NOWRITE']
+	
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
 	#inw.block_duration_s = 2
@@ -630,9 +632,10 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	#
 
 	for event in inw.event_gen(yield_nones=False):
-	
 		(_, type_names, path, asset) = event
-		log.debug("DEBUG Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
+
+		if not type_names[0] in SKIP_EVENTS:
+			log.debug("DEBUG Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
 
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
