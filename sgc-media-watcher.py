@@ -598,6 +598,17 @@ def get_AR(w,h):
 	else:
 		return get_AR(h, w % h)
 
+
+# Remove all special characters except spaces and alphanumeric characters
+# Hyphens, commas, periods allowed
+def clean_filename(text):
+	text = text.replace('&quot;','_')
+	text = text.replace('&amp;','&')
+	clean = re.sub(r'[^a-zA-Z0-9\s\,\-\.\~\&\/]', '', text)
+	clean = clean.replace('~','-')
+	cleaned = clean.replace('/','-')
+	return cleaned.strip()
+
 ###
 
 
@@ -621,7 +632,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	for event in inw.event_gen(yield_nones=False):
 	
 		(_, type_names, path, asset) = event
-		log.debug("Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
+		log.debug("DEBUG Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
 
 		## FILE CREATED EVENT ## (Completed file system write)
 		if type_names[0] == 'IN_CLOSE_WRITE':
@@ -695,11 +706,13 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 				asset_title = splitext(asset)[0]
 				
+				log.debug("> File Properties:")
 				log.debug("File:         " + asset)
 				log.debug("Size:         " + str(asset_size))
 				log.debug("File Hash:    " + asset_sha256)
 				log.debug("Path Hash:    " + path_sha256)
 				log.debug("UUID:         " + asset_uuid)
+				log.debug("> Media Properties:")
 				log.debug("Width:        " + str(width))
 				log.debug("Height:       " + str(height))
 				log.debug("Orientation:  " + orientation)
@@ -827,12 +840,17 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					doc_format_id = result
 				rating = 0
 
+				log.debug("> File Properties:")
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size) + " bytes")
 				log.debug("File Hash:   " + asset_sha256)
 				log.debug("Path Hash:   " + path_sha256)
 				log.debug("UUID:        " + asset_uuid)
-				# Metadata
+				log.debug("> Media Properties:")
+				log.debug("Duration:     " + str(media_audio_duration) + " seconds")
+				log.debug("Bit Rate:     " + media_audio_bitrate + " Kb/s")
+				log.debug("Sample Rate:  " + media_audio_samplerate)
+				log.debug("> Metadata:")
 				log.debug("Title:        " + asset_title)
 				log.debug("Artist:       " + media_audio_artist)
 				log.debug("Album:        " + media_audio_album)
@@ -844,14 +862,11 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 				log.debug("Track Total:  " + media_audio_track_total)
 				log.debug("Disc Num:     " + media_audio_disc)
 				log.debug("Disc Total:   " + media_audio_disc_total)
-				log.debug("Duration:     " + str(media_audio_duration) + " seconds")
-				log.debug("Bit Rate:     " + media_audio_bitrate + " Kb/s")
-				log.debug("Sample Rate:  " + media_audio_samplerate)
 				log.debug("Comment:      " + media_audio_comments)
 				log.debug("Extra:        " + media_audio_extra)
 				log.debug("Format ID:    " + str(doc_format_id))
 				log.debug("Rating:       " + str(rating))
-				
+
 				ingested = asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, \
 					asset_size, asset_sha256, path_sha256, asset_uuid, media_audio_artist, media_audio_album, \
 					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
@@ -1026,6 +1041,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 				asset_title = splitext(asset)[0]
 
+				log.debug("> File Properties:")
 				log.debug("File:            " + asset)
 				log.debug("Size:            " + str(asset_size))
 				log.debug("File Hash:       " + asset_sha256)
@@ -1092,6 +1108,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 				asset_title = splitext(asset)[0]
 
+				log.debug("> File Properties:")
 				log.debug("File:        " + asset)
 				log.debug("Size:        " + str(asset_size))
 				log.debug("File Hash:   " + asset_sha256)
