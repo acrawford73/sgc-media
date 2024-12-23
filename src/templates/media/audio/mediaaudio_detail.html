@@ -50,11 +50,11 @@
                 </td>
               </tr>
               <tr>
-                <td><strong>Created</strong></td>
+                <td><strong>Ingested</strong></td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }} (UTC)</td>
               </tr>
               <tr>
-                <td><strong>Is Public</strong></td>
+                <td><strong>Public</strong></td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
               <tr>
@@ -209,15 +209,5 @@
   </div>
 
 </main>
-
-<script>
-  export default {
-    data() {
-      return {
-        value: null
-      }
-    }
-  }
-</script>
 
 {% endblock %}
