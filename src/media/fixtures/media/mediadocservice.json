@@ -68,7 +68,16 @@
   "fields": {
     "service_source": "NIH",
     "service_url": "https://www.nih.gov",
-    "service_description": " National Institute of Health"
+    "service_description": "National Institute of Health"
+  }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 9,
+  "fields": {
+    "service_source": "MDPI",
+    "service_url": "https://www.mdpi.com",
+    "service_description": "Multidisciplinary Digital Publishing Institute"
   }
 }
 ]

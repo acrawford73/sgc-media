@@ -18,12 +18,16 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th>Service</th>
+                <th>Description</th>
+                <th>URL</th>
               </tr>
             </thead>
             <tbody>
               {% for asset in assets %}
               <tr align="center">
                 <td align="left"><a href="{% url 'doc-service-detail' asset.id %}">{{ asset.service_source }}</a></td>
+                <td align="left">{{ asset.service_description }}</td>
+                <td align="left">{{ asset.service_url }}</td>
               </tr>
               {% endfor %}
 
