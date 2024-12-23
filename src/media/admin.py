@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, MediaVideoThumbnail, \
-					MediaAudio, MediaAudioGenre, MediaAudioFormat, MediaAudioService, \
-					MediaPhoto, MediaPhotoFormat, MediaPhotoService, \
-					MediaDoc, MediaDocFormat, MediaDocCategories, MediaDocService, \
-					MediaCountry
+from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, MediaVideoThumbnail
+from .models import MediaAudio, MediaAudioGenre, MediaAudioFormat, MediaAudioService
+from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
+from .models import MediaDoc, MediaDocFormat, MediaDocCategories, MediaDocService
+from .models import MediaCountry
 					
 
 # Video
@@ -103,18 +103,26 @@ class MediaCountryAdmin(admin.ModelAdmin):
 # Services
 # not implemented yet
 class MediaVideoServiceAdmin(admin.ModelAdmin):
+	list_display = ['service_source']
+	search_fields = ['service_source']
 	class Meta:
 		model = MediaVideoService
 
 class MediaAudioServiceAdmin(admin.ModelAdmin):
+	list_display = ['service_source']
+	search_fields = ['service_source']
 	class Meta:
 		model = MediaAudioService
 
 class MediaPhotoServiceAdmin(admin.ModelAdmin):
+	list_display = ['service_source']
+	search_fields = ['service_source']
 	class Meta:
 		model = MediaPhotoService
 
 class MediaDocServiceAdmin(admin.ModelAdmin):
+	list_display = ['service_source', 'service_description', 'service_url']
+	search_fields = ['service_source']
 	class Meta:
 		model = MediaDocService
 
