@@ -3,7 +3,7 @@ from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoSer
 from .models import MediaAudio, MediaAudioGenre, MediaAudioFormat, MediaAudioService
 from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
 from .models import MediaDoc, MediaDocFormat, MediaDocCategories, MediaDocService
-from .models import MediaCountry
+from .models import MediaCountry, MediaTag
 					
 
 # Video
@@ -100,6 +100,12 @@ class MediaCountryAdmin(admin.ModelAdmin):
 	class Meta:
 		model = MediaCountry
 
+class MediaTagAdmin(admin.ModelAdmin):
+	list_display = ['tag_name']
+	search_fields = ['tag_name']
+	class Meta:
+		model = MediaTag
+
 # Services
 class MediaVideoServiceAdmin(admin.ModelAdmin):
 	list_display = ['service_source']
@@ -147,3 +153,4 @@ admin.site.register(MediaDocService, MediaDocServiceAdmin)
 admin.site.register(MediaDocCategories, MediaDocCategoriesAdmin)
 
 admin.site.register(MediaCountry, MediaCountryAdmin)
+admin.site.register(MediaTag, MediaTagAdmin)
