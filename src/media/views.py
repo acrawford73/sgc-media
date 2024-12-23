@@ -73,7 +73,7 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_source', 'orientation', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_source', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
@@ -316,7 +316,7 @@ class MediaPhotoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'width', 'height', 'orientation', 'photo_format', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
 
 class MediaPhotoListAPI(generics.ListAPIView):
 	queryset = MediaPhoto.objects.all().filter(is_public=True)
