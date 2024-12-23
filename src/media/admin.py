@@ -30,8 +30,8 @@ class MediaVideoFormatAdmin(admin.ModelAdmin):
 		model = MediaVideoFormat
 
 class MediaVideoServiceAdmin(admin.ModelAdmin):
-	list_display = ['service_name']
-	search_fields = ['service_name']
+	list_display = ['service_source']
+	search_fields = ['service_source']
 	class Meta:
 		model = MediaVideoService
 

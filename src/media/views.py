@@ -72,7 +72,7 @@ class MediaVideoUpdateView(UpdateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_name', 'orientation', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'tags', 'genre', 'service', 'service_source', 'orientation', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
@@ -149,13 +149,13 @@ class MediaVideoAtomFeed(MediaVideoRSSFeed):
 class MediaVideoServiceCreateView(CreateView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_create.html'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaVideoServiceListView(ListView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_list.html'
 	context_object_name = 'assets'
-	ordering = ['service_name']
+	ordering = ['service_source']
 	paginate_by = 15
 
 class MediaVideoServiceDetailView(DetailView):
@@ -167,23 +167,23 @@ class MediaVideoServiceUpdateView(UpdateView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_form.html'
 	context_object_name = 'asset'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaVideoServiceListAPI(generics.ListAPIView):
 	queryset = MediaVideoService.objects.all()
 	serializer_class = MediaVideoServiceSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_name']
-	ordering_fields = ['id', 'service_name']
+	filterset_fields = ['service_source']
+	ordering_fields = ['id', 'service_source']
 	ordering = ['-id']
 
 class MediaVideoServiceListAPISearch(generics.ListAPIView):
 	queryset = MediaVideoService.objects.all()
 	serializer_class = MediaVideoServiceSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_name'] 
-	ordering_fields = ['id', 'service_name']
-	ordering = ['service_name']
+	search_fields = ['service_source'] 
+	ordering_fields = ['id', 'service_source']
+	ordering = ['service_source']
 
 class MediaVideoServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaVideoService.objects.all()
@@ -257,13 +257,13 @@ class MediaAudioGalleryListView(ListView):
 class MediaAudioServiceCreateView(CreateView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_create.html'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaAudioServiceListView(ListView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_list.html'
 	context_object_name = 'assets'
-	ordering = ['service_name']
+	ordering = ['service_source']
 	paginate_by = 15
 
 class MediaAudioServiceDetailView(DetailView):
@@ -275,23 +275,23 @@ class MediaAudioServiceUpdateView(UpdateView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_form.html'
 	context_object_name = 'asset'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaAudioServiceListAPI(generics.ListAPIView):
 	queryset = MediaAudioService.objects.all()
 	serializer_class = MediaAudioServiceSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_name']
-	ordering_fields = ['id', 'service_name']
+	filterset_fields = ['service_source']
+	ordering_fields = ['id', 'service_source']
 	ordering = ['-id']
 
 class MediaAudioServiceListAPISearch(generics.ListAPIView):
 	queryset = MediaAudioService.objects.all()
 	serializer_class = MediaAudioServiceSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_name'] 
-	ordering_fields = ['id', 'service_name']
-	ordering = ['service_name']
+	search_fields = ['service_source'] 
+	ordering_fields = ['id', 'service_source']
+	ordering = ['service_source']
 
 class MediaAudioServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaAudioService.objects.all()
@@ -347,13 +347,13 @@ class MediaPhotoGalleryListView(ListView):
 class MediaPhotoServiceCreateView(CreateView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_create.html'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaPhotoServiceListView(ListView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_list.html'
 	context_object_name = 'assets'
-	ordering = ['service_name']
+	ordering = ['service_source']
 	paginate_by = 15
 
 class MediaPhotoServiceDetailView(DetailView):
@@ -365,23 +365,23 @@ class MediaPhotoServiceUpdateView(UpdateView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_form.html'
 	context_object_name = 'asset'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaPhotoServiceListAPI(generics.ListAPIView):
 	queryset = MediaPhotoService.objects.all()
 	serializer_class = MediaPhotoServiceSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_name']
-	ordering_fields = ['id', 'service_name']
+	filterset_fields = ['service_source']
+	ordering_fields = ['id', 'service_source']
 	ordering = ['-id']
 
 class MediaPhotoServiceListAPISearch(generics.ListAPIView):
 	queryset = MediaPhotoService.objects.all()
 	serializer_class = MediaPhotoServiceSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_name'] 
-	ordering_fields = ['id', 'service_name']
-	ordering = ['service_name']
+	search_fields = ['service_source'] 
+	ordering_fields = ['id', 'service_source']
+	ordering = ['service_source']
 
 class MediaPhotoServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhotoService.objects.all()
@@ -430,13 +430,13 @@ class MediaDocDetailAPI(generics.RetrieveAPIView):
 class MediaDocServiceCreateView(CreateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_create.html'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaDocServiceListView(ListView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_list.html'
 	context_object_name = 'assets'
-	ordering = ['service_name']
+	ordering = ['service_source']
 	paginate_by = 15
 
 class MediaDocServiceDetailView(DetailView):
@@ -448,23 +448,23 @@ class MediaDocServiceUpdateView(UpdateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_form.html'
 	context_object_name = 'asset'
-	fields = ['service_name']
+	fields = ['service_source']
 
 class MediaDocServiceListAPI(generics.ListAPIView):
 	queryset = MediaDocService.objects.all()
 	serializer_class = MediaDocServiceSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_name']
-	ordering_fields = ['id', 'service_name']
+	filterset_fields = ['service_source']
+	ordering_fields = ['id', 'service_source']
 	ordering = ['-id']
 
 class MediaDocServiceListAPISearch(generics.ListAPIView):
 	queryset = MediaDocService.objects.all()
 	serializer_class = MediaDocServiceSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_name'] 
-	ordering_fields = ['id', 'service_name']
-	ordering = ['service_name']
+	search_fields = ['service_source'] 
+	ordering_fields = ['id', 'service_source']
+	ordering = ['service_source']
 
 class MediaDocServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaDocService.objects.all()

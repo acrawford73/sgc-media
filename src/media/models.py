@@ -58,11 +58,11 @@ VIDEO_SERVICES = (
 )
 
 class MediaVideoService(models.Model):
-	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	service_source = models.CharField(max_length=200, null=False, blank=False, unique=True)
 	class Meta:
-		ordering = ['service_name']
+		ordering = ['service_source']
 	def __str__(self):
-		return self.service_name
+		return self.service_source
 
 class MediaVideoFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
@@ -131,9 +131,9 @@ class MediaVideo(models.Model):
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=VIDEO_SERVICES, \
-		help_text="The service where the media came from originally, provided from imported json.")
-	service_name = models.ForeignKey("MediaVideoService", on_delete=models.SET_NULL, blank=True, null=True, \
-		help_text="Select the service where the media came from originally.")
+		help_text="The service where the media was originally sourced (from JSON import).")
+	service_source = models.ForeignKey("MediaVideoService", on_delete=models.SET_NULL, blank=True, null=True, \
+		help_text="Select the service where the media was originally sourced.")
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	genre = models.ForeignKey("MediaVideoGenre", on_delete=models.SET_NULL, blank=True, null=True)
 	doc_format = models.ForeignKey("MediaVideoFormat", on_delete=models.SET_NULL, blank=True, null=True)
@@ -177,11 +177,11 @@ class MediaType(models.Model):
 ### AUDIO
 
 class MediaAudioService(models.Model):
-	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	service_source = models.CharField(max_length=200, null=False, blank=False, unique=True)
 	class Meta:
-		ordering = ['service_name']
+		ordering = ['service_source']
 	def __str__(self):
-		return self.service_name
+		return self.service_source
 
 class MediaAudioFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
@@ -296,11 +296,11 @@ PHOTO_SERVICES = (
 
 
 class MediaPhotoService(models.Model):
-	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	service_source = models.CharField(max_length=200, null=False, blank=False, unique=True)
 	class Meta:
-		ordering = ['service_name']
+		ordering = ['service_source']
 	def __str__(self):
-		return self.service_name
+		return self.service_source
 
 class MediaPhotoFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)
@@ -351,12 +351,12 @@ class MediaPhoto(models.Model):
 ### DOCUMENTS
 
 class MediaDocService(models.Model):
-	service_name = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	service_source = models.CharField(max_length=200, null=False, blank=False, unique=True)
 	service_url = models.URLField(max_length=2083, null=True, blank=True)
 	class Meta:
-		ordering = ['service_name']
+		ordering = ['service_source']
 	def __str__(self):
-		return self.service_name
+		return self.service_source
 
 class MediaDocFormat(models.Model):
 	doc_format = models.CharField(max_length=32, null=False, blank=False, unique=True)

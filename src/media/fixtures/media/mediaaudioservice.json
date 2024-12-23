@@ -3,63 +3,63 @@
   "model": "media.mediaaudioservice",
   "pk": 1,
   "fields": {
-    "service_name": "NA"
+    "service_source": "NA"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 2,
   "fields": {
-    "service_name": "Personal"
+    "service_source": "Personal"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 3,
   "fields": {
-    "service_name": "Soundcloud"
+    "service_source": "Soundcloud"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 4,
   "fields": {
-    "service_name": "Mixcloud"
+    "service_source": "Mixcloud"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 5,
   "fields": {
-    "service_name": "Instagram"
+    "service_source": "Instagram"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 6,
   "fields": {
-    "service_name": "Google"
+    "service_source": "Google"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 7,
   "fields": {
-    "service_name": "Dropbox"
+    "service_source": "Dropbox"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 8,
   "fields": {
-    "service_name": "Amazon"
+    "service_source": "Amazon"
   }
 },
 {
   "model": "media.mediaaudioservice",
   "pk": 9,
   "fields": {
-    "service_name": "Telegram"
+    "service_source": "Telegram"
   }
 }
 ]
