@@ -56,6 +56,10 @@
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }} (UTC)</td>
               </tr>
               <tr>
+                <td><strong>Published Date</strong></td>
+                <td>{{ asset.published_date|date:"F d Y" }}</td>
+              </tr>
+              <tr>
                 <td><strong>Public</strong></td>
                 <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>

@@ -4,7 +4,8 @@
   "pk": 1,
   "fields": {
     "service_source": "NA",
-    "service_url": null
+    "service_url": null,
+    "service_description": "Not Available"
   }
 },
 {
@@ -12,7 +13,8 @@
   "pk": 2,
   "fields": {
     "service_source": "Personal",
-    "service_url": null
+    "service_url": null,
+    "service_description": "Personal"
   }
 },
 {
@@ -20,7 +22,8 @@
   "pk": 3,
   "fields": {
     "service_source": "Research Gate",
-    "service_url": "https://www.researchgate.net"
+    "service_url": "https://www.researchgate.net",
+    "service_description": "Research Gate"
   }
 },
 {
@@ -28,7 +31,8 @@
   "pk": 4,
   "fields": {
     "service_source": "Science Direct",
-    "service_url": "https://www.sciencedirect.com"
+    "service_url": "https://www.sciencedirect.com",
+    "service_description": "Science Direct"
   }
 },
 {
@@ -36,7 +40,8 @@
   "pk": 5,
   "fields": {
     "service_source": "IEEE",
-    "service_url": "https://www.ieee.org"
+    "service_url": "https://www.ieee.org",
+    "service_description": "Institute of Electrical and Electronics Engineers"
   }
 },
 {
@@ -44,7 +49,8 @@
   "pk": 6,
   "fields": {
     "service_source": "ITU",
-    "service_url": "https://www.itu.int"
+    "service_url": "https://www.itu.int",
+    "service_description": "International Telecommunication Union"
   }
 },
 {
@@ -52,15 +58,17 @@
   "pk": 7,
   "fields": {
     "service_source": "SCTE",
-    "service_url": "https://www.scte.org"
+    "service_url": "https://www.scte.org",
+    "service_description": "Society of Cable Telecommunications Engineers"
   }
 },
 {
   "model": "media.mediadocservice",
   "pk": 8,
   "fields": {
-    "service_source": "National Institute of Health (NIH)",
-    "service_url": "https://www.nih.gov"
+    "service_source": "NIH",
+    "service_url": "https://www.nih.gov",
+    "service_description": " National Institute of Health"
   }
 }
 ]

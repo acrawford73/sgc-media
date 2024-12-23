@@ -352,8 +352,9 @@ class MediaPhoto(models.Model):
 ### DOCUMENTS
 
 class MediaDocService(models.Model):
-	service_source = models.CharField(max_length=200, null=False, blank=False, unique=True)
+	service_source = models.CharField(max_length=100, null=False, blank=False, unique=True)
 	service_url = models.URLField(max_length=2083, null=True, blank=True)
+	service_description = models.CharField(max_length=200, null=True, blank=True)
 	class Meta:
 		ordering = ['service_source']
 	def __str__(self):
