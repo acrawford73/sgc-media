@@ -23,7 +23,7 @@
             <tbody>
               {% for asset in assets %}
               <tr align="center">
-                <td align="left"><a href="{% url 'photo-service-detail' asset.id %}">{{ asset.service_source }}</a></td>
+                <td align="left"><a href="{% url 'photo-service-update' asset.id %}">{{ asset.service_source }}</a></td>
               </tr>
               {% endfor %}
 

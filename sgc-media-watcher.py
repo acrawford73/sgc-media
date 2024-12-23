@@ -198,15 +198,15 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
-					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta):
+					media_audio_sample_rate, created, updated, is_public, tags, doc_format_id, db_meta):
 	sql = "INSERT INTO media_mediavideo(title, file_name, file_path, media_path, size, file_sha256, path_sha256, file_uuid, \
 	media_video_width, media_video_height, media_video_format, orientation, media_video_frame_rate, \
 	media_video_frame_rate_calc, media_video_bitrate, media_video_codec, media_video_codec_long_name, \
 	media_video_codec_tag_string, media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
 	media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 	media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, media_audio_sample_rate, \
-	created, is_public, tags, doc_format_id) \
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	created, updated, is_public, tags, doc_format_id) \
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, path_sha256, asset_uuid, media_video_width, media_video_height, media_video_format, \
 					orientation, media_video_frame_rate, media_video_frame_rate_calc, media_video_bitrate, \
@@ -214,7 +214,7 @@ def asset_video_create(asset_title, asset, asset_full_path, asset_media_path, as
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
-					media_audio_sample_rate, created, is_public, tags, doc_format_id)
+					media_audio_sample_rate, created, updated, is_public, tags, doc_format_id)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
 
@@ -223,40 +223,40 @@ def asset_audio_create(asset_title, asset, asset_full_path, asset_media_path, as
 	asset_sha256, path_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
-	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
+	media_audio_bitrate, media_audio_samplerate, created, updated, is_public, tags, media_audio_image, \
 	media_audio_extra, doc_format_id, rating, db_meta):
 	sql = "INSERT INTO media_mediaaudio(title, file_name, file_path, media_path, size, file_sha256, path_sha256, \
 	file_uuid, artist, album, album_artist, composer, genre, year, track_num, track_total, \
-	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, \
-	is_public, tags, image, extra, doc_format_id, rating) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	disc_num, disc_total, comments, duration, audio_bitrate, audio_sample_rate, created, updated, \
+	is_public, tags, image, extra, doc_format_id, rating) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 	asset_sha256, path_sha256, asset_uuid, media_audio_artist, media_audio_album, media_audio_album_artist, \
 	media_audio_composer, media_audio_genre, media_audio_year, media_audio_track, media_audio_track_total, \
 	media_audio_disc, media_audio_disc_total, media_audio_comments, media_audio_duration, \
-	media_audio_bitrate, media_audio_samplerate, created, is_public, tags, media_audio_image, \
+	media_audio_bitrate, media_audio_samplerate, created, updated, is_public, tags, media_audio_image, \
 	media_audio_extra, doc_format_id, rating)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
 
 # Add Photo asset to database
 def asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-		asset_sha256, path_sha256, asset_uuid, width, height, photo_format, orientation, created, is_public, \
-		tags, doc_format_id, db_meta):
+		asset_sha256, path_sha256, asset_uuid, width, height, photo_format, orientation, created, updated, \
+		is_public, tags, doc_format_id, db_meta):
 	sql = "INSERT INTO media_mediaphoto(title, file_name, file_path, media_path, size, file_sha256, path_sha256, \
-		file_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id) \
-	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+		file_uuid, width, height, photo_format, orientation, created, updated, is_public, tags, doc_format_id) \
+	VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, path_sha256, \
-		asset_uuid, width, height, photo_format, orientation, created, is_public, tags, doc_format_id)
+		asset_uuid, width, height, photo_format, orientation, created, updated, is_public, tags, doc_format_id)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
 
 # Add Document asset to database
 def asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-	asset_sha256, path_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta):
+	asset_sha256, path_sha256, asset_uuid, doc_format_id, created, updated, is_public, tags, db_meta):
 	sql = "INSERT INTO media_mediadoc(title, file_name, file_path, media_path, size, file_sha256, path_sha256, \
-	file_uuid, doc_format_id, created, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+	file_uuid, doc_format_id, created, updated, is_public, tags) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 	data = (asset_title, asset, asset_full_path, asset_media_path, asset_size, asset_sha256, path_sha256, \
-	asset_uuid, doc_format_id, created, is_public, tags)
+	asset_uuid, doc_format_id, created, updated, is_public, tags)
 	psql_result = pgql(sql, data, db_meta)
 	return psql_result
 
@@ -711,6 +711,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 			# Determine file data
 			created_utc = datetime.datetime.utcnow()
 			created = created_utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+			updated = created
 
 			asset_full_path = os.path.join(path, asset)	# media_assets/media_file.mp4
 			asset_media_path = os.path.join(path.split(watch_path,)[1], asset)  # media_file.mp4
@@ -791,7 +792,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 
 				ingested = asset_photo_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
 					asset_sha256, path_sha256, asset_uuid, width, height, photo_format, orientation, created, \
-					is_public, tags, doc_format_id, db_meta)
+					updated, is_public, tags, doc_format_id, db_meta)
 
 				if ingested == True:
 					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' width='"+str(width)+"' height='"+str(height)+"' orientation='"+orientation+"' format='"+photo_format+"'")
@@ -943,7 +944,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					media_audio_album_artist, media_audio_composer, media_audio_genre, media_audio_year, \
 					media_audio_track, media_audio_track_total, media_audio_disc, media_audio_disc_total, \
 					media_audio_comments, media_audio_duration, media_audio_bitrate, \
-					media_audio_samplerate, created, is_public, tags, media_audio_image, \
+					media_audio_samplerate, created, updated, is_public, tags, media_audio_image, \
 					media_audio_extra, doc_format_id, rating, db_meta)
 
 				if ingested == True:
@@ -1149,7 +1150,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 					media_video_duration, media_video_aspect_ratio, media_video_pixel_format, \
 					media_video_color_space, media_video_is_avc, media_audio_bitrate, media_audio_codec, \
 					media_audio_codec_long_name, media_audio_codec_tag_string, media_audio_channels, \
-					media_audio_sample_rate, created, is_public, tags, doc_format_id, db_meta)
+					media_audio_sample_rate, created, updated, is_public, tags, doc_format_id, db_meta)
 				
 				if ingested == True:
 					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' width='"+str(media_video_width)+"' height='"+str(media_video_height)+"' orientation='"+orientation+"' format='"+media_video_format+"' duration='"+str(media_video_duration)+"'")
@@ -1189,7 +1190,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 				log.debug("Format ID:   " + str(doc_format_id))
 
 				ingested = asset_doc_create(asset_title, asset, asset_full_path, asset_media_path, asset_size, \
-					asset_sha256, path_sha256, asset_uuid, doc_format_id, created, is_public, tags, db_meta)
+					asset_sha256, path_sha256, asset_uuid, doc_format_id, created, updated, is_public, tags, db_meta)
 				
 				if ingested == True:
 					log.info("Asset ingested path='"+asset_full_path+"' size='"+str(asset_size)+"' file_sha256='"+asset_sha256+"' uuid='"+asset_uuid+"' doc_format='"+doc_format_ext+"'")

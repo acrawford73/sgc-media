@@ -74,7 +74,7 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'published_date', 'title', 'short_description', 'long_description', 'notes', 'transcription', 'tags', 'genre', 'service', 'service_source', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'transcription', 'tags', 'genre', 'service', 'service_source', 'location_city', 'location_state', 'location_country']
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
