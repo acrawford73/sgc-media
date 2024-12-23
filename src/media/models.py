@@ -407,3 +407,14 @@ class MediaDoc(models.Model):
 		def __unicode__(self):
 			return self.file_name
 
+
+
+### TAGS
+
+class MediaTag(models.Model):
+	tag_name = models.CharField(max_length=100, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['tag_name']
+	def __str__(self):
+		return self.tag_name
+

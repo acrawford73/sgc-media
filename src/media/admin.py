@@ -101,7 +101,6 @@ class MediaCountryAdmin(admin.ModelAdmin):
 		model = MediaCountry
 
 # Services
-# not implemented yet
 class MediaVideoServiceAdmin(admin.ModelAdmin):
 	list_display = ['service_source']
 	search_fields = ['service_source']
