@@ -852,7 +852,7 @@ class Credit(models.Model):
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
-		return str(self.credit_name)
+		return str(self.credit_name)+" ("+str(self.role)+")"
 
 # Catch all for Tags
 class Tag(models.Model):

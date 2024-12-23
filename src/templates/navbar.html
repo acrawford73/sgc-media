@@ -29,19 +29,29 @@
               <li><a class="dropdown-item" href="{% url 'media-audio-list-gallery' %}">Audio</a></li>
               <li><a class="dropdown-item" href="{% url 'media-doc-list' %}">Docs</a></li>
               <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'video-service-list' %}">Video Services</a></li>
+              <li><a class="dropdown-item" href="{% url 'photo-service-list' %}">Photo Services</a></li>
+              <li><a class="dropdown-item" href="{% url 'audio-service-list' %}">Audio Services</a></li>
+              <li><a class="dropdown-item" href="{% url 'doc-service-list' %}">Document Services</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'video-rss' %}" target="_blank">Video RSS</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Media API</a>
+            <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="{% url 'media-video-list-api' %}" target="_blank">Videos API</a></li>
               <li><a class="dropdown-item" href="{% url 'media-photo-list-api' %}" target="_blank">Photos API</a></li>
               <li><a class="dropdown-item" href="{% url 'media-audio-list-api' %}" target="_blank">Audio API</a></li>
               <li><a class="dropdown-item" href="{% url 'media-doc-list-api' %}" target="_blank">Docs API</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'video-service-list-api' %}" target="_blank">Video Services</a></li>
-              <li><a class="dropdown-item" href="{% url 'photo-service-list-api' %}" target="_blank">Photo Services</a></li>
-              <li><a class="dropdown-item" href="{% url 'audio-service-list-api' %}" target="_blank">Audio Services</a></li>
-              <li><a class="dropdown-item" href="{% url 'doc-service-list-api' %}" target="_blank">Document Services</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="{% url 'video-rss' %}" target="_blank">Video RSS</a></li>
+              <li><a class="dropdown-item" href="{% url 'video-service-list-api' %}" target="_blank">Video Services API</a></li>
+              <li><a class="dropdown-item" href="{% url 'photo-service-list-api' %}" target="_blank">Photo Services API</a></li>
+              <li><a class="dropdown-item" href="{% url 'audio-service-list-api' %}" target="_blank">Audio Services API</a></li>
+              <li><a class="dropdown-item" href="{% url 'doc-service-list-api' %}" target="_blank">Document Services API</a></li>
             </ul>
-          </li> 
+          </li>
 
 <!--           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Feeds</a>
