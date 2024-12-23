@@ -21,7 +21,7 @@ from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail, M
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail, \
 						 MediaPhotoServiceSerializerList, MediaPhotoServiceSerializerDetail
 from .serializers import MediaDocSerializerList, MediaDocSerializerDetail, MediaDocServiceSerializerList, MediaDocServiceSerializerDetail
-
+from .serializers import MediaTagSerializerList
 
 ### Transcription
 # class TranscriptionCreateView(CreateView):
@@ -472,3 +472,38 @@ class MediaDocServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaDocService.objects.all()
 	serializer_class = MediaDocServiceSerializerDetail
 
+
+### Tags
+class MediaTagListView(LoginRequiredMixin, ListView):
+	model = MediaTag
+	template_name = 'media/tag/tag_list.html'
+	context_object_name = 'assets'
+	ordering = ['tag_name']
+	paginate_by = 20
+
+class MediaTagDetailView(LoginRequiredMixin, DetailView):
+	model = MediaTag
+	template_name = 'media/tag/mediatag_detail.html'
+	context_object_name = 'asset'
+
+class MediaTagUpdateView(LoginRequiredMixin, UpdateView):
+	model = MediaTag
+	template_name = 'media/tag/mediatag_form.html'
+	context_object_name = 'asset'
+	fields = ['tag_name']
+
+class MediaTagListAPI(generics.ListAPIView):
+	queryset = MediaTag.objects.all()
+	serializer_class = MediaTagSerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['tag_name']
+	ordering_fields = ['id', 'tag_name']
+	ordering = ['tag_name']
+
+class MediaTagListAPISearch(generics.ListAPIView):
+	queryset = MediaTag.objects.all()
+	serializer_class = MediaTagSerializerList
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['tag_name'] 
+	ordering_fields = ['id', 'tag_name']
+	ordering = ['tag_name']

@@ -95,6 +95,11 @@ urlpatterns = [
 	path('api/doc-service/search/', views.MediaDocServiceListAPISearch.as_view()),
 	path('api/doc-service/<int:pk>', views.MediaDocServiceDetailAPI.as_view(), name='doc-service-detail-api'),
 
+	# Tags
+	path('topics/', views.MediaTagListView.as_view(), name='media-tag-list'),
+	path('topics/<int:pk>/', views.MediaTagDetailView.as_view(), name='media-tag-detail'),
+	path('topics/edit/<int:pk>/', views.MediaTagUpdateView.as_view(), name='media-tag-update'),
+	path('api/topics/', views.MediaTagListAPI.as_view(), name='media-tag-list-api'),
 
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),

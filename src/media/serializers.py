@@ -2,6 +2,7 @@ from datetime import datetime
 from rest_framework import serializers
 from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenre
 from .models import MediaVideoService, MediaAudioService, MediaPhotoService, MediaDocService
+from .models import MediaTag
 
 
 # Video
@@ -116,3 +117,10 @@ class MediaDocServiceSerializerDetail(serializers.ModelSerializer):
 	class Meta:
 		model = MediaDocService
 		fields = '__all__'
+
+
+# Tags
+class MediaTagSerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaTag
+		fields = ['id', 'tag_name']
