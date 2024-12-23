@@ -408,8 +408,7 @@ class MediaDoc(models.Model):
 			return self.file_name
 
 
-
-### TAGS
+### TAGS / TOPICS
 
 class MediaTag(models.Model):
 	tag_name = models.CharField(max_length=100, null=False, blank=False, unique=True)

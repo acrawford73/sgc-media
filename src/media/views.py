@@ -5,10 +5,11 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService, \
-					MediaAudio, MediaAudioFormat, MediaAudioService, \
-					MediaPhoto, MediaPhotoFormat, MediaPhotoService, \
-					MediaDoc, MediaDocFormat, MediaDocService
+from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService
+from .models import MediaAudio, MediaAudioFormat, MediaAudioService
+from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
+from .models import MediaDoc, MediaDocFormat, MediaDocService
+from .models import MediaCountry, MediaTag
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
