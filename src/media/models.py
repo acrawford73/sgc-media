@@ -404,14 +404,16 @@ class MediaDoc(models.Model):
 		return reverse('media-doc-detail', kwargs={'pk': self.pk})
 	class Meta:
 		ordering = ['-created']
-		def __unicode__(self):
-			return self.file_name
+	def __unicode__(self):
+		return self.file_name
 
 
 ### TAGS / TOPICS
 
 class MediaTag(models.Model):
 	tag_name = models.CharField(max_length=100, null=False, blank=False, unique=True)
+	def get_absolute_url(self):
+		return reverse('media-tag-detail', kwargs={'pk': self.pk})
 	class Meta:
 		ordering = ['tag_name']
 	def __str__(self):
