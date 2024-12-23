@@ -61,5 +61,12 @@
   "fields": {
     "service_name": "Vimeo"
   }
+},
+{
+  "model": "media.mediavideoservice",
+  "pk": 10,
+  "fields": {
+    "service_name": "Telegram"
+  }
 }
 ]

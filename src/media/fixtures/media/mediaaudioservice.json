@@ -54,5 +54,12 @@
   "fields": {
     "service_name": "Amazon"
   }
+},
+{
+  "model": "media.mediaaudioservice",
+  "pk": 9,
+  "fields": {
+    "service_name": "Telegram"
+  }
 }
 ]

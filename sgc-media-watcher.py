@@ -1,6 +1,6 @@
 #!bin/python3
 
-# Copyright (c) 2023...2024
+# Copyright (c) 2024
 
 #       _/_/_/    _/_/_/    _/_/_/
 #    _/        _/        _/
@@ -15,11 +15,12 @@
 # CMS like interface for reviewing ingested media.
 # API for querying media content.
 
-# The database schema is created through Django project 'sgcmedia' setup.
+# The database schema is created through Django project 'sgc-media' setup.
+#
 # Features:
-# - Watches for new media in watch folder.
-# - Copies media from private to public web server storage.
-# - Adds media metadata to Postgres database.
+# - Watches for new media in configured watch folder.
+# - Copies media from private to public web server storage.-TBD
+# - Reads and adds media metadata to Postgres database.
 # - Removes media from PostgreSQL database upon deletion, if enabled.
 
 import os
@@ -619,7 +620,7 @@ def clean_filename(text):
 # Check watch folder for new content
 def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	
-	SKIP_EVENTS = ['IN_OPEN', 'IN_ACCESS', 'IN_CLOSE_NOWRITE', 'IN_MODIFY', 'IN_DELETE_SELF', 'IN_IGNORED']
+	SKIP_LOG_EVENTS = ['IN_OPEN', 'IN_ACCESS', 'IN_CLOSE_NOWRITE', 'IN_MODIFY', 'IN_DELETE_SELF', 'IN_IGNORED']
 
 	# Recursive
 	inw = inotify.adapters.InotifyTree(watch_path)
@@ -634,7 +635,7 @@ def Watcher(watch_path, ext_video, ext_audio, ext_photo, ext_doc, db_meta):
 	for event in inw.event_gen(yield_nones=False):
 		(_, type_names, path, asset) = event
 
-		if not type_names[0] in SKIP_EVENTS:
+		if not type_names[0] in SKIP_LOG_EVENTS:
 			log.debug("DEBUG Asset=[{}/{}] Event_Type=[{}]".format(path, asset, type_names))
 
 		## File has been moved check if already in database if so, update path and path hash
