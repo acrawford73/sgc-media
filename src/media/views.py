@@ -3,6 +3,7 @@ from django.contrib.syndication.views import Feed
 from django.utils.feedgenerator import Atom1Feed
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService, \
 					MediaAudio, MediaAudioFormat, MediaAudioService, \
@@ -51,24 +52,24 @@ class MediaUploadView(TemplateView):
 
 
 ### Video
-class MediaVideoCreateView(CreateView):
+class MediaVideoCreateView(LoginRequiredMixin, CreateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_create.html'  #<app>/<model>_<viewtype>.html
 	fields = ['title', 'short_description', 'long_description', 'orientation', 'service', 'file_path', 'notes']
 
-class MediaVideoListView(ListView):
+class MediaVideoListView(LoginRequiredMixin, ListView):
 	model = MediaVideo
 	template_name = 'media/video/video_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
-class MediaVideoDetailView(DetailView):
+class MediaVideoDetailView(LoginRequiredMixin, DetailView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_detail.html'
 	context_object_name = 'asset'
 
-class MediaVideoUpdateView(UpdateView):
+class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
@@ -100,7 +101,7 @@ class MediaVideoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
 	serializer_class = MediaVideoSerializerDetail
 
-class MediaVideoGalleryListView(ListView):
+class MediaVideoGalleryListView(LoginRequiredMixin, ListView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_gallery.html'
 	context_object_name = 'assets'
@@ -146,24 +147,24 @@ class MediaVideoAtomFeed(MediaVideoRSSFeed):
     feed_type = Atom1Feed
     subtitle = MediaVideoRSSFeed.description
 
-class MediaVideoServiceCreateView(CreateView):
+class MediaVideoServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_create.html'
 	fields = ['service_source']
 
-class MediaVideoServiceListView(ListView):
+class MediaVideoServiceListView(LoginRequiredMixin, ListView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_source']
 	paginate_by = 15
 
-class MediaVideoServiceDetailView(DetailView):
+class MediaVideoServiceDetailView(LoginRequiredMixin, DetailView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_detail.html'
 	context_object_name = 'asset'
 
-class MediaVideoServiceUpdateView(UpdateView):
+class MediaVideoServiceUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaVideoService
 	template_name = 'media/video/mediavideoservice_form.html'
 	context_object_name = 'asset'
@@ -191,19 +192,19 @@ class MediaVideoServiceDetailAPI(generics.RetrieveAPIView):
 
 
 ### Audio
-class MediaAudioListView(ListView):
+class MediaAudioListView(LoginRequiredMixin, ListView):
 	model = MediaAudio
 	template_name = 'media/audio/audio_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
-class MediaAudioDetailView(DetailView):
+class MediaAudioDetailView(LoginRequiredMixin, DetailView):
 	model = MediaAudio
 	template_name = 'media/audio/mediaaudio_detail.html'
 	context_object_name = 'asset'
 
-class MediaAudioUpdateView(UpdateView):
+class MediaAudioUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
 	template_name = 'media/audio/mediaaudio_form.html'
@@ -247,31 +248,31 @@ class MediaAudioDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaAudio.objects.all()
 	serializer_class = MediaAudioSerializerDetail
 
-class MediaAudioGalleryListView(ListView):
+class MediaAudioGalleryListView(LoginRequiredMixin, ListView):
 	model = MediaAudio
 	template_name = 'media/audio/mediaaudio_gallery.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 24
 
-class MediaAudioServiceCreateView(CreateView):
+class MediaAudioServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_create.html'
 	fields = ['service_source']
 
-class MediaAudioServiceListView(ListView):
+class MediaAudioServiceListView(LoginRequiredMixin, ListView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_source']
 	paginate_by = 15
 
-class MediaAudioServiceDetailView(DetailView):
+class MediaAudioServiceDetailView(LoginRequiredMixin, DetailView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_detail.html'
 	context_object_name = 'asset'
 
-class MediaAudioServiceUpdateView(UpdateView):
+class MediaAudioServiceUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaAudioService
 	template_name = 'media/audio/mediaaudioservice_form.html'
 	context_object_name = 'asset'
@@ -299,19 +300,19 @@ class MediaAudioServiceDetailAPI(generics.RetrieveAPIView):
 
 
 ### Photo
-class MediaPhotoListView(ListView):
+class MediaPhotoListView(LoginRequiredMixin, ListView):
 	model = MediaPhoto
 	template_name = 'media/photo/photo_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
-class MediaPhotoDetailView(DetailView):
+class MediaPhotoDetailView(LoginRequiredMixin, DetailView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_detail.html'
 	context_object_name = 'asset'
 
-class MediaPhotoUpdateView(UpdateView):
+class MediaPhotoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
@@ -337,31 +338,31 @@ class MediaPhotoDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhoto.objects.all()
 	serializer_class = MediaPhotoSerializerDetail
 
-class MediaPhotoGalleryListView(ListView):
+class MediaPhotoGalleryListView(LoginRequiredMixin, ListView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_gallery.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 24
 
-class MediaPhotoServiceCreateView(CreateView):
+class MediaPhotoServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_create.html'
 	fields = ['service_source']
 
-class MediaPhotoServiceListView(ListView):
+class MediaPhotoServiceListView(LoginRequiredMixin, ListView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_source']
 	paginate_by = 15
 
-class MediaPhotoServiceDetailView(DetailView):
+class MediaPhotoServiceDetailView(LoginRequiredMixin, DetailView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_detail.html'
 	context_object_name = 'asset'
 
-class MediaPhotoServiceUpdateView(UpdateView):
+class MediaPhotoServiceUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaPhotoService
 	template_name = 'media/photo/mediaphotoservice_form.html'
 	context_object_name = 'asset'
@@ -389,19 +390,19 @@ class MediaPhotoServiceDetailAPI(generics.RetrieveAPIView):
 
 
 ### Documents
-class MediaDocListView(ListView):
+class MediaDocListView(LoginRequiredMixin, ListView):
 	model = MediaDoc
 	template_name = 'media/doc/doc_list.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 15
 
-class MediaDocDetailView(DetailView):
+class MediaDocDetailView(LoginRequiredMixin, DetailView):
 	model = MediaDoc
 	template_name = 'media/doc/mediadoc_detail.html'
 	context_object_name = 'asset'
 
-class MediaDocUpdateView(UpdateView):
+class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaDoc
 	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
@@ -427,24 +428,24 @@ class MediaDocDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaDoc.objects.all()
 	serializer_class = MediaDocSerializerDetail
 
-class MediaDocServiceCreateView(CreateView):
+class MediaDocServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_create.html'
 	fields = ['service_source']
 
-class MediaDocServiceListView(ListView):
+class MediaDocServiceListView(LoginRequiredMixin, ListView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_source']
 	paginate_by = 15
 
-class MediaDocServiceDetailView(DetailView):
+class MediaDocServiceDetailView(LoginRequiredMixin, DetailView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_detail.html'
 	context_object_name = 'asset'
 
-class MediaDocServiceUpdateView(UpdateView):
+class MediaDocServiceUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_form.html'
 	context_object_name = 'asset'
