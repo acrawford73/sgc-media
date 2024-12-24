@@ -381,13 +381,14 @@ LOGGING = {
 }
 
 
-BOOTSTRAP_DATEPICKER_PLUS = {
-    "variant_options": {
-        "date": {
-            "format": "YYYY-MM-DD",
-        },
-    }
-}
+# BOOTSTRAP_DATEPICKER_PLUS = {
+#     "showTodayButton": True,
+#     "variant_options": {
+#         "date": {
+#             "format": "YYYY-MM-DD",
+#         },
+#     }
+# }
 
 
 ### MONITORING

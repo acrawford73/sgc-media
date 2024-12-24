@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from bootstrap_datepicker_plus.widgets import DateTimePickerInput
+from bootstrap_datepicker_plus.widgets import DatePickerInput
 from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService
 from .models import MediaAudio, MediaAudioFormat, MediaAudioService
 from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
@@ -78,7 +78,7 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'transcription', 'tags', 'genre', 'service', 'service_source', 'location_city', 'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
-		form.fields['original_published_date'].widget = DateTimePickerInput()
+		form.fields['original_published_date'].widget = DatePickerInput()
 		return form
 
 class MediaVideoListAPI(generics.ListAPIView):
@@ -214,7 +214,11 @@ class MediaAudioUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
 	template_name = 'media/audio/mediaaudio_form.html'
-	fields = ['is_public', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes', 'transcription']
+	fields = ['is_public', 'original_published_date', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes', 'transcription']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DatePickerInput()
+		return form
 
 # class MediaAudioDeleteView(LoginRequiredMixin, DeleteView):
 # 	model = MediaAudio
@@ -322,7 +326,11 @@ class MediaPhotoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'notes', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DatePickerInput()
+		return form
 
 class MediaPhotoListAPI(generics.ListAPIView):
 	queryset = MediaPhoto.objects.all().filter(is_public=True)
@@ -412,7 +420,11 @@ class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaDoc
 	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'abstract', 'notes', 'service', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'abstract', 'notes', 'service', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DatePickerInput()
+		return form
 
 class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)
