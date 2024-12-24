@@ -15,7 +15,7 @@ class MediaVideoSerializerList(serializers.ModelSerializer):
 	duration = serializers.DecimalField(source='media_video_duration',max_digits=8, decimal_places=3)
 	class Meta:
 		model = MediaVideo
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', 'created', 'duration', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'duration', 'size', 'categories']
 
 class MediaVideoGenreSerializerList(serializers.ModelSerializer):
 	class Meta:
@@ -54,7 +54,7 @@ class MediaAudioSerializerList(serializers.ModelSerializer):
 	bitrate = serializers.CharField(source='audio_bitrate')
 	class Meta:
 		model = MediaAudio
-		fields = ['id', 'title', 'artist', 'album', 'album_artist', 'composer', 'genre', 'description', 'duration', 'bitrate', 'media_path', 'file_sha256', 'path_sha256', 'created', 'size']
+		fields = ['id', 'title', 'artist', 'album', 'album_artist', 'composer', 'genre', 'description', 'duration', 'bitrate', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
 
 class MediaAudioSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -78,7 +78,7 @@ class MediaPhotoSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	class Meta:
 		model = MediaPhoto
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'photo_format', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', 'created', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'photo_format', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size', 'categories']
 
 class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -101,7 +101,7 @@ class MediaDocSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	class Meta:
 		model = MediaDoc
-		fields = ['id', 'title', 'description', 'media_path', 'file_sha256', 'path_sha256', 'created', 'size']
+		fields = ['id', 'title', 'description', 'service', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
 
 class MediaDocSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -122,4 +122,4 @@ class MediaDocServiceSerializerDetail(serializers.ModelSerializer):
 class MediaTagSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = MediaTag
-		fields = ['id', 'tag_name']
+		fields = '__all__'

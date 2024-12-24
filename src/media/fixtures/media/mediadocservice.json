@@ -79,5 +79,14 @@
     "service_url": "https://www.mdpi.com",
     "service_description": "Multidisciplinary Digital Publishing Institute"
   }
+},
+{
+  "model": "media.mediadocservice",
+  "pk": 10,
+  "fields": {
+    "service_source": "Wiley",
+    "service_url": "https://onlinelibrary.wiley.com/",
+    "service_description": "Wiley Online Library"
+  }
 }
 ]

@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from bootstrap_datepicker_plus.widgets import DateTimePickerInput
 from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService
 from .models import MediaAudio, MediaAudioFormat, MediaAudioService
 from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
@@ -75,6 +76,10 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'transcription', 'tags', 'genre', 'service', 'service_source', 'location_city', 'location_state', 'location_country']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DateTimePickerInput()
+		return form
 
 class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
@@ -407,13 +412,13 @@ class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaDoc
 	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'title', 'short_description', 'long_description', 'abstract', 'notes', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
+	fields = ['is_public', 'title', 'short_description', 'long_description', 'abstract', 'notes', 'service', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
 
 class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)
 	serializer_class = MediaDocSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['keywords', 'doc_format']
+	filterset_fields = ['service', 'keywords', 'doc_format']
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
 

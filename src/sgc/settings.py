@@ -104,6 +104,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap3', # DRF
     'crispy_bootstrap5',
+    'bootstrap_datepicker_plus',
     'django_filters',
     'roku_content',
     #'roku_search',
@@ -377,6 +378,15 @@ LOGGING = {
         'handlers': ['console'],
         'level': 'DEBUG',
     },
+}
+
+
+BOOTSTRAP_DATEPICKER_PLUS = {
+    "variant_options": {
+        "date": {
+            "format": "YYYY-MM-DD",
+        },
+    }
 }
 
 
