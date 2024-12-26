@@ -421,7 +421,7 @@ class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', \
-		'long_description', 'abstract', 'notes', 'authors', 'publication', 'service', \
+		'long_description', 'abstract', 'notes', 'affiliations', 'authors', 'publication', 'service', \
 		'source_url', 'doi_url', 'category', 'keywords', 'tags']
 	def get_form(self):
 		form = super().get_form()

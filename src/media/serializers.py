@@ -101,9 +101,10 @@ class MediaPhotoServiceSerializerDetail(serializers.ModelSerializer):
 class MediaDocSerializerList(serializers.ModelSerializer):
 	id = serializers.CharField(source="file_uuid")
 	description = serializers.CharField(source='short_description')
+	source = serializers.CharField(source="service")
 	class Meta:
 		model = MediaDoc
-		fields = ['id', 'title', 'description', 'authors', 'publication', 'service', \
+		fields = ['id', 'title', 'description', 'authors', 'publication', 'source', \
 			'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
 
 class MediaDocSerializerDetail(serializers.ModelSerializer):
