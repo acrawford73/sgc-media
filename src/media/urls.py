@@ -104,6 +104,9 @@ urlpatterns = [
 	path('topics/edit/<int:pk>/', views.MediaTagUpdateView.as_view(), name='media-tag-update'),
 	path('api/topics/', views.MediaTagListAPI.as_view(), name='media-tag-list-api'),
 
+	# Categories
+	path('api/media-categories/', views.MediaCategoryListAPI.as_view(), name='media-category-list-api'),
+	
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),
 #

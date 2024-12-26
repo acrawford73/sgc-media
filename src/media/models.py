@@ -130,7 +130,7 @@ class MediaVideo(models.Model):
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_city = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_state = models.CharField(max_length=64, default="", null=True, blank=True)
-	location_country = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_country = models.ForeignKey("MediaCountry", on_delete=models.SET_NULL, blank=True, null=True)
 	location_latitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
@@ -343,7 +343,7 @@ class MediaPhoto(models.Model):
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_city = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_state = models.CharField(max_length=64, default="", null=True, blank=True)
-	location_country = models.CharField(max_length=64, default="", null=True, blank=True)
+	location_country = models.ForeignKey("MediaCountry", on_delete=models.SET_NULL, blank=True, null=True)
 	location_latitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	location_longitude = models.DecimalField(max_digits=12, decimal_places=9, default=0.0, null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
@@ -355,7 +355,6 @@ class MediaPhoto(models.Model):
 	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-photo-detail', kwargs={'pk': self.pk})
-
 	class Meta:
 		ordering = ['-created']
 	def __unicode__(self):

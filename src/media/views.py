@@ -10,7 +10,7 @@ from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoSer
 from .models import MediaAudio, MediaAudioFormat, MediaAudioService
 from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
 from .models import MediaDoc, MediaDocFormat, MediaDocService
-from .models import MediaCountry, MediaTag
+from .models import MediaCountry, MediaTag, MediaCategory
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -22,7 +22,7 @@ from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail, M
 from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail, \
 						 MediaPhotoServiceSerializerList, MediaPhotoServiceSerializerDetail
 from .serializers import MediaDocSerializerList, MediaDocSerializerDetail, MediaDocServiceSerializerList, MediaDocServiceSerializerDetail
-from .serializers import MediaTagSerializerList
+from .serializers import MediaTagSerializerList, MediaCategorySerializerList
 
 ### Transcription
 # class TranscriptionCreateView(CreateView):
@@ -567,3 +567,14 @@ class MediaTagListAPISearch(generics.ListAPIView):
 	search_fields = ['tag_name'] 
 	ordering_fields = ['id', 'tag_name']
 	ordering = ['tag_name']
+
+
+### Categories
+
+class MediaCategoryListAPI(generics.ListAPIView):
+	queryset = MediaCategory.objects.all()
+	serializer_class = MediaCategorySerializerList
+	filter_backends = [DjangoFilterBackend]
+	filterset_fields = ['category']
+	ordering_fields = ['id', 'category']
+	ordering = ['category']

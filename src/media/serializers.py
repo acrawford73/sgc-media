@@ -7,7 +7,7 @@ from .models import MediaTag, MediaCategory
 
 # Video
 class MediaVideoSerializerList(serializers.ModelSerializer):
-	id = serializers.CharField(source='file_uuid')
+	#id = serializers.CharField(source='file_uuid')
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
 	width = serializers.IntegerField(source='media_video_width')
@@ -15,7 +15,8 @@ class MediaVideoSerializerList(serializers.ModelSerializer):
 	duration = serializers.DecimalField(source='media_video_duration',max_digits=8, decimal_places=3)
 	class Meta:
 		model = MediaVideo
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'duration', 'size', 'categories']
+		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', \
+		'media_path', 'file_sha256', 'path_sha256', 'file_uuid', 'created', 'updated', 'duration', 'size', 'categories']
 
 class MediaVideoGenreSerializerList(serializers.ModelSerializer):
 	class Meta:
@@ -49,12 +50,14 @@ class MediaAudioSerializerListAlbums(serializers.ModelSerializer):
 		fields = ['id', 'album', 'artist']
 
 class MediaAudioSerializerList(serializers.ModelSerializer):
-	id = serializers.CharField(source="file_uuid")
+	#id = serializers.CharField(source="file_uuid")
 	description = serializers.CharField(source='short_description')
 	bitrate = serializers.CharField(source='audio_bitrate')
 	class Meta:
 		model = MediaAudio
-		fields = ['id', 'title', 'artist', 'album', 'album_artist', 'composer', 'genre', 'description', 'duration', 'bitrate', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
+		fields = ['id', 'title', 'artist', 'album', 'album_artist', 'composer', 'genre', \
+			'description', 'duration', 'bitrate', 'media_path', 'file_sha256', 'path_sha256', \
+			'file_uuid', 'created', 'updated', 'size']
 
 class MediaAudioSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -73,14 +76,14 @@ class MediaAudioServiceSerializerDetail(serializers.ModelSerializer):
 
 # Photo
 class MediaPhotoSerializerList(serializers.ModelSerializer):
-	id = serializers.CharField(source="file_uuid")
+	#id = serializers.CharField(source="file_uuid")
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
 	class Meta:
 		model = MediaPhoto
 		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', \
 			'photo_format', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', \
-			'created', 'updated', 'size', 'categories']
+			'file_uuid', 'created', 'updated', 'size', 'categories']
 
 class MediaPhotoSerializerDetail(serializers.ModelSerializer):
 	class Meta:
