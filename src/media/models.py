@@ -406,6 +406,7 @@ class MediaDoc(models.Model):
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.ForeignKey("MediaDocService", on_delete=models.SET_NULL, blank=True, null=True)
+	authors = models.CharField(max_length=512, default="", null=True, blank=True)
 	def get_absolute_url(self):
 		return reverse('media-doc-detail', kwargs={'pk': self.pk})
 	class Meta:

@@ -76,7 +76,7 @@ class MediaPhotoFormatAdmin(admin.ModelAdmin):
 # Documents
 class MediaDocAdmin(admin.ModelAdmin):
 	list_display = ['file_name', 'title', 'doc_format', 'size', 'created']
-	search_fields = ['file_name', 'title']
+	search_fields = ['file_name', 'title', 'authors', 'service', 'keywords']
 	list_filter = ['doc_format_id', 'is_public']
 	readonly_fields = ['size', 'path_sha256', 'file_sha256', 'file_uuid', 'created', 'doc_format']
 	class Meta:

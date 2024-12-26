@@ -101,7 +101,7 @@ class MediaDocSerializerList(serializers.ModelSerializer):
 	description = serializers.CharField(source='short_description')
 	class Meta:
 		model = MediaDoc
-		fields = ['id', 'title', 'description', 'service', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
+		fields = ['id', 'title', 'description', 'authors', 'service', 'media_path', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
 
 class MediaDocSerializerDetail(serializers.ModelSerializer):
 	class Meta:
