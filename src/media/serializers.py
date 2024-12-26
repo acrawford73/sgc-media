@@ -2,7 +2,7 @@ from datetime import datetime
 from rest_framework import serializers
 from .models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenre
 from .models import MediaVideoService, MediaAudioService, MediaPhotoService, MediaDocService
-from .models import MediaTag
+from .models import MediaTag, MediaCategory
 
 
 # Video
@@ -102,10 +102,12 @@ class MediaDocSerializerList(serializers.ModelSerializer):
 	#id = serializers.CharField(source="file_uuid")
 	description = serializers.CharField(source='short_description')
 	source = serializers.CharField(source="service")
+	doc_type = serializers.CharField(source="document_type")
 	class Meta:
 		model = MediaDoc
 		fields = ['id', 'title', 'description', 'authors', 'publication', 'source', 'keywords', \
-			'media_path', 'file_uuid', 'file_sha256', 'path_sha256', 'created', 'updated', 'size']
+			'doc_type', 'media_path', 'file_uuid', 'file_sha256', 'path_sha256', 'created', \
+			'updated', 'size']
 
 class MediaDocSerializerDetail(serializers.ModelSerializer):
 	class Meta:
@@ -126,4 +128,10 @@ class MediaDocServiceSerializerDetail(serializers.ModelSerializer):
 class MediaTagSerializerList(serializers.ModelSerializer):
 	class Meta:
 		model = MediaTag
+		fields = '__all__'
+
+# Category
+class MediaCategorySerializerList(serializers.ModelSerializer):
+	class Meta:
+		model = MediaCategory
 		fields = '__all__'

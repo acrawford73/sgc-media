@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import MediaVideo, MediaVideoGenre, MediaVideoFormat, MediaVideoService, MediaVideoThumbnail
 from .models import MediaAudio, MediaAudioGenre, MediaAudioFormat, MediaAudioService
 from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
-from .models import MediaDoc, MediaDocFormat, MediaDocCategory, MediaDocType, MediaDocService
-from .models import MediaCountry, MediaTag
+from .models import MediaDoc, MediaDocFormat, MediaDocType, MediaDocService
+from .models import MediaCountry, MediaTag, MediaCategory
 					
 
 # Video
@@ -88,12 +88,6 @@ class MediaDocFormatAdmin(admin.ModelAdmin):
 	class Meta:
 		model = MediaDocFormat
 
-class MediaDocCategoryAdmin(admin.ModelAdmin):
-	list_display = ['category']
-	search_fields = ['category']
-	class Meta:
-		model = MediaDocCategory
-
 class MediaDocTypeAdmin(admin.ModelAdmin):
 	list_display = ['document_type']
 	search_fields = ['document_type']
@@ -111,6 +105,12 @@ class MediaTagAdmin(admin.ModelAdmin):
 	search_fields = ['tag_name']
 	class Meta:
 		model = MediaTag
+
+class MediaCategoryAdmin(admin.ModelAdmin):
+	list_display = ['category']
+	search_fields = ['category']
+	class Meta:
+		model = MediaCategory
 
 # Services
 class MediaVideoServiceAdmin(admin.ModelAdmin):
@@ -156,8 +156,8 @@ admin.site.register(MediaPhotoService, MediaPhotoServiceAdmin)
 admin.site.register(MediaDoc, MediaDocAdmin)
 admin.site.register(MediaDocFormat, MediaDocFormatAdmin)
 admin.site.register(MediaDocService, MediaDocServiceAdmin)
-admin.site.register(MediaDocCategory, MediaDocCategoryAdmin)
 admin.site.register(MediaDocType, MediaDocTypeAdmin)
 
 admin.site.register(MediaCountry, MediaCountryAdmin)
 admin.site.register(MediaTag, MediaTagAdmin)
+admin.site.register(MediaCategory, MediaCategoryAdmin)

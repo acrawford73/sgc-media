@@ -57,7 +57,8 @@ class MediaUploadView(TemplateView):
 class MediaVideoCreateView(LoginRequiredMixin, CreateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_create.html'  #<app>/<model>_<viewtype>.html
-	fields = ['title', 'short_description', 'long_description', 'orientation', 'service', 'file_path', 'notes']
+	fields = ['title', 'short_description', 'long_description', 'orientation', 'service', 'file_path', \
+		'notes', 'category']
 
 class MediaVideoListView(LoginRequiredMixin, ListView):
 	model = MediaVideo
@@ -75,7 +76,9 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'transcription', 'tags', 'genre', 'service', 'service_source', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', \
+		'notes', 'transcription', 'category', 'tags', 'genre', 'service', 'service_source', 'location_city', \
+		'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -202,7 +205,8 @@ class MediaAudioCreateView(LoginRequiredMixin, CreateView):
 	model = MediaAudio
 	context_object_name = 'asset'
 	template_name = 'media/audio/mediaaudio_form.html'
-	fields = ['is_public', 'original_published_date', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes', 'transcription']
+	fields = ['is_public', 'original_published_date', 'rating', 'title', 'artist', 'album', 'genre', \
+		'short_description', 'long_description', 'source', 'notes', 'transcription', 'category']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -224,7 +228,8 @@ class MediaAudioUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaAudio
 	context_object_name = 'asset'
 	template_name = 'media/audio/mediaaudio_form.html'
-	fields = ['is_public', 'original_published_date', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes', 'transcription']
+	fields = ['is_public', 'original_published_date', 'rating', 'title', 'artist', 'album', 'genre', \
+		'short_description', 'long_description', 'source', 'notes', 'transcription', 'category']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -324,7 +329,8 @@ class MediaPhotoCreateView(LoginRequiredMixin, CreateView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', \
+		'notes', 'service', 'category', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -346,7 +352,8 @@ class MediaPhotoUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', \
+		'notes', 'service', 'category', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -431,7 +438,7 @@ class MediaDocCreateView(LoginRequiredMixin, CreateView):
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', \
 		'long_description', 'abstract', 'notes', 'affiliations', 'authors', 'publication', 'service', \
-		'source_url', 'doi_url', 'category', 'keywords', 'tags']
+		'source_url', 'doi_url', 'category', 'keywords', 'document_type', 'tags']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -455,7 +462,7 @@ class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', \
 		'long_description', 'abstract', 'notes', 'affiliations', 'authors', 'publication', 'service', \
-		'source_url', 'doi_url', 'category', 'keywords', 'tags']
+		'source_url', 'doi_url', 'category', 'keywords', 'document_type', 'tags']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()

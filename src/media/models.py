@@ -13,7 +13,6 @@ def video_thumb_path(instance, filename):
 		datetime.datetime.now().strftime('%m'), \
 		datetime.datetime.now().strftime('%d'), file_path)
 
-
 class MediaCountry(models.Model):
 	country_name = models.CharField(max_length=64, null=False, blank=False, unique=True)
 	country_code = models.CharField(max_length=2, null=False, blank=False, unique=True)
@@ -21,6 +20,13 @@ class MediaCountry(models.Model):
 		ordering = ['country_name']
 	def __str__(self):
 		return self.country_name
+
+class MediaCategory(models.Model):
+	category = models.CharField(max_length=100, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['category']
+	def __str__(self):
+		return self.category
 
 
 ### VIDEO
@@ -146,7 +152,7 @@ class MediaVideo(models.Model):
 	thumbnail_height = models.PositiveSmallIntegerField(default=0, null=True, blank=True)
 	transcription = models.TextField(default="", blank=True, null=True)
 	#transcriptions = models.ManyToManyField('Transcription', through='MediaVideoTranscription', blank=True)
-
+	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-video-detail', kwargs={'pk': self.pk})
 	class Meta:
@@ -247,6 +253,7 @@ class MediaAudio(models.Model):
 	#transcriptions = models.ForeignKey("Transcription", on_delete=models.CASCADE, blank=True, null=True)
 	transcription = models.TextField(default="", blank=True, null=True)
 	topics = models.CharField(default="", null=True, blank=True)
+	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
 	class Meta:
@@ -344,7 +351,7 @@ class MediaPhoto(models.Model):
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	doc_format = models.ForeignKey("MediaPhotoFormat", on_delete=models.SET_NULL, blank=True, null=True)
-
+	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-photo-detail', kwargs={'pk': self.pk})
 
@@ -373,13 +380,6 @@ class MediaDocFormat(models.Model):
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
-class MediaDocCategory(models.Model):
-	category = models.CharField(max_length=100, null=False, blank=False, unique=True)
-	class Meta:
-		ordering = ['category']
-	def __str__(self):
-		return self.category
-
 class MediaDocType(models.Model):
 	document_type = models.CharField(max_length=100, null=False, blank=False, unique=True)
 	class Meta:
@@ -404,7 +404,7 @@ class MediaDoc(models.Model):
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
 	### this is actually doc_format_id in the database
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
-	category = models.ForeignKey("MediaDocCategory", on_delete=models.SET_NULL, blank=True, null=True)
+	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
 	topics = models.CharField(default="", null=True, blank=True)
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
