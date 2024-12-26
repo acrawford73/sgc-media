@@ -253,7 +253,8 @@ class MediaAudio(models.Model):
 	#transcriptions = models.ForeignKey("Transcription", on_delete=models.CASCADE, blank=True, null=True)
 	transcription = models.TextField(default="", blank=True, null=True)
 	topics = models.CharField(default="", null=True, blank=True)
-	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
+	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True, \
+		help_text="Major topic of discussion for podcasts, interviews, and talk content.")
 	def get_absolute_url(self):
 		return reverse('media-audio-detail', kwargs={'pk': self.pk})
 	class Meta:
