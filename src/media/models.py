@@ -340,6 +340,8 @@ class MediaPhoto(models.Model):
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
 	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
+	service_source = models.ForeignKey("MediaPhotoService", on_delete=models.SET_NULL, blank=True, null=True, \
+		help_text="Select the service where the media was originally sourced.")
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_city = models.CharField(max_length=64, default="", null=True, blank=True)
 	location_state = models.CharField(max_length=64, default="", null=True, blank=True)
@@ -392,7 +394,7 @@ class MediaDoc(models.Model):
 	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
 	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
 	abstract = models.TextField(default="", null=True, blank=True)
-	notes = models.TextField(max_length=2048, default="", null=True, blank=True)
+	notes = models.TextField(max_length=8192, default="", null=True, blank=True)
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")
 	media_path = models.CharField(max_length=4096, default="")

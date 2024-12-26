@@ -330,7 +330,8 @@ class MediaPhotoCreateView(LoginRequiredMixin, CreateView):
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', \
-		'notes', 'service', 'category', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+		'notes', 'service', 'service_source', 'category', 'tags', 'location_name', 'location_city', \
+		'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
@@ -353,7 +354,8 @@ class MediaPhotoUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/photo/mediaphoto_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', \
-		'notes', 'service', 'category', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+		'notes', 'service', 'service_source', 'category', 'tags', 'location_name', 'location_city', \
+		'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()

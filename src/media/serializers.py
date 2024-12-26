@@ -79,9 +79,10 @@ class MediaPhotoSerializerList(serializers.ModelSerializer):
 	#id = serializers.CharField(source="file_uuid")
 	categories = serializers.JSONField(source='tags')
 	description = serializers.CharField(source='short_description')
+	source = serializers.CharField(source='service_source')
 	class Meta:
 		model = MediaPhoto
-		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', \
+		fields = ['id', 'username', 'title', 'description', 'service', 'source', 'orientation', \
 			'photo_format', 'width', 'height', 'media_path', 'file_sha256', 'path_sha256', \
 			'file_uuid', 'created', 'updated', 'size', 'categories']
 
