@@ -432,7 +432,7 @@ class MediaDocListAPI(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)
 	serializer_class = MediaDocSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'keywords', 'doc_format']
+	filterset_fields = ['service', 'keywords', 'publication', 'doc_format']
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
 
@@ -440,7 +440,8 @@ class MediaDocListAPISearch(generics.ListAPIView):
 	queryset = MediaDoc.objects.all().filter(is_public=True)
 	serializer_class = MediaDocSerializerList
 	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', 'notes', 'doc_format', 'keywords', '@tags'] 
+	search_fields = ['title', 'short_description', 'long_description', 'abstract', 'notes', 'doc_format', \
+		'publications', 'authors', 'keywords', '@tags'] 
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
 
