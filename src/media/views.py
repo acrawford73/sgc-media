@@ -420,7 +420,9 @@ class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaDoc
 	template_name = 'media/doc/mediadoc_form.html'
 	context_object_name = 'asset'
-	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'abstract', 'notes', 'authors', 'service', 'source_url', 'doi_url', 'category', 'keywords', 'tags']
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', \
+		'long_description', 'abstract', 'notes', 'authors', 'publication', 'service', \
+		'source_url', 'doi_url', 'category', 'keywords', 'tags']
 	def get_form(self):
 		form = super().get_form()
 		form.fields['original_published_date'].widget = DatePickerInput()
