@@ -198,6 +198,16 @@ class MediaVideoServiceDetailAPI(generics.RetrieveAPIView):
 
 
 ### Audio
+class MediaAudioCreateView(LoginRequiredMixin, CreateView):
+	model = MediaAudio
+	context_object_name = 'asset'
+	template_name = 'media/audio/mediaaudio_form.html'
+	fields = ['is_public', 'original_published_date', 'rating', 'title', 'artist', 'album', 'genre', 'short_description', 'long_description', 'source', 'notes', 'transcription']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DatePickerInput()
+		return form
+
 class MediaAudioListView(LoginRequiredMixin, ListView):
 	model = MediaAudio
 	template_name = 'media/audio/audio_list.html'
@@ -310,6 +320,16 @@ class MediaAudioServiceDetailAPI(generics.RetrieveAPIView):
 
 
 ### Photo
+class MediaPhotoCreateView(LoginRequiredMixin, CreateView):
+	model = MediaPhoto
+	template_name = 'media/photo/mediaphoto_form.html'
+	context_object_name = 'asset'
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', 'notes', 'service', 'tags', 'location_name', 'location_city', 'location_state', 'location_country']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DatePickerInput()
+		return form
+
 class MediaPhotoListView(LoginRequiredMixin, ListView):
 	model = MediaPhoto
 	template_name = 'media/photo/photo_list.html'
@@ -404,6 +424,19 @@ class MediaPhotoServiceDetailAPI(generics.RetrieveAPIView):
 
 
 ### Documents
+
+class MediaDocCreateView(LoginRequiredMixin, CreateView):
+	model = MediaDoc
+	template_name = 'media/doc/mediadoc_form.html'
+	context_object_name = 'asset'
+	fields = ['is_public', 'original_published_date', 'title', 'short_description', \
+		'long_description', 'abstract', 'notes', 'affiliations', 'authors', 'publication', 'service', \
+		'source_url', 'doi_url', 'category', 'keywords', 'tags']
+	def get_form(self):
+		form = super().get_form()
+		form.fields['original_published_date'].widget = DatePickerInput()
+		return form
+
 class MediaDocListView(LoginRequiredMixin, ListView):
 	model = MediaDoc
 	template_name = 'media/doc/doc_list.html'

@@ -37,6 +37,7 @@ urlpatterns = [
 	path('api/video-service/<int:pk>', views.MediaVideoServiceDetailAPI.as_view(), name='video-service-detail-api'),
 
 	# Photo
+	path('media-photo/upload/', views.MediaPhotoCreateView.as_view(), name='media-photo-create'),
 	path('photos/', views.MediaPhotoListView.as_view(), name='media-photo-list'),
 	path('photos/<int:pk>/', views.MediaPhotoDetailView.as_view(), name='media-photo-detail'), 
 	path('photos/edit/<int:pk>/', views.MediaPhotoUpdateView.as_view(), name='media-photo-update'),
@@ -56,6 +57,7 @@ urlpatterns = [
 	path('api/photo-service/<int:pk>', views.MediaPhotoServiceDetailAPI.as_view(), name='photo-service-detail-api'),
 
 	# Audio
+	path('media-audio/upload/', views.MediaAudioCreateView.as_view(), name='media-audio-create'),
 	path('audio/', views.MediaAudioListView.as_view(), name='media-audio-list'),
 	path('audio/<int:pk>/', views.MediaAudioDetailView.as_view(), name='media-audio-detail'), 
 	path('audio/edit/<int:pk>/', views.MediaAudioUpdateView.as_view(), name='media-audio-update'),
@@ -80,6 +82,7 @@ urlpatterns = [
 	path('api/audio-service/<int:pk>', views.MediaAudioServiceDetailAPI.as_view(), name='audio-service-detail-api'),
 
 	# Documents
+	path('media-doc/upload/', views.MediaDocCreateView.as_view(), name='media-doc-create'),
 	path('docs/', views.MediaDocListView.as_view(), name='media-doc-list'),
 	path('docs/<int:pk>/', views.MediaDocDetailView.as_view(), name='media-doc-detail'), 
 	path('docs/edit/<int:pk>/', views.MediaDocUpdateView.as_view(), name='media-doc-update'),

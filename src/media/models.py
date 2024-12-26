@@ -373,12 +373,19 @@ class MediaDocFormat(models.Model):
 	def __str__(self):
 		return str(self.doc_format) + " (" + str(self.doc_format_name) + ")"
 
-class MediaDocCategories(models.Model):
-	category = models.CharField(max_length=64, null=False, blank=False, unique=True)
+class MediaDocCategory(models.Model):
+	category = models.CharField(max_length=100, null=False, blank=False, unique=True)
 	class Meta:
 		ordering = ['category']
 	def __str__(self):
 		return self.category
+
+class MediaDocType(models.Model):
+	document_type = models.CharField(max_length=100, null=False, blank=False, unique=True)
+	class Meta:
+		ordering = ['document_type']
+	def __str__(self):
+		return self.document_type
 
 class MediaDoc(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
@@ -397,7 +404,7 @@ class MediaDoc(models.Model):
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
 	### this is actually doc_format_id in the database
 	doc_format = models.ForeignKey("MediaDocFormat", on_delete=models.SET_NULL, blank=True, null=True)
-	category = models.ForeignKey("MediaDocCategories", on_delete=models.SET_NULL, blank=True, null=True)
+	category = models.ForeignKey("MediaDocCategory", on_delete=models.SET_NULL, blank=True, null=True)
 	topics = models.CharField(default="", null=True, blank=True)
 	keywords = models.CharField(max_length=1024, default="", null=True, blank=True)
 	created = models.DateTimeField(auto_now_add=True)
@@ -409,6 +416,7 @@ class MediaDoc(models.Model):
 	authors = models.CharField(max_length=512, default="", null=True, blank=True)
 	affiliations = models.TextField(default="", null=True, blank=True)
 	publication = models.CharField(max_length=200, default="", null=True, blank=True)
+	document_type = models.ForeignKey("MediaDocType", on_delete=models.SET_NULL, blank=True, null=True)
 	def get_absolute_url(self):
 		return reverse('media-doc-detail', kwargs={'pk': self.pk})
 	class Meta:

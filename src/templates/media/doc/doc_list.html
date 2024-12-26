@@ -9,7 +9,10 @@
   <div class="container">
     <p>&nbsp;</p>
     <h1 class="mt-5">Documents</h1>
-
+    
+<!--     <br />
+    <p><a href="{% url 'media-doc-create' %}"><button class="btn btn-primary rounded-pill px-3" type="button">Add a Document</button></a></p>
+ -->
     <div class="row">
       <div class="col-lg-12">
         <!-- <h4>Available Video Assets</h4> -->
@@ -18,7 +21,7 @@
             <thead>
               <tr align="center" class="table-primary">
                 <th align="center">#</th>
-                <th>File</th>
+                <th>Title</th>
                 <th>Added UTC</th>
 		            <th>Public</th>
               </tr>
@@ -27,7 +30,7 @@
               {% for asset in assets %}
               <tr align="center">
                 <td>{{ asset.id }}</td>
-                <td align="left"><a href="{% url 'media-doc-detail' asset.id %}">{{ asset.file_name }}</a></td>
+                <td align="left"><a href="{% url 'media-doc-detail' asset.id %}">{{ asset.title }}</a></td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
 		            <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
               </tr>
