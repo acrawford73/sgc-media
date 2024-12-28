@@ -153,8 +153,8 @@ class MediaVideoRSSFeed(Feed):
 		return feedgen
 
 class MediaVideoAtomFeed(MediaVideoRSSFeed):
-    feed_type = Atom1Feed
-    subtitle = MediaVideoRSSFeed.description
+	feed_type = Atom1Feed
+	subtitle = MediaVideoRSSFeed.description
 
 class MediaVideoServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaVideoService
@@ -534,6 +534,44 @@ class MediaDocServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaDocService.objects.all()
 	serializer_class = MediaDocServiceSerializerDetail
 
+class MediaDocRSSFeed(Feed):
+	title = "Document Feed"
+	link = "/docs/rss/"
+	description = "Latest documents"
+	feed_copyright = "SGC-MEDIA-2024"
+	ttl = 600
+	def items(self):
+		return MediaDoc.objects.filter(is_public=True).order_by("-created")[:50]
+	def item_title(self, item):
+		return item.title
+	def item_description(self, item):
+		if (item.long_description is None) or (item.long_description == ""):
+			item.long_description = "Long description is not available"
+		return item.long_description
+	def item_link(self, item):
+		return "/docs/%s/" % (item.id)
+	def item_author_name(self, item):
+		if (item.authors is None) or (item.authors == ""):
+			return "Unknown"
+		else:
+			return item.authors
+	def item_guid(self, item):
+		guid = item.file_uuid
+		return guid.upper()
+	def item_pubdate(self, item):
+		return item.created
+	### should implement
+	#def item_updateddate(self, item):
+	#	return item.updated
+	def get_feed(self, obj, request):
+		feedgen = super().get_feed(obj, request)
+		feedgen.content_type = "application/xml; charset=utf-8"
+		return feedgen
+
+class MediaDocAtomFeed(MediaDocRSSFeed):
+	feed_type = Atom1Feed
+	subtitle = MediaDocRSSFeed.description
+
 
 ### Tags
 class MediaTagListView(LoginRequiredMixin, ListView):
@@ -572,6 +610,13 @@ class MediaTagListAPISearch(generics.ListAPIView):
 
 
 ### Categories
+
+class MediaCategoryListView(LoginRequiredMixin, ListView):
+	model = MediaCategory
+	template_name = 'media/category/category_list.html'
+	context_object_name = 'assets'
+	ordering = ['category']
+	#paginate_by = 15
 
 class MediaCategoryListAPI(generics.ListAPIView):
 	queryset = MediaCategory.objects.all()

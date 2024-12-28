@@ -97,7 +97,8 @@ urlpatterns = [
 	path('api/doc-services/', views.MediaDocServiceListAPI.as_view(), name='doc-service-list-api'),
 	path('api/doc-service/search/', views.MediaDocServiceListAPISearch.as_view()),
 	path('api/doc-service/<int:pk>', views.MediaDocServiceDetailAPI.as_view(), name='doc-service-detail-api'),
-
+	path('docs/atom/', views.MediaDocAtomFeed(), name='doc-atom'),
+	path('docs/rss/', views.MediaDocRSSFeed(), name='doc-rss'),
 	# Tags
 	path('topics/', views.MediaTagListView.as_view(), name='media-tag-list'),
 	path('topics/<int:pk>/', views.MediaTagDetailView.as_view(), name='media-tag-detail'),
@@ -105,6 +106,7 @@ urlpatterns = [
 	path('api/topics/', views.MediaTagListAPI.as_view(), name='media-tag-list-api'),
 
 	# Categories
+	path('media-categories/', views.MediaCategoryListView.as_view(), name='media-category-list'),
 	path('api/media-categories/', views.MediaCategoryListAPI.as_view(), name='media-category-list-api'),
 	
 # 	# Settings
