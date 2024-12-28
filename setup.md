@@ -34,11 +34,13 @@ source bin/activate
 pip install -r requirements.txt
 
 cd src
+mkdir -p custom_auth/migrations
 mkdir -p roku_content/migrations
 mkdir -p roku_search/migrations
 mkdir -p system_config/migrations
 mkdir -p core/migrations
 mkdir -p media/migrations
+touch custom_auth/migrations/__init__.py
 touch roku_content/migrations/__init__.py
 touch roku_search/migrations/__init__.py
 touch core/migrations/__init__.py
