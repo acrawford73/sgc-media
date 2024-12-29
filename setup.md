@@ -50,8 +50,6 @@ touch system_config/migrations/__init__.py
 python manage.py makemigrations
 python manage.py migrate
 
-python manage.py createsuperuser
-
 python manage.py loaddata roku_content/fixtures/roku_content/ratingsource
 python manage.py loaddata roku_content/fixtures/roku_content/parentalrating
 python manage.py loaddata roku_content/fixtures/roku_content/rating
@@ -62,4 +60,5 @@ python manage.py loaddata roku_content/fixtures/roku_content/language
 python manage.py loaddata roku_content/fixtures/roku_content/externalidtype
 python manage.py loaddata roku_content/fixtures/roku_content/country
 python manage.py loaddata media/fixtures/media/*
-```
+
+python manage.py createsuperuser
