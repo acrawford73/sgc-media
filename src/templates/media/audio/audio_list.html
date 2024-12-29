@@ -36,6 +36,7 @@
 <!--                 <th>Duration</th>
                 <th>Bitrate</th> -->
                 <th>Added UTC</th>
+                <th>Public</th>
               </tr>
             </thead>
             <tbody>
@@ -48,6 +49,11 @@
 <!--                 <td>{{ asset.duration }} s</td>
                 <td>{{ asset.audio_bitrate }} KB/s</td> -->
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
+                {% if asset.is_public %}
+                <td class="text-success"><strong>Yes</strong></td>
+                {% else %}
+                <td class="text-danger"><strong>No</strong></td>
+                {% endif %}
               </tr>
               {% endfor %}
 

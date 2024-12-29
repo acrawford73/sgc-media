@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<<!-- Begin page content -->
+<main class="flex-shrink-0">
+  <div class="container">
+    <p>&nbsp;</p>
+    <h2 class="mt-5"><strong>Category: </strong>{{ asset.id }}</h2>
+    <h4><a href="{% url 'media-category-update' asset.id %}">Edit this Category</a></h4>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="table-responsive">
+
+          <p>&nbsp;</p>
+          <table class="table table-striped table-hover table-md">
+            <tbody>
+              <tr>
+                <td><strong>Category</strong></td>
+                <td>{{ asset.category }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    <!-- row end -->
+    </div>
+
+  <!-- container end -->
+  </div>
+
+</main>
+
+{% endblock %}

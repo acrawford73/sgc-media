@@ -24,7 +24,7 @@ class MediaCountry(models.Model):
 class MediaTag(models.Model):
 	tag_name = models.CharField(max_length=100, null=False, blank=False, unique=True)
 	def get_absolute_url(self):
-		return reverse('media-tag-detail', kwargs={'pk': self.pk})
+		return reverse('media-tag-list')
 	class Meta:
 		ordering = ['tag_name']
 	def __str__(self):
@@ -32,6 +32,8 @@ class MediaTag(models.Model):
 
 class MediaCategory(models.Model):
 	category = models.CharField(max_length=100, null=False, blank=False, unique=True)
+	def get_absolute_url(self):
+		return reverse('media-category-list')
 	class Meta:
 		ordering = ['category']
 	def __str__(self):
@@ -402,10 +404,14 @@ class MediaDocType(models.Model):
 
 class MediaDoc(models.Model):
 	title = models.CharField(max_length=512, default="", null=True, blank=True)
-	short_description = models.CharField(max_length=512, default="", null=True, blank=True)
-	long_description = models.TextField(max_length=2048, default="", null=True, blank=True)
-	abstract = models.TextField(default="", null=True, blank=True)
-	notes = models.TextField(max_length=8192, default="", null=True, blank=True)
+	short_description = models.CharField(max_length=512, default="", null=True, blank=True, \
+		help_text="Description having a single sentence.")
+	long_description = models.TextField(max_length=2048, default="", null=True, blank=True, \
+		help_text="Description having one paragraph.")
+	abstract = models.TextField(default="", null=True, blank=True, \
+		help_text="The 'Abstract' section of the document, if available.")
+	notes = models.TextField(max_length=8192, default="", null=True, blank=True, \
+		help_text="Any additional notes about the document and its contents.")
 	file_name = models.CharField(max_length=255, default="")
 	file_path = models.CharField(max_length=4096, default="")
 	media_path = models.CharField(max_length=4096, default="")

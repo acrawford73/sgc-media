@@ -18,10 +18,10 @@ urlpatterns = [
 	path('language/edit/<int:pk>/', views.LanguageUpdateView.as_view(), name='language-update'),
 	
 	# Category
-	path('category/create/', views.CategoryCreateView.as_view(), name='category-create'),
+	path('categories/create/', views.CategoryCreateView.as_view(), name='category-create'),
 	path('categories/', views.CategoryListView.as_view(), name='category-list'),
-	path('category/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
-	path('category/edit/<int:pk>/', views.CategoryUpdateView.as_view(), name='category-update'),
+	path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
+	path('categories/edit/<int:pk>/', views.CategoryUpdateView.as_view(), name='category-update'),
 	
 	# Playlist
 	path('playlist/create/', views.PlaylistCreateView.as_view(), name='playlist-create'),
@@ -138,9 +138,9 @@ urlpatterns = [
 	path('credit/edit/<int:pk>/', views.CreditUpdateView.as_view(), name='credit-update'),
 
 	# Tags
-	path('tag/create/', views.TagCreateView.as_view(), name='tag-create'),
+	path('tags/create/', views.TagCreateView.as_view(), name='tag-create'),
 	path('tags/', views.TagListView.as_view(), name='tag-list'),
-	path('tag/<int:pk>/', views.TagDetailView.as_view(), name='tag-detail'),
-	path('tag/edit/<int:pk>/', views.TagUpdateView.as_view(), name='tag-update'),
+	path('tags/<int:pk>/', views.TagDetailView.as_view(), name='tag-detail'),
+	path('tags/edit/<int:pk>/', views.TagUpdateView.as_view(), name='tag-update'),
 	
 ]

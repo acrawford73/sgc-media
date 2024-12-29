@@ -23,7 +23,7 @@
                 <th>File</th>
                 <th>Orientation</th>
                 <th>Added UTC</th>
-		<th>Public</th>
+		            <th>Public</th>
               </tr>
             </thead>
             <tbody>
@@ -33,7 +33,11 @@
                 <td align="left"><a href="{% url 'media-photo-detail' asset.id %}">{{ asset.file_name }}</a></td>
                 <td>{{ asset.orientation }}</td>
                 <td>{{ asset.created|date:"F d Y, g:i:s A" }}</td>
-		<td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
+		            {% if asset.is_public %}
+                <td class="text-success"><strong>Yes</strong></td>
+                {% else %}
+                <td class="text-danger"><strong>No</strong></td>
+                {% endif %}
               </tr>
               {% endfor %}
 

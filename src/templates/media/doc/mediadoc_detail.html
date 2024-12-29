@@ -22,7 +22,7 @@
             <tbody>
               <tr>
                 <td><strong>Download</strong></td>
-                <td><a href="/media/{{asset.media_path}}" target="_blank"><button class="btn btn-primary rounded-pill px-3" type="button">{{ asset.file_name }}</button></a>
+                <td><a href="/media/{{asset.media_path}}" target="_blank"><button class="btn btn-outline-primary rounded-pill px-3" type="button">{{ asset.file_name }}</button></a>
                 </td>
               </tr>
 <!--               <tr>
@@ -46,7 +46,11 @@
               </tr>
               <tr>
                 <td><strong>Public</strong></td>
-                <td>{% if asset.is_public %}Yes{% else %}No{% endif %}</td>
+                {% if asset.is_public %}
+                  <td><button class="btn btn-outline-success rounded-pill px-3"><strong>Yes</strong></button></td>
+                {% else %}
+                  <td><button class="btn btn-outline-danger rounded-pill px-3"><strong>No</strong></button></td>
+                {% endif %}
               </tr>
             </tbody>
           </table>

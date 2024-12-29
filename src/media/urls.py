@@ -103,14 +103,19 @@ urlpatterns = [
 	path('api/doc-service/<int:pk>/', views.MediaDocServiceDetailAPI.as_view(), name='doc-service-detail-api'),
 	path('docs/atom/', views.MediaDocAtomFeed(), name='doc-atom'),
 	path('docs/rss/', views.MediaDocRSSFeed(), name='doc-rss'),
+	
 	# Tags
+	path('tag/create/', views.MediaTagCreateView.as_view(), name='media-tag-create'),
 	path('tag/', views.MediaTagListView.as_view(), name='media-tag-list'),
 	path('tag/<int:pk>/', views.MediaTagDetailView.as_view(), name='media-tag-detail'),
 	path('tag/edit/<int:pk>/', views.MediaTagUpdateView.as_view(), name='media-tag-update'),
 	path('api/tag/', views.MediaTagListAPI.as_view(), name='media-tag-list-api'),
 
 	# Categories
+	path('category/create/', views.MediaCategoryCreateView.as_view(), name='media-category-create'),
 	path('category/', views.MediaCategoryListView.as_view(), name='media-category-list'),
+	path('category/<int:pk>/', views.MediaCategoryDetailView.as_view(), name='media-category-detail'),
+	path('category/edit/<int:pk>/', views.MediaCategoryUpdateView.as_view(), name='media-category-update'),
 	path('api/category/', views.MediaCategoryListAPI.as_view(), name='media-category-list-api'),
 	
 # 	# Settings

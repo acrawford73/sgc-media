@@ -77,7 +77,7 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/video/mediavideo_form.html'
 	context_object_name = 'asset'
 	fields = ['is_public', 'original_published_date', 'title', 'short_description', 'long_description', \
-		'notes', 'transcription', 'category', 'tags', 'genre', 'service', 'service_source', 'location_city', \
+		'notes', 'transcription', 'tags', 'category', 'genre', 'service', 'service_source', 'location_city', \
 		'location_state', 'location_country']
 	def get_form(self):
 		form = super().get_form()
@@ -570,14 +570,14 @@ class MediaDocDetailAPI(generics.RetrieveAPIView):
 class MediaDocServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_create.html'
-	fields = ['service_source']
+	fields = ['service_source', 'service_description', 'service_url']
 
 class MediaDocServiceListView(LoginRequiredMixin, ListView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_list.html'
 	context_object_name = 'assets'
 	ordering = ['service_source']
-	paginate_by = 15
+	#paginate_by = 15
 
 class MediaDocServiceDetailView(LoginRequiredMixin, DetailView):
 	model = MediaDocService
@@ -588,7 +588,7 @@ class MediaDocServiceUpdateView(LoginRequiredMixin, UpdateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_form.html'
 	context_object_name = 'asset'
-	fields = ['service_source']
+	fields = ['service_source', 'service_description', 'service_url']
 
 class MediaDocServiceListAPI(generics.ListAPIView):
 	queryset = MediaDocService.objects.all()
@@ -650,6 +650,11 @@ class MediaDocAtomFeed(MediaDocRSSFeed):
 
 
 ### Tags
+class MediaTagCreateView(LoginRequiredMixin, CreateView):
+	model = MediaTag
+	template_name = 'media/tag/tag_create.html'
+	fields = ['tag_name']
+
 class MediaTagListView(LoginRequiredMixin, ListView):
 	model = MediaTag
 	template_name = 'media/tag/tag_list.html'
@@ -687,12 +692,28 @@ class MediaTagListAPISearch(generics.ListAPIView):
 
 ### Categories
 
+class MediaCategoryCreateView(LoginRequiredMixin, CreateView):
+	model = MediaCategory
+	template_name = 'media/category/category_create.html'
+	fields = ['category']
+
 class MediaCategoryListView(LoginRequiredMixin, ListView):
 	model = MediaCategory
 	template_name = 'media/category/category_list.html'
 	context_object_name = 'assets'
 	ordering = ['category']
 	#paginate_by = 15
+
+class MediaCategoryDetailView(LoginRequiredMixin, DetailView):
+	model = MediaCategory
+	template_name = 'media/category/category_detail.html'
+	context_object_name = 'asset'
+
+class MediaCategoryUpdateView(LoginRequiredMixin, UpdateView):
+	model = MediaCategory
+	template_name = 'media/category/category_form.html'
+	context_object_name = 'asset'
+	fields = ['category']
 
 class MediaCategoryListAPI(generics.ListAPIView):
 	queryset = MediaCategory.objects.all()
