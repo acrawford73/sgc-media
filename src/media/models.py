@@ -21,6 +21,15 @@ class MediaCountry(models.Model):
 	def __str__(self):
 		return self.country_name
 
+class MediaTag(models.Model):
+	tag_name = models.CharField(max_length=100, null=False, blank=False, unique=True)
+	def get_absolute_url(self):
+		return reverse('media-tag-detail', kwargs={'pk': self.pk})
+	class Meta:
+		ordering = ['tag_name']
+	def __str__(self):
+		return self.tag_name
+
 class MediaCategory(models.Model):
 	category = models.CharField(max_length=100, null=False, blank=False, unique=True)
 	class Meta:
@@ -339,7 +348,8 @@ class MediaPhoto(models.Model):
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION, editable=False)
 	is_public = models.BooleanField(default=True)
 	tags = models.JSONField(default=list, null=True, blank=True)
-	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES)
+	service = models.CharField(max_length=32, default="NA", null=True, blank=True, choices=PHOTO_SERVICES, \
+		help_text="This service field is from the scripted photo importer only.")
 	service_source = models.ForeignKey("MediaPhotoService", on_delete=models.SET_NULL, blank=True, null=True, \
 		help_text="Select the service where the media was originally sourced.")
 	location_name = models.CharField(max_length=64, default="", null=True, blank=True)
@@ -354,7 +364,8 @@ class MediaPhoto(models.Model):
 	notes = models.TextField(max_length=1024, default="", null=True, blank=True)
 	username = models.CharField(max_length=64, default="", null=True, blank=True)
 	doc_format = models.ForeignKey("MediaPhotoFormat", on_delete=models.SET_NULL, blank=True, null=True)
-	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True)
+	category = models.ForeignKey("MediaCategory", on_delete=models.SET_NULL, blank=True, null=True, \
+		help_text="Select the highest level topic specific to the content.")
 	def get_absolute_url(self):
 		return reverse('media-photo-detail', kwargs={'pk': self.pk})
 	class Meta:
@@ -425,16 +436,3 @@ class MediaDoc(models.Model):
 		ordering = ['-created']
 	def __unicode__(self):
 		return self.file_name
-
-
-### TAGS / TOPICS
-
-class MediaTag(models.Model):
-	tag_name = models.CharField(max_length=100, null=False, blank=False, unique=True)
-	def get_absolute_url(self):
-		return reverse('media-tag-detail', kwargs={'pk': self.pk})
-	class Meta:
-		ordering = ['tag_name']
-	def __str__(self):
-		return self.tag_name
-
