@@ -323,6 +323,44 @@ class MediaAudioServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaAudioService.objects.all()
 	serializer_class = MediaAudioServiceSerializerDetail
 
+class MediaAudioRSSFeed(Feed):
+	title = "Audio Feed"
+	link = "/audio/rss/"
+	description = "Latest audio files"
+	feed_copyright = "SGC-MEDIA-2024"
+	ttl = 600
+	def items(self):
+		return MediaAudio.objects.filter(is_public=True).order_by("-created")[:50]
+	def item_title(self, item):
+		return item.title
+	def item_description(self, item):
+		if (item.long_description is None) or (item.long_description == ""):
+			item.long_description = "Long description is not available"
+		return item.long_description
+	def item_link(self, item):
+		return "/videos/%s/" % (item.id)
+	def item_author_name(self, item):
+		if (item.artist is None) or (item.artist == ""):
+			return "Unknown"
+		else:
+			return item.artist
+	def item_guid(self, item):
+		guid = item.file_uuid
+		return guid.upper()
+	def item_pubdate(self, item):
+		return item.created
+	### should implement
+	#def item_updateddate(self, item):
+	#	return item.updated
+	def get_feed(self, obj, request):
+		feedgen = super().get_feed(obj, request)
+		feedgen.content_type = "application/xml; charset=utf-8"
+		return feedgen
+
+class MediaAudioAtomFeed(MediaAudioRSSFeed):
+	feed_type = Atom1Feed
+	subtitle = MediaAudioRSSFeed.description
+
 
 ### Photo
 class MediaPhotoCreateView(LoginRequiredMixin, CreateView):
@@ -430,6 +468,44 @@ class MediaPhotoServiceListAPISearch(generics.ListAPIView):
 class MediaPhotoServiceDetailAPI(generics.RetrieveAPIView):
 	queryset = MediaPhotoService.objects.all()
 	serializer_class = MediaPhotoServiceSerializerDetail
+
+class MediaPhotoRSSFeed(Feed):
+	title = "Photo Feed"
+	link = "/photos/rss/"
+	description = "Latest photos"
+	feed_copyright = "SGC-MEDIA-2024"
+	ttl = 600
+	def items(self):
+		return MediaPhoto.objects.filter(is_public=True).order_by("-created")[:50]
+	def item_title(self, item):
+		return item.title
+	def item_description(self, item):
+		if (item.long_description is None) or (item.long_description == ""):
+			item.long_description = "Long description is not available"
+		return item.long_description
+	def item_link(self, item):
+		return "/videos/%s/" % (item.id)
+	def item_author_name(self, item):
+		if (item.username is None) or (item.username == ""):
+			return "Unknown"
+		else:
+			return item.username
+	def item_guid(self, item):
+		guid = item.file_uuid
+		return guid.upper()
+	def item_pubdate(self, item):
+		return item.created
+	### should implement
+	#def item_updateddate(self, item):
+	#	return item.updated
+	def get_feed(self, obj, request):
+		feedgen = super().get_feed(obj, request)
+		feedgen.content_type = "application/xml; charset=utf-8"
+		return feedgen
+
+class MediaPhotoAtomFeed(MediaPhotoRSSFeed):
+	feed_type = Atom1Feed
+	subtitle = MediaPhotoRSSFeed.description
 
 
 ### Documents
@@ -579,7 +655,7 @@ class MediaTagListView(LoginRequiredMixin, ListView):
 	template_name = 'media/tag/tag_list.html'
 	context_object_name = 'assets'
 	ordering = ['tag_name']
-	paginate_by = 20
+	#paginate_by = 20
 
 class MediaTagDetailView(LoginRequiredMixin, DetailView):
 	model = MediaTag

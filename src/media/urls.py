@@ -20,7 +20,7 @@ urlpatterns = [
 	path('api/media-videos/', views.MediaVideoListAPI.as_view(), name='media-video-list-api'),
 	path('api/media-videos/genres/', views.MediaVideoGenreListAPI.as_view()),
 	path('api/media-videos/search/', views.MediaVideoListAPISearch.as_view()),
-	path('api/media-videos/<int:pk>', views.MediaVideoDetailAPI.as_view(), name='media-video-detail-api'),
+	path('api/media-videos/<int:pk>/', views.MediaVideoDetailAPI.as_view(), name='media-video-detail-api'),
 	path('media-videos/gallery/', views.MediaVideoGalleryListView.as_view(), name='media-video-list-gallery'),
 	path('videos/atom/', views.MediaVideoAtomFeed(), name='video-atom'),
 	path('videos/rss/', views.MediaVideoRSSFeed(), name='video-rss'),
@@ -34,7 +34,7 @@ urlpatterns = [
 	path('video-service/edit/<int:pk>/', views.MediaVideoServiceUpdateView.as_view(), name='video-service-update'),
 	path('api/video-services/', views.MediaVideoServiceListAPI.as_view(), name='video-service-list-api'),
 	path('api/video-service/search/', views.MediaVideoServiceListAPISearch.as_view()),
-	path('api/video-service/<int:pk>', views.MediaVideoServiceDetailAPI.as_view(), name='video-service-detail-api'),
+	path('api/video-service/<int:pk>/', views.MediaVideoServiceDetailAPI.as_view(), name='video-service-detail-api'),
 
 	# Photo
 	path('media-photo/upload/', views.MediaPhotoCreateView.as_view(), name='media-photo-create'),
@@ -43,8 +43,10 @@ urlpatterns = [
 	path('photos/edit/<int:pk>/', views.MediaPhotoUpdateView.as_view(), name='media-photo-update'),
 	path('api/photos/', views.MediaPhotoListAPI.as_view(), name='media-photo-list-api'),
 	path('api/photos/search/', views.MediaPhotoListAPISearch.as_view()),
-	path('api/photos/<int:pk>', views.MediaPhotoDetailAPI.as_view(), name='media-photo-detail-api'),
+	path('api/photos/<int:pk>/', views.MediaPhotoDetailAPI.as_view(), name='media-photo-detail-api'),
 	path('photos/gallery/', views.MediaPhotoGalleryListView.as_view(), name='media-photo-list-gallery'),
+	path('photos/atom/', views.MediaPhotoAtomFeed(), name='photo-atom'),
+	path('photos/rss/', views.MediaPhotoRSSFeed(), name='photo-rss'),
 	re_path('^api/photos/(?P<username>.+)/$', views.MediaPhotoListAPI.as_view()),
 	re_path('^api/photos/(?P<service>.+)/$', views.MediaPhotoListAPI.as_view()),
 	re_path('^api/photos/(?P<orientation>.+)/$', views.MediaPhotoListAPI.as_view()),
@@ -54,7 +56,7 @@ urlpatterns = [
 	path('photo-service/edit/<int:pk>/', views.MediaPhotoServiceUpdateView.as_view(), name='photo-service-update'),
 	path('api/photo-services/', views.MediaPhotoServiceListAPI.as_view(), name='photo-service-list-api'),
 	path('api/photo-service/search/', views.MediaPhotoServiceListAPISearch.as_view()),
-	path('api/photo-service/<int:pk>', views.MediaPhotoServiceDetailAPI.as_view(), name='photo-service-detail-api'),
+	path('api/photo-service/<int:pk>/', views.MediaPhotoServiceDetailAPI.as_view(), name='photo-service-detail-api'),
 
 	# Audio
 	path('media-audio/upload/', views.MediaAudioCreateView.as_view(), name='media-audio-create'),
@@ -63,10 +65,12 @@ urlpatterns = [
 	path('audio/edit/<int:pk>/', views.MediaAudioUpdateView.as_view(), name='media-audio-update'),
 	path('api/audio/', views.MediaAudioListAPI.as_view(), name='media-audio-list-api'),
 	path('api/audio/search/', views.MediaAudioListAPISearch.as_view()),
-	path('api/audio/<int:pk>', views.MediaAudioDetailAPI.as_view(), name='media-audio-detail-api'),
+	path('api/audio/<int:pk>/', views.MediaAudioDetailAPI.as_view(), name='media-audio-detail-api'),
 	path('api/audio/artists/', views.MediaAudioListAPIArtists.as_view()),
 	path('api/audio/albums/', views.MediaAudioListAPIAlbums.as_view()),
 	path('audio/gallery/', views.MediaAudioGalleryListView.as_view(), name='media-audio-list-gallery'),
+	path('audio/atom/', views.MediaAudioAtomFeed(), name='audio-atom'),
+	path('audio/rss/', views.MediaAudioRSSFeed(), name='audio-rss'),
 	#path('audio/delete/<int:pk>/', views.MediaAudioDeleteView.as_view(), name='media-audio-delete'),
 	re_path('^api/audio/(?P<title>.+)/$', views.MediaAudioListAPI.as_view()),
 	re_path('^api/audio/(?P<artist>.+)/$', views.MediaAudioListAPI.as_view()),
@@ -79,7 +83,7 @@ urlpatterns = [
 	path('audio-service/edit/<int:pk>/', views.MediaAudioServiceUpdateView.as_view(), name='audio-service-update'),
 	path('api/audio-services/', views.MediaAudioServiceListAPI.as_view(), name='audio-service-list-api'),
 	path('api/audio-service/search/', views.MediaAudioServiceListAPISearch.as_view()),
-	path('api/audio-service/<int:pk>', views.MediaAudioServiceDetailAPI.as_view(), name='audio-service-detail-api'),
+	path('api/audio-service/<int:pk>/', views.MediaAudioServiceDetailAPI.as_view(), name='audio-service-detail-api'),
 
 	# Documents
 	path('media-doc/upload/', views.MediaDocCreateView.as_view(), name='media-doc-create'),
@@ -88,7 +92,7 @@ urlpatterns = [
 	path('docs/edit/<int:pk>/', views.MediaDocUpdateView.as_view(), name='media-doc-update'),
 	path('api/docs/', views.MediaDocListAPI.as_view(), name='media-doc-list-api'),
 	path('api/docs/search/', views.MediaDocListAPISearch.as_view()),
-	path('api/docs/<int:pk>', views.MediaDocDetailAPI.as_view(), name='media-doc-detail-api'),
+	path('api/docs/<int:pk>/', views.MediaDocDetailAPI.as_view(), name='media-doc-detail-api'),
 	re_path('^api/docs/(?P<doc_format>.+)/$', views.MediaDocListAPI.as_view()),
 	path('doc-service/create/', views.MediaDocServiceCreateView.as_view(), name='doc-service-create'),
 	path('doc-services/', views.MediaDocServiceListView.as_view(), name='doc-service-list'),
@@ -96,18 +100,18 @@ urlpatterns = [
 	path('doc-service/edit/<int:pk>/', views.MediaDocServiceUpdateView.as_view(), name='doc-service-update'),
 	path('api/doc-services/', views.MediaDocServiceListAPI.as_view(), name='doc-service-list-api'),
 	path('api/doc-service/search/', views.MediaDocServiceListAPISearch.as_view()),
-	path('api/doc-service/<int:pk>', views.MediaDocServiceDetailAPI.as_view(), name='doc-service-detail-api'),
+	path('api/doc-service/<int:pk>/', views.MediaDocServiceDetailAPI.as_view(), name='doc-service-detail-api'),
 	path('docs/atom/', views.MediaDocAtomFeed(), name='doc-atom'),
 	path('docs/rss/', views.MediaDocRSSFeed(), name='doc-rss'),
 	# Tags
-	path('topics/', views.MediaTagListView.as_view(), name='media-tag-list'),
-	path('topics/<int:pk>/', views.MediaTagDetailView.as_view(), name='media-tag-detail'),
-	path('topics/edit/<int:pk>/', views.MediaTagUpdateView.as_view(), name='media-tag-update'),
-	path('api/topics/', views.MediaTagListAPI.as_view(), name='media-tag-list-api'),
+	path('tag/', views.MediaTagListView.as_view(), name='media-tag-list'),
+	path('tag/<int:pk>/', views.MediaTagDetailView.as_view(), name='media-tag-detail'),
+	path('tag/edit/<int:pk>/', views.MediaTagUpdateView.as_view(), name='media-tag-update'),
+	path('api/tag/', views.MediaTagListAPI.as_view(), name='media-tag-list-api'),
 
 	# Categories
-	path('media-categories/', views.MediaCategoryListView.as_view(), name='media-category-list'),
-	path('api/media-categories/', views.MediaCategoryListAPI.as_view(), name='media-category-list-api'),
+	path('category/', views.MediaCategoryListView.as_view(), name='media-category-list'),
+	path('api/category/', views.MediaCategoryListAPI.as_view(), name='media-category-list-api'),
 	
 # 	# Settings
 # 	path('settings/', views.SettingsUpdateView.as_view(), name='settings-update'),
