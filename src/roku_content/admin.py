@@ -4,8 +4,8 @@ from django.contrib import admin
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID, \
-					ExternalIDType,	Rating, RatingSource, RatingCountry, ParentalRating, CreditRole, Credit, Tag
+from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID
+from .models import ExternalIDType,	Rating, RatingSource, RatingCountry, ParentalRating, CreditRole, Credit, Tag
 
 # Roku Content Feed
 
