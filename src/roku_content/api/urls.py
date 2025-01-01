@@ -106,7 +106,7 @@ urlpatterns = [
     path('api/ratingsources/', views.RatingSourceListAPI.as_view(), name='ratingsource-api'),
     # path('api/ratingsource/<int:pk>', views.RatingSourceDetailAPI.as_view(), name='ratingsource-detail-api'),
 
-    path('api/countries/', views.CountryListAPI.as_view(), name='countries-api'),
+    path('api/ratingcountries/', views.RatingCountryListAPI.as_view(), name='rating-countries-api'),
 
     path('api/parentalratings/', views.ParentalRatingListAPI.as_view(), name='parentalrating-api'),
     # path('api/parentalrating/<int:pk>', views.ParentalRatingDetailAPI.as_view(), name='parentalrating-detail-api'),

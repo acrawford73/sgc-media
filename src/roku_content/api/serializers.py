@@ -11,7 +11,7 @@ from roku_content.models import Movie, LiveFeed, Series, Season
 from roku_content.models import Episode, ShortFormVideo, TVSpecial
 from roku_content.models import Content, Video, Caption, TrickPlayFile
 from roku_content.models import Genre, ExternalID, Rating, RatingSource
-from roku_content.models import Country, ParentalRating, CreditRole, Credit, Tag
+from roku_content.models import RatingCountry, ParentalRating, CreditRole, Credit, Tag
 
 
 # Single string - serializers.StringRelatedField()
@@ -100,11 +100,11 @@ class RatingSourceSerializerList(serializers.ModelSerializer):
 		fields = ['ratingSource', 'sourceLongName', 'sourceCountry']
 
 
-class CountrySerializerList(serializers.ModelSerializer):
+class RatingCountrySerializerList(serializers.ModelSerializer):
 	countryName = serializers.CharField(source='country_name')
 	countryCode = serializers.CharField(source='country_code')
 	class Meta:
-		model = Country
+		model = RatingCountry
 		fields = ['countryName', 'countryCode']
 
 

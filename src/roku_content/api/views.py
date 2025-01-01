@@ -9,7 +9,7 @@ from roku_content.models import RokuContentFeed
 from roku_content.models import Language, Category, Playlist
 from roku_content.models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
 from roku_content.models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating
-from roku_content.models import RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
+from roku_content.models import RatingSource, RatingCountry, ParentalRating, CreditRole, Credit, Tag
 ### Rest Framework
 from rest_framework.response import Response
 from rest_framework.reverse import reverse, reverse_lazy
@@ -30,7 +30,7 @@ from .serializers import TVSpecialSerializerList
 # Properties
 from .serializers import ContentSerializerList, VideoSerializerList, CaptionSerializerList
 from .serializers import TrickPlayFileSerializerList, GenreSerializerList, ExternalIDSerializerList
-from .serializers import RatingSerializerList, RatingSourceSerializerList, CountrySerializerList, ParentalRatingSerializerList
+from .serializers import RatingSerializerList, RatingSourceSerializerList, RatingCountrySerializerList, ParentalRatingSerializerList
 from .serializers import CreditRoleSerializerList, CreditSerializerList, LanguageSerializerList, TagSerializerList
 
 
@@ -515,9 +515,9 @@ class RatingSourceListAPI(generics.ListAPIView):
 
 # Countries
 
-class CountryListAPI(generics.ListAPIView):
-	queryset = Country.objects.all()
-	serializer_class = CountrySerializerList
+class RatingCountryListAPI(generics.ListAPIView):
+	queryset = RatingCountry.objects.all()
+	serializer_class = RatingCountrySerializerList
 	#filter_backends = [DjangoFilterBackend]
 	#filterset_fields = ['country_code']
 	ordering_fields = ['country_name', 'country_code']
