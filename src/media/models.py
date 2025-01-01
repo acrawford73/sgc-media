@@ -116,7 +116,7 @@ class MediaVideo(models.Model):
 	path_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
 	file_sha256 = models.CharField(max_length=64, default="", editable=False, unique=True)
 	file_uuid = models.CharField(max_length=36, null=False, blank=False, editable=False, unique=True)
-	#file_uuid = models.UUIDField(default=uuid.uuid4, editable=False, null=False, blank=False)
+	#file_uuid = models.UUIDField(default=uuid.uuid4, editable=False, null=False, blank=False, unique=True)
 	orientation = models.CharField(max_length=16, default="Landscape", null=False, choices=MEDIA_ORIENTATION, editable=False)
 	media_video_width = models.PositiveSmallIntegerField(default=0)
 	media_video_height= models.PositiveSmallIntegerField(default=0)

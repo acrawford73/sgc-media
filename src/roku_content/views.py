@@ -8,8 +8,8 @@ from django.views.generic import TemplateView, CreateView, ListView, DetailView,
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID, Rating, \
-					RatingSource, Country, ParentalRating, CreditRole, Credit, Tag
+from .models import Content, Video, Caption, TrickPlayFile, Genre, ExternalID
+from .models import Rating, RatingSource, RatingCountry, ParentalRating, CreditRole, Credit, Tag
 
 ## Roku Feeds
 

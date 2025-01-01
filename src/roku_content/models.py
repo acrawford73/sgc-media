@@ -786,7 +786,7 @@ class RatingSource(models.Model):
 	source_name = models.CharField(max_length=16, default="", null=False, blank=False, unique=True)
 	source_long_name = models.CharField(max_length=128, null=True, blank=True)
 	source_url = models.URLField(max_length=2083, null=True, blank=True)
-	source_country = models.ForeignKey('Country', on_delete=models.PROTECT, null=False, blank=True)
+	source_country = models.ForeignKey('RatingCountry', on_delete=models.PROTECT, null=False, blank=True)
 	def get_absolute_url(self):
 		return reverse('ratingsource-list')
 	class Meta:
@@ -796,7 +796,7 @@ class RatingSource(models.Model):
 	def __str__(self):
 		return str(self.source_name)
 
-class Country(models.Model):
+class RatingCountry(models.Model):
 	""" List of all global countries with country code."""
 	country_name = models.CharField(max_length=64, default="", null=False, blank=False, unique=True)
 	country_code = models.CharField(max_length=2, default="", null=False, blank=False, unique=True)	
