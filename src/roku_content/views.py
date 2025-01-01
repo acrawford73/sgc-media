@@ -466,8 +466,8 @@ class RatingListView(LoginRequiredMixin, ListView):
 	model = Rating
 	template_name = 'roku_content/rating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'rating'
-	ordering = ['rating']
-	paginate_by = 15
+	ordering = ['rating_source', 'rating']
+	#paginate_by = 15
 
 class RatingDetailView(LoginRequiredMixin, DetailView):
 	model = Rating
@@ -489,7 +489,7 @@ class RatingSourceListView(LoginRequiredMixin, ListView):
 	template_name = 'roku_content/ratingsource_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'ratingsource'
 	ordering = ['source_name']
-	paginate_by = 15
+	#paginate_by = 15
 
 class RatingSourceDetailView(LoginRequiredMixin, DetailView):
 	model = RatingSource
@@ -511,7 +511,7 @@ class ParentalRatingListView(LoginRequiredMixin, ListView):
 	template_name = 'roku_content/parentalrating_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'parentalrating'
 	ordering = ['parental_rating']
-	paginate_by = 15
+	#paginate_by = 15
 
 class ParentalRatingDetailView(LoginRequiredMixin, DetailView):
 	model = ParentalRating
@@ -533,7 +533,7 @@ class CreditRoleListView(LoginRequiredMixin, ListView):
 	template_name = 'roku_content/creditrole_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'creditrole'
 	ordering = ['credit_role']
-	paginate_by = 15
+	#paginate_by = 15
 
 class CreditRoleDetailView(LoginRequiredMixin, DetailView):
 	model = CreditRole
@@ -555,7 +555,7 @@ class CreditListView(LoginRequiredMixin, ListView):
 	template_name = 'roku_content/credit_list.html'  #<app>/<model>_<viewtype>.html
 	context_object_name = 'credit'
 	ordering = ['credit_name']
-	paginate_by = 15
+	#paginate_by = 15
 
 class CreditDetailView(LoginRequiredMixin, DetailView):
 	model = Credit

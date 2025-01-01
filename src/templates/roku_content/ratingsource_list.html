@@ -31,7 +31,7 @@
               <tr align="center">
                 <td align="left"><a href="{% url 'ratingsource-detail' asset.id %}">{{ asset.source_name }}</a></td>
                 <td align="left">{{ asset.source_long_name }}</td>
-                <td>{{ asset.source_country.country_code }}</td>
+                <td align="left">{{ asset.source_country.country_name }} ({{ asset.source_country.country_code }})</td>
               </tr>
               {% endfor %}
 

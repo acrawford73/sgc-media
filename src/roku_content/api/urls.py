@@ -103,15 +103,15 @@ urlpatterns = [
     path('api/ratings/', views.RatingListAPI.as_view(), name='rating-api'),
     # path('api/rating/<int:pk>', views.RatingDetailAPI.as_view(), name='rating-detail-api'),
 
-    path('api/ratingsources/', views.RatingSourceListAPI.as_view(), name='ratingsource-api'),
+    path('api/rating-sources/', views.RatingSourceListAPI.as_view(), name='ratingsource-api'),
     # path('api/ratingsource/<int:pk>', views.RatingSourceDetailAPI.as_view(), name='ratingsource-detail-api'),
 
-    path('api/ratingcountries/', views.RatingCountryListAPI.as_view(), name='rating-countries-api'),
+    path('api/rating-countries/', views.RatingCountryListAPI.as_view(), name='rating-countries-api'),
 
-    path('api/parentalratings/', views.ParentalRatingListAPI.as_view(), name='parentalrating-api'),
+    path('api/parental-ratings/', views.ParentalRatingListAPI.as_view(), name='parentalrating-api'),
     # path('api/parentalrating/<int:pk>', views.ParentalRatingDetailAPI.as_view(), name='parentalrating-detail-api'),
 
-    path('api/creditroles/', views.CreditRoleListAPI.as_view(), name='creditrole-api'),
+    path('api/credit-roles/', views.CreditRoleListAPI.as_view(), name='creditrole-api'),
 
     path('api/credits/', views.CreditListAPI.as_view(), name='credit-api'),
 
@@ -119,6 +119,7 @@ urlpatterns = [
 
 ]
 
-# # Avoids using ending '/' on a URL
-# #urlpatterns = format_suffix_patterns(urlpatterns)
-# # ^ causes issues with swagger and routers so don't use it
+### NOTE:
+# This code avoids using ending '/' on a URL
+# It causes issues with swagger and routers so don't use it
+# urlpatterns = format_suffix_patterns(urlpatterns)
