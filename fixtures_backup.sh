@@ -17,7 +17,7 @@ python manage.py dumpdata media.mediavideoformat > media/fixtures/media/mediavid
 python manage.py dumpdata media.mediavideogenre > media/fixtures/media/mediavideogenre.json
 python manage.py dumpdata media.mediavideoservice > media/fixtures/media/mediavideoservice.json
 
-python manage.py dumpdata roku_content.country > roku_content/fixtures/roku_content/country.json
+python manage.py dumpdata roku_content.ratingcountry > roku_content/fixtures/roku_content/ratingcountry.json
 python manage.py dumpdata roku_content.creditrole > roku_content/fixtures/roku_content/creditrole.json
 python manage.py dumpdata roku_content.externalidtype > roku_content/fixtures/roku_content/externalidtype.json
 python manage.py dumpdata roku_content.genre > roku_content/fixtures/roku_content/genre.json
