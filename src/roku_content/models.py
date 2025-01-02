@@ -200,7 +200,7 @@ class PlaylistShortFormVideo(models.Model):
 def video_path(instance, filename):
 	file_uuid = instance.uuid_id
 	file_ext = os.path.splitext(filename)[1]
-	file_path = str(file_uuid) + file_ext
+	file_path = "video_" + str(file_uuid) + file_ext
 	return 'uploads/{0}/{1}/{2}/{3}'.format(datetime.datetime.now().strftime('%Y'), \
 		datetime.datetime.now().strftime('%m'), \
 		datetime.datetime.now().strftime('%d'), file_path)
@@ -208,7 +208,7 @@ def video_path(instance, filename):
 def thumb_path(instance, filename):
 	file_uuid = instance.uuid_id
 	file_ext = os.path.splitext(filename)[1]
-	file_path = str(file_uuid) + file_ext
+	file_path = "thumb_" + str(file_uuid) + file_ext
 	return 'thumbs/{0}/{1}/{2}/{3}'.format(datetime.datetime.now().strftime('%Y'), \
 		datetime.datetime.now().strftime('%m'), \
 		datetime.datetime.now().strftime('%d'), file_path)
