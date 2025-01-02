@@ -822,7 +822,7 @@ class ParentalRating(models.Model):
 		return str(self.parental_rating)
 
 class RatingAdvisory(models.Model):
-	advisory_name = models.CharField(max_length=64, default="", null=False, blank=False, unique=True)
+	advisory_name = models.CharField(max_length=200, default="", null=False, blank=False, unique=True)
 	advisory_source = models.ForeignKey('RatingSource', on_delete=models.PROTECT, null=False, blank=True)
 	advisory_descriptors = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=True)
 	class Meta:
@@ -831,7 +831,7 @@ class RatingAdvisory(models.Model):
 			return self.id
 	def __str__(self):
 		return str(self.advisory_name)
-		
+
 class CreditRole(models.Model):
 	""" Represents a role of the person credited in video content. """
 	credit_role = models.CharField(max_length=50, default="", null=False, blank=False)
