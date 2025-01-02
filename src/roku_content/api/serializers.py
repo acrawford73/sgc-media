@@ -172,6 +172,7 @@ class LiveFeedSerializerList(serializers.ModelSerializer):
 	tags = serializers.StringRelatedField(many=True)
 	genres = serializers.StringRelatedField(many=True)
 	rating = RatingSerializerList()
+	# advisoryRatings (AdvisoryRatingObject)
 	def to_representation(self, instance):
 		result = super(LiveFeedSerializerList, self).to_representation(instance)
 		return OrderedDict([(key, result[key]) for key in result if result[key] ])

@@ -460,7 +460,7 @@ class ExternalIDUpdateView(LoginRequiredMixin, UpdateView):
 # Rating
 class RatingCreateView(LoginRequiredMixin, CreateView):
 	model = Rating
-	fields = ['rating', 'rating_source']
+	fields = ['rating_source', 'rating']
 
 class RatingListView(LoginRequiredMixin, ListView):
 	model = Rating
@@ -476,7 +476,7 @@ class RatingDetailView(LoginRequiredMixin, DetailView):
 class RatingUpdateView(LoginRequiredMixin, UpdateView):
 	model = Rating
 	context_object_name = 'rating'
-	fields = ['rating', 'rating_source']
+	fields = ['rating_source', 'rating']
 
 
 # RatingSource

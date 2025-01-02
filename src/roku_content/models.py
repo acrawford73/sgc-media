@@ -220,7 +220,7 @@ class Movie(models.Model):
 	Movie objects are added to a Roku Content Feed.
 	"""
 	uuid_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	title = models.CharField(max_length=200, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
@@ -272,7 +272,7 @@ class MovieExternalID(models.Model):
 class LiveFeed(models.Model):
 	""" Represents a live linear stream. """
 	uuid_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	title = models.CharField(max_length=200, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
@@ -313,7 +313,7 @@ class LiveFeedGenre(models.Model):
 class Series(models.Model):
 	""" Represents a Series, such as a Season of a TV Show or a Mini-Series. """
 	uuid_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	title = models.CharField(max_length=200, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
@@ -377,7 +377,7 @@ class Season(models.Model):
 	"episodes": [ ... ]
 	}
 	"""
-	title_season = models.CharField(max_length=50, default="", null=False, blank=False)
+	title_season = models.CharField(max_length=200, default="", null=False, blank=False)
 	season_number = models.PositiveSmallIntegerField(default=1, null=False, blank=False)
 	# One or more episodes of this particular season.
 	episodes = models.ManyToManyField('Episode', through='SeasonEpisode', \
@@ -400,7 +400,7 @@ class SeasonEpisode(models.Model):
 class Episode(models.Model):
 	""" This Model represents a single Episode in a Series or a Season. """
 	uuid_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	title = models.CharField(max_length=200, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
@@ -445,7 +445,7 @@ class ShortFormVideo(models.Model):
 	uuid_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 	# The title of the video in plain text. This field is used for matching in Roku Search. 
 	# Do not include extra information such as year, version label, and so on.
-	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	title = models.CharField(max_length=200, default="", null=False, blank=False)
 	# A description of the video that does not exceed 200 characters. 
 	# The text will be clipped if longer.
 	short_description = models.CharField(max_length=200, null=False, blank=False, \
@@ -485,12 +485,12 @@ class ShortFormVideo(models.Model):
 	# def get_uuid(self):
 	# 	return str(self.uuid_id)
 	class Meta:
-		ordering = ['uuid_id']
+		ordering = ['id']
 		def __unicode__(self):
 			return self.id
 	def __str__(self):
 		#return str(self.title) + ":" + str(self.uuid_id)
-		return str(self.id)
+		return str(self.title)
 
 class ShortFormVideoGenre(models.Model):
 	""" ManyToMany table for ShortFormVideo model and Genre model. """
@@ -506,7 +506,7 @@ class ShortFormVideoCredit(models.Model):
 class TVSpecial(models.Model):
 	""" TV Specials (TV Shows) are usually 30 or 60 minutes. Special ad rules apply. """
 	uuid_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-	title = models.CharField(max_length=50, default="", null=False, blank=False)
+	title = models.CharField(max_length=200, default="", null=False, blank=False)
 	short_description = models.CharField(max_length=200, default="", null=False, blank=False, \
 		help_text="200 characters maximum.")
 	long_description = models.CharField(max_length=500, default="", null=False, blank=True, \
@@ -557,15 +557,17 @@ class Content(models.Model):
 	The Content model represents the details about a single video content
 	item such as a Movie, Episode, Short-Form Video, or TV Show.
 	"""
-	title = models.CharField(max_length=50, default="", null=False, blank=False, help_text="The title should be unique.")
+	title = models.CharField(max_length=200, default="", null=False, blank=False, help_text="The title should be unique.")
 	date_added = models.DateField(auto_now_add=True)
 	videos = models.ManyToManyField('Video', through='ContentVideo', blank=True)
 	duration = models.IntegerField(default=0, null=False, blank=True, help_text="The video duration must be in seconds.")
 	captions = models.ManyToManyField('Caption', through='ContentCaption', blank=True)
 	trick_play_files = models.ManyToManyField('TrickPlayFile', through='ContentTrickPlayFile', blank=True) # Optional
 	language = models.ForeignKey('Language', on_delete=models.PROTECT, null=True, blank=True)
+	# FIX: ISO 8601format: {YYYY}-{MM}-{DD}T{hh}:{mm}:{ss}+{TZ}. E.g.: 2015-11-11T22:21:37+00:00
 	validity_start_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD", db_index=True) # Optional
 	validity_end_period = models.DateField(null=True, blank=True, help_text="Date format: YYYY-MM-DD", db_index=True) # Optional
+	#
 	ad_breaks = models.JSONField(default=list, null=True, blank=True) # NOT SUPPORTED. Required only if monetizing.
 	updated = models.DateField(auto_now=True)
 	def get_absolute_url(self):
