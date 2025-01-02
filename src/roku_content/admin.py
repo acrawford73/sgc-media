@@ -4,8 +4,9 @@ from django.contrib import admin
 from .models import RokuContentFeed
 from .models import Language, Category, Playlist
 from .models import Movie, LiveFeed, Series, Season, Episode, ShortFormVideo, TVSpecial
-from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID
-from .models import ExternalIDType,	Rating, RatingSource, RatingCountry, ParentalRating, CreditRole, Credit, Tag
+from .models import Content, Video, VideoType, Caption, TrickPlayFile, Genre, ExternalID, ExternalIDType
+from .models import Rating, RatingSource, RatingCountry, ParentalRating, RatingAdvisory
+from .models import CreditRole, Credit, Tag
 
 # Roku Content Feed
 
@@ -177,6 +178,12 @@ class ParentalRatingAdmin(admin.ModelAdmin):
 	class Meta:
 		model = ParentalRating
 
+class RatingAdvisoryAdmin(admin.ModelAdmin):
+	list_display = ['advisory_name', 'advisory_source', 'advisory_description']
+	search_fields = ['advisory_name']
+	class Meta:
+		model = RatingAdvisory
+
 class CreditRoleAdmin(admin.ModelAdmin):
 	list_display = ['credit_role']
 	search_fields = ['credit_role']
@@ -229,6 +236,7 @@ admin.site.register(Rating, RatingAdmin)
 admin.site.register(RatingSource, RatingSourceAdmin)
 admin.site.register(RatingCountry, RatingCountryAdmin)
 admin.site.register(ParentalRating, ParentalRatingAdmin)
+admin.site.register(RatingAdvisory, RatingAdvisoryAdmin)
 admin.site.register(CreditRole, CreditRoleAdmin)
 admin.site.register(Credit, CreditAdmin)
 admin.site.register(Tag, TagAdmin)
