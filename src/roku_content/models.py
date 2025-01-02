@@ -823,7 +823,7 @@ class ParentalRating(models.Model):
 
 class RatingAdvisory(models.Model):
 	advisory_name = models.CharField(max_length=200, default="", null=False, blank=False, unique=True)
-	advisory_source = models.ForeignKey('RatingSource', on_delete=models.PROTECT, null=False, blank=True)
+	rating_source = models.ForeignKey('RatingSource', on_delete=models.PROTECT, null=False, blank=True)
 	advisory_descriptors = models.ForeignKey('Rating', on_delete=models.PROTECT, null=False, blank=True)
 	class Meta:
 		ordering = ['advisory_name']
