@@ -179,7 +179,8 @@ class ParentalRatingAdmin(admin.ModelAdmin):
 		model = ParentalRating
 
 class RatingAdvisoryAdmin(admin.ModelAdmin):
-	list_display = ['rating_source', 'advisory_name', 'advisory_descriptors']
+	fields = ['rating_source', 'advisory_name', 'advisory_descriptors']
+	list_display = ['advisory_name', 'rating_source', 'advisory_descriptors']
 	search_fields = ['advisory_name']
 	list_filter = ['rating_source']
 	class Meta:
