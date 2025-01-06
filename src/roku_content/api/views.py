@@ -102,7 +102,7 @@ class RokuContentFeedListAPI(APIView):
 # 	pagination_class = None
 
 class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
-	queryset = RokuContentFeed.objects.all().filter(is_public=True)
+	#queryset = RokuContentFeed.objects.all().filter(is_public=True)
 	# serializer_class = RokuContentFeedSerializerDetail
 	lookup_field = 'id'
 	renderer_classes = [JSONRenderer]

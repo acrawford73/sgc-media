@@ -39,6 +39,7 @@ class RokuContentFeed(models.Model):
 	}
 
 	"""
+	#id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
 	provider_name = models.CharField(max_length=50, default="", null=False, blank=False)
 	# The date that the feed was last modified in ISO 8601 format: {YYYY}-{MM}-{DD}T{hh}:{mm}:{ss}+{TZ}.
 	# For example, 2020-11-11T22:21:37+00:00
