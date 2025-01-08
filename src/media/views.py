@@ -88,7 +88,7 @@ class MediaVideoListAPI(generics.ListAPIView):
 	queryset = MediaVideo.objects.all().filter(is_public=True)
 	serializer_class = MediaVideoSerializerList
 	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'orientation', 'username', 'doc_format']
+	filterset_fields = ['service', 'orientation', 'category', 'service_source']
 	ordering_fields = ['id', 'created']
 	ordering = ['-id']
 
