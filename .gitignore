@@ -9,12 +9,8 @@ src/sgc/__pycache__/
 media_assets/
 log/
 static_cdn/
-db.py
 *.pyc
-image.py
-check.py
 export_pretty.json
-importer.py
 .env
 .lock
 .DS_Store
