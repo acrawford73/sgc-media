@@ -27,9 +27,6 @@ from custom_auth.forms import SGCRegistrationForm
 urlpatterns = [
 
     #Apps
-    path('', include('roku_content.urls')),
-    path('', include('roku_content.api.urls')),
-    #path('', include('roku_search.urls')),
     path('', include('media.urls')),
     path('', include('core.urls')),
     #path('', include('core.system_config')),

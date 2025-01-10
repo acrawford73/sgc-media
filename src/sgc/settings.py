@@ -106,8 +106,6 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'bootstrap_datepicker_plus',
     'django_filters',
-    'roku_content',
-    #'roku_search',
     'media',
     'core',
     #'versatileimagefield',
@@ -258,8 +256,6 @@ else:
 # Load data by calling manage.py loaddata app/fixtures/app/<fixturename> or * 
 #  where <fixturename> is the name of the fixture file.
 FIXTURE_DIRS = [
-    os.path.join(BASE_DIR, '/roku_content/fixtures/roku_content/'),
-    #os.path.join(BASE_DIR, '/roku_content/fixtures/roku_search/'),
     os.path.join(BASE_DIR, '/media/fixtures/media/'),
     os.path.join(BASE_DIR, '/system_config/fixtures/system_config/')
 ]
