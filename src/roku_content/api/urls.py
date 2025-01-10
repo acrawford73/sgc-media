@@ -42,7 +42,7 @@ urlpatterns = [
     #path('api/roku-content-feed/', views.RokuContentFeedListAPI.as_view(), name='rokucontentfeed-api'),
     #path('api/roku-content-feed/search/', views.RokuContentFeedListSearchAPI.as_view()),
     #re_path('api/roku-content-feed/search/(?P<language>.+)/$', views.RokuContentFeedListSearchAPI.as_view()),
-    path('api/roku-content-feed/<int:pk>/', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
+    path('api/rcf/<int:pk>/', views.RokuContentFeedDetailAPI.as_view(), name='rokucontentfeed-detail-api'),
     #re_path('^api/roku-content-feed/(?P<language>.+)/$', views.RokuContentFeedListAPI.as_view()),
 
     # path('roku-search-feed/create/', views.RokuSearchFeedCreateView.as_view(), name='rokusearchfeed-create'),

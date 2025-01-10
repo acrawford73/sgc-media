@@ -102,15 +102,16 @@ class RokuContentFeedListAPI(APIView):
 # 	pagination_class = None
 
 class RokuContentFeedDetailAPI(generics.RetrieveAPIView):
-	# queryset = RokuContentFeed.objects.all().filter(is_public=True)
+	#queryset = RokuContentFeed.objects.all().filter(is_public=True)
 	# serializer_class = RokuContentFeedSerializerDetail
+	lookup_field = 'id'
 	renderer_classes = [JSONRenderer]
 	pagination_class = None
 	def get(self, request, pk, format=None):
 		feed = RokuContentFeed.objects.get(pk=pk)
 		serializer = RokuContentFeedSerializerDetail(feed)
 		if feed is not None:
-			logger.debug("RokuContentFeed detail object " + str(feed.roku_content_feed_id) + " returned.")
+			logger.info("RokuContentFeed detail object " + str(feed.roku_content_feed_id) + " returned.")
 		return Response(serializer.data)
 
 

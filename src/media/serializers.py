@@ -15,11 +15,12 @@ class MediaVideoSerializerList(serializers.ModelSerializer):
 	height = serializers.IntegerField(source='media_video_height')
 	duration = serializers.DecimalField(source='media_video_duration',max_digits=8, decimal_places=3)
 	source = serializers.CharField(source='service_source')
+	format = serializers.CharField(source='doc_format')
 	class Meta:
 		model = MediaVideo
 		fields = ['id', 'username', 'title', 'description', 'service', 'orientation', 'width', 'height', \
 		'media_path', 'file_sha256', 'path_sha256', 'file_uuid', 'created', 'updated', 'duration', 'size', \
-		'major_category', 'source']
+		'major_category', 'source', 'format']
 
 class MediaVideoGenreSerializerList(serializers.ModelSerializer):
 	class Meta:
