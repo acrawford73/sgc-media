@@ -5,11 +5,6 @@ Content and API Management System.
 - Ingested media content is exposed through an API.
 - Manage content metadata.
 - Watcher service ingests new media files.
-- Create custom Roku content feeds.
-
-### ROKU Content Feed
-
-Roku Content feed management system based on Roku Direct Publisher JSON feed specification.
 
 Content data feed provided via JSON API.
 
@@ -102,22 +97,16 @@ pip install -r requirements.txt
 cd src
 
 mkdir -p core/migrations
-mkdir -p roku_content/migrations
-mkdir -p roku_search/migrations
 mkdir -p media/migrations
 mkdir -p system_config/migrations
 
 touch core/migrations/__init__.py
-touch roku_content/migrations/__init__.py
-touch roku_search/migrations/__init__.py
 touch media/migrations/__init__.py
 touch system_config/migrations/__init__.py
 
 python manage.py makemigrations
 python manage.py migrate
 
-python manage.py loaddata roku_content/fixtures/roku_content/*
-python manage.py loaddata roku_search/fixtures/roku_search/*
 python manage.py loaddata media/fixtures/media/*
 python manage.py loaddata core/fixtures/core/*
 python manage.py loaddata system_config/fixtures/system_config/*
