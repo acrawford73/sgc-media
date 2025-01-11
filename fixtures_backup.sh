@@ -1,5 +1,9 @@
 #!/bin/sh
 
+echo
+echo "Please enter the virtual environment before running."
+echo
+
 cd src
 
 # Dump Fixtures
