@@ -28,6 +28,7 @@ urlpatterns = [
 
     #Apps
     path('', include('media.urls')),
+    path('', include('media.api.urls')),
     path('', include('core.urls')),
     #path('', include('core.system_config')),
 

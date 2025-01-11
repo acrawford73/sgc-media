@@ -5,24 +5,20 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+
 from bootstrap_datepicker_plus.widgets import DatePickerInput
+
 from .models import MediaVideo, MediaVideoFormat, MediaVideoGenre, MediaVideoService
 from .models import MediaAudio, MediaAudioFormat, MediaAudioService
 from .models import MediaPhoto, MediaPhotoFormat, MediaPhotoService
 from .models import MediaDoc, MediaDocFormat, MediaDocService
 from .models import MediaCountry, MediaTag, MediaCategory
+
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 #from url_filter.filtersets import ModelFilterSet
-from .serializers import MediaVideoSerializerList, MediaVideoSerializerDetail, MediaVideoGenreSerializerList, \
-						 MediaVideoServiceSerializerList, MediaVideoServiceSerializerDetail
-from .serializers import MediaAudioSerializerList, MediaAudioSerializerDetail, MediaAudioServiceSerializerList, \
-						 MediaAudioServiceSerializerDetail, MediaAudioSerializerListArtists, MediaAudioSerializerListAlbums
-from .serializers import MediaPhotoSerializerList, MediaPhotoSerializerDetail, \
-						 MediaPhotoServiceSerializerList, MediaPhotoServiceSerializerDetail
-from .serializers import MediaDocSerializerList, MediaDocSerializerDetail, MediaDocServiceSerializerList, MediaDocServiceSerializerDetail
-from .serializers import MediaTagSerializerList, MediaCategorySerializerList
+
 
 ### Transcription
 # class TranscriptionCreateView(CreateView):
@@ -84,39 +80,12 @@ class MediaVideoUpdateView(LoginRequiredMixin, UpdateView):
 		form.fields['original_published_date'].widget = DatePickerInput()
 		return form
 
-class MediaVideoListAPI(generics.ListAPIView):
-	queryset = MediaVideo.objects.all().filter(is_public=True)
-	serializer_class = MediaVideoSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'orientation', 'category', 'service_source']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaVideoListAPISearch(generics.ListAPIView):
-	queryset = MediaVideo.objects.all().filter(is_public=True)
-	serializer_class = MediaVideoSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaVideoGenreListAPI(generics.ListAPIView):
-	queryset = MediaVideoGenre.objects.all()
-	serializer_class = MediaVideoGenreSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['genre']
-
-class MediaVideoDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaVideo.objects.all().filter(is_public=True)
-	serializer_class = MediaVideoSerializerDetail
-
 class MediaVideoGalleryListView(LoginRequiredMixin, ListView):
 	model = MediaVideo
 	template_name = 'media/video/mediavideo_gallery.html'
 	context_object_name = 'assets'
 	ordering = ['-created']
 	paginate_by = 24
-
 
 class MediaVideoRSSFeed(Feed):
 	title = "Video Feed"
@@ -179,27 +148,6 @@ class MediaVideoServiceUpdateView(LoginRequiredMixin, UpdateView):
 	context_object_name = 'asset'
 	fields = ['service_source']
 
-class MediaVideoServiceListAPI(generics.ListAPIView):
-	queryset = MediaVideoService.objects.all()
-	serializer_class = MediaVideoServiceSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_source']
-	ordering_fields = ['id', 'service_source']
-	ordering = ['-id']
-
-class MediaVideoServiceListAPISearch(generics.ListAPIView):
-	queryset = MediaVideoService.objects.all()
-	serializer_class = MediaVideoServiceSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_source'] 
-	ordering_fields = ['id', 'service_source']
-	ordering = ['service_source']
-
-class MediaVideoServiceDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaVideoService.objects.all()
-	serializer_class = MediaVideoServiceSerializerDetail
-
-
 ### Audio
 class MediaAudioCreateView(LoginRequiredMixin, CreateView):
 	model = MediaAudio
@@ -241,38 +189,6 @@ class MediaAudioUpdateView(LoginRequiredMixin, UpdateView):
 # 	context_object_name = 'asset'
 # 	success_url = reverse_lazy('media-audio-list')
 
-class MediaAudioListAPI(generics.ListAPIView):
-	queryset = MediaAudio.objects.all().filter(is_public=True)
-	serializer_class = MediaAudioSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'artist', 'album', 'album_artist', 'composer', 'genre', 'year']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaAudioListAPIArtists(generics.ListAPIView):
-	queryset = MediaAudio.objects.order_by("artist").distinct("artist").filter(is_public=True)
-	serializer_class = MediaAudioSerializerListArtists
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['artist']
-
-class MediaAudioListAPIAlbums(generics.ListAPIView):
-	queryset = MediaAudio.objects.order_by("album").distinct("album").filter(is_public=True)
-	serializer_class = MediaAudioSerializerListAlbums
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['album']
-
-class MediaAudioListAPISearch(generics.ListAPIView):
-	queryset = MediaAudio.objects.all().filter(is_public=True)
-	serializer_class = MediaAudioSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'artist', 'album', 'genre', 'year', 'service', '@tags']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaAudioDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaAudio.objects.all()
-	serializer_class = MediaAudioSerializerDetail
-
 class MediaAudioGalleryListView(LoginRequiredMixin, ListView):
 	model = MediaAudio
 	template_name = 'media/audio/mediaaudio_gallery.html'
@@ -302,26 +218,6 @@ class MediaAudioServiceUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/audio/mediaaudioservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_source']
-
-class MediaAudioServiceListAPI(generics.ListAPIView):
-	queryset = MediaAudioService.objects.all()
-	serializer_class = MediaAudioServiceSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_source']
-	ordering_fields = ['id', 'service_source']
-	ordering = ['-id']
-
-class MediaAudioServiceListAPISearch(generics.ListAPIView):
-	queryset = MediaAudioService.objects.all()
-	serializer_class = MediaAudioServiceSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_source'] 
-	ordering_fields = ['id', 'service_source']
-	ordering = ['service_source']
-
-class MediaAudioServiceDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaAudioService.objects.all()
-	serializer_class = MediaAudioServiceSerializerDetail
 
 class MediaAudioRSSFeed(Feed):
 	title = "Audio Feed"
@@ -399,26 +295,6 @@ class MediaPhotoUpdateView(LoginRequiredMixin, UpdateView):
 		form.fields['original_published_date'].widget = DatePickerInput()
 		return form
 
-class MediaPhotoListAPI(generics.ListAPIView):
-	queryset = MediaPhoto.objects.all().filter(is_public=True)
-	serializer_class = MediaPhotoSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'orientation', 'username']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaPhotoListAPISearch(generics.ListAPIView):
-	queryset = MediaPhoto.objects.all().filter(is_public=True)
-	serializer_class = MediaPhotoSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', 'service', 'orientation', 'photo_format', 'username', '@tags', 'location_name', 'location_city', 'location_state', 'location_country']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaPhotoDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaPhoto.objects.all()
-	serializer_class = MediaPhotoSerializerDetail
-
 class MediaPhotoGalleryListView(LoginRequiredMixin, ListView):
 	model = MediaPhoto
 	template_name = 'media/photo/mediaphoto_gallery.html'
@@ -448,26 +324,6 @@ class MediaPhotoServiceUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/photo/mediaphotoservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_source']
-
-class MediaPhotoServiceListAPI(generics.ListAPIView):
-	queryset = MediaPhotoService.objects.all()
-	serializer_class = MediaPhotoServiceSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_source']
-	ordering_fields = ['id', 'service_source']
-	ordering = ['-id']
-
-class MediaPhotoServiceListAPISearch(generics.ListAPIView):
-	queryset = MediaPhotoService.objects.all()
-	serializer_class = MediaPhotoServiceSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_source'] 
-	ordering_fields = ['id', 'service_source']
-	ordering = ['service_source']
-
-class MediaPhotoServiceDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaPhotoService.objects.all()
-	serializer_class = MediaPhotoServiceSerializerDetail
 
 class MediaPhotoRSSFeed(Feed):
 	title = "Photo Feed"
@@ -546,27 +402,6 @@ class MediaDocUpdateView(LoginRequiredMixin, UpdateView):
 		form.fields['original_published_date'].widget = DatePickerInput()
 		return form
 
-class MediaDocListAPI(generics.ListAPIView):
-	queryset = MediaDoc.objects.all().filter(is_public=True)
-	serializer_class = MediaDocSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service', 'keywords', 'publication', 'doc_format']
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaDocListAPISearch(generics.ListAPIView):
-	queryset = MediaDoc.objects.all().filter(is_public=True)
-	serializer_class = MediaDocSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['title', 'short_description', 'long_description', 'abstract', 'notes', 'doc_format', \
-		'publications', 'authors', 'keywords', '@tags'] 
-	ordering_fields = ['id', 'created']
-	ordering = ['-id']
-
-class MediaDocDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaDoc.objects.all()
-	serializer_class = MediaDocSerializerDetail
-
 class MediaDocServiceCreateView(LoginRequiredMixin, CreateView):
 	model = MediaDocService
 	template_name = 'media/doc/mediadocservice_create.html'
@@ -589,26 +424,6 @@ class MediaDocServiceUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/doc/mediadocservice_form.html'
 	context_object_name = 'asset'
 	fields = ['service_source', 'service_description', 'service_url']
-
-class MediaDocServiceListAPI(generics.ListAPIView):
-	queryset = MediaDocService.objects.all()
-	serializer_class = MediaDocServiceSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['service_source']
-	ordering_fields = ['id', 'service_source']
-	ordering = ['-id']
-
-class MediaDocServiceListAPISearch(generics.ListAPIView):
-	queryset = MediaDocService.objects.all()
-	serializer_class = MediaDocServiceSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['service_source'] 
-	ordering_fields = ['id', 'service_source']
-	ordering = ['service_source']
-
-class MediaDocServiceDetailAPI(generics.RetrieveAPIView):
-	queryset = MediaDocService.objects.all()
-	serializer_class = MediaDocServiceSerializerDetail
 
 class MediaDocRSSFeed(Feed):
 	title = "Document Feed"
@@ -673,22 +488,6 @@ class MediaTagUpdateView(LoginRequiredMixin, UpdateView):
 	context_object_name = 'asset'
 	fields = ['tag_name']
 
-class MediaTagListAPI(generics.ListAPIView):
-	queryset = MediaTag.objects.all()
-	serializer_class = MediaTagSerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['tag_name']
-	ordering_fields = ['id', 'tag_name']
-	ordering = ['tag_name']
-
-class MediaTagListAPISearch(generics.ListAPIView):
-	queryset = MediaTag.objects.all()
-	serializer_class = MediaTagSerializerList
-	filter_backends = [filters.SearchFilter]
-	search_fields = ['tag_name'] 
-	ordering_fields = ['id', 'tag_name']
-	ordering = ['tag_name']
-
 
 ### Categories
 
@@ -714,11 +513,3 @@ class MediaCategoryUpdateView(LoginRequiredMixin, UpdateView):
 	template_name = 'media/category/category_form.html'
 	context_object_name = 'asset'
 	fields = ['category']
-
-class MediaCategoryListAPI(generics.ListAPIView):
-	queryset = MediaCategory.objects.all()
-	serializer_class = MediaCategorySerializerList
-	filter_backends = [DjangoFilterBackend]
-	filterset_fields = ['category']
-	ordering_fields = ['id', 'category']
-	ordering = ['category']

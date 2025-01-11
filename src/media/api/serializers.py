@@ -1,9 +1,5 @@
 from datetime import datetime
-
 from rest_framework import serializers
-from rest_framework.renderers import JSONRenderer
-from rest_framework.permissions import IsAdminUser
-
 from media.models import MediaVideo, MediaAudio, MediaPhoto, MediaDoc, MediaVideoGenre
 from media.models import MediaVideoService, MediaAudioService, MediaPhotoService, MediaDocService
 from media.models import MediaTag, MediaCategory
