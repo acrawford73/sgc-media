@@ -35,14 +35,10 @@ pip install -r requirements.txt
 
 cd src
 mkdir -p custom_auth/migrations
-mkdir -p roku_content/migrations
-mkdir -p roku_search/migrations
 mkdir -p system_config/migrations
 mkdir -p core/migrations
 mkdir -p media/migrations
 touch custom_auth/migrations/__init__.py
-touch roku_content/migrations/__init__.py
-touch roku_search/migrations/__init__.py
 touch core/migrations/__init__.py
 touch media/migrations/__init__.py
 touch system_config/migrations/__init__.py
@@ -50,15 +46,6 @@ touch system_config/migrations/__init__.py
 python manage.py makemigrations
 python manage.py migrate
 
-python manage.py loaddata roku_content/fixtures/roku_content/ratingsource
-python manage.py loaddata roku_content/fixtures/roku_content/parentalrating
-python manage.py loaddata roku_content/fixtures/roku_content/rating
-python manage.py loaddata roku_content/fixtures/roku_content/genre
-python manage.py loaddata roku_content/fixtures/roku_content/creditrole
-python manage.py loaddata roku_content/fixtures/roku_content/videotype
-python manage.py loaddata roku_content/fixtures/roku_content/language
-python manage.py loaddata roku_content/fixtures/roku_content/externalidtype
-python manage.py loaddata roku_content/fixtures/roku_content/country
 python manage.py loaddata media/fixtures/media/*
 
 python manage.py createsuperuser
