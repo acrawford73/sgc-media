@@ -304,12 +304,12 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer', 
         'rest_framework.renderers.BrowsableAPIRenderer',
     ],
-    'DEFAULT_THROTTLE_CLASSES': [
-        'roku_content.api.throttling.AnonSustainedThrottle',
-        'roku_content.api.throttling.AnonBurstThrottle',
-        'roku_content.api.throttling.UserSustainedThrottle',
-        'roku_content.api.throttling.UserBurstThrottle',
-    ],
+    #'DEFAULT_THROTTLE_CLASSES': [
+    #    'roku_content.api.throttling.AnonSustainedThrottle',
+    #    'roku_content.api.throttling.AnonBurstThrottle',
+    #    'roku_content.api.throttling.UserSustainedThrottle',
+    #    'roku_content.api.throttling.UserBurstThrottle',
+    #],
     'DEFAULT_THROTTLE_RATES': {
         'anon_sustained': '500/day',
         'anon_burst': '10/minute',
