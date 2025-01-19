@@ -57,7 +57,7 @@ else:
     SECRET_KEY = config('DEBUG_SECRET_KEY')
     ALLOWED_HOSTS = config('DEBUG_ALLOWED_HOSTS', cast=Csv())
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    INTERNAL_IPS = ['192.168.0.14']
+    INTERNAL_IPS = ['192.168.0.15']
 
     SWAGGER_SETTINGS = {
         'SECURITY_DEFINITIONS': {

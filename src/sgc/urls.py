@@ -21,8 +21,6 @@ import custom_auth.views
 from django_registration.backends.activation.views import RegistrationView
 from custom_auth.forms import SGCRegistrationForm
 
-#print(f"Time zone: {settings.TIME_ZONE}")
-
 
 urlpatterns = [
 
