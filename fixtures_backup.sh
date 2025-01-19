@@ -14,6 +14,7 @@ python manage.py dumpdata media.mediacategory > media/fixtures/media/mediacatego
 python manage.py dumpdata media.mediacountry > media/fixtures/media/mediacountry.json
 python manage.py dumpdata media.mediadocformat > media/fixtures/media/mediadocformat.json
 python manage.py dumpdata media.mediadocservice > media/fixtures/media/mediadocservice.json
+python manage.py dumpdata media.mediadoctype > media/fixtures/media/mediadoctype.json
 python manage.py dumpdata media.mediaphotoformat > media/fixtures/media/mediaphotoformat.json
 python manage.py dumpdata media.mediaphotoservice > media/fixtures/media/mediaphotoservice.json
 python manage.py dumpdata media.mediatag > media/fixtures/media/mediatag.json
